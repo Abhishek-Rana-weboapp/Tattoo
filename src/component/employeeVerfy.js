@@ -71,11 +71,20 @@ const IDVerificationComponent = () => {
         }),
       })
         .then((response) => {
-          if (response.status===201)
-          {
+          const minor=sessionStorage.getItem('minor')
+          if (response.status===201){
+        
+          if(minor === "true"){
+            
           navigate('/consent-guard');
           }
           else{
+     
+            navigate('/');
+            alert('your form was successfully submitted')
+          }}
+          else{
+          
             alert('ALL filed is require , please refill the form.');
           }
         })
