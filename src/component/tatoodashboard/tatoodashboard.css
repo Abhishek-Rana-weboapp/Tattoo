@@ -1,0 +1,37 @@
+.outer-item{
+    width: 48%; /* 50% width with some margin between items */
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px;
+  
+  }
+
+
+.outer-item {
+  text-align: center;
+    margin-bottom: 20px;
+    border: none;
+    padding: 17px;
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+  }
+  .inner-item {
+    cursor: pointer;
+    justify-content: space-evenly;
+    display: flex;
+    border: 2px solid;
+    padding: 8px 44px;
+    border-radius: 16px;
+    background-color: #0000000f;
+    align-items: center;
+    margin: 10px;
+}
+  .inner-item h5 {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  @media (max-width:600px) {
+    
+  }
+

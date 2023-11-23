@@ -1,0 +1,40 @@
+.outer-item{
+    margin-bottom: 20px;
+    border: none;
+    padding: 10px;
+  
+  }
+
+
+.outer-item {
+  text-align: center;
+    margin-bottom: 20px;
+    border: none;
+    padding: 17px;
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+  }
+ 
+.inner-item {
+    justify-content: space-evenly;
+    border: 2px solid;
+    padding: 6px 36px;
+    border-radius: 13px;
+    background-color: #0000000f;
+    align-items: center;
+    margin: 10px;
+}
+  .inner-item h5 {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  @media (max-width:600px) {
+    .outer-item {
+        padding: 0px;
+        display: initial;
+
+    }
+    
+  }
+

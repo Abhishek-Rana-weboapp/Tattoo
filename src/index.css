@@ -1,0 +1,109 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+.container {
+  width:100%
+}
+
+.item {
+  text-align: center;
+  width: 16%;
+  margin-bottom: 20px;
+  border: none;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+}
+.item1 {
+  justify-content: space-evenly;
+  display: flex;
+}
+.item h2 {
+  font-size: 34px;
+  font-weight: 300;
+}
+.big-container {
+  margin-top: 40px;
+}
+
+.outer.container h1 {
+  color: #8400fff0;
+  text-align: center;
+  margin-top: 37px;
+  font-size: 46px;
+}
+
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* .image-item {
+  width: 150px;
+  margin: 10px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+} */
+
+.image-item:hover {
+  border-color: #007BFF;
+}
+
+.image-item img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 5px;
+}
+
+.image-item p {
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.smp-btn {
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+@media (max-width:600px){
+
+  .item {
+    width: 100%;
+    display: initial;
+   
+}
+
+
+
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
