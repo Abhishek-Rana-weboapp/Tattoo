@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const AppointmentList = () => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,7 +12,7 @@ const AppointmentList = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await fetch('http://localhost:3000/artist/appointment_list');
+        const response = await fetch(`${apiUrl}/artist/appointment_list`);
         const data = await response.json();
         setAppointments(data.data);
         setLoading(false);
@@ -33,7 +34,7 @@ const AppointmentList = () => {
 
   const handleAssignArtist = async () => {
     try {
-      const response = await fetch('http://localhost:3000/artist/artist_assign', {
+      const response = await fetch(`${apiUrl}/artist/artist_assign`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,6 +53,7 @@ const AppointmentList = () => {
     } catch (error) {
       console.error('Error assigning artist:', error);
     }
+    setSelectedAppointment(null)
   };
 
   const handleUsernameClick = appointment => {

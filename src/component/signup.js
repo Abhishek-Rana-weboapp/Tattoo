@@ -3,16 +3,18 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [usertype,setusertype]=useState('');
+  const [usertype,setusertype]=useState('admin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState('english'); 
   const [minor,setMinor] = useState('false')
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    console.log("inter data ===",email, password,usertype);
     const user = {
+
       username: email,
       password: password,
       lang: selectedLanguage,
@@ -28,7 +30,7 @@ function SignUp() {
       body: JSON.stringify(user)
     };
     
-    const url = 'http://localhost:3000/signup'
+    const url = `${apiUrl}/signup`
       try {
         const response = await fetch(url, config);
         
@@ -41,13 +43,24 @@ function SignUp() {
         }
     
         const responseData = await response.json();
-        console.log('Sign-up Response:', responseData);
+        console.log('Sign-up Response:', responseData.userData);
+        if(responseData.userData.usertype==="admin")
+        {
+          sessionStorage.setItem('responseData',JSON.stringify(responseData));
+          sessionStorage.setItem('username', email);
+          sessionStorage.setItem('minor', responseData.userData.minor)
+          sessionStorage.setItem('token', responseData.token);
+          navigate("/AppointmentList");
+
+        }
+        else 
+        {
         sessionStorage.setItem('responseData',JSON.stringify(responseData));
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.userData.minor)
-        
+        sessionStorage.setItem('token', responseData.token);
         navigate("/dashboard");
-        
+        }
         
       } catch (error) {
         console.error('Sign-up Error:', error);
@@ -100,6 +113,7 @@ function SignUp() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <div className="mb-3">
             <label htmlFor="usertype" className="form-label">
               usertype
@@ -107,10 +121,10 @@ function SignUp() {
             <select
               id="usertype"
               className="form-select"
-              value={usertype} // Set the selected value
-              onChange={(e) => setusertype(e.target.value)} // Update state on change
+              value={usertype} 
+              onChange={(e) =>setusertype(e.target.value)}
             >
-              <option value="adimn">Admin</option>
+              <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>
 

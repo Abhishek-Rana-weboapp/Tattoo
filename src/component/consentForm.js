@@ -1,6 +1,16 @@
-import React, { useState } from 'react';
+import React, { useRef,useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SignatureCanvas from 'react-signature-canvas';
 
 const ConsentFormGuard = () => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const [showPopup,setShowPopup] =useState(null);
+
+  const [signature_type,setsignature_type]=useState(null);
+
+  const signatureRef = useRef(null);
+  const [signatureImage, setSignatureImage] = useState(null);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     dateOfBirth: '',
@@ -20,9 +30,87 @@ const ConsentFormGuard = () => {
   });
 
   const handleInputChange = (event) => {
+  
     const { name, value, type, checked } = event.target;
     setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
+
+    
   };
+
+  const handleSave = () => {
+    console.log("url===",signatureRef)
+    const dataUrl = signatureRef.current.toDataURL();
+    setSignatureImage(dataUrl);
+  };
+  const handleClear = () => {
+    signatureRef.current.clear();
+    setSignatureImage(null);
+  };
+  const handleSubmit = () => {
+    setShowPopup(false);
+  
+    // You can now use the signatureImage state to submit the signature to your API
+    if (signatureImage) {
+      console.log('Submitting Signature:', signatureImage, signature_type);
+  
+      if (signature_type === 'techSignature') {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          techSignature: signatureImage,
+        }));
+      } else if (signature_type === 'clientSignature') {
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          clientSignature: signatureImage,
+        }));
+      }
+   setSignatureImage(null)
+      // Add your API submission logic here
+    } else {
+      console.log('Please save a signature before submitting.');
+    }
+  };
+  
+
+  const handelapi =async (event) => {
+
+    event.preventDefault()
+
+   const appointment_detail= JSON.parse(sessionStorage.getItem("appointment_detail"))
+    console.log("apoinment detail",formData)
+
+
+    try {
+      const response = await fetch(`${apiUrl}/appointment/post?update=true`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: appointment_detail.username,
+          id:appointment_detail.id,
+          consent_guard:formData
+        }),
+      });
+
+   
+      if (response.status === 201) {
+
+        alert("Appointment booked");
+          navigate('/');
+        }
+        else{
+      
+        alert('All fields are required, please refill the form.');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+ 
+
+  }
 
   return (
     <div className="container" style={{ width: '80%', margin: '0 auto', padding: '20px' }}>
@@ -86,12 +174,49 @@ const ConsentFormGuard = () => {
         </section>
 
         <section style={{ margin: '10px 0' }}>
+
+
+
+        {showPopup && (
+
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '2px solid #3498db', padding: '20px', borderRadius: '10px', maxWidth: '400px', margin: 'auto', marginTop: '50px', backgroundColor: '#ecf0f1' }}>
+      <SignatureCanvas
+        penColor="black"
+        canvasProps={{ width: 300, height: 150, className: 'sigCanvas', style: { border: '1px solid #000', backgroundColor: 'white' } }}
+        ref={signatureRef}
+      />
+      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+        <button type="button" style={{ background: '#e74c3c', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginRight: '10px' }} onClick={handleClear}>Clear</button>
+        <button type="button" style={{ background: '#2ecc71', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} onClick={handleSave}>Save</button>
+      </div>
+
+      {signatureImage && (
+        <div style={{ marginTop: '20px' }}>
+          <img src={signatureImage} alt="Signature Preview" style={{ border: '1px solid #000', borderRadius: '5px', maxWidth: '100%' }} />
+        </div>
+      )}
+
+      {signatureImage && (
+        <button type="button" style={{ marginTop: '10px', padding: '8px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleSubmit}>
+          Submit Signature
+        </button>
+      )}
+    </div>
+        
+
+
+      )}
           <h2>Witness (Technician)</h2>
           <label style={{ fontWeight: 'bold' }} htmlFor="techName">Technician's Name:</label>
           <input type="text" id="techName" name="techName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techName} onChange={handleInputChange} required /><br />
 
+
+
           <label style={{ fontWeight: 'bold' }} htmlFor="techSignature">Technician's Signature:</label>
-          <input type="text" id="techSignature" name="techSignature" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techSignature} onChange={handleInputChange} required /><br />
+          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >add signature</button>
+
+
+
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techDate">Date (MM/DD/YYYY):</label>
           <input type="text" id="techDate" name="techDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techDate} onChange={handleInputChange} required /><br />
@@ -99,17 +224,20 @@ const ConsentFormGuard = () => {
 
         <section style={{ margin: '10px 0' }}>
           <h2>Client's Signature</h2>
+
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignature">Signature:</label>
-          <input type="text" id="clientSignature" name="clientSignature" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.clientSignature} onChange={handleInputChange} required /><br />
+          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >add signature</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignatureDate">Date (MM/DD/YYYY):</label>
           <input type="text" id="clientSignatureDate" name="clientSignatureDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
         </section>
 
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={handelapi}>Submit</button>
       </form>
     </div>
   );
 };
 
 export default ConsentFormGuard;
+
+
