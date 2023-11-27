@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
 const IDVerificationComponent = () => {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { user, formData, emerformData, drformData } = React.useContext(UserContext);
 
@@ -18,7 +19,7 @@ const IDVerificationComponent = () => {
     const formData = new FormData();
     formData.append('profile', file);
 
-    fetch('http://localhost:3000/upload', {
+    fetch(`${apiUrl}/upload`, {
       method: 'POST',
       body: formData,
     })
@@ -36,61 +37,59 @@ const IDVerificationComponent = () => {
       });
   };
 
-  const handleSubmit = () => {
-    const username=sessionStorage.getItem('username');
-    const minor=sessionStorage.getItem('minor')
-   console.log('data===',username,minor)
+  const handleSubmit = async () => {
+    const username = sessionStorage.getItem('username');
+    const minor = sessionStorage.getItem('minor');
+
     if (!isSubmitDisabled) {
-      fetch('http://localhost:3000/appointment/post', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          minor: minor,
-          typeofservice: user.selectedTattooType,
-          bodyloacation: user.tattooLocation,
-          bodyloacation: "non",
-          medicalhistory: {
-            "tattooed before": formData.page1,
-            "Pregnant or Nursing": formData.page2,
-            "hemophiliac": formData.page3,
-            "medical condition": formData.page4,
-            "communicable diseases": formData.page5,
-            "alcohol": formData.page6,
-            "allergies": formData.page7,
-            "heart condition": formData.page8,
+      try {
+        const response = await fetch(`${apiUrl}/appointment/post`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
           },
-          emergencycontectnumber: emerformData.phone,
-          doctor_information: drformData.name,
-          WaiverRelease_url: true,
-          HoldHarmlessAgreement_url: true,
-          id_url: idPhoto,
-          ArtistPiercerNames: "Manik Sharma",
-        }),
-      })
-        .then((response) => {
-          const minor=sessionStorage.getItem('minor')
-          if (response.status===201){
-        
-          if(minor === "true"){
-            
-          navigate('/consent-guard');
-          }
-          else{
-     
-            navigate('/');
-            alert('your form was successfully submitted')
-          }}
-          else{
-          
-            alert('ALL filed is require , please refill the form.');
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
+          body: JSON.stringify({
+            username: username,
+            minor: minor,
+            typeofservice: user.selectedTattooType,
+            bodyloacation: user.tattooLocation,
+            medicalhistory: {
+              "tattooed before": formData.page1,
+              "Pregnant or Nursing": formData.page2,
+              "hemophiliac": formData.page3,
+              "medical condition": formData.page4,
+              "communicable diseases": formData.page5,
+              "alcohol": formData.page6,
+              "allergies": formData.page7,
+              "heart condition": formData.page8,
+            },
+            emergencycontectnumber: emerformData.phone,
+            doctor_information: drformData.name,
+            WaiverRelease_url: true,
+            HoldHarmlessAgreement_url: true,
+            id_url: idPhoto,
+            ArtistPiercerNames: " ",
+          }),
         });
+
+        const responseData = await response.json();
+
+        if (response.status === 201) {
+          alert("Appointment booked");
+
+          if (minor === "true") {
+            sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
+            navigate('/consent-guard');
+          } else {
+            //sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
+            navigate('/');
+          }
+        } else {
+          alert('All fields are required, please refill the form.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
     }
   };
 

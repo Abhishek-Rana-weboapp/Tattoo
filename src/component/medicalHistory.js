@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import { json, useNavigate } from 'react-router-dom';
 function MedicalForm() {
-
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { user, selectedPattern } = useContext(UserContext)
   const { formData, setFormData } = useContext(UserContext)
@@ -21,7 +21,7 @@ function MedicalForm() {
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
     try {
-      const response = await fetch(`http://localhost:3000/artist/username_appointment_list?username=${username}`);
+      const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
       const data = await response.json();
 
       if (data.data.length > 0) {
@@ -512,7 +512,7 @@ function MedicalForm() {
             />
           </label>
           <button onClick={prevPage}>Previous</button>
-          <button onClick={() => setShowEmergencyContactPopup(true)}>Next</button>
+          <button onClick={() => navigate('/emergency-contact')}>Next</button>
 
           {formData.page8.yes && (
             <div>

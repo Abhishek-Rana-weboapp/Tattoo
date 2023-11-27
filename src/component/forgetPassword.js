@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function ForgetPassword() {
+  
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [email, setEmail] = useState('');
   const [responseMessage, setResponseMessage] = useState(''); 
 
@@ -12,7 +14,7 @@ function ForgetPassword() {
     };
 
     // Configure the request
-    const url = 'http://localhost:3000/forgot_password';
+    const url = `${apiUrl}/forgot_password`;
     const config = {
       method: 'POST',
       headers: {

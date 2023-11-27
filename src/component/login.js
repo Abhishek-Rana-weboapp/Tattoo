@@ -3,13 +3,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
+
+
+
 function Login() {
+
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
+
+  
     
     e.preventDefault();
     console.log(email, password);
@@ -25,18 +32,32 @@ function Login() {
       body: JSON.stringify(user)
     };
     
-    const url = 'http://localhost:3000/login';  
+    const url = `${apiUrl}/login`;  
     try {
       const response = await fetch(url, config);
        
       const responseData = await response.json();  
-      if (responseData.message==='Login successful.'){
+      if (responseData.message==='Login successful.')
+      {
+
+        if(responseData.user.usertype==="admin")
         
+        {
+
+          sessionStorage.setItem('username', email);
+          sessionStorage.setItem('minor', responseData.user.minor)
+          sessionStorage.setItem('token', responseData.token);
+  
+          navigate("/AppointmentList");
+
+        }
+        else
+        {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.user.minor)
-
+        sessionStorage.setItem('token', responseData.token);
         navigate("/dashboard");
-
+        }
       }
       else{
         setResponseMessage('Invalid credentials');
@@ -49,6 +70,7 @@ function Login() {
     }
   
     }
+    console.log("base url===",apiUrl)
     console.log(navigator.language)    
   return (
     <div className='container flex flex-col items-center justify-center h-screen'
@@ -57,7 +79,6 @@ function Login() {
     <h2>Login Form</h2>
       </div>
       <div className="col-md-6">
-   
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
             

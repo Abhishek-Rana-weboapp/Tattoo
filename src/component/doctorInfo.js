@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
 function DoctorContactForm() {
-  
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [data, setdata] = useState()
   const [showPopup_, setShowPopup_] = useState(false);
@@ -20,7 +20,7 @@ function DoctorContactForm() {
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
     try {
-      const response = await fetch(`http://localhost:3000/artist/username_appointment_list?username=${username}`);
+      const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
       const data = await response.json();
 
       if (data.data.length > 0) {

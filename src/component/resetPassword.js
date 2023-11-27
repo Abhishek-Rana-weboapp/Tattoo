@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
+
 function ResetPassword() {
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [psw, setpsw] = useState('');
   const [confirm_psw, setconfirm_psw] = useState('');
@@ -22,7 +24,7 @@ function ResetPassword() {
       };
 
       // Configure the request
-      const url = `http://localhost:3000/reset_password?username=${username}&token=${token}`;
+      const url = `${apiUrl}/reset_password?username=${username}&token=${token}`;
       const config = {
         method: 'POST',
         headers: {
