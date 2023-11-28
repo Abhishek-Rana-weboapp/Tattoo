@@ -77,7 +77,7 @@ function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div className="App">
+      <div className="App bg-[#000000] w-screen h-screen">
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />

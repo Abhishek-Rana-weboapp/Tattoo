@@ -48,6 +48,10 @@ code {
   flex-wrap: wrap;
 }
 
+.yellowButton{
+  background: linear-gradient(to bottom, #f8f5f5 0%, #ffd21c 30%, #eb6d08 100%);
+}
+
 /* .image-item {
   width: 150px;
   margin: 10px;

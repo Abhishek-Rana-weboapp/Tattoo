@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-
+import Title_logo from "../assets/Title_logo.png"
+import { PiUserCircleFill } from "react-icons/pi";
+import { CiLock } from "react-icons/ci";
+import Button_bg from "../assets/Button_bg.png"
 
 
 
@@ -14,10 +17,13 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleFormSubmit = async (e) => {
+  const buttonStyle = {
+    backgroundImage: Button_bg,
+    backgroundSize: 'cover',
+    // Add any other styles you need
+  };
 
-  
-    
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(email, password);
     const user = {
@@ -71,53 +77,55 @@ function Login() {
   
     }
     console.log("base url===",apiUrl)
-    console.log(navigator.language)    
+    console.log(Button_bg)    
   return (
-    <div className='container flex flex-col items-center justify-center h-screen'
+    <div className='container w-1/2 h-full flex flex-col gap-4 justify-center items-center'
     >    
-     <div className='mb-5'>
-    <h2>Login Form</h2>
-      </div>
+    <img src={Title_logo} className=' w-72'></img>
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
-            
-          <div className="flex flex-col itmes-center gap-1">
-            <label htmlFor="email" className="">
-              Email address
-            </label>
-            <input
+
+            <div className='flex gap-3 bg-white p-2 rounded-2xl items-center'>
+              <PiUserCircleFill size={30}/>
+              <input
               type="email"
-              className="p-2 border-slate-300 rounded-md focus-within:border-blue-500 focus:shadow-outline-blue"
+              className="flex-1 focus:outline-none p-2"
               id="email"
-              placeholder="Enter email"
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
+              {/* <input className='flex-1' placeholder='Email'/> */}
+            </div>
 
-          <div className="flex flex-col itmes-center gap-1">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
+            <div className='flex gap-3 bg-white p-2 rounded-2xl items-center'>
+              <CiLock size={30}/>
+              <input
               type="password"
-              className="form-control"
+              className="flex-1 focus:outline-none bg-white"
               id="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            </div>
+         
           </div>
+          <div className='flex gap-2 justify-between'>
+            <div className='flex gap-2 text-white'>
+              <input type='checkbox'/>
+              Remember me?
+            </div>
+            <div className='flex gap-2'>
+        <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
+        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink>
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary">
- 
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold '>
             Login
           </button>
-          <div className='flex flex-col items-end'>
-        <NavLink to="/signup" className={" no-underline w-max"}>Signup  </NavLink>
-        <NavLink to="/forget_password"  className={" no-underline w-max"}>Forgot Password?</NavLink>
-          </div>
+          
         </form>
         {responseMessage && (
           <div className="alert alert-info mt-3">
