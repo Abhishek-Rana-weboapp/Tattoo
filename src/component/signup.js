@@ -6,8 +6,11 @@ function SignUp() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [usertype,setusertype]=useState('admin');
+  const [showPopup,setshowPopup]=useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [adminUsername,setadminUsername]=useState('')
+
   const [selectedLanguage, setSelectedLanguage] = useState('english'); 
   const [minor,setMinor] = useState('false')
   const handleFormSubmit = async (e) => {
@@ -67,6 +70,42 @@ function SignUp() {
         
       }
     }
+
+    const handleInviteClick = () => {
+
+      fetch(`http://localhost:4000/add_admin?username_admin=${email}&psw=${password}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username:adminUsername}),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if(data.message==="meil send successful.")
+          {
+          alert(" Mail send successfully ")
+          setshowPopup(false)
+          }
+          else{
+          alert(" Invalid credentials  ")
+          setshowPopup(true)
+          setEmail('')
+          setPassword('')
+
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        });
+
+
+
+
+
+      
+    };
+
     console.log(navigator.language)    
 
   return (
@@ -177,7 +216,82 @@ function SignUp() {
           <Link to="/">Already have an account? Log in</Link>
         </form>
       </div>
+
+      <button type='submit' className="btn btn-primary" onClick={() => setshowPopup(true)}>
+        Invite Admin
+      </button>
+      
+       
+      {showPopup && (
+
+       <div className='popup' style={{
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        padding: '20px',
+        backdropFilter: 'blur(6px)',
+        width: '60%',  // Increase the width
+        minHeight: '500px',  // Increase the height
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'black',  // Change the background color
+        color: 'white',  // Set text color
+        boxShadow: '0 0 6px rgba(0,0,0,0.1)',
+        borderRadius: '12px',
+      }}
+      >
+        <h2>Invite Admin</h2>
+        <label htmlFor="username" style={{ zIndex: 1001, color: 'white' }}>Username:</label>
+<input
+  type="text"
+  id="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+/>
+
+<label htmlFor="password" style={{ zIndex: 1001, color: 'white' }}>Password:</label>
+<input
+  type="password"
+  id="password"
+  value={password}
+  onChange={(e) => setPassword(e.target.value)}
+  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+/>
+
+<label htmlFor="email" style={{ zIndex: 1001, color: 'white' }}>Email:</label>
+<input
+  type="email"
+  id="email"
+  value={adminUsername}
+  onChange={(e) => setadminUsername(e.target.value)}
+  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+/>
+  
+
+
+
+
+          
+  
+  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+    <button className="btn btn-primary" onClick={handleInviteClick}>
+      Invite
+    </button>
+
+    <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={() => setshowPopup(false)}>
+      Close
+    </button>
+  </div>
+      </div>
+      )}
     </div>
+  
+  
+
   );
 }
 
