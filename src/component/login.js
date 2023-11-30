@@ -10,7 +10,7 @@ import Button_bg from "../assets/Button_bg.png"
 
 
 function Login() {
-
+  const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
   const [email, setEmail] = useState('');
@@ -53,7 +53,7 @@ function Login() {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
-  
+          sessionStorage.setItem('progress_bar',progress)
           navigate("/AppointmentList");
 
         }
@@ -62,6 +62,7 @@ function Login() {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
+        sessionStorage.setItem('progress_bar',progress)
         navigate("/dashboard");
         }
       }

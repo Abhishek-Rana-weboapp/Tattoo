@@ -1,8 +1,9 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-
+import ProgressBar from '../ProgressBar';
 function FaceDashboard() {
+  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
 
@@ -81,6 +82,7 @@ function FaceDashboard() {
 
 
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div>
   

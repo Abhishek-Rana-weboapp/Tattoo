@@ -1,10 +1,10 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-
+import ProgressBar from '../ProgressBar';
 
 function Hip() {
-
+  const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
 
@@ -51,7 +51,7 @@ function Hip() {
        
         </div>
       
-    
+        <ProgressBar progress={progressValue} />
 
       </div>
 

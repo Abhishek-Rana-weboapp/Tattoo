@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Tattoo from '../assets/tattoo.png'
 import microblading from '../assets/microblading.png'
 import piercings from '../assets/piercings.png'
@@ -7,14 +7,19 @@ import smp from '../assets/smp.png'
 import tooth from '../assets/tooth.png'
 import { useNavigate ,Link} from "react-router-dom";
 import UserContext from '../context/UserContext';
-
+import React, { useState, useEffect } from 'react';
+import ProgressBar from './ProgressBar';
 function Dashboard() {
+  
+  const progressValue = 10;
+
   const navigate = useNavigate();
   const {user,setUser} = React.useContext(UserContext)
   const userObject = user || {};
-
+  
 
   const handleTattooTypeSelect = (selectedType) => {
+    
     setUser({ ...userObject,selectedTattooType: selectedType });
     navigate(`/${selectedType}`); 
   };
@@ -88,7 +93,11 @@ function Dashboard() {
             </Link>
           </div>
         </div>
+
+        <ProgressBar progress={progressValue} />
+
       </div>
+     
     </div>
   );
 }
