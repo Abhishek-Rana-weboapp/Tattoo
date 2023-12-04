@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Tattoo from '../assets/tattoo.png'
 import microblading from '../assets/microblading.png'
 import piercings from '../assets/piercings.png'
@@ -15,14 +15,22 @@ import tooth_gold from "../assets/tooth_gold.png"
 import removal_gold from "../assets/removal_gold.png"
 import piercings_gold from "../assets/piercings_gold.png"
 import tattoo_gold from "../assets/tattoo_gold.png"
+import ProgressBar from './ProgressBar';
+
+
 
 function Dashboard() {
+
+  
+  const progressValue = 10;
+
   const navigate = useNavigate();
   const {user,setUser} = React.useContext(UserContext)
   const userObject = user || {};
-
+  
 
   const handleTattooTypeSelect = (selectedType) => {
+    
     navigate(`/${selectedType}`); 
   };
 
@@ -73,8 +81,9 @@ function Dashboard() {
   ]
 
   return (
-    <div className='w-1/2 h-full flex flex-col gap-4 justify-center items-center'
+    <div className='w-1/2 h-full flex flex-col gap-4 justify-center items-center overflow-auto' 
     >
+      
         <img src={Title} className='w-3/5'></img>
         <div className="grid grid-cols-2 gap-x-10 gap-y-10">
           {
@@ -82,7 +91,11 @@ function Dashboard() {
               return <DisplayCard key={index} data={menu} name={menu.name} type={menu.type} link={menu.link} onClick={handleTattooTypeSelect} selectedType={user.selectedTattooType} src={menu.src} />
             })
           }
+          
         </div> 
+        
+       <ProgressBar progress={progressValue} />
+       
     </div>
         );
 }

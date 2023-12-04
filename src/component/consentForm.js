@@ -1,8 +1,12 @@
-import React, { useRef,useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
+import ProgressBar from './ProgressBar';
+import Title from '../assets/Title.png';
+
 
 const ConsentFormGuard = () => {
+  var progressValue = 100;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [showPopup,setShowPopup] =useState(null);
 
@@ -113,26 +117,41 @@ const ConsentFormGuard = () => {
   }
 
   return (
-    <div className="container" style={{ width: '80%', margin: '0 auto', padding: '20px' }}>
-      <h1 style={{ textAlign: 'center' }}>Consent Form</h1>
-      <form style={{ backgroundColor: '#f4f4f4', padding: '20px', borderRadius: '5px' }}>
-        <section style={{ margin: '10px 0' }}>
-          <h2>Client Information</h2>
-          <label style={{ fontWeight: 'bold' }} htmlFor="fullName">Full Name:</label>
-          <input type="text" id="fullName" name="fullName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.fullName} onChange={handleInputChange} required /><br />
+    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
+    <img src={Title} className="w-3/5 mb-8" alt="Logo" />
+    <h1 className="text-3xl font-bold mb-4 text-yellow-500">Consent Form</h1>
+    <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black">
 
-          <label style={{ fontWeight: 'bold' }} htmlFor="dateOfBirth">Date of Birth:</label>
-          <input type="date" id="dateOfBirth" name="dateOfBirth" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.dateOfBirth} onChange={handleInputChange} required /><br />
+    <section style={{ margin: '10px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+  <div style={{ flex: '1' }}>
+    <h2>Client Information</h2>
 
-          <label style={{ fontWeight: 'bold' }} htmlFor="address">Address:</label>
-          <input type="text" id="address" name="address" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.address} onChange={handleInputChange} required /><br />
+    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{ marginRight: '10px', flex: '1' }}>
+        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="fullName">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.fullName} onChange={handleInputChange} required />
+      </div>
 
-          <label style={{ fontWeight: 'bold' }} htmlFor="phone">Phone:</label>
-          <input type="tel" id="phone" name="phone" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.phone} onChange={handleInputChange} required /><br />
+      <div style={{ flex: '1' }}>
+        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.dateOfBirth} onChange={handleInputChange} required />
+      </div>
+    </div>
 
-          <label style={{ fontWeight: 'bold' }} htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.email} onChange={handleInputChange} required /><br />
-        </section>
+    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <div style={{ marginRight: '10px', flex: '1' }}>
+        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="address">Address:</label>
+        <input type="text" id="address" name="address" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.address} onChange={handleInputChange} required />
+      </div>
+
+      <div style={{ flex: '1' }}>
+        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.phone} onChange={handleInputChange} required />
+      </div>
+    </div>
+  </div>
+</section>
+
 
         <section style={{ margin: '10px 0' }}>
           <h2>Procedure Information</h2>
@@ -232,8 +251,12 @@ const ConsentFormGuard = () => {
           <input type="text" id="clientSignatureDate" name="clientSignatureDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
         </section>
 
-        <button type="submit" onClick={handelapi}>Submit</button>
+        <button type="submit" className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={handelapi}>Submit</button>
       </form>
+      <div className='w-full h-10' >
+       <ProgressBar progress={progressValue} />
+       {progressValue}
+       </div>
     </div>
   );
 };

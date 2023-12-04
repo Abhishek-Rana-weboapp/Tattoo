@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
-
+import ProgressBar from './ProgressBar';
 function EmergencyContactForm() {
+  var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { emerformData, setemerFormData } = React.useContext(UserContext);
@@ -150,7 +151,13 @@ function EmergencyContactForm() {
         </div>
         <button type="submit">Submit</button>
       </form>
+      
+      <div className='w-full h-10' >
+       <ProgressBar progress={progressValue} />
+       {progressValue}
+       </div>
     </div>
+    
   );
 }
 

@@ -1,10 +1,15 @@
+// Import necessary modules and components
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import UserContext from '../context/UserContext';
+import ConsentFormLayout from './Layout/FormLayout';
+import ProgressBar from './ProgressBar';
+import Title from '../assets/Title.png';
 
+// Define the component
 function TermsOfService() {
-  const navigate = useNavigate();
-
+  // State and initialization
+  const [progressValue, setProgressValue] = useState(90);
+  const [progressValue_, setProgressValue_] = useState(33.3333);
   const [currentPage, setCurrentPage] = useState(1);
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
@@ -29,49 +34,66 @@ function TermsOfService() {
     All cover-ups and fix-ups are done at an hourly shop rate of $200-$350 per hour depending on the artist.
     If you are paying by the hour depending on the tattoo, some tattoo will be charged stencil time.`,
   ];
-  let minorData = JSON.parse(sessionStorage.getItem('responseData'))
 
+  // Navigation function
+  const navigate = useNavigate();
+
+  // Handle change in initials
   const handleInitialsChange = (page, initialsValue) => {
     setInitials({ ...initials, [page]: initialsValue });
   };
 
-
-
-
+  // Navigate to the next page
   const nextPage = () => {
     if (currentPage < totalPages) {
+      setProgressValue_(progressValue_ + 13.333);
       setCurrentPage(currentPage + 1);
-    }
-    else if(currentPage == 3){
-      navigate('/verify')
+    } else if (currentPage === 3) {
+      navigate('/verify');
     }
   };
 
+  // Navigate to the previous page
   const prevPage = () => {
     if (currentPage > 1) {
+      setProgressValue_(progressValue_ - 13.333);
       setCurrentPage(currentPage - 1);
     }
   };
 
+  // Return the JSX structure
   return (
-    <div className='outer container' style={{
-        border: '1px solid #d8d6d6'
-      
-      }}>
-      <h1>Terms of Service - Page {currentPage}</h1>
-      <p>{pageContents[currentPage - 1]}</p>
-      <label>
-        Initials: 
+    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} about="Terms of Service">
+      <p className="text-white">{pageContents[currentPage - 1]}</p>
+      <label className="block mt-4 text-white">
+        Initials:
         <input
           type="text"
           value={initials[currentPage] || ''}
+          
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+          className="bg-gray-700 text-white p-2 rounded-md"
         />
-      </label>
-      <button onClick={prevPage}>Previous</button>
-      <button onClick={nextPage}>Next</button>
-    </div>
+        </label>
+        <div className="flex justify-between mt-4">
+        <button
+          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+          onClick={prevPage}
+        >
+          Previous
+        </button>
+        <button
+          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+          onClick={nextPage}
+        >
+          Next
+        </button>
+      </div>
+
+     
+    </ConsentFormLayout>
   );
 }
 
+// Export the component
 export default TermsOfService;

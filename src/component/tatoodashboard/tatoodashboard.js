@@ -1,8 +1,11 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
+import ProgressBar from '../ProgressBar';
 
 function TattooDashboard() {
+  const progressValue = 20;
+  console.log("progerssvalue===",progressValue)
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
 
@@ -104,6 +107,7 @@ function TattooDashboard() {
       </div>
 
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div>
   

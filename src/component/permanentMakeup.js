@@ -1,8 +1,11 @@
 import React from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
+import ProgressBar from './ProgressBar';
 
 function PermanentMakeup() {
+
+  const progressValue = 20;
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
 
@@ -52,7 +55,7 @@ function PermanentMakeup() {
         </div>
         </div>
       
-    
+        <ProgressBar progress={progressValue} />
 
       </div>
 

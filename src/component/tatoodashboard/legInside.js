@@ -2,10 +2,10 @@ import React from 'react'
 import { useLocation } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import { useNavigate } from "react-router-dom";
-
+import ProgressBar from '../ProgressBar';
 
 function LegInside({}) {
-
+  const progressValue = 45;
     const { state } = useLocation();
     const navigate = useNavigate()
     const { user, setUser } = React.useContext(UserContext);
@@ -91,7 +91,7 @@ function LegInside({}) {
         </div>
       
     
-
+        <ProgressBar progress={progressValue} />
       </div>
 
       </div>

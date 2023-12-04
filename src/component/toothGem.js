@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
-
+import ProgressBar from './ProgressBar';
 
 function ToothGem() {
+    const progressValue = 30;
     const navigate = useNavigate()
     const [isAuthorized, setIsAuthorized] = useState(false);
     const { user, setUser } = useContext(UserContext);
@@ -62,6 +63,7 @@ function ToothGem() {
                         </div>
                     )}
                 </div>
+                <ProgressBar progress={progressValue} />
             </div>
         </div>
     );

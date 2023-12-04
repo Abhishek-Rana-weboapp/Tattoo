@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import { Button } from 'bootstrap';
-
+import ProgressBar from '../ProgressBar';
 
 function Back() {
+  const progressValue = 30;
   const navigate = useNavigate();
   const [showOtherField, setShowOtherField] = useState(false);
   const [otherFieldValue, setOtherFieldValue] = useState('');
@@ -65,6 +66,7 @@ function Back() {
             </div>
           )}
         </div>
+        <ProgressBar progress={progressValue} />
       </div>
     </div>
   );
