@@ -8,19 +8,19 @@ const ProgressBar = ({ progress }) => {
   }, [progress]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px' }}>
-      <div style={{ width: '50%', height: '10px', backgroundColor: '#000', borderRadius: '5px', overflow: 'hidden' }}>
-        <div
-          style={{
-            width: `${progress}%`,
-            height: '100%',
-            backgroundColor: '#FFA500',
-            transition: 'width 1s ease-in-out',
-            borderRadius: '5px',
-          }}
-        ></div>
-      </div>
-    </div>  
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px',width: "100%" }}>
+    <div style={{ width: '50%', height: '12px', border: '1px solid #fff', borderRadius: '6px', overflow: 'hidden' }}>
+      <div
+        style={{
+          width: `${progress}%`,
+          height: '100%',
+          backgroundColor: '#FFA500',
+          transition: 'width 1s ease-in-out',
+          borderRadius: '5px', // Adjusted border radius to fit inside the container border
+        }}
+      ></div>
+    </div>
+  </div>
   );
 };
 

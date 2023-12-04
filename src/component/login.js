@@ -45,17 +45,13 @@ function Login() {
       const responseData = await response.json();  
       if (responseData.message==='Login successful.')
       {
-
         if(responseData.user.usertype==="admin")
-        
         {
-
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
-          sessionStorage.setItem('progress_bar',progress)
+  
           navigate("/AppointmentList");
-
         }
         else
         {
@@ -80,7 +76,7 @@ function Login() {
     console.log("base url===",apiUrl)
     console.log(Button_bg)    
   return (
-    <div className='container w-1/2 h-full flex flex-col gap-4 justify-center items-center'
+    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
     >    
     <img src={Title_logo} className=' w-72'></img>
       <div className="col-md-6">
