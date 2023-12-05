@@ -1,26 +1,97 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-import ProgressBar from '../ProgressBar';
+import GridLayout from '../Layout/GridLayout';
+import CustomButton from '../buttons/CustomButton';
+import Navigation from '../navigation/Navigation';
+
 
 function ArmDashboard() {
   const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
+    const [selected, setSelected] = useState()
+
+    useEffect(()=>{
+     if(user.bodyPart) setSelected(user.bodyPart)
+     if(user.armInside) setSelected(user.armInside)
+    },[])
 
 
     const handlepartLocation = (bodyPart) => {
-      setUser({ ...user, bodyPart });
-      navigate('/medical-form'); 
+      setSelected(bodyPart)
     }
-    const handlearmLocation = (armInside) => {
-      setUser({ ...user, armInside });
-      navigate('/arm-inside',{state:{name: armInside}}); 
 
+    const partButtons = [
+      {
+        name:"full sleeve"
+      },
+      {
+        name:"half sleeve"
+      },
+      {
+        name:"shoulder"
+      },
+      {
+        name:"armpit"
+      }
+    ]
+
+    const armButtons = [
+      {
+        name:"upper arm",
+      },
+      {
+        name:"elbow",
+      },
+      {
+        name:"forearm"
+      },
+      {
+        name:"wrist"
+      }
+    ]
+
+    const handleNext = ()=>{
+       if(selected){
+        if(partButtons.find(item=>item.name === selected)){
+          setUser({ ...user, bodyPart : selected});
+          navigate('/medical-form'); 
+        }
+        if(armButtons.find(item=>item.name===selected)){
+          setUser({ ...user, armInside : selected});
+          navigate('/arm-inside',{state:{name: selected}}); 
+        }
+       }
+    }
+
+    const handlePrev = ()=>{
+      navigate(-1)
     }
 
     return (
-      <div className='outer container' style={{
+      <>
+      <GridLayout>
+        {
+          partButtons.map((button , index)=>{
+            return <CustomButton onClick={handlepartLocation} selected={selected} key={index} >{button.name}</CustomButton>
+          })
+        }
+        {
+          armButtons.map((button , index)=>{
+            return <CustomButton onClick={handlepartLocation} selected={selected} key={index} >{button.name}</CustomButton>
+          })
+        }
+      </GridLayout>
+      <Navigation next={handleNext} prev={handlePrev}/>
+      </>
+      
+    );
+  }
+  
+export default ArmDashboard
+
+{/* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -86,8 +157,4 @@ function ArmDashboard() {
       <ProgressBar progress={progressValue} />
       </div>
   </div>
-  
-    );
-  }
-  
-export default ArmDashboard
+   */}

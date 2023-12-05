@@ -1,62 +1,74 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-import ProgressBar from '../ProgressBar';
+import CustomButton from '../buttons/CustomButton';
+import Title from "../../assets/Title.png"
+import Navigation from '../navigation/Navigation';
+
 
 function HeadTattoo() {
   const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
+    const [selected, setSelected] = useState()
+
+    useEffect(()=>{
+       if(user.headLocation) setSelected(user.headLocation)
+    },[])
 
     const handleheadLocation = (headLocation) =>{
-      setUser({ ...user, headLocation });
-      navigate(`/${headLocation}`); 
+      setSelected(headLocation)
     }
-    return (
-      <div className='outer container' style={{
-        border: '1px solid #d8d6d6'
-      
-      }}>
-      <div className='container h-100' style={{
-        backgroundColor: '#f5f5f5',
-      
-        alignItems: 'center',
-        minHeight: '100vh',
-        width:'100%',
-        border: '3px solid black',
-  
-  
-      }}>
-        <h1> Head</h1>
-        <div className='big-container'>
-  
-        <div className='outer-item'>
-        <div className='inner-item' onClick={()=>handleheadLocation('face')}>
-          <h5>Face</h5>
-          
-        </div>
-        <div className='inner-item' onClick={()=>handleheadLocation('scalp')}>
-  
-          <h5>Scalp</h5>
+
+    const buttons = [
+      {
+        name : "face"
+      },
+      {
+        name:"scalp"
+      },
+      {
+        name:"ear"
+      }
+    ]
+
+    const handleNext = ()=>{
+      if(selected){
+        setUser({ ...user, selected });
+        navigate(`/${selected}`); 
+      }else{
+        alert("Please Select an head location")
+      }
         
-        </div>
-        </div>
-      <div className='outer-item'>
-      <div className='inner-item' onClick={()=>handleheadLocation('ear')}>
-  
-          <h5>Ear</h5>
-          
-        </div>
+    }
 
-      </div>
-      
+    const handlePrev = ()=>{
+navigate(-1)
+    }
 
-      </div>
-      
-      </div>
-      <ProgressBar progress={progressValue} />
-  </div>
-  
+    return (
+   <div className="w-full h-full flex flex-col gap-1 items-center">
+   <img src={Title} className="w-3/5 mt-5"></img>
+   <div className='w-4/6 h-2/3 flex flex-col gap-4 items-center pt-5'>
+<h1 className='text-white font-semibold'>HEAD</h1>
+<div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max">
+     { buttons.map((button, index) => {
+       return (
+         <div className="flex justify-center items-center w-full h-max">
+           <CustomButton
+            onClick={handleheadLocation}
+            selected={selected}
+            >
+             {button.name}
+           </CustomButton>
+         </div>
+       );
+      }) 
+    }
+    </div>
+   </div>
+  <Navigation next={handleNext}  prev={handlePrev} />
+ </div>
     );
   }
   

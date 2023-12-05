@@ -1,19 +1,75 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-import ProgressBar from '../ProgressBar';
+import Navigation from '../navigation/Navigation';
+import GridLayout from '../Layout/GridLayout';
+import CustomButton from '../buttons/CustomButton';
+
 function Neck() {
   const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
+    const [selected, setSelected] = useState()
+
+    useEffect(()=>{
+      if(user.bodyPart) setSelected(user.bodyPart)
+  },[])
 
     const handlepartLocation = (bodyPart) => {
-      setUser({ ...user, bodyPart });
-      navigate('/medical-form'); 
+     setSelected(bodyPart)
+    }
 
+    const buttons = [
+      {
+        name: "front"
+      },
+      {
+        name: "back"
+      },
+      {
+        name: "left"
+      },
+      {
+        name: "right"
+      },
+      {
+        name: "full"
+      }
+    ]
+
+    const handleNext = ()=>{
+      if(selected){
+        setUser({ ...user, bodyPart : selected });
+        navigate('/medical-form'); 
+      }else{
+        alert("Please select an option")
+      }
+    }
+
+    const handlePrev = ()=>{
+     navigate(-1)
     }
     return (
-      <div className='outer container' style={{
+
+      <>
+      <GridLayout title={"neck"}>
+      {
+           buttons.map((button, index)=>{
+             return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
+           })
+         }
+      </GridLayout>
+       <Navigation next={handleNext} prev={handlePrev} />
+      </>
+      
+  
+    );
+  }
+  
+export default Neck
+
+
+{/* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -69,9 +125,4 @@ function Neck() {
       </div>
       <ProgressBar progress={progressValue} />
       </div>
-  </div>
-  
-    );
-  }
-  
-export default Neck
+  </div> */}

@@ -1,68 +1,124 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
+import Title from "../../assets/Title.png";
+import CustomButton from "../buttons/CustomButton";
+import Navigation from "../navigation/Navigation";
 
 
 function EarDashboard() {
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
+    const [selected , setSelected] = useState()
 
-    const handlepartLocation = (bodyPart) => {
-      setUser({ ...user, bodyPart });
-      navigate('/medical-form'); 
+    useEffect(() => {
+      if (user.bodyPart) setSelected(user.bodyPart);
+    }, []);
+  
+  const handlePartLocation = (bodyPart) => {
+    setSelected(bodyPart)
+  }
 
-    }
-    return (
-      <div className='outer container' style={{
-        border: '1px solid #d8d6d6'
-      
-      }}>
-      <div className='container h-100' style={{
-        backgroundColor: '#f5f5f5',
-      
-        alignItems: 'center',
-        minHeight: '100vh',
-        width:'100%',
-        border: '3px solid black',
-  
-  
-      }}>
-        <h1> Ear</h1>
-        <div className='outer-container' style={{
-            display:'flex',
-            justifyContent:'center',
-            flexDirection:'column',
-            alignItems:'center',
-            gap:'30px',
-            marginTop:'55px'
-        }}>
-  
-        
-        <div className='inner-item' onClick={()=>handlepartLocation('Behind')}>
-          <h5>Behind</h5>
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlepartLocation('Inner')}>
-  
-          <h5>Inner</h5>
-        
-        </div>
-        <div className='inner-item' onClick={()=>handlepartLocation('lobe')}>
-  
-  <h5>Lobe</h5>
-  
-</div>
-        </div>
-      
+    const buttons = [
+      {
+        name:"behind"
+      },
+      {
+        name:"inner"
+      },
+      {
+        name:"lobe"
+      },
+    ]
+
+    const handleNext = () => {
+      if (selected) {
+        setUser({ ...user, bodyPart: selected });
+        navigate("/medical-form");
+      } else {
+        alert("Please select an option");
+      }
+    };
     
+    const handlePrev = () => {
+      navigate(-1);
+    };
+    
+    return (
 
+      <div className="w-full h-full flex flex-col gap-1 items-center">
+      <img src={Title} className="w-3/5 mt-5"></img>
+      <div className="w-4/6 h-2/3 flex flex-col items-center pt-5 gap-4">
+        <h1 className='font-bold text-5xl text-white'>EYELID</h1>
+        <div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max">
+          {buttons.map((button, index) => {
+            return (
+              <div className="flex justify-center items-center w-full">
+                <CustomButton
+                  onClick={handlePartLocation}
+                  selected={selected}
+                >
+                  {button.name}
+                </CustomButton>
+              </div>
+            );
+          })}
+        </div>
       </div>
-
-      </div>
-      
-  
+      <Navigation next={handleNext} prev={handlePrev} />
+    </div>
+    
+    
   
     );
   }
   
 export default EarDashboard
+
+// <div className='outer container' style={{
+//   border: '1px solid #d8d6d6'
+
+// }}>
+// <div className='container h-100' style={{
+//   backgroundColor: '#f5f5f5',
+
+//   alignItems: 'center',
+//   minHeight: '100vh',
+//   width:'100%',
+//   border: '3px solid black',
+
+
+// }}>
+//   <h1> Ear</h1>
+//   <div className='outer-container' style={{
+//       display:'flex',
+//       justifyContent:'center',
+//       flexDirection:'column',
+//       alignItems:'center',
+//       gap:'30px',
+//       marginTop:'55px'
+//   }}>
+
+  
+//   <div className='inner-item' onClick={()=>handlepartLocation('behind')}>
+//     <h5>Behind</h5>
+    
+//   </div>
+//   <div className='inner-item' onClick={()=>handlepartLocation('inner')}>
+
+//     <h5>Inner</h5>
+  
+//   </div>
+//   <div className='inner-item' onClick={()=>handlepartLocation('lobe')}>
+
+// <h5>Lobe</h5>
+
+// </div>
+//   </div>
+
+
+
+// </div>
+
+// </div>
+

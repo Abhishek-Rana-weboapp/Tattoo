@@ -78,7 +78,7 @@ function Login() {
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
     >    
-    <img src={Title_logo} className=' w-72'></img>
+    <img src={Title_logo} className=' w-1/5'></img>
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>

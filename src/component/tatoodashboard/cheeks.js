@@ -1,66 +1,107 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
+import GridLayout from '../Layout/GridLayout';
+import Navigation from '../navigation/Navigation';
+import CustomButton from '../buttons/CustomButton';
 
 
 function Cheeks() {
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
+  const [selected, setSelected] = useState()
 
-  const handlepartLocation = (bodyPart) => {
-    setUser({ ...user, bodyPart });
-    navigate('/medical-form'); 
-
+  const handlePartLocation = (bodyPart) => {
+    setSelected(bodyPart)
   }
+
+  useEffect(()=>{
+    if(user.bodyPart) setSelected(user.bodyPart)
+  },[])
+
+  const buttons = [
+    {
+      name:"left"
+    },
+    {
+      name:"right"
+    }
+  ]
+
+  const handleNext = ()=>{
+    if(selected){
+      setUser({ ...user, bodyPart : selected});
+    navigate("/medical-form")
+  }else{
+    alert("Please select a location for the cheek.")
+  }
+  }
+
+  const handlePrev = ()=>{
+    navigate(-1)
+  }
+
+
 
   
     return (
-      <div className='outer container' style={{
-        border: '1px solid #d8d6d6'
-      
-      }}>
-      <div className='container h-100' style={{
-        backgroundColor: '#f5f5f5',
-      
-        alignItems: 'center',
-        minHeight: '100vh',
-        width:'100%',
-        border: '3px solid black',
-  
-  
-      }}>
-        <h1> Cheeks</h1>
-        <div className='outer-container' style={{
-            display:'flex',
-            justifyContent:'center',
-            flexDirection:'column',
-            alignItems:'center',
-            gap:'30px',
-            marginTop:'55px'
-        }}>
-  
-        
-        <div className='inner-item' onClick={()=>handlepartLocation('left')}>
-          <h5>Left</h5>
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlepartLocation('right')}>
-  
-          <h5>Right</h5>
-        
-        </div>
-       
-        </div>
-      
+      <>
+      <GridLayout title={"cheeks"}>
+    {
+      buttons.map((button, index)=>{
+        return <CustomButton onClick={handlePartLocation} selected={selected} >{button.name}</CustomButton>
+      })
+    }
+  </GridLayout>
+  <Navigation next={handleNext}  prev={handlePrev} />
     
-
-      </div>
-
-      </div>
-      
-  
+    </>
   
     );
   }
   
 export default Cheeks
+
+{/* <div className='outer container' style={{
+  border: '1px solid #d8d6d6'
+
+}}>
+<div className='container h-100' style={{
+  backgroundColor: '#f5f5f5',
+
+  alignItems: 'center',
+  minHeight: '100vh',
+  width:'100%',
+  border: '3px solid black',
+
+
+}}>
+  <h1> Cheeks</h1>
+  <div className='outer-container' style={{
+      display:'flex',
+      justifyContent:'center',
+      flexDirection:'column',
+      alignItems:'center',
+      gap:'30px',
+      marginTop:'55px'
+  }}>
+
+  
+  <div className='inner-item' onClick={()=>handlepartLocation('left')}>
+    <h5>Left</h5>
+    
+  </div>
+  <div className='inner-item' onClick={()=>handlepartLocation('right')}>
+
+    <h5>Right</h5>
+  
+  </div>
+ 
+  </div>
+
+
+
+</div>
+
+</div>
+ */}
