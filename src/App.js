@@ -22,7 +22,6 @@ import Neck from './component/tatoodashboard/Neck';
 import Nipple from './component/tatoodashboard/nipple';
 import UnderChest from './component/tatoodashboard/underChest';
 import EarDashboard from './component/tatoodashboard/earInside'
-import NeckDashboard from './component/tatoodashboard/neckDashboard'
 import ChestDeshboard from './component/tatoodashboard/chestDashboard'
 import ChestInside from './component/tatoodashboard/chestInside';
 import Torso from './component/tatoodashboard/torso';
@@ -77,10 +76,13 @@ function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div className="App bg-[#000000] w-screen h-screen flex justify-center">
-        <Routes>
+      <div className="App bg-[#000000] w-screen h-screen flex flex-col items-center justify-center p-2">
+        {/* <div className='flex justify-center p-3'>
+      <img src={Title} className='w-2/4 '></img>
+        </div> */}
+        <Routes>\
           <Route exact path="/" element={<Login />} />
-          <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/signup" element={<SignUp />} />\
           <Route exact path="/forget_password" element={<ForgetPassword />} />
           <Route exact path="/reset_password" element={<Resetpassword/>} />
           <Route exact path="/dashboard" element={<Dashboard />} />
@@ -101,7 +103,6 @@ function App() {
           <Route exact path="/scalp" element={<Scalp />} />
           <Route exact path="/ear" element={<Ear />} />
           <Route exact path="/ear-dashboard" element={<EarDashboard />} />
-          <Route exact path="/neck-dashboard" element={<NeckDashboard />} />
           <Route exact path="/chest" element={<ChestDeshboard />} />
           <Route exact path="/under-chest" element={<ChestInside />} />
           <Route exact path="/torso" element={<Torso />} />
@@ -120,7 +121,8 @@ function App() {
           <Route exact path="/leginside" element={<LegInside />} />
           <Route exact path="/foot" element={<Foot />} />
           <Route exact path="/foot-dashboard" element={<FootDashboard />} />
-
+          <Route exact path="/temple" element={<FaceTemple />} />
+          
           <Route exact path="/piercing" element={<Piercing />} />
 
           <Route exact path="/belly-piercing" element={<BellyPiercing />} />

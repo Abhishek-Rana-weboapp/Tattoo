@@ -1,18 +1,96 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
+import Title from "../../assets/Title.png"
+import CustomButton from '../buttons/CustomButton';
+import Navigation from '../navigation/Navigation';
 
 function FaceDashboard() {
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
+    const [selected, setSelected] = useState()
+
+    useEffect(()=>{
+      if(user.faceLocation) setSelected(user.faceLocation)
+   },[])
 
     const handlefaceLocation = (faceLocation) => {
-      setUser({ ...user, faceLocation });
-      navigate(`/${faceLocation}`); 
-
+      setSelected(faceLocation)
     }
+
+  const buttons = [
+    {
+      name:"forehead"
+    },
+    {
+      name:"temple"
+    },
+    {
+      name:"eyebrow"
+    },
+    {
+      name:"eyelid"
+    },
+    {
+      name:"nose"
+    },
+    {
+      name:"cheeks"
+    },
+    {
+      name:"lip"
+    },
+    {
+      name:"jaw"
+    },
+  ]
+
+  const handleNext = ()=>{
+  if(selected){
+    setUser({ ...user, faceLocation : selected });
+    navigate(`/${selected}`); 
+  }else{
+    alert("Please select a face location")
+  }
+  }
+
+  const handlePrev = ()=>{
+   navigate(-1)
+  }
+
     return (
-      <div className='outer container' style={{
+
+      <div className="w-full h-full flex flex-col gap-1 items-center">
+      <img src={Title} className="w-3/5 mt-5"></img>
+      <div className='w-4/6 h-2/3 flex flex-col gap-4 items-center pt-5'>
+<h1 className='text-white font-semibold'>FACE</h1>
+<div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max">
+
+        { buttons.map((button, index) => {
+          return (
+            <div className="flex justify-center items-center w-full">
+              <CustomButton
+                onClick={handlefaceLocation}
+                number= {button.number}
+                selected={selected}
+                >
+                {button.name}
+              </CustomButton>
+            </div>
+          );
+        }) 
+      }
+      </div>
+      </div>
+     <Navigation next={handleNext}  prev={handlePrev} />
+    </div>
+  
+    );
+  }
+  
+export default FaceDashboard
+
+{/* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -82,9 +160,4 @@ function FaceDashboard() {
 
       </div>
       </div>
-  </div>
-  
-    );
-  }
-  
-export default FaceDashboard
+  </div> */}

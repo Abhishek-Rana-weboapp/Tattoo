@@ -1,18 +1,105 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from '../../context/UserContext';
+import UserContext from "../../context/UserContext";
+import CustomButton from "../buttons/CustomButton";
+import Navigation from "../navigation/Navigation";
+import GridLayout from "../Layout/GridLayout";
 
 function TattooDashboard() {
-    const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+  const navigate = useNavigate();
+  const { user, setUser } = React.useContext(UserContext);
+  const [selected , setSelected] = useState()
 
-    const handletattooLocation = (tattooLocation) => {
-      setUser({ ...user, tattooLocation });
-      navigate(`/${tattooLocation}`); 
-
+  useEffect(()=>{
+    if(user.tattooLocation){
+      setSelected(user.tattooLocation)
     }
-    return (
-      <div className='outer container' style={{
+  },[])
+
+  const handletattooLocation = (tattooLocation) => {
+    setSelected(tattooLocation)
+  };
+
+ 
+  const buttons = [
+    {
+      name: "head",
+    },
+    {
+      name: "chest",
+    },
+    {
+      name: "torso",
+    },
+    {
+      name: "back",
+    },
+    {
+      name: "arm",
+    },
+    {
+      name: "hand"
+    },
+    {
+      name: "hip"
+    },
+    {
+      name: "glute"
+    },
+    {
+      name: "leg",
+    },
+    {
+      name: "foot",
+    },
+    {
+      name: "neck",
+    },
+    {
+      name: "pelvic",
+    },
+  ];
+  
+  const handleNext = ()=>{
+    if(selected){
+      setUser({ ...user, tattooLocation : selected});
+      navigate(`/${selected}`)
+    }
+    else{
+      alert("Please Select a Location for the tatto")
+    }
+
+  }
+
+  const handlePrev = ()=>{
+      navigate(-1)
+  }
+
+  return (
+    <>
+    <GridLayout title={"tattoo"}>
+        { buttons.map((button, index) => {
+          return (
+              <CustomButton
+              key={index}
+                onClick={handletattooLocation}
+                selected={selected}
+                >
+                {button.name}
+              </CustomButton>
+          );
+        }) 
+      }
+     </GridLayout>
+     <Navigation next={handleNext}  prev={handlePrev} />
+      </>
+  );
+}
+
+export default TattooDashboard;
+
+{
+  /* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -106,8 +193,5 @@ function TattooDashboard() {
       </div>
       </div>
   </div>
-  
-    );
-  }
-  
-export default TattooDashboard
+   */
+}

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import { useNavigate } from "react-router-dom";
+import GridLayout from '../Layout/GridLayout';
+import CustomButton from '../buttons/CustomButton';
+import Navigation from '../navigation/Navigation';
 
 
 function LegInside({}) {
@@ -9,14 +12,138 @@ function LegInside({}) {
     const { state } = useLocation();
     const navigate = useNavigate()
     const { user, setUser } = React.useContext(UserContext);
+    const [selected, setSelected] =useState()
+
+    useEffect(()=>{
+      if(user.legLocation) setSelected(user.legLocation)
+  },[])
 
     const handlepartLocation = (bodyPart) => {
-        setUser({ ...user, bodyPart });
-        navigate('/medical-form'); 
+       setSelected(bodyPart)
+      }
+
+
+      const halfButton = [
+        {
+          name : "upper"
+        },
+        {
+          name:"lower"
+        }
+      ]
+
+      const ankleButtons = [
+        {
+          name : "full"
+        },
+        {
+          name:"inner"
+        },
+        {
+          name:"outer"
+        },
+        {
+          name:"front"
+        },
+        {
+          name:"back"
+        }
+      ]
+
+      const thighButton = [
+        {
+          name:"inner"
+        },
+        {
+          name:"outer"
+        },
+        {
+          name:"front"
+        },
+        {
+          name:"back"
+        }
+      ]
+
+      const kneeButtons = [
+        {
+          name:"front"
+        },
+        {
+          name:"back"
+        }
+      ]
+
+      const handleNext = ()=>{
+        if(selected){
+          setUser({ ...user, bodyPart:selected });
+      navigate('/medical-form');
+        }else{
+          alert("Please select an option")
+        }
+      }
   
+      const handlePrev = ()=>{
+       navigate(-1)
       }
     return (
-      <div className='outer container' style={{
+      <>
+      {
+        state.full === "ankle" && (<>
+        <GridLayout title={"ankle"}>
+               {
+                ankleButtons.map((button , index)=>{
+                  return <CustomButton key={index} onClick={handlepartLocation} selected={selected} >{button.name}</CustomButton>
+                })
+               }
+        </GridLayout>
+        </>)
+      }
+       {
+        state.full === "half sleeve" && (<>
+        <GridLayout title={"half sleeve"}>
+               {
+                halfButton.map((button , index)=>{
+                  return <CustomButton key={index} onClick={handlepartLocation} selected={selected} >{button.name}</CustomButton>
+                })
+               }
+        </GridLayout>
+        </>)
+      }
+       {
+        state.full === "thigh"  && (<>
+        <GridLayout title={"thigh"}>
+               {
+                thighButton.map((button , index)=>{
+                  return <CustomButton key={index} onClick={handlepartLocation} selected={selected} >{button.name}</CustomButton>
+                })
+               }
+        </GridLayout>
+        </>)
+      }
+       {
+        state.full === "knee" && (<>
+        <GridLayout title={"knee"}>
+               {
+                kneeButtons.map((button , index)=>{
+                  return <CustomButton key={index} onClick={handlepartLocation} selected={selected} >{button.name}</CustomButton>
+                })
+               }
+        </GridLayout>
+        </>)
+      }
+       <Navigation next={handleNext} prev={handlePrev}/>
+      </>
+      
+      
+  
+  
+    );
+  }
+  
+export default LegInside
+
+{/* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -94,11 +221,4 @@ function LegInside({}) {
 
       </div>
 
-      </div>
-      
-  
-  
-    );
-  }
-  
-export default LegInside
+      </div> */}

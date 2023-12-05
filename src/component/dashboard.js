@@ -23,7 +23,7 @@ function Dashboard() {
 
 
   const handleTattooTypeSelect = (selectedType) => {
-    navigate(`/${selectedType}`); 
+    setUser({ ...userObject,selectedTattooType: selectedType });
   };
 
   const menu = [
@@ -66,17 +66,17 @@ function Dashboard() {
     {
       name : "REMOVAL",
       type : "removal",
-      link: "/tattoo",
+      link: "/removal",
       src:removal,
       activesrc:removal_gold
     },
   ]
 
   return (
-    <div className='w-1/2 h-full flex flex-col gap-4 justify-center items-center'
+    <div className='w-3/4 h-full flex flex-col gap-4 justify-center items-center'
     >
         <img src={Title} className='w-3/5'></img>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-10">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-10 w-full">
           {
             menu.map((menu, index)=>{
               return <DisplayCard key={index} data={menu} name={menu.name} type={menu.type} link={menu.link} onClick={handleTattooTypeSelect} selectedType={user.selectedTattooType} src={menu.src} />
