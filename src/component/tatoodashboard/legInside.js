@@ -8,7 +8,7 @@ import Navigation from '../navigation/Navigation';
 
 
 function LegInside({}) {
-
+  const progressValue = 45;
     const { state } = useLocation();
     const navigate = useNavigate()
     const { user, setUser } = React.useContext(UserContext);
@@ -218,7 +218,7 @@ export default LegInside
         </div>
       
     
-
+        <ProgressBar progress={progressValue} />
       </div>
 
       </div> */}

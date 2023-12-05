@@ -3,7 +3,14 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
+import ProgressBar from './ProgressBar';
+import ConsentFormLayout from './Layout/FormLayout';
+
 function ConsentForm() {
+
+  var progressValue = 80;
+  const[progressValue_,setprogressValue_]=useState(12.5)
+
   const navigate = useNavigate();
   const { initials, setInitials } = React.useContext(UserContext);
 
@@ -35,6 +42,7 @@ function ConsentForm() {
       if (!initials[currentPage]) {
         alert('Please provide your initials before moving to the next question.');
       } else {
+        setprogressValue_(progressValue_+7.6923)
         setCurrentPage(currentPage + 1);
       }
     } else if (currentPage === 13) {
@@ -44,24 +52,38 @@ function ConsentForm() {
 
   const prevPage = () => {
     if (currentPage > 1) {
+      setprogressValue_(progressValue_-7.6923)
       setCurrentPage(currentPage - 1);
     }
   };
 
   return (
-    <div>
-      <h1>Consent Form - Page {currentPage}</h1>
-      <p>{statements[currentPage - 1]}</p>
-      <label>
-        Initials: <input
+    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} about="Consent form">
+      <p className="text-white">{statements[currentPage - 1]}</p>
+      <label className="block mt-4 text-white">
+        Initials:{' '}
+        <input
           type="text"
           value={initials[currentPage] || ''}
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+          className="bg-gray-700 text-white p-2 rounded-md"
         />
       </label>
-      <button onClick={prevPage}>Previous</button>
-      <button onClick={nextPage}>Next</button>
-    </div>
+      <div className="flex justify-between mt-4">
+        <button
+          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+          onClick={prevPage}
+        >
+          Previous
+        </button>
+        <button
+          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+          onClick={nextPage}
+        >
+          Next
+        </button>
+      </div>
+    </ConsentFormLayout>
   );
 }
 

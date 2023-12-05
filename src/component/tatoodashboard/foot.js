@@ -7,7 +7,7 @@ import CustomButton from '../buttons/CustomButton';
 
 
 function Foot() {
-
+  const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()

@@ -6,6 +6,7 @@ import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 
 function ChestInside() {
+  const progressValue = 40;
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
   const [selected, setSelected] = useState()

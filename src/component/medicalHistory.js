@@ -1,7 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import { json, useNavigate } from 'react-router-dom';
+import ProgressBar from './ProgressBar';
+import GeneralLayout from './Layout/FormLayout';
+
 function MedicalForm() {
+
+  var progressValue = 50;
+  const[progressValue_,setprogressValue_]=useState(12.5)
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { user, selectedPattern } = useContext(UserContext)
@@ -81,6 +87,8 @@ function MedicalForm() {
     const currentPageData = formData[`page${currentPage}`];
 
     if (currentPageData.yes || currentPageData.no) {
+
+     setprogressValue_(progressValue_+12.5)
       setCurrentPage(currentPage + 1);
     } else {
       // Show an alert message if the user doesn't select a choice
@@ -89,10 +97,18 @@ function MedicalForm() {
   };
 
   const prevPage = () => {
+    setprogressValue_(progressValue_-12.5)
     setCurrentPage(currentPage - 1);
   };
 
   return (
+
+    <GeneralLayout
+      title="Tattoo Consent Form"
+      progressValue={progressValue}
+      progressValue_={progressValue_}
+      about={`Tattoo Consent Form- Page ${currentPage}`}
+    >
     <div className='outer container' style={{
       border: '1px solid #d8d6d6'
 
@@ -174,8 +190,7 @@ function MedicalForm() {
             padding: '20px 40px',
             borderRadius: '12px',
           }}>
-            <h2>Your Popup Content</h2>
-            <p>Do you want to update your medical history?</p>
+            <h3>Do you want to update your medical history?</h3>
 
             {/* Dropdown menu */}
             <label>Select an option:</label>
@@ -191,17 +206,19 @@ function MedicalForm() {
               ))}
             </select>
 
-            <button onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
+            <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
           </div>
         </div>
       )}
-
+      
+      
+      
       <h1>Tattoo Consent Form- Page {currentPage}</h1>
 
       {currentPage === 1 && (
         <div >
-          <h3>Page 1: Have you ever been tattooed before?</h3>
-          <label style={{ marginRight: '10px' }}>
+          <h3 className="text-black">Page 1: Have you ever been tattooed before?</h3>
+          <label >
             YES
             <input
               type="radio"
@@ -221,7 +238,7 @@ function MedicalForm() {
               onChange={() => handleInputChange('page1', 'no', true)}
             />
           </label>
-          <button onClick={nextPage}>Next</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
         </div>
       )}
 
@@ -230,7 +247,7 @@ function MedicalForm() {
 
       {currentPage === 2 && (
         <div>
-          <h3>Page 2: Are you Pregnant or Nursing?</h3>
+          <h3 className="text-black">Page 2: Are you Pregnant or Nursing?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -269,8 +286,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page2', 'nursing', !formData.page2.nursing)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+        </div>
         </div>
 
       )}
@@ -279,7 +298,7 @@ function MedicalForm() {
 
       {currentPage === 3 && (
         <>
-          <h3>Page 3: Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?</h3>
+          <h3 className="text-black">Page 3: Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -301,8 +320,10 @@ function MedicalForm() {
             />
 
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
           {formData.page3.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -322,7 +343,7 @@ function MedicalForm() {
       {/* Page 4 */}
       {currentPage === 4 && (
         <div>
-          <h3>Page 4: Do you have any medical or skin conditions?</h3>
+          <h3 className="text-black">Page 4: Do you have any medical or skin conditions?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -343,8 +364,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page4', 'no', true)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
           {formData.page4.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -364,7 +387,7 @@ function MedicalForm() {
       {/* Page 5 */}
       {currentPage === 5 && (
         <div>
-          <h3>Page 5: Do you have any communicable diseases?</h3>
+          <h3 className="text-black">Page 5: Do you have any communicable diseases?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -385,8 +408,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page5', 'no', true)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
           {formData.page5.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -406,7 +431,7 @@ function MedicalForm() {
       {/* Page 6 */}
       {currentPage === 6 && (
         <div>
-          <h3>Page 6: Are you under the influence of alcohol or drugs, prescribed or otherwise?</h3>
+          <h3 className="text-black">Page 6: Are you under the influence of alcohol or drugs, prescribed or otherwise?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -427,8 +452,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page6', 'no', true)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
           {formData.page6.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -448,7 +475,7 @@ function MedicalForm() {
       {/* Page 7 */}
       {currentPage === 7 && (
         <div>
-          <h3>Page 7: Do you have any allergies?</h3>
+          <h3 className="text-black">Page 7: Do you have any allergies?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -469,8 +496,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page7', 'no', true)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={nextPage}>Next</button>
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
           {formData.page7.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -490,7 +519,7 @@ function MedicalForm() {
       {/* Page 8 */}
       {currentPage === 8 && (
         <div>
-          <h3>Page 8: Do you have a heart condition, epilepsy, or diabetes?</h3>
+          <h3 className="text-black">Page 8: Do you have a heart condition, epilepsy, or diabetes?</h3>
           <label style={{ marginRight: '10px' }}>
             YES
             <input
@@ -511,9 +540,10 @@ function MedicalForm() {
               onChange={() => handleInputChange('page8', 'no', true)}
             />
           </label>
-          <button onClick={prevPage}>Previous</button>
-          <button onClick={() => navigate('/emergency-contact')}>Next</button>
-
+          <div>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"  onClick={() => navigate('/emergency-contact')}>Next</button>
+           </div>
           {formData.page8.yes && (
             <div>
               <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
@@ -528,8 +558,9 @@ function MedicalForm() {
           )}
         </div>
       )}
-
     </div>
+    </GeneralLayout>
+     
   )
 }
 export default MedicalForm;

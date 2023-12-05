@@ -7,6 +7,7 @@ import Navigation from '../navigation/Navigation';
 
 
 function ArmDashboard() {
+  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
@@ -153,6 +154,7 @@ export default ArmDashboard
         </div>
       </div>  
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div>
    */}

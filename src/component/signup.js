@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [usertype,setusertype]=useState('admin');
@@ -53,6 +54,7 @@ function SignUp() {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.userData.minor)
           sessionStorage.setItem('token', responseData.token);
+          sessionStorage.setItem('progress_bar',progress);
           navigate("/AppointmentList");
 
         }
@@ -62,6 +64,7 @@ function SignUp() {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.userData.minor)
         sessionStorage.setItem('token', responseData.token);
+        sessionStorage.setItem('progress_bar',progress)
         navigate("/dashboard");
         }
         

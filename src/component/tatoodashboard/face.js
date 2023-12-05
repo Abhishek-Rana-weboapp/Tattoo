@@ -6,6 +6,7 @@ import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 
 function FaceDashboard() {
+  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
@@ -159,5 +160,6 @@ export default FaceDashboard
 
 
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div> */}

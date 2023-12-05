@@ -1,8 +1,11 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
+import ProgressBar from './ProgressBar';
+import Title from '../assets/Title.png';
 
 function DoctorContactForm() {
+  var progressValue = 70;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [data, setdata] = useState()
@@ -73,7 +76,8 @@ function DoctorContactForm() {
   };
 
   return (
-    <div className='outer container' style={{ border: '1px solid #d8d6d6' }}>
+    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
+       <img src={Title} className="w-3/5 mb-8" alt="Logo" />
       {showPopup_ && (
         <div className='popup' style={{
           position: 'fixed',
@@ -96,13 +100,13 @@ function DoctorContactForm() {
             padding: '20px 40px',
             borderRadius: '12px',
           }}>
-            <h2>Your Popup Content</h2>
-            <p>Do you want to update your emergency contact?</p>
+           
+            <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
 
             {/* Dropdown menu */}
-            <label>Select an option:</label>
+            <label className="text-3xl font-bold mb-4 text-black">Select an option:</label>
             <select
-              
+              className='bg-black'
               onChange={(e) => handleUpdatedata(e.target.value)}
             >
               <option value="">Select...</option>
@@ -113,15 +117,16 @@ function DoctorContactForm() {
               ))}
             </select>
 
-            <button onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
+            <button className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
           </div>
         </div>
       )} 
-      <h1>Doctor Contact Information</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500">Doctor Contact Information</h1>
+      <form  className="bg-white p-6 rounded-md shadow-md w-4/5 text-black" onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="name"
             value={drformData.name}
@@ -132,6 +137,7 @@ function DoctorContactForm() {
         <div>
           <label>Phone #:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
             name="phone"
             value={drformData.phone}
@@ -142,6 +148,7 @@ function DoctorContactForm() {
         <div>
           <label>City:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="city"
             value={drformData.city}
@@ -152,6 +159,7 @@ function DoctorContactForm() {
         <div>
           <label>State:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="state"
             value={drformData.state}
@@ -183,8 +191,12 @@ function DoctorContactForm() {
           </div>
         )}
 
-        <button type="submit">Submit</button>
+        <button className='yellowButton py-2 px-8 rounded-3xl font-bold' type="submit">Submit</button>
       </form>
+      <div className='w-full h-10' >
+       <ProgressBar progress={progressValue} />
+    
+       </div>
     </div>
   );
 }

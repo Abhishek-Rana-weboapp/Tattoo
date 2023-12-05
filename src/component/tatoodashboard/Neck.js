@@ -6,6 +6,7 @@ import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 
 function Neck() {
+  const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
@@ -122,5 +123,6 @@ export default Neck
 
 
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div> */}

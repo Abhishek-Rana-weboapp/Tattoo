@@ -18,10 +18,12 @@ import sixteen from '../assets/16.png'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
-
+import ProgressBar from './ProgressBar';
 
 
 const HairLossPatternSelection = () => {
+  const progressValue = 30;
+
   const navigate = useNavigate();
   const { selectedPattern, setSelectedPattern } = React.useContext(UserContext);
 
@@ -47,6 +49,7 @@ const HairLossPatternSelection = () => {
             <p>Select</p>
           </div>
         ))}
+        <ProgressBar progress={progressValue} />
       </div>
       <button className='smp-btn' onClick={()=>navigate('/medical-form')}>Submit</button>
     </div>

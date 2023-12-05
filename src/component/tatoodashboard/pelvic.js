@@ -7,6 +7,7 @@ import Navigation from '../navigation/Navigation';
 
 
 function Pelvic() {
+  const progressValue = 30;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()

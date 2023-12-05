@@ -7,7 +7,7 @@ import CustomButton from '../buttons/CustomButton';
 
 
 function FootDashboard() {
-
+  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected , setSelected] = useState()
@@ -110,7 +110,7 @@ export default FootDashboard
         </div>
       
     
-
+        <ProgressBar progress={progressValue} />
       </div>
 
       </div>

@@ -7,7 +7,7 @@ import CustomButton from '../buttons/CustomButton';
 
 
 function LegDashboard() {
-
+  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
     const [selected, setSelected] = useState()

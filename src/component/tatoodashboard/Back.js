@@ -8,6 +8,7 @@ import Navigation from '../navigation/Navigation';
 
 
 function Back() {
+  const progressValue = 30;
   const navigate = useNavigate();
   const [showOtherField, setShowOtherField] = useState(false);
   const [otherFieldValue, setOtherFieldValue] = useState('');

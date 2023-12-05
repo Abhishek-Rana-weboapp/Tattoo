@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Tattoo from '../assets/tattoo.png'
 import microblading from '../assets/microblading.png'
 import piercings from '../assets/piercings.png'
@@ -16,11 +16,15 @@ import removal_gold from "../assets/removal_gold.png"
 import piercings_gold from "../assets/piercings_gold.png"
 import tattoo_gold from "../assets/tattoo_gold.png"
 
+
+
 function Dashboard() {
+
+
   const navigate = useNavigate();
   const {user,setUser} = React.useContext(UserContext)
   const userObject = user || {};
-
+  
 
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...userObject,selectedTattooType: selectedType });
@@ -75,6 +79,7 @@ function Dashboard() {
   return (
     <div className='w-3/4 h-full flex flex-col gap-4 justify-center items-center'
     >
+      
         <img src={Title} className='w-3/5'></img>
         <div className="grid grid-cols-2 gap-x-10 gap-y-10 w-full">
           {
@@ -82,7 +87,10 @@ function Dashboard() {
               return <DisplayCard key={index} data={menu} name={menu.name} type={menu.type} link={menu.link} onClick={handleTattooTypeSelect} selectedType={user.selectedTattooType} src={menu.src} />
             })
           }
+          
         </div> 
+        
+       
     </div>
         );
 }

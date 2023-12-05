@@ -191,6 +191,7 @@ export default TattooDashboard;
       </div>
 
       </div>
+      <ProgressBar progress={progressValue} />
       </div>
   </div>
    */
