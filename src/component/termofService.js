@@ -9,7 +9,7 @@ import Title from '../assets/Title.png';
 function TermsOfService() {
   // State and initialization
   const [progressValue, setProgressValue] = useState(90);
-  const [progressValue_, setProgressValue_] = useState(33.3333);
+  const [progressValue_, setProgressValue_] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
@@ -46,7 +46,7 @@ function TermsOfService() {
   // Navigate to the next page
   const nextPage = () => {
     if (currentPage < totalPages) {
-      setProgressValue_(progressValue_ + 13.333);
+      setProgressValue_(progressValue_ + 1);
       setCurrentPage(currentPage + 1);
     } else if (currentPage === 3) {
       navigate('/verify');
@@ -56,14 +56,14 @@ function TermsOfService() {
   // Navigate to the previous page
   const prevPage = () => {
     if (currentPage > 1) {
-      setProgressValue_(progressValue_ - 13.333);
+      setProgressValue_(progressValue_ - 1);
       setCurrentPage(currentPage - 1);
     }
   };
 
   // Return the JSX structure
   return (
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} about="Terms of Service">
+    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={3} about="Terms of Service">
       <p className="text-white">{pageContents[currentPage - 1]}</p>
       <label className="block mt-4 text-white">
         Initials:

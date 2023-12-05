@@ -1,26 +1,57 @@
-// ProgressBar.js
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ProgressBar = ({ progress }) => {
+const ProgressBar = ({ progress, count }) => {
+  const totalSteps = count; // Set your static total steps here
+  const [markers, setMarkers] = useState([]);
+  console.log("currentvalue===", progress)
   useEffect(() => {
-    // You can use the 'progress' value here as needed
-    console.log('Progress value:', progress);
-  }, [progress]);
+    const generateMarkers = () => {
+      const newMarkers = [];
+      for (let i = 1; i <= totalSteps; i++) {
+        newMarkers.push(
+          <>
+            <div
+              key={i}
+              style={{
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                backgroundColor: i <= progress ? '#FFA500' : '#ccc',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '0 5px',
+                color: i <= progress ? '#fff' : '#000',
+                fontWeight: 'bold',
+                border: '2px solid #ccc',
+              }}
+            >
+              {i}
+            </div>
+            {i < totalSteps && i < progress && (
+              <div
+                key={`line-${i}`}
+                style={{
+                  width: '30px',
+                  height: '2px',
+                  backgroundColor: '#FFA500',
+                  margin: '0 0 0 5px', // Adjusted margin to make the line touch the circle
+                }}
+              ></div>
+            )}
+          </>
+        );
+      }
+      setMarkers(newMarkers);
+    };
+
+    generateMarkers();
+  }, [progress, totalSteps]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px',width: "100%" }}>
-    <div style={{ width: '50%', height: '12px', border: '1px solid #fff', borderRadius: '6px', overflow: 'hidden' }}>
-      <div
-        style={{
-          width: `${progress}%`,
-          height: '100%',
-          backgroundColor: '#FFA500',
-          transition: 'width 1s ease-in-out',
-          borderRadius: '5px', // Adjusted border radius to fit inside the container border
-        }}
-      ></div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px', width: '100%' }}>
+      {markers}
     </div>
-  </div>
   );
 };
 

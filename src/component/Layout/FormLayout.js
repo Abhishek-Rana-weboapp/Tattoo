@@ -3,7 +3,9 @@ import React from 'react';
 import ProgressBar from '../ProgressBar';
 import Title from '../../assets/Title.png';
 
-export default function GeneralLayout({ children, title, progressValue, progressValue_, about }) {
+export default function GeneralLayout({ children, title, progressValue, progressValue_,progressValue_count_, about }) {
+
+  console.log("bar===",progressValue,progressValue_)
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <img src={Title} className="w-3/5 mb-8" alt="Logo" />
@@ -13,8 +15,8 @@ export default function GeneralLayout({ children, title, progressValue, progress
         {children}
       </div>
       <div className="w-full h-10 mt-4">
-        <ProgressBar progress={progressValue_} />
-        <ProgressBar progress={progressValue} />
+        <ProgressBar progress={progressValue_} count={progressValue_count_} />
+        {/* <ProgressBar progress={progressValue} count={8}/> */}
       </div>
     </div>
   );

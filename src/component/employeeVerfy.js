@@ -100,7 +100,7 @@ const IDVerificationComponent = () => {
 
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       <img src={Title} className="w-3/5 mb-8" alt="Logo" />
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>Employee ID Verification</h1>
+      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> ID Verification</h1>
 
       {idPhoto && (
         <img
@@ -152,8 +152,7 @@ const IDVerificationComponent = () => {
         Submit
       </button>
       <div className='w-full h-10' >
-       <ProgressBar progress={progressValue} />
-       {progressValue}
+       
        </div>
     </div>
   );
