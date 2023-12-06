@@ -8,8 +8,8 @@ import ConsentFormLayout from './Layout/FormLayout';
 
 function ConsentForm() {
 
-  var progressValue = 80;
-  const[progressValue_,setprogressValue_]=useState(12.5)
+  var progressValue = 5;
+  const[progressValue_,setprogressValue_]=useState(1)
 
   const navigate = useNavigate();
   const { initials, setInitials } = React.useContext(UserContext);
@@ -42,7 +42,7 @@ function ConsentForm() {
       if (!initials[currentPage]) {
         alert('Please provide your initials before moving to the next question.');
       } else {
-        setprogressValue_(progressValue_+7.6923)
+        setprogressValue_(progressValue_+1)
         setCurrentPage(currentPage + 1);
       }
     } else if (currentPage === 13) {
@@ -52,13 +52,13 @@ function ConsentForm() {
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setprogressValue_(progressValue_-7.6923)
+      setprogressValue_(progressValue_-1)
       setCurrentPage(currentPage - 1);
     }
   };
 
   return (
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} about="Consent form">
+    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} about="Consent form">
       <p className="text-white">{statements[currentPage - 1]}</p>
       <label className="block mt-4 text-white">
         Initials:{' '}
