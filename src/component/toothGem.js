@@ -36,7 +36,7 @@ const ToothGems = () => {
       });
   
       if (response.ok) {
-        //navigate('/medical-form');
+        navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);
       }
