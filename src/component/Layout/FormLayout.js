@@ -5,8 +5,7 @@ import Title from '../../assets/Title.png';
 import { useNavigate } from "react-router-dom";
 
 export default function GeneralLayout({ children, title, progressValue, progressValue_,progressValue_count_, about }) {
-
-  console.log("bar===",progressValue,progressValue_)
+const navigate = useNavigate()
   return (
     <div className="w-full h-full flex flex-col items-center  gap-3">
       <img src={Title} className="w-2/5 mt-5" onClick={()=>navigate("/dashboard")} alt="Logo" />
