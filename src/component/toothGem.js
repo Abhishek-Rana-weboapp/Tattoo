@@ -36,7 +36,7 @@ const ToothGems = () => {
       });
   
       if (response.ok) {
-        //navigate('/medical-form');
+        navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);
       }
@@ -74,14 +74,7 @@ const ToothGems = () => {
 
   return (
     <div>
-      {selectedTeeth.length > 0 && (
-        <p>
-          Selected Teeth:{' '}
-          {selectedTeeth.map((tooth, index) => (
-            <span key={index}>{tooth.label}, </span>
-          ))}
-        </p>
-      )}
+      
 
       <canvas
         ref={canvasRef}
