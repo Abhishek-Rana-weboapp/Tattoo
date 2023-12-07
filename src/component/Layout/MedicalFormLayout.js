@@ -4,7 +4,7 @@ import ProgressBar from '../ProgressBar';
 import Title from '../../assets/Title.png';
 import { useNavigate } from "react-router-dom";
 
-export default function MedicalFormLayout({ children, title, progressValue, progressValue_, about }) {
+export default function MedicalFormLayout({ children, title, progressValue, progressValue_,progressValue_count_,about }) {
 
     const navigate = useNavigate()
   return (
@@ -15,6 +15,9 @@ export default function MedicalFormLayout({ children, title, progressValue, prog
       <div className="w-full bg-gray-800 rounded-md p-6">
         {children}
       </div>
+  
+        <ProgressBar progress={progressValue_} count={progressValue_count_} />
+        {/* <ProgressBar progress={progressValue} count={8}/> */}
      
     </div>
   );

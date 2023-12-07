@@ -77,7 +77,7 @@ function EmergencyContactForm() {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           padding: '20px',
-          backdropFilter: 'blur(6px)',
+          backdropFilter: 'blur(15px)',
           width: '100%',
           height: '100vh',
           display: 'flex',
@@ -85,7 +85,7 @@ function EmergencyContactForm() {
           justifyContent: 'center',
         }}>
           <div style={{
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             width: '50%',
             minHeight: '200px',
             boxShadow: '0 0 6px rgba(0,0,0,0.1)',
