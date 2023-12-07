@@ -74,14 +74,7 @@ const ToothGems = () => {
 
   return (
     <div>
-      {selectedTeeth.length > 0 && (
-        <p>
-          Selected Teeth:{' '}
-          {selectedTeeth.map((tooth, index) => (
-            <span key={index}>{tooth.label}, </span>
-          ))}
-        </p>
-      )}
+      
 
       <canvas
         ref={canvasRef}
