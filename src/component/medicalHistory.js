@@ -5,6 +5,7 @@ import ProgressBar from './ProgressBar';
 import GeneralLayout from './Layout/FormLayout';
 import { isCursorAtStart } from '@testing-library/user-event/dist/utils';
 import MedicalFormLayout from './Layout/MedicalFormLayout';
+import Modal from './modal/Modal';
 
 function MedicalForm() {
 
@@ -16,17 +17,16 @@ function MedicalForm() {
   const { formData, setFormData } = useContext(UserContext)
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
-  const [showPopup_, setShowPopup_] = useState(false);
+  const [showPopup_, setShowPopup_] = useState(true);
 
-  const [showEmergencyContactPopup, setShowEmergencyContactPopup] = useState(false);
+  const [showEmergencyContactPopup, setShowEmergencyContactPopup] = useState(true);
 
 
-  const options = ['yes', 'No',];
+  const options = ['Yes', 'No',];
   const [updateEmergencyContact, setUpdateEmergencyContact] = useState(false);
   const [data, setdata] = useState()
   const [isUpdatePopupOpen, setUpdatePopupOpen] = useState(false);
 
-console.log(window.performance.navigation)
 
 
   const fetchData = async () => {
@@ -40,7 +40,7 @@ console.log(window.performance.navigation)
         //console.log("have medical history :",data.data[data.data.length-1])    
         setdata(data.medicalhistory)
         setShowPopup_(true);
-      }
+      } 
     } catch (error) {
       console.error('Error fetching previous medical history:', error);
     }
@@ -51,26 +51,22 @@ console.log(window.performance.navigation)
   }, [])
 
   const handleUpdatedata = (value) => {
-    console.log("value===",value)
-    //console.log("medical data===",data.tattooedBefore)
-    
-
     if (value === 'No') {
       setFormData({
-        'page1':data.tattooedBefore,
-        'page2': data.pregnantOrNursing,
-        'page3': data.hemophiliac,
-        'page4': data.medicalCondition,
-        'page5': data.communicableDiseases,
-        'page6': data.alcohol,
-        'page7': data.allergies,
-        'page8': data.heartCondition
-
+        'page1':data?.tattooedBefore,
+        'page2': data?.pregnantOrNursing,
+        'page3': data?.hemophiliac,
+        'page4': data?.medicalCondition,
+        'page5': data?.communicableDiseases,
+        'page6': data?.alcohol,
+        'page7': data?.allergies,
+        'page8': data?.heartCondition
       })
-      console.log("update data====",formData)
-      navigate('/emergency-contact')
-
+      navigate("/emergency-contact")
     }
+      if(value === "Yes"){
+        setShowPopup_(!showPopup_)
+      } 
   }
 
 
@@ -185,7 +181,7 @@ const handleCheckBoxes = (e , page)=>{
       progressValue_={progressValue_}
     >
    
-      {showEmergencyContactPopup && (
+      {/* {showEmergencyContactPopup && (
         <div className="popup text-2xl uppercase text-white"  
           style={{top: "50%",
           left: "50%",
@@ -199,12 +195,51 @@ const handleCheckBoxes = (e , page)=>{
           justifyContent: "center"
         }}>
           <h2>Do You Need to Update Your Emergency Contact?</h2>
+          <div className='flex justify-between'>
           <button onClick={() => navigate('/emergency-contact')}>Yes</button>
           <button onClick={() => navigate('/doctor-info')}>No</button>
+          </div>
         </div>
-      )}
+      )} */}
+      {/* {
+     showEmergencyContactPopup &&
+        <Modal>
+      <h2>Do You Need to Update Your Emergency Contact?</h2>
+          <div className='flex gap-5'>
+          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => navigate('/emergency-contact')}>Yes</button>
+          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => {
+            setShowEmergencyContactPopup(!showEmergencyContactPopup)
+            setShowPopup_(!showPopup_)
+            }}>No</button>
+          </div>
+      </Modal>
+      } */}
+      {
+        showPopup_ && <Modal>
+          <h3>Do you want to update your medical history?</h3>
+
+{/* // Dropdown menu */}
+<div className='flex gap-1 items-center'>
+<label>Select an option:</label>
+<select
+  className='rounded p-2 border-1 border-slate-400'
+  onChange={(e) => handleUpdatedata(e.target.value)}
+>
+  <option value="">Select...</option>
+  {options.map((option, index) => (
+    <option key={index} value={option}>
+      {option}
+    </option>
+  ))}
+</select>
+  </div>
+
+<button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
+
+        </Modal>
+      }
      
-      {showPopup_ && (
+      {/* {showPopup_ && (
         <div  className='popup text-2xl uppercase text-white'  
         style={{ top: '50%',
           left: '50%',
@@ -228,7 +263,7 @@ const handleCheckBoxes = (e , page)=>{
             <h3>Do you want to update your medical history?</h3>
 
             {/* // Dropdown menu */}
-           <label>Select an option:</label>
+           {/* <label>Select an option:</label>
             <select
               
               onChange={(e) => handleUpdatedata(e.target.value)}
@@ -244,8 +279,7 @@ const handleCheckBoxes = (e , page)=>{
             <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
           </div>
         </div>
-      )} 
-      
+      )}  */}
       
 
       {currentPage === 1 && (

@@ -55,6 +55,7 @@ function ConsentForm() {
       setprogressValue_(progressValue_-1)
       setCurrentPage(currentPage - 1);
     }
+    if(currentPage === 1) navigate(-1)
   };
 
   return (

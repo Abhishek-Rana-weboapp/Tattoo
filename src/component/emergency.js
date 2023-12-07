@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
+import Modal from './modal/Modal';
 function EmergencyContactForm() {
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { emerformData, setemerFormData } = React.useContext(UserContext);
   const [data, setdata] = useState()
-  const [showPopup_, setShowPopup_] = useState(false);
+  const [showPopup_, setShowPopup_] = useState(true);
   const options = ['yes', 'No',];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,37 +71,32 @@ function EmergencyContactForm() {
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       <img src={Title} className="w-3/5 mb-8" alt="Logo" />
+      {/* {
+     showPopup_ &&
+        <Modal>
+      <h2>Do You Need to Update Your Emergency Contact?</h2>
+          <div className='flex gap-5'>
+          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => navigate('/emergency-contact')}>Yes</button>
+          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => {
+            setShowEmergencyContactPopup(!showEmergencyContactPopup)
+            setShowPopup_(!showPopup_)
+            }}>No</button>
+          </div>
+      </Modal>
+      } */}
       {showPopup_ && (
-        <div className='popup' style={{
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          padding: '20px',
-          backdropFilter: 'blur(6px)',
-          width: '100%',
-          height: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <div style={{
-            backgroundColor: 'white',
-            width: '50%',
-            minHeight: '200px',
-            boxShadow: '0 0 6px rgba(0,0,0,0.1)',
-            padding: '20px 40px',
-            borderRadius: '12px',
-          }}>
+        <Modal>
            
             <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contect?</p>
 
             {/* Dropdown menu */}
-            <label className="text-3xl font-bold mb-4 text-black">Select an option:</label>
+            <div className='flex gap-2'>
+
+            <label className="text-xl font-bold text-black">Select an option:</label>
             <select
-              className='bg-black'
+              className='bg-black p-2 rounded-lg'
               onChange={(e) => handleUpdatedata(e.target.value)}
-            >
+              >
               <option value="">Select...</option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
@@ -108,10 +104,11 @@ function EmergencyContactForm() {
                 </option>
               ))}
             </select>
+              </div>
 
             <button className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
-          </div>
-        </div>
+
+        </Modal>
       )}
       <h1 className="text-3xl font-bold mb-4 text-yellow-500">Emergency Contact Information</h1>
       <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black" onSubmit={handleSubmit}>
