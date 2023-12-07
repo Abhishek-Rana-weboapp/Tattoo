@@ -78,7 +78,8 @@ function Login() {
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
     >    
-    <img src={Title_logo} className=' w-1/5'></img>
+    <img src={Title_logo} className=' w-1/6'></img>
+    <h1 className='text-white font-bold'>LOGIN</h1>
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
@@ -87,7 +88,7 @@ function Login() {
               <PiUserCircleFill size={30}/>
               <input
               type="email"
-              className="flex-1 focus:outline-none p-2"
+              className="flex-1 focus:outline-none bg-white p-2"
               id="email"
               placeholder="Email"
               value={email}
@@ -100,7 +101,7 @@ function Login() {
               <CiLock size={30}/>
               <input
               type="password"
-              className="flex-1 focus:outline-none bg-white"
+              className="flex-1 focus:outline-none bg-white p-2"
               id="password"
               placeholder="Password"
               value={password}

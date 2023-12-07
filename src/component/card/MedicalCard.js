@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function MedicalCard({heading , type}) {
 
-    const [selected , setSelected]
 
   return (
     <div className='w-2/3 flex flex-col items-center '>
@@ -18,8 +17,9 @@ export default function MedicalCard({heading , type}) {
             </div>
         }
         {
-            type === "inputField"  && <div>
+            type === "inputField"  && <div className='flex flex-col gap-2'>
                 <p className='text-white'>IF YES , PLEASE EXPLAIN </p>
+                <textarea className='w-2/4 h-32'></textarea>
             </div>
         }
       </div>

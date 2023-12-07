@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import Title_logo from "../assets/Title_logo.png"
+
 
 function SignUp() {
   const progress=5;
@@ -23,7 +25,7 @@ function SignUp() {
       password: password,
       lang: selectedLanguage,
       minor: minor,
-      usertype:usertype,
+      usertype:"user",
     };
 
     const config = {
@@ -112,167 +114,225 @@ function SignUp() {
     console.log(navigator.language)    
 
   return (
-    <div
-      className="container h-100"
-      style={{
-        backgroundColor: '#f5f5f5',
-        display: 'flex',
-        flexDirection:'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-      }}
-    >
-    <div className='mb-5'>
-    <h3>Signup Form</h3>
-      </div>
+    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
+    >    
+    <img src={Title_logo} className=' w-1/6'></img>
+    <h1 className='text-white font-bold uppercase'>Signup</h1>
       <div className="col-md-6">
-        <form onSubmit={handleFormSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email address
-            </label>
-            <input
+        <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
+          <div className='flex flex-col itmes-center gap-3'>
+
+            <div className='flex gap-3 bg-white p-2 rounded-lg items-center'>
+              {/* <PiUserCircleFill size={30}/> */}
+              <input
               type="email"
-              className="form-control"
+              className="flex-1 focus:outline-none bg-white p-1"
               id="email"
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-          </div>
+              {/* <input className='flex-1' placeholder='Email'/> */}
+            </div>
 
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
+            <div className='flex gap-3 bg-white p-2 rounded-lg items-center'>
+              {/* <CiLock size={30}/> */}
+              <input
               type="password"
-              className="form-control"
+              className="flex-1 focus:outline-none bg-white p-1"
               id="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="usertype" className="form-label">
-              usertype
-            </label>
-            <select
-              id="usertype"
-              className="form-select"
-              value={usertype} 
-              onChange={(e) =>setusertype(e.target.value)}
-            >
-              <option value="admin">Admin</option>
-              <option value="user">User</option>
-            </select>
-
-          </div>
-          <div className="mb-3">
-            <label htmlFor="language" className="form-label">
-                Preferred Language
-            </label>
+            </div>
             <select
               id="language"
-              className="form-select"
+              className="form-select p-2 rounded-lg"
               value={selectedLanguage} // Set the selected value
               onChange={(e) => setSelectedLanguage(e.target.value)} // Update state on change
             >
               <option value="english">English</option>
               <option value="spanish">Spanish</option>
             </select>
-
+            
+   <div className='flex gap-2'>
+    <label className='text-white'>Are you a minor?</label>
+     <input
+       type="radio"
+       id="minor-true"
+       name="minor"
+       value="true"
+       checked={minor === 'true'}
+       onChange={() => setMinor('true')}
+     />
+     <label className='text-white' htmlFor="minor-true">Yes</label>
+     <input
+       type="radio"
+       id="minor-false"
+       name="minor"
+       value="false"
+       checked={minor === 'false'}
+       onChange={() => setMinor('false')}
+       />
+     <label className='text-white' htmlFor="minor-false">No</label>
+       </div>
+         
+          </div>
+          <div className='flex gap-2 justify-end'>
+            {/* <div className='flex gap-2 text-white'>
+              <input type='checkbox'/>
+              Remember me?
+            </div> */}
+            <div className='flex gap-2'>
+            <NavLink to="/" className={" no-underline w-max text-white hover:text-yellow-500"}>Already have an account? Log in</NavLink>
+        {/* <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
+        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink> */}
             </div>
-<div className="mb-3">
-  <label>Are you a minor?</label>
-  <div>
-    <input
-      type="radio"
-      id="minor-true"
-      name="minor"
-      value="true"
-      checked={minor === 'true'}
-      onChange={() => setMinor('true')}
-    />
-    <label htmlFor="minor-true">Yes</label>
-  </div>
-  <div>
-    <input
-      type="radio"
-      id="minor-false"
-      name="minor"
-      value="false"
-      checked={minor === 'false'}
-      onChange={() => setMinor('false')}
-    />
-    <label htmlFor="minor-false">No</label>
-  </div>
-</div>
-
-          <button type="submit" className="btn btn-primary">
-            Sign Up
+          </div>
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold '>
+            Signup
           </button>
-
-          <Link to="/">Already have an account? Log in</Link>
+          
         </form>
+        {/* {responseMessage && (
+          <div className="alert alert-info mt-3">
+            {responseMessage}
+          </div>
+        )} */}
       </div>
+    </div>
+//     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
+//     > 
+//       <img src={Title_logo} className=' w-40'></img>
+//     <div className='mb-5'>
+//     <h1 className='text-white font-bold uppercase'>Signup</h1>
+//       </div>
+//       <div className="col-md-6">
+//         <form onSubmit={handleFormSubmit}>
+//           <div className='flex flex-col gap-3 items-center'>
+         
 
-      <button type='submit' className="btn btn-primary" onClick={() => setshowPopup(true)}>
-        Invite Admin
-      </button>
+//             <input
+//               type="email"
+//               className=" focus:outline-none bg-white p-2"
+//               id="email"
+//               placeholder="Enter email"
+//               value={email}
+//               onChange={(e) => setEmail(e.target.value)}
+//               />
+
+//             <input
+//               type="password"
+//               className="form-control"
+//               id="password"
+//               placeholder="Password"
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//             />
+
+//             {/* <select
+//               id="usertype"
+//               className="form-select"
+//               value={usertype} 
+//               onChange={(e) =>setusertype(e.target.value)}
+//             >
+//               <option value="admin">Admin</option>
+//               <option value="user">User</option>
+//             </select> */}
+
+//             <select
+//               id="language"
+//               className="form-select"
+//               value={selectedLanguage} // Set the selected value
+//               onChange={(e) => setSelectedLanguage(e.target.value)} // Update state on change
+//             >
+//               <option value="english">English</option>
+//               <option value="spanish">Spanish</option>
+//             </select>
+
+// <div className='flex gap-2'>
+//   <label>Are you a minor?</label>
+//     <input
+//       type="radio"
+//       id="minor-true"
+//       name="minor"
+//       value="true"
+//       checked={minor === 'true'}
+//       onChange={() => setMinor('true')}
+//     />
+//     <label htmlFor="minor-true">Yes</label>
+
+//     <input
+//       type="radio"
+//       id="minor-false"
+//       name="minor"
+//       value="false"
+//       checked={minor === 'false'}
+//       onChange={() => setMinor('false')}
+//       />
+//     <label htmlFor="minor-false">No</label>
+//       </div>
+ 
+
+//           <button type="submit" className="yellowButton py-2 px-8 rounded-3xl font-bold ">
+//             Sign Up
+//           </button>
+
+//           <Link to="/">Already have an account? Log in</Link>
+//           </div>
+//         </form>
+//       </div>
       
        
-      {showPopup && (
+//       {showPopup && (
 
-       <div className='popup' style={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        padding: '20px',
-        backdropFilter: 'blur(6px)',
-        width: '60%',  // Increase the width
-        minHeight: '500px',  // Increase the height
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'black',  // Change the background color
-        color: 'white',  // Set text color
-        boxShadow: '0 0 6px rgba(0,0,0,0.1)',
-        borderRadius: '12px',
-      }}
-      >
-        <h2>Invite Admin</h2>
-        <label htmlFor="username" style={{ zIndex: 1001, color: 'white' }}>Username:</label>
-<input
-  type="text"
-  id="email"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
-/>
+//        <div className='popup' style={{
+//         position: 'fixed',
+//         top: '50%',
+//         left: '50%',
+//         transform: 'translate(-50%, -50%)',
+//         padding: '20px',
+//         backdropFilter: 'blur(6px)',
+//         width: '60%',  // Increase the width
+//         minHeight: '500px',  // Increase the height
+//         display: 'flex',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         backgroundColor: 'black',  // Change the background color
+//         color: 'white',  // Set text color
+//         boxShadow: '0 0 6px rgba(0,0,0,0.1)',
+//         borderRadius: '12px',
+//       }}
+//       >
+//         <h2>Invite Admin</h2>
+//         <label htmlFor="username" style={{ zIndex: 1001, color: 'white' }}>Username:</label>
+// <input
+//   type="text"
+//   id="email"
+//   value={email}
+//   onChange={(e) => setEmail(e.target.value)}
+//   style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+// />
 
-<label htmlFor="password" style={{ zIndex: 1001, color: 'white' }}>Password:</label>
-<input
-  type="password"
-  id="password"
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
-/>
+// <label htmlFor="password" style={{ zIndex: 1001, color: 'white' }}>Password:</label>
+// <input
+//   type="password"
+//   id="password"
+//   value={password}
+//   onChange={(e) => setPassword(e.target.value)}
+//   style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+// />
 
-<label htmlFor="email" style={{ zIndex: 1001, color: 'white' }}>Email:</label>
-<input
-  type="email"
-  id="email"
-  value={adminUsername}
-  onChange={(e) => setadminUsername(e.target.value)}
-  style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
-/>
+// <label htmlFor="email" style={{ zIndex: 1001, color: 'white' }}>Email:</label>
+// <input
+//   type="email"
+//   id="email"
+//   value={adminUsername}
+//   onChange={(e) => setadminUsername(e.target.value)}
+//   style={{ zIndex: 1001, color: 'black', backgroundColor: 'white', border: '1px solid #ccc' }}
+// />
   
 
 
@@ -280,18 +340,18 @@ function SignUp() {
 
           
   
-  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-    <button className="btn btn-primary" onClick={handleInviteClick}>
-      Invite
-    </button>
+//   <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+//     <button className="btn btn-primary" onClick={handleInviteClick}>
+//       Invite
+//     </button>
 
-    <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={() => setshowPopup(false)}>
-      Close
-    </button>
-  </div>
-      </div>
-      )}
-    </div>
+//     <button className="btn btn-primary" style={{ marginLeft: '10px' }} onClick={() => setshowPopup(false)}>
+//       Close
+//     </button>
+//   </div>
+//       </div>
+//       )}
+//     </div>
   
   
 
