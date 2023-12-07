@@ -71,7 +71,7 @@ function ArmDashboard() {
 
     return (
       <>
-      <GridLayout>
+      <GridLayout title={"arm"}>
         {
           partButtons.map((button , index)=>{
             return <CustomButton onClick={handlepartLocation} selected={selected} key={index} >{button.name}</CustomButton>

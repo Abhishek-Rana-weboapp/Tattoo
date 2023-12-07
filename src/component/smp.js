@@ -19,6 +19,10 @@ import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
 import ProgressBar from './ProgressBar';
+import SmpCard from './card/SmpCard';
+import GridLayout from './Layout/GridLayout';
+import SixGridLayout from './Layout/SixGridLayout';
+import Navigation from './navigation/Navigation';
 
 
 const HairLossPatternSelection = () => {
@@ -26,6 +30,7 @@ const HairLossPatternSelection = () => {
 
   const navigate = useNavigate();
   const { selectedPattern, setSelectedPattern } = React.useContext(UserContext);
+  const [selected, setSelected] = useState()
 
   const images = [
     one,two,three,four,five,six,seven,eight,nine,ten,eleven,twelve,thrteen,fourteen,fifteen,sixteen
@@ -33,26 +38,47 @@ const HairLossPatternSelection = () => {
 
 
   const handlePatternSelection = (image) => {
-    console.log(image)
-    setSelectedPattern(image);
+    setSelected(image)
   };
+  
+  const handleNext = ()=>{
+    if(selected){
+      setSelectedPattern(selected);
+      navigate("/medical-form")
+    }else{
+      alert("Select an option to proceed")
+    }
+  }
+
+  const handlePrev = ()=>{
+    navigate(-1)
+  }
+
+
 
   return (
-    <div>
-      <h1>Which image most closely resembles your hair loss pattern?</h1>
-      <div className="image-container">
+    // <div>
+    //   <h1>Which image most closely resembles your hair loss pattern?</h1>
+    //   <div className="image-container">
+    <>
+    <SixGridLayout title={"smp"} heading={"Which image most closely resembles your hair loss pattern?"}>
+
         {images.map((image, index) => (
-          <div key={index} className="image-item" style={{
-            border:image==selectedPattern?"1px solid blue":""
-          }}>
-            <img src={image} alt={`Hair Loss Pattern ${index + 1}`} onClick={() => handlePatternSelection(image)} />
-            <p>Select</p>
-          </div>
-        ))}
-        <ProgressBar progress={progressValue} />
-      </div>
-      <button className='smp-btn' onClick={()=>navigate('/medical-form')}>Submit</button>
-    </div>
+          <SmpCard key={index} image={image} onClick={handlePatternSelection} selected={selected}/>
+          // <div key={index} className="image-item" style={{
+            //   border:image==selectedPattern?"1px solid blue":""
+            // }}> 
+            //   <img src={image} alt={`Hair Loss Pattern ${index + 1}`} onClick={() => handlePatternSelection(image)} />
+            //   <p>Select</p>
+            // </div>
+            ))}
+            </SixGridLayout>
+            <Navigation next={handleNext}  prev={handlePrev} />
+            </>
+    //     <ProgressBar progress={progressValue} />
+    //   </div>
+    //   <button className='smp-btn' onClick={()=>navigate('/medical-form')}>Submit</button>
+    // </div>
   );
 };
 

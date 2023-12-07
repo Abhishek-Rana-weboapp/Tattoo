@@ -1,22 +1,70 @@
-import React from 'react'
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from '../context/UserContext';
-import ProgressBar from './ProgressBar';
+import UserContext from "../context/UserContext";
+import ProgressBar from "./ProgressBar";
+import GridLayout from "./Layout/GridLayout";
+import CustomButton from "./buttons/CustomButton";
+import Navigation from "./navigation/Navigation"
 
 function PermanentMakeup() {
-
   const progressValue = 20;
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
+  const [selected, setSelected] = useState();
 
   const handlepartLocation = (bodyPart) => {
-    setUser({ ...user, bodyPart });
-    navigate('/medical-form'); 
+    setSelected(bodyPart);
+  };
 
-  }
-  
-    return (
-      <div className='outer container' style={{
+  const buttons = [
+    {
+      name: "Eyebrows",
+    },
+    {
+      name: "Eyeliner",
+    },
+    {
+      name: "Lips",
+    },
+  ];
+
+  const handleNext = () => {
+    if (selected) {
+      setUser({ ...user, bodyPart: selected });
+      navigate("/medical-form");
+    }else{
+      alert("Please select an option")
+    }
+  };
+
+  const handlePrev = () => {
+    navigate(-1)
+  };
+
+  return (
+    <>
+      <GridLayout title={"permanent makeup"}>
+        {buttons.map((button, index) => {
+          return (
+            <CustomButton
+              key={index}
+              onClick={handlepartLocation}
+              selected={selected}
+            >
+              {button.name}
+            </CustomButton>
+          );
+        })}
+      </GridLayout>
+      <Navigation next={handleNext} prev={handlePrev} />
+    </>
+  );
+}
+
+export default PermanentMakeup;
+
+{
+  /* <div className='outer container' style={{
         border: '1px solid #d8d6d6'
       
       }}>
@@ -28,18 +76,7 @@ function PermanentMakeup() {
         width:'100%',
         border: '3px solid black',
   
-  
-      }}>
-        <h1>Permanent Makeup</h1>
-        <div className='outer-container' style={{
-            display:'flex',
-            justifyContent:'center',
-            flexDirection:'column',
-            alignItems:'center',
-            gap:'30px',
-            marginTop:'55px'
-        }}>
-  
+   
         
         <div className='inner-item' onClick={()=>handlepartLocation('Eyebrows')}>
           <h5>Eyebrows</h5>
@@ -60,10 +97,16 @@ function PermanentMakeup() {
       </div>
 
       </div>
-      
-  
-  
-    );
-  }
-  
-export default PermanentMakeup
+      }}>
+        <h1>Permanent Makeup</h1>
+        <div className='outer-container' style={{
+            display:'flex',
+            justifyContent:'center',
+            flexDirection:'column',
+            alignItems:'center',
+            gap:'30px',
+            marginTop:'55px'
+        }}>
+ 
+       */
+}
