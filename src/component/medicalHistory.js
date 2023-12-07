@@ -10,7 +10,7 @@ import Modal from './modal/Modal';
 function MedicalForm() {
 
   var progressValue = 50;
-  const[progressValue_,setprogressValue_]=useState(12.5)
+  const[progressValue_,setprogressValue_]=useState(1)
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { user, selectedPattern } = useContext(UserContext)
@@ -131,19 +131,19 @@ const handleCheckBoxes = (e , page)=>{
     const currentPageData = formData[`page${currentPage}`];
     if (currentPageData.yes ) {
       if(currentPage === 1 ){
-        setprogressValue_(progressValue_+12.5)
+        setprogressValue_(progressValue_+1)
         setCurrentPage(currentPage + 1);
       }
       if(currentPage === 2){
         if(currentPageData.pregnant || currentPageData.nursing){
-          setprogressValue_(progressValue_+12.5)
+          setprogressValue_(progressValue_+1)
           setCurrentPage(currentPage + 1);
         }else{
           alert("Please Select an option")
         }
       }else if(currentPage !== 1 && currentPage !== 2 ){
         if(currentPageData.explanation){
-          setprogressValue_(progressValue_+12.5)
+          setprogressValue_(progressValue_+1)
           setCurrentPage(currentPage + 1);
           if(currentPage === 8){
             navigate('/emergency-contact')
@@ -153,7 +153,7 @@ const handleCheckBoxes = (e , page)=>{
         }
       }
     } if(currentPageData.no){
-      setprogressValue_(progressValue_+12.5)
+      setprogressValue_(progressValue_+1)
       setCurrentPage(currentPage + 1);
       if(currentPage === 8){
         navigate('/emergency-contact')
@@ -167,7 +167,7 @@ const handleCheckBoxes = (e , page)=>{
 
 
   const prevPage = () => {
-    setprogressValue_(progressValue_-12.5)
+    setprogressValue_(progressValue_-1)
     setCurrentPage(currentPage - 1);
   };
 
@@ -179,6 +179,7 @@ const handleCheckBoxes = (e , page)=>{
       title="Medical history"
       progressValue={progressValue}
       progressValue_={progressValue_}
+      progressValue_count_={8}
     >
    
       {/* {showEmergencyContactPopup && (
@@ -265,7 +266,7 @@ const handleCheckBoxes = (e , page)=>{
             {/* // Dropdown menu */}
            {/* <label>Select an option:</label>
             <select
-              
+              className='bg-black'
               onChange={(e) => handleUpdatedata(e.target.value)}
             >
               <option value="">Select...</option>

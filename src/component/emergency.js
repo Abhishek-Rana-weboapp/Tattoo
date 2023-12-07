@@ -86,8 +86,9 @@ function EmergencyContactForm() {
       } */}
       {showPopup_ && (
         <Modal>
+
            
-            <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contect?</p>
+            <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
 
             {/* Dropdown menu */}
             <div className='flex gap-2'>
