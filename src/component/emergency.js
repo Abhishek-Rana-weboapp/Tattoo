@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
+import Title from '../assets/Title.png';
 function EmergencyContactForm() {
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -67,7 +68,8 @@ function EmergencyContactForm() {
   };
 
   return (
-    <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
+    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
+      <img src={Title} className="w-3/5 mb-8" alt="Logo" />
       {showPopup_ && (
         <div className='popup' style={{
           position: 'fixed',
@@ -90,13 +92,13 @@ function EmergencyContactForm() {
             padding: '20px 40px',
             borderRadius: '12px',
           }}>
-            <h2>Your Popup Content</h2>
-            <p>Do you want to update your emergency contect?</p>
+           
+            <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contect?</p>
 
             {/* Dropdown menu */}
-            <label>Select an option:</label>
+            <label className="text-3xl font-bold mb-4 text-black">Select an option:</label>
             <select
-              
+              className='bg-black'
               onChange={(e) => handleUpdatedata(e.target.value)}
             >
               <option value="">Select...</option>
@@ -107,54 +109,61 @@ function EmergencyContactForm() {
               ))}
             </select>
 
-            <button onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
+            <button className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
           </div>
         </div>
       )}
-      <h1>Emergency Contact Information</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500">Emergency Contact Information</h1>
+      <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black" onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="name"
             value={emerformData.name}
             onChange={handleInputChange}
+            required
           />
         </div>
         <div>
           <label>Phone #:</label>
           <input
+           className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
             name="phone"
             value={emerformData.phone}
             onChange={handleInputChange}
+            required
           />
         </div>
         <div>
           <label>City:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="city"
             value={emerformData.city}
             onChange={handleInputChange}
+            required
           />
         </div>
         <div>
           <label>State:</label>
           <input
+          className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
             name="state"
             value={emerformData.state}
             onChange={handleInputChange}
+            required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button className='yellowButton py-2 px-8 rounded-3xl font-bold' type="submit">Submit</button>
       </form>
       
       <div className='w-full h-10' >
        <ProgressBar progress={progressValue} />
-       {progressValue}
        </div>
     </div>
     

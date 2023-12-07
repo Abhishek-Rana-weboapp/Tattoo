@@ -4,9 +4,9 @@ import ProgressBar from '../ProgressBar';
 import Title from '../../assets/Title.png';
 import { useNavigate } from "react-router-dom";
 
-export default function GeneralLayout({ children, title, progressValue, progressValue_, about }) {
+export default function GeneralLayout({ children, title, progressValue, progressValue_,progressValue_count_, about }) {
 
-  const navigate = useNavigate()
+  console.log("bar===",progressValue,progressValue_)
   return (
     <div className="w-full h-full flex flex-col items-center  gap-3">
       <img src={Title} className="w-2/5 mt-5" onClick={()=>navigate("/dashboard")} alt="Logo" />
@@ -16,8 +16,8 @@ export default function GeneralLayout({ children, title, progressValue, progress
         {children}
       </div>
       <div className="w-full h-10 mt-4">
-        <ProgressBar progress={progressValue_} />
-        <ProgressBar progress={progressValue} />
+        <ProgressBar progress={progressValue_} count={progressValue_count_} />
+        {/* <ProgressBar progress={progressValue} count={8}/> */}
       </div>
     </div>
   );
