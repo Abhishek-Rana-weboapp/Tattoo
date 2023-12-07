@@ -71,6 +71,7 @@ import AppointmentList from './component/AppointmentList';
 import CalculateBilling from './component/billing';
 import SignaturePad from './component/signature';
 import SignaturePad_see from './component/signature_see';
+import JewelleryPiercing from './component/piercingdashboard/jweleryPiercing';
 
 function App() {
   return (
@@ -128,7 +129,7 @@ function App() {
           <Route exact path="/belly-piercing" element={<BellyPiercing />} />
           <Route exact path="/ear-piercing" element={<EarPiercing />} />
           <Route exact path="/facial-piercing" element={<FacialPiercing />} />
-          <Route exact path="/jwelry-piercing" element={<JweleryPiercing />} />
+          <Route exact path="/jewellery-piercing" element={<JewelleryPiercing />} />
           <Route exact path="/nipple-piercing" element={<NipplePiercing />} />
           <Route exact path="/nose-piercing" element={<NosePiercing />} />
           <Route exact path="/oral-piercing" element={<OralPiercing />} />

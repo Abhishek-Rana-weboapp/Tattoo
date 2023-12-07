@@ -5,7 +5,7 @@ import piercings from '../assets/piercings.png'
 import removal from '../assets/removal.png'
 import smp from '../assets/smp.png'
 import tooth from '../assets/tooth.png'
-import { useNavigate ,Link} from "react-router-dom";
+import { useNavigate ,Link, useLocation} from "react-router-dom";
 import UserContext from '../context/UserContext';
 import Title from "../assets/Title.png"
 import DisplayCard from './card/DisplayCard';
@@ -20,8 +20,6 @@ import tattoo_gold from "../assets/tattoo_gold.png"
 
 function Dashboard() {
 
-
-  const navigate = useNavigate();
   const {user,setUser} = React.useContext(UserContext)
   const userObject = user || {};
   
@@ -70,7 +68,7 @@ function Dashboard() {
     {
       name : "REMOVAL",
       type : "removal",
-      link: "/removal",
+      link: "/tattoo",
       src:removal,
       activesrc:removal_gold
     },

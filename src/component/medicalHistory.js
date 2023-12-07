@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
-import { json, useNavigate } from 'react-router-dom';
+import { json, useLocation, useNavigate } from 'react-router-dom';
 import ProgressBar from './ProgressBar';
 import GeneralLayout from './Layout/FormLayout';
+import { isCursorAtStart } from '@testing-library/user-event/dist/utils';
+import MedicalFormLayout from './Layout/MedicalFormLayout';
 
 function MedicalForm() {
 
@@ -23,6 +25,9 @@ function MedicalForm() {
   const [updateEmergencyContact, setUpdateEmergencyContact] = useState(false);
   const [data, setdata] = useState()
   const [isUpdatePopupOpen, setUpdatePopupOpen] = useState(false);
+
+console.log(window.performance.navigation)
+
 
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
@@ -83,41 +88,106 @@ function MedicalForm() {
       [page]: { ...formData[page], [option]: value },
     });
   };
+
+const handleRadioButtons = (e , page)=>{
+  if(e.target.value === "yes"){
+    setFormData({
+      ...formData,
+      [page]: { ...formData[page], yes: true , no : false }
+    });
+  }
+  if(e.target.value === "no"){
+    setFormData({
+      ...formData,
+      [page]: { ...formData[page], yes: false , no : true }
+    });
+    if(Object.keys(formData[page]).includes("explanation")){
+      setFormData({
+        ...formData,
+        [page]: { ...formData[page], yes: false , no : true , explanation: "" }
+      });
+    }
+    if(Object.keys(formData[page]).includes("pregnant" || "nursing")){
+      setFormData({
+        ...formData,
+        [page]: { ...formData[page], yes: false , no : true , pregnant : false , nursing:false }
+      });
+    }
+  }
+}
+
+const handleCheckBoxes = (e , page)=>{
+  if(e.target.value === "pregnant"){
+    setFormData({
+      ...formData,
+      [page]: { ...formData[page],pregnant: true , nursing : false }
+    });
+  }
+  if(e.target.value === "nursing"){
+    setFormData({
+      ...formData,
+      [page]: { ...formData[page],pregnant: false , nursing : true }
+    });
+  }
+}
+
   const nextPage = () => {
     const currentPageData = formData[`page${currentPage}`];
-
-    if (currentPageData.yes || currentPageData.no) {
-
-     setprogressValue_(progressValue_+12.5)
+    if (currentPageData.yes ) {
+      if(currentPage === 1 ){
+        setprogressValue_(progressValue_+12.5)
+        setCurrentPage(currentPage + 1);
+      }
+      if(currentPage === 2){
+        if(currentPageData.pregnant || currentPageData.nursing){
+          setprogressValue_(progressValue_+12.5)
+          setCurrentPage(currentPage + 1);
+        }else{
+          alert("Please Select an option")
+        }
+      }else if(currentPage !== 1 && currentPage !== 2 ){
+        if(currentPageData.explanation){
+          setprogressValue_(progressValue_+12.5)
+          setCurrentPage(currentPage + 1);
+          if(currentPage === 8){
+            navigate('/emergency-contact')
+          }
+        }else{
+          alert("Please enter the explanation")
+        }
+      }
+    } if(currentPageData.no){
+      setprogressValue_(progressValue_+12.5)
       setCurrentPage(currentPage + 1);
-    } else {
+      if(currentPage === 8){
+        navigate('/emergency-contact')
+      }
+    }else if(!currentPageData.no && !currentPageData.yes) {
       // Show an alert message if the user doesn't select a choice
       alert('Please choose an option before moving to the next question.');
     }
+
   };
+
 
   const prevPage = () => {
     setprogressValue_(progressValue_-12.5)
     setCurrentPage(currentPage - 1);
   };
 
+  console.log(formData)
+
   return (
 
-    <GeneralLayout
-      title="Tattoo Consent Form"
+    <MedicalFormLayout
+      title="Medical history"
       progressValue={progressValue}
       progressValue_={progressValue_}
-      about={`Tattoo Consent Form- Page ${currentPage}`}
     >
-    <div className='outer container' style={{
-      border: '1px solid #d8d6d6'
-
-    }}>
+   
       {showEmergencyContactPopup && (
-        <div className="popup" style={{
-
-          position: "fixed",
-          top: "50%",
+        <div className="popup text-2xl uppercase text-white"  
+          style={{top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           padding: "20px",
@@ -127,51 +197,16 @@ function MedicalForm() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
-
-        }
-
-        }>
+        }}>
           <h2>Do You Need to Update Your Emergency Contact?</h2>
           <button onClick={() => navigate('/emergency-contact')}>Yes</button>
           <button onClick={() => navigate('/doctor-info')}>No</button>
         </div>
       )}
-      {showPopup && (
-        <div className="popup" style={{
-
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          padding: "20px",
-          backdropFilter: "blur(6px)",
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center"
-
-        }
-
-        }>
-          <div style={{
-            backgroundColor: "white",
-            width: "50%",
-            minHeight: "200px",
-            boxShadow: "0 0 6px rgba(0,0,0,0.1)",
-            padding: "20px 40px",
-            borderRadius: "12px"
-          }}>
-            <h2>Your Popup Content</h2>
-            <p>You selected {user.selectedTattooType} {selectedPattern}{user.piercingLocation} {user.selectedPattern} at {user.tattooLocation} {user.bodyPart} side.</p>
-            <button onClick={() => setShowPopup(false)}>Close Popup</button>
-          </div>
-        </div>
-      )}
+     
       {showPopup_ && (
-        <div className='popup' style={{
-          position: 'fixed',
-          top: '50%',
+        <div  className='popup text-2xl uppercase text-white'  
+        style={{ top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
           padding: '20px',
@@ -182,8 +217,8 @@ function MedicalForm() {
           alignItems: 'center',
           justifyContent: 'center',
         }}>
-          <div style={{
-            backgroundColor: 'white',
+          <div styl className='text-2xl uppercase text-white'            
+           style={{ 
             width: '50%',
             minHeight: '200px',
             boxShadow: '0 0 6px rgba(0,0,0,0.1)',
@@ -192,8 +227,8 @@ function MedicalForm() {
           }}>
             <h3>Do you want to update your medical history?</h3>
 
-            {/* Dropdown menu */}
-            <label>Select an option:</label>
+            {/* // Dropdown menu */}
+           <label>Select an option:</label>
             <select
               
               onChange={(e) => handleUpdatedata(e.target.value)}
@@ -209,36 +244,46 @@ function MedicalForm() {
             <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
           </div>
         </div>
-      )}
+      )} 
       
       
-      
-      <h1>Tattoo Consent Form- Page {currentPage}</h1>
 
       {currentPage === 1 && (
-        <div >
-          <h3 className="text-black">Page 1: Have you ever been tattooed before?</h3>
-          <label >
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+          <h3  className='uppercase text-white'><span className='underline'>Q1</span> : Have you ever been tattooed before?</h3>
+          <div className='flex gap-4'>
+            <div className='flex gap-2 items-center'>
+              
+          <label  className='text-2xl uppercase text-white' >
             YES
+            </label>
             <input
               type="radio"
               name="page1"
               value="yes"
               checked={formData.page1.yes}
               onChange={() => handleInputChange('page1', 'yes', true)}
-            />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+              />
+              </div>
+              <div className='flex gap-2 items-center'>
+
+          <label className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page1"
               value="no"
               checked={formData.page1.no}
               onChange={() => handleInputChange('page1', 'no', true)}
-            />
-          </label>
+              />
+              </div>
+              </div>
+              <ProgressBar progress={progressValue_} />
+              <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={()=>navigate(-1)}>Prev</button>
           <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+              </div>
         </div>
       )}
 
@@ -246,47 +291,67 @@ function MedicalForm() {
       {/* Page 2 */}
 
       {currentPage === 2 && (
-        <div>
-          <h3 className="text-black">Page 2: Are you Pregnant or Nursing?</h3>
-          <label style={{ marginRight: '10px' }}>
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+        <h3  className='uppercase text-white'><span className='underline'>Q2</span> : Are you Pregnant or Nursing?</h3>
+        <div className='flex gap-4'> 
+
+        <div className='flex gap-2 items-center'>
+
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page2"
               value="yes"
               checked={formData.page2.yes}
-              onChange={() => handleInputChange('page2', 'yes', true)}
-            />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+              onChange={(e) => handleRadioButtons(e ,'page2')}
+              />
+              </div>
+              <div className='flex gap-2 items-center'>
+
+          <label  className='text-2xl uppercase text-white'>
             NO
+          </label>
             <input
               type="radio"
               name="page2"
               value="no"
               checked={formData.page2.no}
-              onChange={() => handleInputChange('page2', 'no', true)}
-            />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+              onChange={(e) => handleRadioButtons(e ,'page2')}
+              />
+              </div>
+            </div>
+
+  <label className='text-white'>IF YES , PLEASE SELECT WHICH ONE</label>
+            <div className='flex gap-10'> 
+       <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             Pregnant
+            </label >
             <input
               type="checkbox"
               name="page2-pregnant"
+              value={"pregnant"}
               checked={formData.page2.pregnant}
-              onChange={() => handleInputChange('page2', 'pregnant', !formData.page2.pregnant)}
+              disabled={formData.page2.no}
+              onChange={(e) => handleCheckBoxes(e ,'page2')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+          <label  className='text-2xl uppercase text-white'>
             Nursing
+            </label >
             <input
               type="checkbox"
               name="page2-nursing"
+              value={"nursing"}
               checked={formData.page2.nursing}
-              onChange={() => handleInputChange('page2', 'nursing', !formData.page2.nursing)}
+              disabled={formData.page2.no}
+              onChange={(e) => handleCheckBoxes(e ,'page2')}
             />
-          </label>
-          <div>
+            </div>
+            </div>
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
           <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
           <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
         </div>
@@ -298,268 +363,313 @@ function MedicalForm() {
 
       {currentPage === 3 && (
         <>
-          <h3 className="text-black">Page 3: Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?</h3>
-          <label style={{ marginRight: '10px' }}>
+          <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+         <h3  className='uppercase text-white'><span className='underline'>Q3</span>: Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?</h3>
+         <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page3"
               value="yes"
               checked={formData.page3.yes}
-              onChange={() => handleInputChange('page3', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e,'page3')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+            </div>
+            <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page3"
               value="no"
               checked={formData.page3.no}
-              onChange={() => handleInputChange('page3', 'no', true)}
+              onChange={(e) => handleRadioButtons(e ,'page3')}
             />
-
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
-          </div>
-          {formData.page3.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+         </div>
+         </div>
+          
+            <div className='flex gap-2 items-center'>
+              <label  className='text-lg uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
                 name="page3-explanation"
+                className=' w-52 h-10 p-2 rounded-lg'
                 value={formData.page3.explanation}
+                disabled={!formData.page3.yes ? true : false}
                 onChange={(e) => handleInputChange('page3', 'explanation', e.target.value)}
               />
 
             </div>
-
-          )}
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
+          </div>
         </>
       )}
 
       {/* Page 4 */}
       {currentPage === 4 && (
-        <div>
-          <h3 className="text-black">Page 4: Do you have any medical or skin conditions?</h3>
-          <label style={{ marginRight: '10px' }}>
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+        <h3  className='uppercase text-white'><span className='underline'>Q4</span>: Do you have any medical or skin conditions?</h3>
+        <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page4"
               value="yes"
               checked={formData.page4.yes}
-              onChange={() => handleInputChange('page4', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e , 'page4')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+          </div>
+          <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page4"
               value="no"
               checked={formData.page4.no}
-              onChange={() => handleInputChange('page4', 'no', true)}
-            />
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
-          </div>
-          {formData.page4.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+              onChange={(e) => handleRadioButtons(e ,'page4')}
+              />
+              </div>
+              </div>
+          
+            <div className='flex gap-2 items-center'>
+              <label  className='text-2xl uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
                 name="page4-explanation"
+                className=' w-52 h-10 p-2 rounded-lg'
+                disabled={!formData.page4.yes ? true : false}
                 value={formData.page4.explanation}
                 onChange={(e) => handleInputChange('page4', 'explanation', e.target.value)}
               />
 
             </div>
-          )}
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
         </div>
       )}
 
 
       {/* Page 5 */}
       {currentPage === 5 && (
-        <div>
-          <h3 className="text-black">Page 5: Do you have any communicable diseases?</h3>
-          <label style={{ marginRight: '10px' }}>
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+        <h3  className='uppercase text-white'><span className='underline'>Q5</span>: Do you have any communicable diseases?</h3>
+        <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page5"
               value="yes"
               checked={formData.page5.yes}
-              onChange={() => handleInputChange('page5', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e ,'page5')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+          </div>
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page5"
               value="no"
               checked={formData.page5.no}
-              onChange={() => handleInputChange('page5', 'no', true)}
+              onChange={(e) => handleRadioButtons(e ,'page5')}
             />
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
           </div>
-          {formData.page5.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+          </div>
+          
+            <div className='flex gap-2 items-center'>
+              <label  className='text-2xl uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
                 name="page5-explanation"
+                className=' w-52 h-10 p-2 rounded-lg'
+                disabled={!formData.page5.yes ? true : false}
                 value={formData.page5.explanation}
                 onChange={(e) => handleInputChange('page5', 'explanation', e.target.value)}
               />
 
             </div>
-          )}
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
         </div>
       )}
 
 
       {/* Page 6 */}
       {currentPage === 6 && (
-        <div>
-          <h3 className="text-black">Page 6: Are you under the influence of alcohol or drugs, prescribed or otherwise?</h3>
-          <label style={{ marginRight: '10px' }}>
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+        <h3  className='uppercase text-white flex gap-2'><span className='underline'>Q6:</span><span> Are you under the influence of alcohol or drugs, prescribed or otherwise?</span></h3>
+        <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page6"
               value="yes"
               checked={formData.page6.yes}
-              onChange={() => handleInputChange('page6', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e ,'page6')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+          </div>
+         <div className=' w-full flex gap-2 items-center'>
+
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page6"
               value="no"
               checked={formData.page6.no}
-              onChange={() => handleInputChange('page6', 'no', true)}
+              onChange={(e) => handleRadioButtons(e ,'page6')}
             />
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
           </div>
-          {formData.page6.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+          </div>
+
+            <div className='flex gap-2 items-center'>
+              <label  className='text-2xl uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
+                className=' w-52 h-10 p-2 rounded-lg'
                 name="page6-explanation"
+                disabled={!formData.page6.yes ? true : false}
                 value={formData.page6.explanation}
                 onChange={(e) => handleInputChange('page6', 'explanation', e.target.value)}
               />
 
             </div>
-          )}
+            <ProgressBar progress={progressValue_} />
+          <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
         </div>
       )}
 
 
       {/* Page 7 */}
       {currentPage === 7 && (
-        <div>
-          <h3 className="text-black">Page 7: Do you have any allergies?</h3>
-          <label style={{ marginRight: '10px' }}>
+       <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+       <h3  className='uppercase text-white flex gap-2'><span className='underline'>Q7:</span><span> Do you have any allergies?</span></h3>
+       <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page7"
               value="yes"
               checked={formData.page7.yes}
-              onChange={() => handleInputChange('page7', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e ,'page7')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+          </div>
+          <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page7"
               value="no"
               checked={formData.page7.no}
-              onChange={() => handleInputChange('page7', 'no', true)}
-            />
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
-          </div>
-          {formData.page7.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+              onChange={(e) => handleRadioButtons(e ,'page7')}
+              />
+              </div>
+              </div>
+            <div className='flex gap-2 items-center'>
+              <label  className='text-2xl uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
+                className=' w-52 h-10 p-2 rounded-lg'
                 name="page7-explanation"
+                disabled={!formData.page7.yes ? true : false}
                 value={formData.page7.explanation}
                 onChange={(e) => handleInputChange('page7', 'explanation', e.target.value)}
               />
-
             </div>
-          )}
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={nextPage}>Next</button>
+          </div>
         </div>
 
       )}
 
       {/* Page 8 */}
       {currentPage === 8 && (
-        <div>
-          <h3 className="text-black">Page 8: Do you have a heart condition, epilepsy, or diabetes?</h3>
-          <label style={{ marginRight: '10px' }}>
+        <div className='flex flex-col items-center gap-4 w-full h-full flex-1'>
+        <h3  className='uppercase text-white flex gap-2'><span className='underline'>Q8:</span><span>  Do you have a heart condition, epilepsy, or diabetes?</span></h3>
+        <div className='flex gap-10'> 
+         <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             YES
+            </label>
             <input
               type="radio"
               name="page8"
               value="yes"
               checked={formData.page8.yes}
-              onChange={() => handleInputChange('page8', 'yes', true)}
+              onChange={(e) => handleRadioButtons(e ,'page8')}
             />
-          </label>
-          <label style={{ marginRight: '10px' }}>
+            </div>
+            <div className='flex gap-2 items-center'>
+          <label  className='text-2xl uppercase text-white'>
             NO
+            </label>
             <input
               type="radio"
               name="page8"
               value="no"
               checked={formData.page8.no}
-              onChange={() => handleInputChange('page8', 'no', true)}
+              onChange={(e) => handleRadioButtons(e ,'page8')}
             />
-          </label>
-          <div>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
-          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"  onClick={() => navigate('/emergency-contact')}>Next</button>
-           </div>
-          {formData.page8.yes && (
-            <div>
-              <label style={{ marginRight: '10px' }}>If yes, please explain:</label>
+            </div>
+            </div>
+            <div className='flex gap-2 items-center'>
+              <label  className='text-2xl uppercase text-white'>If yes, please explain:</label>
               <input
                 type="text"
                 name="page8-explanation"
+                className=' w-52 h-10 p-2 rounded-lg'
+                disabled={!formData.page8.yes ? true : false}
                 value={formData.page8.explanation}
                 onChange={(e) => handleInputChange('page8', 'explanation', e.target.value)}
               />
 
             </div>
-          )}
+            <ProgressBar progress={progressValue_} />
+            <div className=' w-full flex justify-between'>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={prevPage}>Previous</button>
+          <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"  onClick={nextPage}>Next</button>
+           </div>
         </div>
-      )}
-    </div>
-    </GeneralLayout>
+      )}  
+    </MedicalFormLayout>
      
   )
 }

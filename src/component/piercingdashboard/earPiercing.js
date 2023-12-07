@@ -1,20 +1,109 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import ProgressBar from '../ProgressBar';
+import GridLayout from '../Layout/GridLayout';
+import CustomButton from '../buttons/CustomButton';
+import Navigation from '../navigation/Navigation';
 function EarPiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
+  const [selected , setSelected] = useState()
+
+  useEffect(()=>{
+    if(user.bodyPart) setSelected(user.bodyPart)
+     },[])
 
   const handlepartLocation = (bodyPart) => {
-    setUser({ ...user, bodyPart });
-    navigate('/medical-form'); 
+    setSelected(bodyPart)
+  }
 
+  const buttons = [
+    {
+      name: "Regular Earlobe",
+    },
+    {
+      name: "Upper Earlobe",
+    },
+    {
+      name: "helix",
+    },
+    {
+      name: "Industrial",
+    },
+    {
+      name: "Tragus",
+    },
+    {
+      name: "Rook",
+    },
+    {
+      name: "Conch",
+    },
+    {
+      name: "Daith",
+    },
+    {
+      name: "Snug",
+    },
+    {
+      name: "Forward Helix",
+    },
+    {
+      name: "Helix",
+    },
+    {
+      name: "Anti Helix",
+    },
+    {
+      name: "Anti Tragus",
+    },
+    {
+      name: "Auricle",
+    },
+    {
+      name: "External Auditory Meatus",
+    },
+    {
+      name: "Transverse Lobe",
+    }
+  ];
+
+  const handleNext = ()=>{
+    if(selected){
+      setUser({ ...user, bodyPart : selected});
+    navigate('/medical-form'); 
+    }else{
+      alert("Please Select an option")
+    }
+  }
+
+  const handlePrev = ()=>{
+ navigate(-1)
   }
 
   return (
-    <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
+    <>
+    <GridLayout title={"ear piercing"}>
+    {buttons.map((button, index) => {
+          return (
+            <CustomButton key={index} onClick={handlepartLocation} selected={selected}>
+              {button.name}
+            </CustomButton>
+          );
+        })}
+    </GridLayout>
+    <Navigation next={handleNext} prev={handlePrev} />
+    </>
+    
+  );
+}
+
+export default EarPiercing;
+
+
+{/* <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
       <div
         className="container h-100"
         style={{
@@ -94,8 +183,4 @@ function EarPiercing() {
         </div>
         <ProgressBar progress={progressValue} />
       </div>
-    </div>
-  );
-}
-
-export default EarPiercing;
+    </div> */}
