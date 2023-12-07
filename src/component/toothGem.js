@@ -1,11 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Title from '../assets/tooth-gen.png';
-import { json, useLocation, useNavigate } from 'react-router-dom';
 
 const ToothGems = () => {
-    const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;// Replace with your actual API URL
+  const navigate = useNavigate();
   const [selectedTeeth, setSelectedTeeth] = useState([]);
-  const [canvasImageUrl, setCanvasImageUrl] = useState(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -13,57 +13,60 @@ const ToothGems = () => {
   }, [selectedTeeth]);
 
   const handleToothClick = (e) => {
-    
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Simulate logic to map coordinates to tooth numbers
     const selectedTooth = `Tooth at (${x}, ${y})`;
 
-    // Add the selected tooth to the array
     setSelectedTeeth([...selectedTeeth, { coordinates: { x, y }, label: selectedTooth }]);
   };
-
-  const handleImageUpload = () => {
+  const handleImageUpload = async () => {
     const canvas = canvasRef.current;
-
-    // Convert canvas to data URL with JPEG format and lower quality (e.g., 0.5)
-    const imageUrl = canvas.toDataURL('image/jpeg', 0.5);
-
-    // Log the data URL to the console
-    console.log('Canvas Data URL:', imageUrl);
-
-    // Set the data URL to state for display (optional)
-    setCanvasImageUrl(imageUrl);
-    navigate('/medical-form')
+    const imageBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.5));
+  
+    const formData = new FormData();
+    formData.append('profile', imageBlob); // Use 'profile' as the field name
+  
+    try {
+      const response = await fetch(`http://localhost:3000/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (response.ok) {
+        //navigate('/medical-form');
+      } else {
+        console.error('Failed to upload image. Server returned:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
-
+  
+  
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
-    // Clear the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Redraw the entire image
     const image = new Image();
     image.src = Title;
     image.onload = () => {
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-      // Draw a highlighted diamond shape for each selected tooth
       selectedTeeth.forEach((tooth) => {
         const { x, y } = tooth.coordinates;
-        const size = 5; // Adjust the size of the diamond
+        const size = 5;
         context.beginPath();
-        context.moveTo(x, y - size); // Top point
-        context.lineTo(x + size, y); // Right point
-        context.lineTo(x, y + size); // Bottom point
-        context.lineTo(x - size, y); // Left point
+        context.moveTo(x, y - size);
+        context.lineTo(x + size, y);
+        context.lineTo(x, y + size);
+        context.lineTo(x - size, y);
         context.closePath();
-        context.fillStyle = 'rgba(255, 215, 0, 0.8)'; // Golden color with transparency
+        context.fillStyle = 'rgba(255, 215, 0, 0.8)';
         context.fill();
       });
     };
@@ -71,15 +74,15 @@ const ToothGems = () => {
 
   return (
     <div>
-      {/* Display selected tooth information */}
       {selectedTeeth.length > 0 && (
         <p>
           Selected Teeth:{' '}
-          
+          {selectedTeeth.map((tooth, index) => (
+            <span key={index}>{tooth.label}, </span>
+          ))}
         </p>
       )}
 
-      {/* Canvas for drawing */}
       <canvas
         ref={canvasRef}
         width={500}
@@ -88,15 +91,12 @@ const ToothGems = () => {
         style={{ border: '1px solid #000' }}
       ></canvas>
 
-      {/* Button to get the canvas data URL */}
-      <button className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2" onClick={handleImageUpload}>Upload</button>
-
-      {/* Display the canvas data URL (optional) */}
-      {canvasImageUrl && (
-        <div>
-          
-        </div>
-      )}
+      <button
+        className="yellowButton py-2 px-4 rounded-3xl font-bold mb-2 mr-2"
+        onClick={handleImageUpload}
+      >
+        Upload
+      </button>
     </div>
   );
 };
