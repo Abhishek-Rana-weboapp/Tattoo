@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Title from '../assets/tooth-gen.png';
+import UserContext from '../context/UserContext';
 import { useMediaQuery } from 'react-responsive';
 //const { user, setUser } = React.useContext(UserContext);
+
 const ToothGems = () => {
+  const { user, setUser } = React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   var data
   const navigate = useNavigate();
@@ -16,6 +19,7 @@ const ToothGems = () => {
   }, [selectedTeeth]);
 
   const handleToothClick = (e) => {
+
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -27,6 +31,7 @@ const ToothGems = () => {
   };
 
   const handleImageUpload = async () => {
+ 
     const canvas = canvasRef.current;
     const imageBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.5));
 
@@ -43,6 +48,7 @@ const ToothGems = () => {
 
       if (response.ok) {
         //sessionStorage.setItem('toothgem_url', data.profile_url);
+        user.Image=data.profile_url
         navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);
