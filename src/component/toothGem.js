@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Title from '../assets/tooth-gen.png';
-
+import { useMediaQuery } from 'react-responsive';
+//const { user, setUser } = React.useContext(UserContext);
 const ToothGems = () => {
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;// Replace with your actual API URL
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  var data
   const navigate = useNavigate();
   const [selectedTeeth, setSelectedTeeth] = useState([]);
   const canvasRef = useRef(null);
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     redrawCanvas();
@@ -22,20 +25,24 @@ const ToothGems = () => {
 
     setSelectedTeeth([...selectedTeeth, { coordinates: { x, y }, label: selectedTooth }]);
   };
+
   const handleImageUpload = async () => {
     const canvas = canvasRef.current;
     const imageBlob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.5));
-  
+
     const formData = new FormData();
-    formData.append('profile', imageBlob); // Use 'profile' as the field name
-  
+    formData.append('profile', imageBlob);
+
     try {
-      const response = await fetch(`http://localhost:3000/upload`, {
+      const response = await fetch(`${apiUrl}/upload`, {
         method: 'POST',
         body: formData,
       });
-  
+
+      const data = await response.json();
+
       if (response.ok) {
+        //sessionStorage.setItem('toothgem_url', data.profile_url);
         navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);
@@ -44,8 +51,7 @@ const ToothGems = () => {
       console.error('Error:', error);
     }
   };
-  
-  
+
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
@@ -74,22 +80,25 @@ const ToothGems = () => {
 
   return (
     <div>
-      
-
       <canvas
         ref={canvasRef}
-        width={500}
-        height={300}
+        width={isMobile ? 300 : 500}
+        height={isMobile ? 200 : 300}
         onClick={handleToothClick}
         style={{ border: '1px solid #000' }}
       ></canvas>
 
       <button
-        className="yellowButton py-2 px-4 rounded-3xl font-bold mb-2 mr-2"
+        className={`yellowButton py-2 px-${isMobile ? '2' : '4'} rounded-3xl font-bold mb-2 mr-2`}
         onClick={handleImageUpload}
       >
         Upload
       </button>
+
+      <div>
+        <h1>Uploaded image</h1>
+        <img src={data} alt="Description of the image" style={{ maxWidth: '100%' }} />
+      </div>
     </div>
   );
 };

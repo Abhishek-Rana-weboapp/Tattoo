@@ -171,7 +171,7 @@ const handleCheckBoxes = (e , page)=>{
     setCurrentPage(currentPage - 1);
   };
 
-  console.log(formData)
+  console.log(user)
 
   return (
 

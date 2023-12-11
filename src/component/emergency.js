@@ -71,33 +71,12 @@ function EmergencyContactForm() {
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       <img src={Title} className="w-3/5 mb-8" alt="Logo" />
-      {/* {
-     showPopup_ &&
-        <Modal>
-      <h2>Do You Need to Update Your Emergency Contact?</h2>
-          <div className='flex gap-5'>
-          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => navigate('/emergency-contact')}>Yes</button>
-          <button className='yellowButton rounded-lg py-2 px-5 text-xl font-semibold ' onClick={() => {
-            setShowEmergencyContactPopup(!showEmergencyContactPopup)
-            setShowPopup_(!showPopup_)
-            }}>No</button>
-          </div>
-      </Modal>
-      } */}
       {showPopup_ && (
         <Modal>
-
-           
-            <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
-
-            {/* Dropdown menu */}
-            <div className='flex gap-2'>
-
+          <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
+          <div className="flex gap-2">
             <label className="text-xl font-bold text-black">Select an option:</label>
-            <select
-              className='bg-black p-2 rounded-lg'
-              onChange={(e) => handleUpdatedata(e.target.value)}
-              >
+            <select className="bg-black p-2 rounded-lg" onChange={(e) => handleUpdatedata(e.target.value)}>
               <option value="">Select...</option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
@@ -105,14 +84,15 @@ function EmergencyContactForm() {
                 </option>
               ))}
             </select>
-              </div>
-
-            <button className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={() => { setShowPopup_(false);  }}>Close Popup</button>
-
+          </div>
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold" onClick={() => setShowPopup_(false)}>
+            Close Popup
+          </button>
         </Modal>
       )}
       <h1 className="text-3xl font-bold mb-4 text-yellow-500">Emergency Contact Information</h1>
-      <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black" onSubmit={handleSubmit}>
+      <form className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
+ 
         <div>
           <label>Name:</label>
           <input
@@ -157,14 +137,14 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <button className='yellowButton py-2 px-8 rounded-3xl font-bold' type="submit">Submit</button>
+        <button className="yellowButton py-2 px-8 rounded-3xl font-bold" type="submit">
+          Submit
+        </button>
       </form>
-      
-      <div className='w-full h-10' >
-       <ProgressBar progress={progressValue} />
-       </div>
+      <div className="w-full h-10">
+        <ProgressBar progress={progressValue} />
+      </div>
     </div>
-    
   );
 }
 
