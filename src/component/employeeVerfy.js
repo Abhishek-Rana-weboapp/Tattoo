@@ -4,6 +4,7 @@ import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 const IDVerificationComponent = () => {
+  
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const IDVerificationComponent = () => {
 
   const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-
+  console.log("userdata====",user)
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     uploadIdPhoto(file);
@@ -42,6 +43,7 @@ const IDVerificationComponent = () => {
   const handleSubmit = async () => {
     const username = sessionStorage.getItem('username');
     const minor = sessionStorage.getItem('minor');
+    const toothgem_url=sessionStorage.getItem('toothgem_url')
 
     if (!isSubmitDisabled) {
       try {
@@ -54,7 +56,7 @@ const IDVerificationComponent = () => {
             username: username,
             minor: minor,
             typeofservice: user.selectedTattooType,
-            bodyloacation: user.tattooLocation,
+            bodyloacation: JSON.stringify(user),
             medicalhistory: {
               "tattooed before": formData.page1,
               "Pregnant or Nursing": formData.page2,

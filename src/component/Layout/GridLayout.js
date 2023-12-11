@@ -9,7 +9,7 @@ export default function GridLayout({children , title, onChange,selected, otherFi
     <div className="w-full h-full flex flex-col gap-1 items-center">
       <img src={Title} className="w-2/5 mt-5 hover:cursor-pointer" onClick={()=>navigate("/dashboard")}></img>
       <h1 className='font-bold text-5xl text-white uppercase'>{title}</h1>
-    <div className="w-4/6 h-2/3 flex flex-col items-center pt-5 gap-5">
+    <div className="md:w-4/6 lg:w-4/6 w-full h-2/3 flex flex-col items-center pt-5 gap-5">
       <div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max overflow-auto">
         {children}
       </div>

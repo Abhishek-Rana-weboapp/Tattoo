@@ -117,11 +117,10 @@ const ConsentFormGuard = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-    <img src={Title} className="w-3/5 mb-8" alt="Logo" />
-    <h1 className="text-3xl font-bold mb-4 text-yellow-500">Consent Form</h1>
-    <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black">
-
+<div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-4 md:p-8 text-white">
+      <img src={Title} className="w-4/5 md:w-3/5 lg:w-2/5 mb-8" alt="Logo" />
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500">Consent Form</h1>
+      <form className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-3/5 text-black" style={{ margin: 'auto' }}>
     <section style={{ margin: '10px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
   <div style={{ flex: '1' }}>
     <h2>Client Information</h2>
@@ -193,38 +192,29 @@ const ConsentFormGuard = () => {
         </section>
 
         <section style={{ margin: '10px 0' }}>
-
-
-
         {showPopup && (
-
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '2px solid #3498db', padding: '20px', borderRadius: '10px', maxWidth: '400px', margin: 'auto', marginTop: '50px', backgroundColor: '#ecf0f1' }}>
-      <SignatureCanvas
-        penColor="black"
-        canvasProps={{ width: 300, height: 150, className: 'sigCanvas', style: { border: '1px solid #000', backgroundColor: 'white' } }}
-        ref={signatureRef}
-      />
-      <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-        <button type="button" style={{ background: '#e74c3c', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginRight: '10px' }} onClick={handleClear}>Clear</button>
-        <button type="button" style={{ background: '#2ecc71', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} onClick={handleSave}>Save</button>
-      </div>
-
-      {signatureImage && (
-        <div style={{ marginTop: '20px' }}>
-          <img src={signatureImage} alt="Signature Preview" style={{ border: '1px solid #000', borderRadius: '5px', maxWidth: '100%' }} />
-        </div>
-      )}
-
-      {signatureImage && (
-        <button type="button" style={{ marginTop: '10px', padding: '8px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleSubmit}>
-          Submit Signature
-        </button>
-      )}
-    </div>
-        
-
-
-      )}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '2px solid #3498db', padding: '20px', borderRadius: '10px', maxWidth: '90%', margin: 'auto', marginTop: '50px', backgroundColor: '#ecf0f1' }}>
+            <SignatureCanvas
+              penColor="black"
+              canvasProps={{ width: 300, height: 150, className: 'sigCanvas', style: { border: '1px solid #000', backgroundColor: 'white' } }}
+              ref={signatureRef}
+            />
+            <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
+              <button type="button" style={{ background: '#e74c3c', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginRight: '10px' }} onClick={handleClear}>Clear</button>
+              <button type="button" style={{ background: '#2ecc71', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} onClick={handleSave}>Save</button>
+            </div>
+            {signatureImage && (
+              <div style={{ marginTop: '20px' }}>
+                <img src={signatureImage} alt="Signature Preview" style={{ border: '1px solid #000', borderRadius: '5px', maxWidth: '100%' }} />
+              </div>
+            )}
+            {signatureImage && (
+              <button type="button" style={{ marginTop: '10px', padding: '8px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleSubmit}>
+                Submit Signature
+              </button>
+            )}
+          </div>
+        )}
           <h2>Witness (Technician)</h2>
           <label style={{ fontWeight: 'bold' }} htmlFor="techName">Technician's Name:</label>
           <input type="text" id="techName" name="techName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techName} onChange={handleInputChange} required /><br />
@@ -252,11 +242,10 @@ const ConsentFormGuard = () => {
         </section>
 
         <button type="submit" className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={handelapi}>Submit</button>
-      </form>
-      <div className='w-full h-10' >
-       <ProgressBar progress={progressValue} />
-       {progressValue}
-       </div>
+        </form>
+      <div className='w-full h-10'>
+        <ProgressBar progress={progressValue} />
+      </div>
     </div>
   );
 };
