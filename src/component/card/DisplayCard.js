@@ -7,7 +7,10 @@ export default function DisplayCard({ onClick, data, selectedType }) {
   return (
     <NavLink
       to={data.link}
-      className={`flex flex-col items-center gap-2 h-full w-full md:text-3xl text-md capitalize font-bold text-white overflow text-center hover:scale-105 transition-all ease-in`}
+      className={`flex flex-col items-center 
+                  gap-2 h-full w-full md:text-3xl text-md capitalize
+                  font-bold text-white overflow text-center 
+                  hover:scale-105 transition-all ease-in`}
       onClick={() => onClick(data.type)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -17,7 +20,7 @@ export default function DisplayCard({ onClick, data, selectedType }) {
         src={
           isHovered || selectedType === data.type ? data.activesrc : data.src
         }
-        className="rounded-xl md:w-32 md:h-32"
+        className="rounded-xl w-20 h-20 md:w-32 md:h-32"
         alt={`${data.type}-image`}
       />
       {data.name.split("-").join(" ")}

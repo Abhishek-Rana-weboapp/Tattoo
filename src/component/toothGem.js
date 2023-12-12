@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Title from '../assets/tooth-gen.png';
+import ToothGem from '../assets/tooth-gen.png';
 import UserContext from '../context/UserContext';
 import { useMediaQuery } from 'react-responsive';
+import Title from "../assets/Title.png"
+import { IoMdArrowRoundBack } from "react-icons/io";
 //const { user, setUser } = React.useContext(UserContext);
 
 const ToothGems = () => {
@@ -65,7 +67,7 @@ const ToothGems = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const image = new Image();
-    image.src = Title;
+    image.src = ToothGem;
     image.onload = () => {
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -84,8 +86,15 @@ const ToothGems = () => {
     };
   };
 
+  const handlePrev = ()=>{
+    navigate(-1)
+  }
+
   return (
-    <div>
+    <div className='flex flex-col gap-3 items-center'>
+      <img src={Title} className='md:w-3/5 mt-5' ></img>
+      <label className=' text-white md:text-4xl font-bold uppercase'>Tooth gem</label>
+      <label className=' text-white md:text-3xl font-bold uppercase'>Select a Tooth</label>
       <canvas
         ref={canvasRef}
         width={isMobile ? 300 : 500}
@@ -94,17 +103,25 @@ const ToothGems = () => {
         style={{ border: '1px solid #000' }}
       ></canvas>
 
+
       <button
-        className={`yellowButton py-2 px-${isMobile ? '2' : '4'} rounded-3xl font-bold mb-2 mr-2`}
+        className={`yellowButton py-2 px-${isMobile ? '3' : '5'} rounded-3xl font-bold mb-2 mr-2`}
         onClick={handleImageUpload}
-      >
+        >
         Upload
       </button>
 
-      <div>
+      <button
+        className={`yellowButton py-2 px-${isMobile ? '3' : '5'} rounded-3xl font-bold mb-2 mr-2 flex gap-1 items-center`}
+        onClick={handlePrev}
+      >
+        <IoMdArrowRoundBack/>
+        Prev
+      </button>
+      {/* <div>
         <h1>Uploaded image</h1>
         <img src={data} alt="Description of the image" style={{ maxWidth: '100%' }} />
-      </div>
+      </div> */}
     </div>
   );
 };

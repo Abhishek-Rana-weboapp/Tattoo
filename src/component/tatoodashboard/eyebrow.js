@@ -5,6 +5,7 @@ import Title from "../../assets/Title.png";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
 import { PiSmileySticker } from 'react-icons/pi';
+import GridLayout from '../Layout/GridLayout';
 
 
 function Eyebrow() {
@@ -45,29 +46,25 @@ function Eyebrow() {
 
     return (
 
-      <div className="w-full h-full flex flex-col gap-1 items-center">
-      <img src={Title} className="w-3/5 mt-5"></img>
-      <div className="w-4/6 h-2/3 flex flex-col items-center pt-5 gap-4">
-        <h1 className='font-bold text-5xl text-white'>EYEBROW</h1>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max">
+      <>
+      <GridLayout title={"eyebrow"}>
+
           {buttons.map((button, index) => {
             return (
               <div className="flex justify-center items-center w-full">
                 <CustomButton
                   onClick={handlePartLocation}
                   selected={selected}
-                >
+                  >
                   {button.name}
                 </CustomButton>
               </div>
             );
           })}
-        </div>
-      </div>
+          </GridLayout>
       <Navigation next={handleNext} prev={handlePrev} />
-    </div>
-    
-  
+      </>
+      
     );
   }
   

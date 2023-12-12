@@ -44,7 +44,6 @@ function Ear() {
   return (
     <>
     <GridLayout title={"ear"}>
-
           {buttons.map((button, index) => {
             return (
              

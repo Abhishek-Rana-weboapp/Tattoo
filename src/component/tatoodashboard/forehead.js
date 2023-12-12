@@ -4,6 +4,7 @@ import UserContext from "../../context/UserContext";
 import Title from "../../assets/Title.png";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
+import GridLayout from "../Layout/GridLayout";
 
 function FaceDashboard() {
   const navigate = useNavigate();
@@ -44,10 +45,9 @@ function FaceDashboard() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-1 items-center">
-      <img src={Title} className="w-3/5 mt-5"></img>
-      <div className="w-4/6 h-2/3 flex justify-center pt-5">
-        <div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max">
+    <>
+    <GridLayout title={"forehead"}> 
+
           {buttons.map((button, index) => {
             console.log(button);
             return (
@@ -58,10 +58,9 @@ function FaceDashboard() {
               </div>
             );
           })}
-        </div>
-      </div>
+          </GridLayout>
       <Navigation next={handleNext} prev={handlePrev} />
-    </div>
+          </>
   );
 }
 
