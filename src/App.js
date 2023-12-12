@@ -77,7 +77,7 @@ function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div className="App bg-[#000000] w-screen min-h-screen flex flex-col items-center justify-center p-2">
+      <div className="App bg-[#000000] w-screen min-h-screen flex flex-col items-center  p-2">
         {/* <div className='flex justify-center p-3'>
       <img src={Title} className='w-2/4 '></img>
         </div> */}

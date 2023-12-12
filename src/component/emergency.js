@@ -68,9 +68,13 @@ function EmergencyContactForm() {
     }
   };
 
+  const handlePrev = ()=>{
+    navigate(-1)
+  }
+
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      <img src={Title} className="w-3/5 mb-8" alt="Logo" />
+      <img src={Title} className="w-4/5 md:w-2/6  mb-8" alt="Logo" />
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
@@ -85,7 +89,7 @@ function EmergencyContactForm() {
               ))}
             </select>
           </div>
-          <button className="yellowButton py-2 px-8 rounded-3xl font-bold" onClick={() => setShowPopup_(false)}>
+          <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold text-black" onClick={() => setShowPopup_(false)}>
             Close Popup
           </button>
         </Modal>
@@ -137,9 +141,17 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <button className="yellowButton py-2 px-8 rounded-3xl font-bold" type="submit">
+        <div className='flex justify-between'>
+        <button
+            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
+            onClick={handlePrev}
+          >
+            Prev
+          </button>
+        <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100%  py-2 px-8 rounded-3xl font-bold mt-4" type="submit">
           Submit
         </button>
+        </div>
       </form>
       <div className="w-full h-10">
         <ProgressBar progress={progressValue} />
