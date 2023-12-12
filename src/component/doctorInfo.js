@@ -73,7 +73,7 @@ function DoctorContactForm() {
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      <img src={Title} className="w-3/5 mb-8" alt="Logo" />
+      <img src={Title} className="w-4/5 md:w-2/6 mb-8" alt="Logo" />
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
@@ -96,7 +96,7 @@ function DoctorContactForm() {
             </select>
           </div>
           <button
-            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
+            className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={() => {
               setShowPopup_(false);
             }}
@@ -181,19 +181,19 @@ function DoctorContactForm() {
             </p>
           </div>
         )}
-         <button
-          className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
-          type="submit"
-        >
-          Submit
-        </button>
-        <div className="mt-4">
+        <div className="mt-4 flex justify-between">
           <button
-            className="yellowButton py-2 px-8 rounded-3xl font-bold"
+            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={handlePrev}
           >
             Prev
           </button>
+         <button
+          className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold mt-4"
+          type="submit"
+        >
+          Submit
+        </button>
         </div>
       </form>
       <div className="w-full h-10">

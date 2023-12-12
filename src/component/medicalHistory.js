@@ -221,9 +221,9 @@ const handleCheckBoxes = (e , page)=>{
 
 {/* // Dropdown menu */}
 <div className='flex gap-1 items-center'>
-<label>Select an option:</label>
+<label className='text-xl font-bold'>Select an option:</label>
 <select
-  className='rounded p-2 border-1 border-slate-400'
+  className='rounded p-2 border-1 bg-black text-white'
   onChange={(e) => handleUpdatedata(e.target.value)}
 >
   <option value="">Select...</option>
@@ -296,7 +296,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page1"
               value="yes"
-              checked={formData.page1.yes}
+              checked={formData?.page1?.yes}
               onChange={() => handleInputChange('page1', 'yes', true)}
               />
               </div>
@@ -309,7 +309,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page1"
               value="no"
-              checked={formData.page1.no}
+              checked={formData?.page1?.no}
               onChange={() => handleInputChange('page1', 'no', true)}
               />
               </div>
@@ -339,7 +339,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page2"
               value="yes"
-              checked={formData.page2.yes}
+              checked={formData?.page2?.yes}
               onChange={(e) => handleRadioButtons(e ,'page2')}
               />
               </div>
@@ -352,7 +352,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page2"
               value="no"
-              checked={formData.page2.no}
+              checked={formData?.page2?.no}
               onChange={(e) => handleRadioButtons(e ,'page2')}
               />
               </div>
@@ -368,8 +368,8 @@ const handleCheckBoxes = (e , page)=>{
               type="checkbox"
               name="page2-pregnant"
               value={"pregnant"}
-              checked={formData.page2.pregnant}
-              disabled={formData.page2.no}
+              checked={formData?.page2?.pregnant}
+              disabled={formData?.page2?.no}
               onChange={(e) => handleCheckBoxes(e ,'page2')}
             />
           <label  className='text-2xl uppercase text-white'>
@@ -379,8 +379,8 @@ const handleCheckBoxes = (e , page)=>{
               type="checkbox"
               name="page2-nursing"
               value={"nursing"}
-              checked={formData.page2.nursing}
-              disabled={formData.page2.no}
+              checked={formData?.page2?.nursing}
+              disabled={formData?.page2?.no}
               onChange={(e) => handleCheckBoxes(e ,'page2')}
             />
             </div>
@@ -409,7 +409,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page3"
               value="yes"
-              checked={formData.page3.yes}
+              checked={formData?.page3?.yes}
               onChange={(e) => handleRadioButtons(e,'page3')}
             />
             </div>
@@ -421,7 +421,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page3"
               value="no"
-              checked={formData.page3.no}
+              checked={formData?.page3?.no}
               onChange={(e) => handleRadioButtons(e ,'page3')}
             />
          </div>
@@ -434,7 +434,7 @@ const handleCheckBoxes = (e , page)=>{
                 name="page3-explanation"
                 className=' w-52 h-10 p-2 rounded-lg'
                 value={formData.page3.explanation}
-                disabled={!formData.page3.yes ? true : false}
+                disabled={!formData?.page3?.yes ? true : false}
                 onChange={(e) => handleInputChange('page3', 'explanation', e.target.value)}
               />
 
@@ -461,7 +461,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page4"
               value="yes"
-              checked={formData.page4.yes}
+              checked={formData?.page4?.yes}
               onChange={(e) => handleRadioButtons(e , 'page4')}
             />
           </div>
@@ -473,7 +473,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page4"
               value="no"
-              checked={formData.page4.no}
+              checked={formData?.page4?.no}
               onChange={(e) => handleRadioButtons(e ,'page4')}
               />
               </div>
@@ -485,8 +485,8 @@ const handleCheckBoxes = (e , page)=>{
                 type="text"
                 name="page4-explanation"
                 className=' w-52 h-10 p-2 rounded-lg'
-                disabled={!formData.page4.yes ? true : false}
-                value={formData.page4.explanation}
+                disabled={!formData?.page4?.yes ? true : false}
+                value={formData?.page4?.explanation}
                 onChange={(e) => handleInputChange('page4', 'explanation', e.target.value)}
               />
 
@@ -513,7 +513,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page5"
               value="yes"
-              checked={formData.page5.yes}
+              checked={formData?.page5?.yes}
               onChange={(e) => handleRadioButtons(e ,'page5')}
             />
           </div>
@@ -525,7 +525,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page5"
               value="no"
-              checked={formData.page5.no}
+              checked={formData?.page5?.no}
               onChange={(e) => handleRadioButtons(e ,'page5')}
             />
           </div>
@@ -537,8 +537,8 @@ const handleCheckBoxes = (e , page)=>{
                 type="text"
                 name="page5-explanation"
                 className=' w-52 h-10 p-2 rounded-lg'
-                disabled={!formData.page5.yes ? true : false}
-                value={formData.page5.explanation}
+                disabled={!formData?.page5?.yes ? true : false}
+                value={formData?.page5?.explanation}
                 onChange={(e) => handleInputChange('page5', 'explanation', e.target.value)}
               />
 
@@ -565,7 +565,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page6"
               value="yes"
-              checked={formData.page6.yes}
+              checked={formData?.page6?.yes}
               onChange={(e) => handleRadioButtons(e ,'page6')}
             />
           </div>
@@ -578,7 +578,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page6"
               value="no"
-              checked={formData.page6.no}
+              checked={formData?.page6?.no}
               onChange={(e) => handleRadioButtons(e ,'page6')}
             />
           </div>
@@ -590,8 +590,8 @@ const handleCheckBoxes = (e , page)=>{
                 type="text"
                 className=' w-52 h-10 p-2 rounded-lg'
                 name="page6-explanation"
-                disabled={!formData.page6.yes ? true : false}
-                value={formData.page6.explanation}
+                disabled={!formData?.page6?.yes ? true : false}
+                value={formData?.page6?.explanation}
                 onChange={(e) => handleInputChange('page6', 'explanation', e.target.value)}
               />
 
@@ -618,7 +618,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page7"
               value="yes"
-              checked={formData.page7.yes}
+              checked={formData?.page7?.yes}
               onChange={(e) => handleRadioButtons(e ,'page7')}
             />
           </div>
@@ -630,7 +630,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page7"
               value="no"
-              checked={formData.page7.no}
+              checked={formData?.page7?.no}
               onChange={(e) => handleRadioButtons(e ,'page7')}
               />
               </div>
@@ -641,8 +641,8 @@ const handleCheckBoxes = (e , page)=>{
                 type="text"
                 className=' w-52 h-10 p-2 rounded-lg'
                 name="page7-explanation"
-                disabled={!formData.page7.yes ? true : false}
-                value={formData.page7.explanation}
+                disabled={!formData?.page7?.yes ? true : false}
+                value={formData?.page7?.explanation}
                 onChange={(e) => handleInputChange('page7', 'explanation', e.target.value)}
               />
             </div>
@@ -668,7 +668,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page8"
               value="yes"
-              checked={formData.page8.yes}
+              checked={formData?.page8?.yes}
               onChange={(e) => handleRadioButtons(e ,'page8')}
             />
             </div>
@@ -680,7 +680,7 @@ const handleCheckBoxes = (e , page)=>{
               type="radio"
               name="page8"
               value="no"
-              checked={formData.page8.no}
+              checked={formData?.page8?.no}
               onChange={(e) => handleRadioButtons(e ,'page8')}
             />
             </div>
@@ -691,8 +691,8 @@ const handleCheckBoxes = (e , page)=>{
                 type="text"
                 name="page8-explanation"
                 className=' w-52 h-10 p-2 rounded-lg'
-                disabled={!formData.page8.yes ? true : false}
-                value={formData.page8.explanation}
+                disabled={!formData?.page8?.yes ? true : false}
+                value={formData?.page8?.explanation}
                 onChange={(e) => handleInputChange('page8', 'explanation', e.target.value)}
               />
 

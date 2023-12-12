@@ -111,8 +111,8 @@ function LegInside({}) {
         </>)
       }
        {
-        state.full === "thigh"  && (<>
-        <GridLayout title={"thigh"}>
+        state.full === "thigh" || "lower leg"  && (<>
+        <GridLayout title={state.full === "thigh" ? "thigh" : "Lower"}>
                {
                 thighButton.map((button , index)=>{
                   return <CustomButton key={index} onClick={handlepartLocation} selected={selected} >{button.name}</CustomButton>
