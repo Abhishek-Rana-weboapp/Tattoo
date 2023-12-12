@@ -77,8 +77,7 @@ function HoldHarmlessAgreement() {
         </div>
       )}
       <div className='w-full h-10' >
-       <ProgressBar progress={progressValue} />
-       {progressValue}
+     
        </div>
     </div>
   );
