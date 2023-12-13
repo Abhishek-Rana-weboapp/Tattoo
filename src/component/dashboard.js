@@ -76,9 +76,9 @@ function Dashboard() {
   ];
 
   return (
-    <div className="w-3/4 h-full flex flex-col gap-4 justify-center items-center">
-      <img src={Title} className="md:w-4/5 sm:w-4/5 w-full mt-4"></img>
-      <div className="grid grid-cols-2 gap-x-10 gap-y-10 w-full">
+    <div className="w-3/4 h-full flex flex-col justify-center items-center">
+      {/* <img src={Title} className="md:w-4/5 sm:w-4/5 w-full mt-4"></img> */}
+      <div className="grid grid-cols-2 gap-5 w-full">
         {menu.map((menu, index) => {
           return (
             <DisplayCard

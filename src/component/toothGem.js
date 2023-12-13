@@ -92,7 +92,7 @@ const ToothGems = () => {
 
   return (
     <div className='flex flex-col gap-3 items-center'>
-      <img src={Title} className='md:w-3/5 mt-5' ></img>
+      {/* <img src={Title} className='md:w-3/5 mt-5' ></img> */}
       <label className=' text-white md:text-4xl font-bold uppercase'>Tooth gem</label>
       <label className=' text-white md:text-3xl font-bold uppercase'>Select a Tooth</label>
       <canvas

@@ -73,7 +73,7 @@ function DoctorContactForm() {
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      <img src={Title} className="w-4/5 md:w-2/6 mb-8" alt="Logo" />
+      {/* <img src={Title} className="w-4/5 md:w-2/6 mb-8" alt="Logo" /> */}
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">

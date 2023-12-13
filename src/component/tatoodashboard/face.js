@@ -62,12 +62,6 @@ function FaceDashboard() {
 
     return (
       <>
-{/* 
-      <div className="w-full h-full flex flex-col gap-1 items-center">
-      <img src={Title} className="w-3/5 mt-5"></img>
-      <div className='w-4/6 h-2/3 flex flex-col gap-4 items-center pt-5'>
-<h1 className='text-white font-semibold'>FACE</h1>
-<div className="grid grid-cols-2 gap-x-10 gap-y-3 w-4/6 h-max"> */}
 <GridLayout title={"face"}>
 
         { buttons.map((button, index) => {
@@ -85,10 +79,7 @@ function FaceDashboard() {
         }) 
       }
       </GridLayout>
-      {/* </div> */}
-      {/* // </div> */}
      <Navigation next={handleNext}  prev={handlePrev} />
-    {/* // </div> */}
       </>
   
     );

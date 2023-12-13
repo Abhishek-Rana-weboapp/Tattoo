@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
@@ -9,6 +9,19 @@ function VaginalPiercing() {
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
+  const [buttonHeight, setButtonHeight] = useState('auto');
+
+  useEffect(() => {
+    // Calculate the maximum height among all buttons
+    const maxHeight = Math.max(...buttons.map(button => {
+      // You can adjust the padding as needed
+      const padding = 16; // Adjust this value based on your design
+      return buttonRef.current.clientHeight + padding * 2;
+    }));
+    setButtonHeight(`${maxHeight}px`);
+  }, [buttons]);
+
+  const buttonRef = useRef()
 
   useEffect(()=>{
     if(user.bodyPart) setSelected(user.bodyPart)
@@ -71,7 +84,7 @@ function VaginalPiercing() {
     <GridLayout title={"vaginal piercing"}>
     {buttons.map((button, index) => {
           return (
-            <CustomButton key={index} onClick={handlepartLocation} selected={selected}>
+            <CustomButton key={index} def={buttonRef} buttonStyle={{ height: buttonHeight }} onClick={handlepartLocation} selected={selected}>
               {button.name}
             </CustomButton>
           );
