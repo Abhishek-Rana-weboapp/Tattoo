@@ -8,16 +8,10 @@ export default function MedicalFormLayout({ children, title, progressValue_, pro
   const navigate = useNavigate();
 
   return (
-    <div className="w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/2  flex flex-col gap-3">
-      <img
-        src={Title}
-        className="w-full max-w-md mx-auto mb-4 hover:cursor-pointer mt-5"
-        onClick={() => navigate('/dashboard')}
-        alt="Logo"
-      />
+    <div className="w-full sm:w-3/4 bg-gray-800 rounded-md p-4 md:w-2/3 lg:w-1/2 xl:w-1/2  flex flex-col gap-3">
       {about && <h1 className="text-2xl font-bold mb-4 text-yellow-500">{about}</h1>}
-      <h1 className="font-bold text-2xl text-white mb-4 uppercase text-center">{title}</h1>
-      <div className="w-full bg-gray-800 rounded-md p-4">{children}</div>
+      <h1 className="font-bold text-2xl md:text-5xl text-white mb-4 uppercase text-center">{title}</h1>
+      <div className="w-full  ">{children}</div>
 
       <ProgressBar progress={progressValue_} count={progressValue_count_} />
     </div>

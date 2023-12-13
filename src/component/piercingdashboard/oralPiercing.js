@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useRoutes } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import ProgressBar from '../ProgressBar';
 import Navigation from '../navigation/Navigation';
@@ -110,6 +110,7 @@ function OralPiercing() {
  navigate(-1)
   }
 
+  console.log(window.location.pathname)
 
 
   return (

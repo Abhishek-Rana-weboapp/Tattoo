@@ -73,14 +73,16 @@ import SignaturePad from './component/signature';
 import SignaturePad_see from './component/signature_see';
 import JewelleryPiercing from './component/piercingdashboard/jweleryPiercing';
 
+import Title from "./assets/Title.png"
+
 function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div className="App bg-[#000000] w-screen min-h-screen flex flex-col items-center  p-2">
-        {/* <div className='flex justify-center p-3'>
-      <img src={Title} className='w-2/4 '></img>
-        </div> */}
+      <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto p-2 gap-2" style={{height : "100dvh"}}>
+          <div className='flex justify-center'>
+        <img src={Title} className='w-4/5 md:w-2/5'></img>
+          </div>
         <Routes>\
           <Route exact path="/" element={<Login />} />
           <Route exact path="/signup" element={<SignUp />} />\
