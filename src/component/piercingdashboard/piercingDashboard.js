@@ -5,8 +5,9 @@ import ProgressBar from "../ProgressBar";
 import GridLayout from "../Layout/GridLayout";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
-
+import { useTranslation } from 'react-i18next';
 function PiercingDashboard() {
+  const { t } = useTranslation();
   const progressValue = 20;
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
@@ -26,34 +27,34 @@ function PiercingDashboard() {
 
   const partButton = [
     {
-      name: "Belly Piercing",
+      name: t("Belly Piercing"),
     },
     {
-      name: "nipple-piercing",
+      name: t("nipple-piercing"),
     }
   ];
 
   const buttons = [
     {
-      name: "ear-piercing",
+      name: t("ear-piercing"),
     },
     {
-      name: "facial-piercing",
+      name: t("facial-piercing"),
     },
     {
-      name: "jewellery-piercing",
+      name: t("jewellery-piercing"),
     },
     {
-      name: "nose-piercing",
+      name: t("nose-piercing"),
     },
     {
-      name: "oral-piercing",
+      name: t("oral-piercing"),
     },
     {
-      name: "surface-piercing",
+      name: t("surface-piercing"),
     },
     {
-      name: "vaginal-piercing",
+      name: t("vaginal-piercing"),
     },
   ];
 

@@ -4,7 +4,9 @@ import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
+import { useTranslation } from 'react-i18next';
 function EmergencyContactForm() {
+  const { t } = useTranslation();
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -98,7 +100,7 @@ function EmergencyContactForm() {
       <form className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
  
         <div>
-          <label>Name:</label>
+          <label>{t("Name")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -109,7 +111,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div>
-          <label>Phone #:</label>
+          <label>{t("Phone #")}:</label>
           <input
            className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
@@ -120,7 +122,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div>
-          <label>City:</label>
+          <label>{t("City")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -131,7 +133,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div>
-          <label>State:</label>
+          <label>{t("State")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -146,10 +148,10 @@ function EmergencyContactForm() {
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={handlePrev}
           >
-            Prev
+            {t("Prev")}
           </button>
         <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100%  py-2 px-8 rounded-3xl font-bold mt-4" type="submit">
-          Submit
+          {t("Submit")}
         </button>
         </div>
       </form>

@@ -4,8 +4,9 @@ import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
-
+import { useTranslation } from 'react-i18next';
 function DoctorContactForm() {
+  const { t } = useTranslation();
   var progressValue = 70;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -113,7 +114,7 @@ function DoctorContactForm() {
         onSubmit={handleSubmit}
       >
         <div>
-          <label>Name:</label>
+          <label>{t("Name")}</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -124,7 +125,7 @@ function DoctorContactForm() {
           />
         </div>
         <div>
-          <label>Phone #:</label>
+          <label>{t("Phone #")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
@@ -135,7 +136,7 @@ function DoctorContactForm() {
           />
         </div>
         <div>
-          <label>City:</label>
+          <label>{t("City")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -146,7 +147,7 @@ function DoctorContactForm() {
           />
         </div>
         <div>
-          <label>State:</label>
+          <label>{t("State")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -159,7 +160,7 @@ function DoctorContactForm() {
 
         <div>
           <label>
-            Use Doctor Recommendation:
+            {t("Use Doctor Recommendation")}
             <input
               type="checkbox"
               name="useDoctorRecommendation"
@@ -171,13 +172,13 @@ function DoctorContactForm() {
 
         {drformData.useDoctorRecommendation && (
           <div>
-            <h2>Doctor Information:</h2>
+            <h2>{t("Doctor Information")}</h2>
             <p>
-              Carbon Health Urgent Care of Hialeah
+              {t("Carbon Health Urgent Care of Hialeah")}
               <br />
-              Phone: (305) 200-1225
+              {t("Phone: (305) 200-1225")}
               <br />
-              Address: 915 W 49th St. Hialeah, FL 33012
+              {t("Address: 915 W 49th St. Hialeah, FL 33012")}
             </p>
           </div>
         )}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -10,12 +11,14 @@ import Button_bg from "../assets/Button_bg.png"
 
 
 function Login() {
+  const { t } = useTranslation();
   const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
 
   const buttonStyle = {
     backgroundImage: Button_bg,
@@ -50,6 +53,7 @@ function Login() {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
+          sessionStorage.setItem('lang',responseData.lang)
   
           navigate("/AppointmentList");
         }
@@ -58,7 +62,8 @@ function Login() {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
-        sessionStorage.setItem('progress_bar',progress)
+        sessionStorage.setItem('lang',responseData.user.lang)
+     
         navigate("/dashboard");
         }
       }
@@ -76,10 +81,9 @@ function Login() {
     console.log("base url===",apiUrl)
     console.log(Button_bg)    
   return (
-    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
-    >    
-    <img src={Title_logo} className=' w-1/6'></img>
-    <h1 className='text-white font-bold'>LOGIN</h1>
+    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>
+      <img src={Title_logo} className=' w-1/6' alt="Title Logo" />
+      <h1 className='text-white font-bold'>login</h1> {/* Use translation key */}
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
@@ -113,15 +117,15 @@ function Login() {
           <div className='flex gap-2 justify-between'>
             <div className='flex gap-2 text-white'>
               <input type='checkbox'/>
-              Remember me?
+              'Remember me?'
             </div>
             <div className='flex gap-2'>
-        <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
-        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink>
+        <NavLink to="/signup" className={" no-underline w-max text-white"}>"Signup"  </NavLink>
+        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>"Forgot Password?"</NavLink>
             </div>
           </div>
           <button className='yellowButton py-2 px-8 rounded-3xl font-bold '>
-            Login
+          'login'
           </button>
           
         </form>

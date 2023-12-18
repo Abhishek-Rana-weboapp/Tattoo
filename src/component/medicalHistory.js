@@ -6,8 +6,10 @@ import GeneralLayout from "./Layout/FormLayout";
 import { isCursorAtStart } from "@testing-library/user-event/dist/utils";
 import MedicalFormLayout from "./Layout/MedicalFormLayout";
 import Modal from "./modal/Modal";
+import { useTranslation } from 'react-i18next';
 
 function MedicalForm() {
+  const { t } = useTranslation();
   var progressValue = 50;
   const [progressValue_, setprogressValue_] = useState(1);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -48,7 +50,7 @@ function MedicalForm() {
 
   useEffect(()=>{
     if(formData?.page3?.yes || formData?.page4?.yes || formData?.page5?.yes || formData?.page6?.yes || formData?.page7?.yes || formData?.page8?.yes){
-      textRef.current.focus()
+      textRef?.current?.focus()
     }
   },[formData])
 
@@ -188,18 +190,18 @@ function MedicalForm() {
 
   return (
     <MedicalFormLayout
-      title="Medical history"
+      title={t("Medical history")}
       progressValue={progressValue}
       progressValue_={progressValue_}
       progressValue_count_={8}
     >
      {showPopup_ && (
         <Modal>
-          <h3 className="font-bold">Do you want to update your medical history?</h3>
+          <h3 className="font-bold">{t("Do you want to update your medical history?")}</h3>
 
           {/* // Dropdown menu */}
           <div className="flex gap-1 items-center">
-            <label className="text-xl font-bold">Select an option:</label>
+            <label className="text-xl font-bold">{t("Select an option:")}</label>
             <select
               className="rounded p-2 border-1 bg-black text-white"
               onChange={(e) => handleUpdatedata(e.target.value)}
@@ -219,7 +221,7 @@ function MedicalForm() {
               setShowPopup_(false);
             }}
           >
-            Close Popup
+            {t("Close Popup")}
           </button>
         </Modal>
       )}
@@ -227,8 +229,7 @@ function MedicalForm() {
       {currentPage === 1 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">Q1</span> : Have you ever been tattooed
-            before?
+            <span className="underline">{t("Q1")}</span>{t("HaveYouEverBeenTattooedBefore?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-2 items-center">
@@ -240,7 +241,7 @@ function MedicalForm() {
                 checked={formData?.page1?.yes}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">YES</label>
+              <label className="md:text-2xl text-lg uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -251,7 +252,7 @@ function MedicalForm() {
                 checked={formData?.page1?.no}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">NO</label>
+              <label className="md:text-2xl text-lg uppercase text-white">{t("NO")}</label>
             </div>
           </div>
           <ProgressBar progress={progressValue_} />
@@ -260,13 +261,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={() => navigate(-1)}
             >
-              Prev
+              {t("Prev")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t("Next")}
             </button>
           </div>
         </div>
@@ -277,7 +278,7 @@ function MedicalForm() {
       {currentPage === 2 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">Q2</span> : Are you Pregnant or Nursing?
+            <span className="underline">{t("Q2")}</span>{t(": Are you Pregnant or Nursing?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-2 items-center">
@@ -289,7 +290,7 @@ function MedicalForm() {
                 checked={formData?.page2?.yes}
                 onChange={(e) => handleRadioButtons(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -300,11 +301,11 @@ function MedicalForm() {
                 checked={formData?.page2?.no}
                 onChange={(e) => handleRadioButtons(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">NO</label>
+              <label className="text-2xl uppercase text-white">{t("NO")}</label>
             </div>
           </div>
 
-          <label className="text-white">IF YES , PLEASE SELECT WHICH ONE</label>
+          <label className="text-white">{t("IF YES , PLEASE SELECT WHICH ONE")}</label>
           <div className="flex gap-10">
             <div className="flex gap-2 items-center">
               <input
@@ -316,7 +317,7 @@ function MedicalForm() {
                 disabled={formData?.page2?.no}
                 onChange={(e) => handleCheckBoxes(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">Pregnant</label>
+              <label className="text-2xl uppercase text-white">{t("Pregnant")}</label>
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -326,7 +327,7 @@ function MedicalForm() {
                 disabled={formData?.page2?.no}
                 onChange={(e) => handleCheckBoxes(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">Nursing</label>
+              <label className="text-2xl uppercase text-white">{t("Nursing")}</label>
             </div>
           </div>
           <ProgressBar progress={progressValue_} />
@@ -335,13 +336,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t("Previous")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t("Next")}
             </button>
           </div>
         </div>
@@ -353,8 +354,7 @@ function MedicalForm() {
         <>
           <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
             <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-              <span className="underline">Q3</span>: Are you a hemophiliac or on
-              any medications that may cause bleeding or hinder blood clotting?
+              <span className="underline">Q3</span>{t(": Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}
             </label>
             <div className="flex flex-col items-center gap-4">
               <div className="flex gap-2 items-center">
@@ -420,8 +420,7 @@ function MedicalForm() {
       {currentPage === 4 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">Q4</span>: Do you have any medical or
-            skin conditions?
+            <span className="underline">Q4</span>{t(": Do you have any medical or skin conditions?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-2 items-center">
@@ -486,9 +485,9 @@ function MedicalForm() {
       {currentPage === 5 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-1">
-            <span className="underline">Q5: </span> 
+            <span className="underline">Q5 </span> 
             <span>
-              {""}Do you have any communicable diseases?
+              {t(": Do you have any communicable diseases?")}
             </span>
           </label>
           <div className="flex flex-col items-center gap-4">
@@ -554,11 +553,8 @@ function MedicalForm() {
       {currentPage === 6 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
-            <span className="underline">Q6:</span>
-            <span>
-              {" "}
-              Are you under the influence of alcohol or drugs, prescribed or
-              otherwise?
+            <span className="underline">Q6</span>
+            <span>{t(": Are you under the influence of alcohol or drugs, prescribed or otherwise?")}
             </span>
           </label>
           <div className="flex flex-col items-center  gap-4">
@@ -624,8 +620,8 @@ function MedicalForm() {
       {currentPage === 7 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
-            <span className="underline">Q7:</span>
-            <span> Do you have any allergies?</span>
+            <span className="underline">Q7</span>
+            <span>{t(": Do you have any allergies?")}</span>
           </label>
           <div className="flex flex-col items-center  gap-4">
             <div className="flex gap-2 items-center">
@@ -690,7 +686,7 @@ function MedicalForm() {
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
             <span className="underline">Q8:</span>
-            <span> Do you have a heart condition, epilepsy, or diabetes?</span>
+            <span>{t(": Do you have a heart condition, epilepsy, or diabetes?")}</span>
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-2 items-center">
