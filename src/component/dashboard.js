@@ -15,8 +15,9 @@ import tooth_gold from "../assets/tooth_gold.png";
 import removal_gold from "../assets/removal_gold.png";
 import piercings_gold from "../assets/piercings_gold.png";
 import tattoo_gold from "../assets/tattoo_gold.png";
-
+import { useTranslation } from 'react-i18next';
 function Dashboard() {
+  const { t } = useTranslation();
   const { user, setUser } = React.useContext(UserContext);
   const userObject = user || {};
 
@@ -32,42 +33,42 @@ function Dashboard() {
 
   const menu = [
     {
-      name: "TATTOO",
+      name: t("TATTOO"),
       type: "tattoo",
       link: "/tattoo",
       src: Tattoo,
       activesrc: tattoo_gold,
     },
     {
-      name: "PIERCING",
+      name: t("PIERCING"),
       type: "piercing",
       link: "/piercing",
       src: piercings,
       activesrc: piercings_gold,
     },
     {
-      name: "TOOTH GEMS",
+      name: t("TOOTH GEMS"),
       type: "tooth-gems",
       link: "/tooth-gems",
       src: tooth,
       activesrc: tooth_gold,
     },
     {
-      name: "PERMANENT-MAKEUP",
+      name: t("PERMANENT-MAKEUP"),
       type: "permanent-makeup",
       link: "/permanent-makeup",
       src: microblading,
       activesrc: microblading_active,
     },
     {
-      name: "SMP",
+      name: t("SMP"),
       type: "smp",
       link: "/smp",
       src: smp,
       activesrc: smp_gold,
     },
     {
-      name: "REMOVAL",
+      name: t("REMOVAL"),
       type: "removal",
       link: "/tattoo",
       src: removal,

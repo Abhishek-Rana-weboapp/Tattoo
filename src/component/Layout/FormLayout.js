@@ -2,8 +2,9 @@ import React from 'react';
 import ProgressBar from '../ProgressBar';
 import Title from '../../assets/Title.png';
 import { useNavigate } from "react-router-dom";
-
+import { useTranslation } from 'react-i18next';
 export default function ConsentFormLayout({ children, title, progressValue, progressValue_, progressValue_count_, about }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
