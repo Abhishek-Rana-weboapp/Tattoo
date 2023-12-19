@@ -62,7 +62,7 @@ function ConsentForm() {
     <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} about="Consent form">
       <p className="text-white">{t(statements[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
-        Initials:{' '}
+        {t("Initials")}:{' '}
         <input
           type="text"
           value={initials[currentPage] || ''}

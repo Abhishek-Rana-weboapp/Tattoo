@@ -12,7 +12,9 @@ function DoctorContactForm() {
   const navigate = useNavigate();
   const [data, setdata] = useState();
   const [showPopup_, setShowPopup_] = useState(true);
-  const options = ['Yes', 'No'];
+  const yes=t("YES")
+  const No=t('No')
+  const options = [yes,No];
   const { drformData, setdrFormData } = React.useContext(UserContext);
 
   const handleInputChange = (e) => {
@@ -78,11 +80,11 @@ function DoctorContactForm() {
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
-            Do you want to update your Doctor's contact?
+           {t("Do you want to update your Doctor's contact?")}
           </p>
           <div className="flex flex-col md:flex-row gap-2 items-center">
             <label className="text-xl font-bold text-black">
-              Select an option:
+              {t("Select an option:")}
             </label>
             <select
               className="bg-black p-2 rounded-lg"
@@ -102,12 +104,12 @@ function DoctorContactForm() {
               setShowPopup_(false);
             }}
           >
-            Close Popup
+            {t("Close Popup")}
           </button>
         </Modal>
       )}
       <h1 className="text-3xl font-bold mb-4 text-yellow-500">
-        Doctor Contact Information
+        {t("Doctor Contact Information")}
       </h1>
       <form
         className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black"

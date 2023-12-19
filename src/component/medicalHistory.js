@@ -22,8 +22,9 @@ function MedicalForm() {
 
   const [showEmergencyContactPopup, setShowEmergencyContactPopup] =
     useState(true);
-
-  const options = ["Yes", "No"];
+  const yes=t("YES")
+  const No=t('No')
+  const options = [yes,No];
   const [updateEmergencyContact, setUpdateEmergencyContact] = useState(false);
   const [data, setdata] = useState();
   const [isUpdatePopupOpen, setUpdatePopupOpen] = useState(false);
@@ -366,7 +367,7 @@ function MedicalForm() {
                   checked={formData?.page3?.yes}
                   onChange={(e) => handleRadioButtons(e, "page3")}
                 />
-                <label className="text-2xl uppercase text-white">YES</label>
+                <label className="text-2xl uppercase text-white">{t("YES")}</label>
               </div>
               <div className="flex gap-2 items-center">
                 <input
@@ -383,7 +384,7 @@ function MedicalForm() {
 
             <div className="flex-col flex gap-2 items-center w-full">
               <label className="text-lg uppercase text-white">
-                If yes, please explain:
+              {t("IF YES , PLEASE SELECT WHICH ONE")}
               </label>
               <textarea
                 // type="text"
@@ -403,13 +404,13 @@ function MedicalForm() {
                 className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
                 onClick={prevPage}
               >
-                Previous
+                {t('Previous')}
               </button>
               <button
                 className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
                 onClick={nextPage}
               >
-                Next
+                {t('Next')}
               </button>
             </div>
           </div>
@@ -432,7 +433,7 @@ function MedicalForm() {
                 checked={formData?.page4?.yes}
                 onChange={(e) => handleRadioButtons(e, "page4")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -449,7 +450,7 @@ function MedicalForm() {
 
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              If yes, please explain:
+            {t("IF YES , PLEASE SELECT WHICH ONE")}
             </label>
             <textarea
             ref={textRef}
@@ -469,13 +470,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t('Previous')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t('Next')}
             </button>
           </div>
         </div>
@@ -500,7 +501,7 @@ function MedicalForm() {
                 checked={formData?.page5?.yes}
                 onChange={(e) => handleRadioButtons(e, "page5")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -517,7 +518,7 @@ function MedicalForm() {
 
           <div className="flex-col  flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              If yes, please explain:
+             {t("IF YES , PLEASE SELECT WHICH ONE")}
             </label>
             <textarea
             ref={textRef}
@@ -537,13 +538,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t('Previous')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+             {t('Next')}
             </button>
           </div>
         </div>
@@ -567,7 +568,7 @@ function MedicalForm() {
                 checked={formData?.page6?.yes}
                 onChange={(e) => handleRadioButtons(e, "page6")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className=" w-full flex gap-2 items-center">
               <input
@@ -584,7 +585,7 @@ function MedicalForm() {
 
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              If yes, please explain:
+              {t("IF YES , PLEASE SELECT WHICH ONE")}
             </label>
             <textarea
             ref={textRef}
@@ -604,13 +605,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t('Previous')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t('Next')}
             </button>
           </div>
         </div>
@@ -633,7 +634,7 @@ function MedicalForm() {
                 checked={formData?.page7?.yes}
                 onChange={(e) => handleRadioButtons(e, "page7")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -649,7 +650,7 @@ function MedicalForm() {
           </div>
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              If yes, please explain:
+              {t("IF YES , PLEASE SELECT WHICH ONE")}
             </label>
             <textarea
             ref={textRef}
@@ -669,13 +670,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t('Previous')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t('Next')}
             </button>
           </div>
         </div>
@@ -698,7 +699,7 @@ function MedicalForm() {
                 checked={formData?.page8?.yes}
                 onChange={(e) => handleRadioButtons(e, "page8")}
               />
-              <label className="text-2xl uppercase text-white">YES</label>
+              <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
             <div className="flex gap-2 items-center">
               <input
@@ -714,7 +715,7 @@ function MedicalForm() {
           </div>
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              If yes, please explain:
+              {t("IF YES , PLEASE SELECT WHICH ONE")}
             </label>
             <textarea
             ref={textRef}
@@ -734,13 +735,13 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              Previous
+              {t('Previous')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={nextPage}
             >
-              Next
+              {t('Next')}
             </button>
           </div>
         </div>

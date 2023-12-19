@@ -6,8 +6,9 @@ import { useMediaQuery } from 'react-responsive';
 import Title from "../assets/Title.png"
 import { IoMdArrowRoundBack } from "react-icons/io";
 //const { user, setUser } = React.useContext(UserContext);
-
+import { useTranslation } from 'react-i18next';
 const ToothGems = () => {
+  const { t } = useTranslation();
   const { user, setUser } = React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   var data
@@ -93,8 +94,8 @@ const ToothGems = () => {
   return (
     <div className='flex flex-col gap-3 items-center'>
       {/* <img src={Title} className='md:w-3/5 mt-5' ></img> */}
-      <label className=' text-white md:text-4xl font-bold uppercase'>Tooth gem</label>
-      <label className=' text-white md:text-3xl font-bold uppercase'>Select a Tooth</label>
+      <label className=' text-white md:text-4xl font-bold uppercase'>{t('Tooth gem')}</label>
+      <label className=' text-white md:text-3xl font-bold uppercase'>{t('Select a Tooth')}</label>
       <canvas
         ref={canvasRef}
         width={isMobile ? 300 : 500}
@@ -108,7 +109,7 @@ const ToothGems = () => {
         className={`yellowButton py-2 px-${isMobile ? '3' : '5'} rounded-3xl font-bold mb-2 mr-2`}
         onClick={handleImageUpload}
         >
-        Upload
+        {t('Upload')}
       </button>
 
       <button
@@ -116,7 +117,7 @@ const ToothGems = () => {
         onClick={handlePrev}
       >
         <IoMdArrowRoundBack/>
-        Prev
+        {t('Prev')}
       </button>
       {/* <div>
         <h1>Uploaded image</h1>

@@ -117,15 +117,15 @@ function Login() {
           <div className='flex gap-2 justify-between'>
             <div className='flex gap-2 text-white'>
               <input type='checkbox'/>
-              'Remember me?'
+              Remember me?
             </div>
             <div className='flex gap-2'>
-        <NavLink to="/signup" className={" no-underline w-max text-white"}>"Signup"  </NavLink>
-        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>"Forgot Password?"</NavLink>
+        <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
+        <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink>
             </div>
           </div>
           <button className='yellowButton py-2 px-8 rounded-3xl font-bold '>
-          'login'
+          login
           </button>
           
         </form>

@@ -13,7 +13,9 @@ function EmergencyContactForm() {
   const { emerformData, setemerFormData } = React.useContext(UserContext);
   const [data, setdata] = useState()
   const [showPopup_, setShowPopup_] = useState(true);
-  const options = ['yes', 'No',];
+  const yes=t("YES")
+  const No=t('No')
+  const options = [yes,No];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setemerFormData({ ...emerformData, [name]: value });
@@ -79,9 +81,9 @@ function EmergencyContactForm() {
       {/* <img src={Title} className="w-4/5 md:w-2/6  mb-8" alt="Logo" /> */}
       {showPopup_ && (
         <Modal>
-          <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
+          <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your medical history?")}</p>
           <div className="flex gap-2">
-            <label className="text-xl font-bold text-black">Select an option:</label>
+            <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
             <select className="bg-black p-2 rounded-lg" onChange={(e) => handleUpdatedata(e.target.value)}>
               <option value="">Select...</option>
               {options.map((option, index) => (
@@ -92,7 +94,7 @@ function EmergencyContactForm() {
             </select>
           </div>
           <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold text-black" onClick={() => setShowPopup_(false)}>
-            Close Popup
+          {t("Close Popup")}
           </button>
         </Modal>
       )}

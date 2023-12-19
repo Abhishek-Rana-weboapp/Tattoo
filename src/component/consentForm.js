@@ -210,8 +210,8 @@ const ConsentFormGuard = () => {
         ref={signatureRef}
       />
       <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
-        <button type="button" style={{ background: '#e74c3c', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginRight: '10px' }} onClick={handleClear}>Clear</button>
-        <button type="button" style={{ background: '#2ecc71', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} onClick={handleSave}>Save</button>
+        <button type="button" style={{ background: '#e74c3c', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer', marginRight: '10px' }} onClick={handleClear}>{t('Clear')}</button>
+        <button type="button" style={{ background: '#2ecc71', color: 'white', padding: '8px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} onClick={handleSave}>{t('Save')}</button>
       </div>
 
       {signatureImage && (
@@ -222,7 +222,7 @@ const ConsentFormGuard = () => {
 
       {signatureImage && (
         <button type="button" style={{ marginTop: '10px', padding: '8px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleSubmit}>
-          Submit Signature
+          {t('Submit Signature')}
         </button>
       )}
     </div>
@@ -237,7 +237,7 @@ const ConsentFormGuard = () => {
 
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techSignature">{t("Technician's Signature:")}</label>
-          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >add signature</button>
+          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
 
 
 
@@ -254,7 +254,7 @@ const ConsentFormGuard = () => {
           <h2>{t("Client's Signature")}</h2>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignature">{t("Signature:")}</label>
-          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >add signature</button>
+          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignatureDate">Date (MM/DD/YYYY):</label>
           <input type="text" id="clientSignatureDate" name="clientSignatureDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
