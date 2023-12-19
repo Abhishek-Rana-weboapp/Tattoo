@@ -50,10 +50,10 @@ function TermsOfService() {
 
   // Return the JSX structure
   return (
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={3} about="Terms of Service">
+    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={3} about={t("Terms of Service")}>
       <p className="text-white">{t(pageContents[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
-        Initials:
+        {t('Initials')}:
         <input
           type="text"
           value={initials[currentPage] || ''}
@@ -67,13 +67,13 @@ function TermsOfService() {
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
           onClick={prevPage}
         >
-          Previous
+          {t("Previous")}
         </button>
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
           onClick={nextPage}
         >
-          Next
+          {t("Next")}
         </button>
       </div>
 

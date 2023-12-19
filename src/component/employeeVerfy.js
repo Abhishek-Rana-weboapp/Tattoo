@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
+import { useTranslation } from 'react-i18next';
 const IDVerificationComponent = () => {
-  
+  const { t } = useTranslation();
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ const IDVerificationComponent = () => {
   return (
     
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> ID Verification</h1>
+      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
       {idPhoto && (
         <img
@@ -132,10 +133,10 @@ const IDVerificationComponent = () => {
           fontSize: '16px',
         }}
       >
-        Upload ID Photo
+        {t("Upload ID Photo")}
       </label>
 
-      {isSubmitDisabled ? <p>Please upload your ID photo before submitting.</p> : null}
+      {isSubmitDisabled ? <p>{t("Please upload your ID photo before submitting.")}</p> : null}
 
       <button
         onClick={handleSubmit}
@@ -150,7 +151,7 @@ const IDVerificationComponent = () => {
           fontSize: '16px',
         }}
       >
-        Submit
+        {t("Submit")}
       </button>
       <div className='w-full h-10' >
        
