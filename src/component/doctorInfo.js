@@ -73,7 +73,6 @@ function DoctorContactForm() {
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      {/* <img src={Title} className="w-4/5 md:w-2/6 mb-8" alt="Logo" /> */}
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
@@ -109,11 +108,14 @@ function DoctorContactForm() {
         Doctor Contact Information
       </h1>
       <form
-        className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black"
+        className="bg-gray-800 p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black"
         onSubmit={handleSubmit}
       >
-        <div>
-          <label>Name:</label>
+        <div className='flex flex-col items-center gap-4 flex-1'>
+
+        
+        <div className='w-2/6 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">Name:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -123,8 +125,9 @@ function DoctorContactForm() {
             required
           />
         </div>
-        <div>
-          <label>Phone #:</label>
+        
+        <div className='w-2/6 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">Phone #:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
@@ -134,8 +137,8 @@ function DoctorContactForm() {
             required
           />
         </div>
-        <div>
-          <label>City:</label>
+        <div className='w-2/6 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">City:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -143,10 +146,10 @@ function DoctorContactForm() {
             value={drformData.city}
             onChange={handleInputChange}
             required
-          />
+            />
         </div>
-        <div>
-          <label>State:</label>
+        <div className='w-2/6 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">State:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -158,19 +161,19 @@ function DoctorContactForm() {
         </div>
 
         <div>
-          <label>
+          <label className="text-white font-semibold text-md">
             Use Doctor Recommendation:
             <input
               type="checkbox"
               name="useDoctorRecommendation"
               checked={drformData.useDoctorRecommendation}
               onChange={handleInputChange}
-            />
+              />
           </label>
         </div>
 
         {drformData.useDoctorRecommendation && (
-          <div>
+          <div className='text-white font-semibold text-md'>
             <h2>Doctor Information:</h2>
             <p>
               Carbon Health Urgent Care of Hialeah
@@ -181,6 +184,7 @@ function DoctorContactForm() {
             </p>
           </div>
         )}
+          </div>
         <div className="mt-4 flex justify-between">
           <button
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"

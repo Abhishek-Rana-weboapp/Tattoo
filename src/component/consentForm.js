@@ -116,14 +116,11 @@ const ConsentFormGuard = () => {
     } catch (error) {
       console.error('Error:', error);
     }
-
- 
-
   }
 
   return (
     <div className="w-full h-full flex flex-col items-center bg-black p-8 text-white">
-    <img src={Title} className="w-3/5 mb-8" alt="Logo" />
+    
     <h1 className="text-3xl font-bold mb-4 text-yellow-500">Consent Form</h1>
     <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black">
 

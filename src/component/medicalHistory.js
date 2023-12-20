@@ -226,6 +226,8 @@ function MedicalForm() {
 
       {currentPage === 1 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
             <span className="underline">Q1</span> : Have you ever been tattooed
             before?
@@ -239,7 +241,7 @@ function MedicalForm() {
                 value="yes"
                 checked={formData?.page1?.yes}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
-              />
+                />
               <label className="md:text-2xl text-lg uppercase text-white">YES</label>
             </div>
             <div className="flex gap-2 items-center">
@@ -250,11 +252,13 @@ function MedicalForm() {
                 value="no"
                 checked={formData?.page1?.no}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
-              />
+                />
               <label className="md:text-2xl text-lg uppercase text-white">NO</label>
             </div>
           </div>
-          <ProgressBar progress={progressValue_} />
+                </div>
+          <ProgressBar progress={progressValue_} count={8} />
+
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -276,6 +280,8 @@ function MedicalForm() {
 
       {currentPage === 2 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
             <span className="underline">Q2</span> : Are you Pregnant or Nursing?
           </label>
@@ -329,7 +335,8 @@ function MedicalForm() {
               <label className="text-2xl uppercase text-white">Nursing</label>
             </div>
           </div>
-          <ProgressBar progress={progressValue_} />
+            </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -352,6 +359,8 @@ function MedicalForm() {
       {currentPage === 3 && (
         <>
           <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
             <label className="uppercase text-white md:text-2xl text-md md:font-bold">
               <span className="underline">Q3</span>: Are you a hemophiliac or on
               any medications that may cause bleeding or hinder blood clotting?
@@ -397,7 +406,8 @@ function MedicalForm() {
                 }
               />
             </div>
-            <ProgressBar progress={progressValue_} />
+              </div>
+            <ProgressBar progress={progressValue_} count={8} />
             <div className=" w-full flex justify-between">
               <button
                 className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -419,6 +429,8 @@ function MedicalForm() {
       {/* Page 4 */}
       {currentPage === 4 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
             <span className="underline">Q4</span>: Do you have any medical or
             skin conditions?
@@ -454,17 +466,18 @@ function MedicalForm() {
             </label>
             <textarea
             ref={textRef}
-              // type="text"
-              name="page4-explanation"
-              className="w-full p-2 rounded-lg focus:outline-yellow-500"
-              disabled={!formData?.page4?.yes ? true : false}
-              value={formData?.page4?.explanation}
+            // type="text"
+            name="page4-explanation"
+            className="w-full p-2 rounded-lg focus:outline-yellow-500"
+            disabled={!formData?.page4?.yes ? true : false}
+            value={formData?.page4?.explanation}
               onChange={(e) =>
                 handleInputChange("page4", "explanation", e.target.value)
               }
             />
           </div>
-          <ProgressBar progress={progressValue_} />
+            </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -485,6 +498,8 @@ function MedicalForm() {
       {/* Page 5 */}
       {currentPage === 5 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-1">
             <span className="underline">Q5: </span> 
             <span>
@@ -522,17 +537,18 @@ function MedicalForm() {
             </label>
             <textarea
             ref={textRef}
-              type="text"
-              name="page5-explanation"
+            type="text"
+            name="page5-explanation"
               className="w-full p-2 rounded-lg focus:outline-yellow-500"
               disabled={!formData?.page5?.yes ? true : false}
               value={formData?.page5?.explanation}
               onChange={(e) =>
                 handleInputChange("page5", "explanation", e.target.value)
               }
-            />
+              />
           </div>
-          <ProgressBar progress={progressValue_} />
+              </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -553,6 +569,8 @@ function MedicalForm() {
       {/* Page 6 */}
       {currentPage === 6 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
             <span className="underline">Q6:</span>
             <span>
@@ -570,7 +588,7 @@ function MedicalForm() {
                 value="yes"
                 checked={formData?.page6?.yes}
                 onChange={(e) => handleRadioButtons(e, "page6")}
-              />
+                />
               <label className="text-2xl uppercase text-white">YES</label>
             </div>
             <div className=" w-full flex gap-2 items-center">
@@ -581,7 +599,7 @@ function MedicalForm() {
                 value="no"
                 checked={formData?.page6?.no}
                 onChange={(e) => handleRadioButtons(e, "page6")}
-              />
+                />
               <label className="text-2xl uppercase text-white">NO</label>
             </div>
           </div>
@@ -602,7 +620,8 @@ function MedicalForm() {
               }
             />
           </div>
-          <ProgressBar progress={progressValue_} />
+              </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -623,6 +642,8 @@ function MedicalForm() {
       {/* Page 7 */}
       {currentPage === 7 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
             <span className="underline">Q7:</span>
             <span> Do you have any allergies?</span>
@@ -657,17 +678,18 @@ function MedicalForm() {
             </label>
             <textarea
             ref={textRef}
-              type="text"
-              className="w-full p-2 rounded-lg focus:outline-yellow-500"
-              name="page7-explanation"
-              disabled={!formData?.page7?.yes ? true : false}
-              value={formData?.page7?.explanation}
-              onChange={(e) =>
-                handleInputChange("page7", "explanation", e.target.value)
-              }
+            type="text"
+            className="w-full p-2 rounded-lg focus:outline-yellow-500"
+            name="page7-explanation"
+            disabled={!formData?.page7?.yes ? true : false}
+            value={formData?.page7?.explanation}
+            onChange={(e) =>
+              handleInputChange("page7", "explanation", e.target.value)
+            }
             />
           </div>
-          <ProgressBar progress={progressValue_} />
+            </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -688,6 +710,8 @@ function MedicalForm() {
       {/* Page 8 */}
       {currentPage === 8 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
+          <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
             <span className="underline">Q8:</span>
             <span> Do you have a heart condition, epilepsy, or diabetes?</span>
@@ -712,7 +736,7 @@ function MedicalForm() {
                 value="no"
                 checked={formData?.page8?.no}
                 onChange={(e) => handleRadioButtons(e, "page8")}
-              />
+                />
               <label className="text-2xl uppercase text-white">NO</label>
             </div>
           </div>
@@ -730,9 +754,10 @@ function MedicalForm() {
               onChange={(e) =>
                 handleInputChange("page8", "explanation", e.target.value)
               }
-            />
+              />
           </div>
-          <ProgressBar progress={progressValue_} />
+              </div>
+          <ProgressBar progress={progressValue_} count={8} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

@@ -17,7 +17,7 @@ import piercings_gold from "../assets/piercings_gold.png";
 import tattoo_gold from "../assets/tattoo_gold.png";
 
 function Dashboard() {
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser ,isVisible , setIsVisible} = React.useContext(UserContext);
   const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
@@ -25,6 +25,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
+    setIsVisible(true)
     if(user.selectedTattooType !== null){
       setUser({...user , selectedTattooType : null})
     }
@@ -76,8 +77,7 @@ function Dashboard() {
   ];
 
   return (
-    <div className="w-3/4 h-full flex flex-col justify-center items-center">
-      {/* <img src={Title} className="md:w-4/5 sm:w-4/5 w-full mt-4"></img> */}
+    <div className="w-3/4 h-full flex flex-col gap-5 justify-center items-center">
       <div className="grid grid-cols-2 gap-5 w-full">
         {menu.map((menu, index) => {
           return (

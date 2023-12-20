@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Login from './component/login';
 import SignUp from './component/signup';
 import ForgetPassword from './component/forgetPassword';
@@ -74,100 +74,21 @@ import SignaturePad_see from './component/signature_see';
 import JewelleryPiercing from './component/piercingdashboard/jweleryPiercing';
 
 import Title from "./assets/Title.png"
+import LogoWrapper from './component/wrapper/LogoWrapper';
+import RoutesComponent from './routes/RoutesComponent';
 
 function App() {
+
+  // const location = useLocation()
+  // console.log(location)
   return (
     <UserContextProvider>
     <Router>
       <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto p-2 gap-2" style={{height : "100dvh"}}>
-          <div className='flex justify-center'>
+          {/* <div className='flex justify-center'>
         <img src={Title} className='w-4/5 md:w-2/5'></img>
-          </div>
-        <Routes>\
-          <Route exact path="/" element={<Login />} />
-          <Route exact path="/signup" element={<SignUp />} />\
-          <Route exact path="/forget_password" element={<ForgetPassword />} />
-          <Route exact path="/reset_password" element={<Resetpassword/>} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
-          <Route exact path="/tattoo" element={<TattooDashboard />} />
-          <Route exact path="/head" element={<HeadTattoo />} />
-          <Route exact path="/face" element={<FaceDashboard />} />
-          <Route exact path="/forehead" element={<Forehead />} />
-          <Route exact path="/neck" element={<Neck />} />
-          <Route exact path="/face-temple" element={<FaceTemple />} />
-
-          <Route exact path="/eyebrow" element={<Eyebrow />} />
-          <Route exact path="/eyelid" element={<Eyelid />} />
-          <Route exact path="/nose" element={<Nose />} />
-          <Route exact path="/cheeks" element={<Cheeks />} />
-          <Route exact path="/lip" element={<Lip />} />
-          <Route exact path="/jaw" element={<Jaw />} />
-          <Route exact path="/upper-chest" element={<UnderChest />} />
-          <Route exact path="/scalp" element={<Scalp />} />
-          <Route exact path="/ear" element={<Ear />} />
-          <Route exact path="/ear-dashboard" element={<EarDashboard />} />
-          <Route exact path="/chest" element={<ChestDeshboard />} />
-          <Route exact path="/under-chest" element={<ChestInside />} />
-          <Route exact path="/torso" element={<Torso />} />
-          <Route exact path="/back" element={<Back />} />
-          <Route exact path="/arm" element={<Arm />} />
-          <Route exact path="/arm-dashboard" element={<ArmDashboard />} />
-          <Route exact path="/arm-inside" element={<ArmInside />} />
-          <Route exact path="/hand" element={<Hand />} />
-          <Route exact path="/hand-inside" element={<HandInside />} />
-          <Route exact path="/hip" element={<Hip />} />
-          <Route exact path="/glute" element={<Glute />} />
-          <Route exact path="/pelvic" element={<Pelvic />} />
-          <Route exact path="/leg" element={<Leg />} />
-          <Route exact path="/nipple" element={<Nipple />} />
-          <Route exact path="/leg-dashboard" element={<LegDashboard />} />
-          <Route exact path="/leginside" element={<LegInside />} />
-          <Route exact path="/foot" element={<Foot />} />
-          <Route exact path="/foot-dashboard" element={<FootDashboard />} />
-          <Route exact path="/temple" element={<FaceTemple />} />
-          
-          <Route exact path="/piercing" element={<Piercing />} />
-
-          <Route exact path="/belly-piercing" element={<BellyPiercing />} />
-          <Route exact path="/ear-piercing" element={<EarPiercing />} />
-          <Route exact path="/facial-piercing" element={<FacialPiercing />} />
-          <Route exact path="/jewellery-piercing" element={<JewelleryPiercing />} />
-          <Route exact path="/nipple-piercing" element={<NipplePiercing />} />
-          <Route exact path="/nose-piercing" element={<NosePiercing />} />
-          <Route exact path="/oral-piercing" element={<OralPiercing />} />
-          <Route exact path="/surface-piercing" element={<SurfacePiercing />} />
-          <Route exact path="/vaginal-piercing" element={<VaginalPiercing />} />
-
-
-          <Route exact path="/tooth-gems" element={<ToothGem />} />
-          <Route exact path="/permanent-makeup" element={<PermanentMakeup />} />
-          <Route exact path="/smp" element={<HairLossPatternSelection />} />
-          <Route exact path="/medical-form" element={<MedicalForm />} />
-          <Route exact path="/emergency-contact" element={<EmergencyContactForm />} />
-          <Route exact path="/doctor-info" element={<DoctorContactForm />} />
-          <Route exact path="/consent" element={<ConsentForm />} />
-          <Route exact path="/harmless-agreement" element={<HoldHarmlessAgreement />} />
-          <Route exact path="/term" element={<TermsOfService />} />
-
-
-          <Route exact path="/verify" element={<IDVerificationComponent />} />
-          <Route exact path="/consent-guard" element={<ConsentFormGuard />} />
-          <Route exact path="/admin" element={<AdminDashboard />} />
-
-          <Route exact path="/medical-review" element={<MedicalReview />} />
-          <Route exact path="/price" element={<PriceServices />} />
-          <Route exact path="/select" element={<TattooComponent />} />
-
-          <Route exact path="/skin" element={<SkinCondition />} />
-
-
-          <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
-          <Route exact path="/CalculateBilling" element={<CalculateBilling/>}/>
-          <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
-          <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
-
-
-        </Routes>
+          </div> */}
+      <RoutesComponent />
       </div>
     </Router>
     </UserContextProvider>

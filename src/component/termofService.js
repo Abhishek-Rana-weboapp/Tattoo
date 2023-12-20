@@ -45,16 +45,17 @@ function TermsOfService() {
 
   // Navigate to the next page
   const nextPage = () => {
-    if (currentPage < totalPages) {
+    if (currentPage < totalPages && currentPage !== 3) {
       setProgressValue_(progressValue_ + 1);
       setCurrentPage(currentPage + 1);
-    } else if (currentPage === 3) {
+    }if (currentPage === 3) {
       navigate('/verify');
     }
   };
 
   // Navigate to the previous page
   const prevPage = () => {
+    if(currentPage === 1) navigate(-1)
     if (currentPage > 1) {
       setProgressValue_(progressValue_ - 1);
       setCurrentPage(currentPage - 1);
@@ -63,18 +64,22 @@ function TermsOfService() {
 
   // Return the JSX structure
   return (
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={3} about="Terms of Service">
+    <ConsentFormLayout title=""  about="Terms of Service">
+      <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
+
       <p className="text-white">{pageContents[currentPage - 1]}</p>
-      <label className="block mt-4 text-white">
-        Initials:
+      <label className="block mt-2 text-white">
+        Initials : {" "}
         <input
           type="text"
           value={initials[currentPage] || ''}
           
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
           className="bg-gray-700 text-white p-2 rounded-md"
-        />
+          />
         </label>
+          </div>
+          <ProgressBar progress={progressValue_} count={3} />
         <div className="flex justify-between mt-4">
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

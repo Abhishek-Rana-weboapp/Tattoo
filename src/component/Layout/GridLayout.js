@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Title from "../../assets/Title.png"
 import CustomButton from "../buttons/CustomButton";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../navigation/Navigation";
+import UserContext from "../../context/UserContext";
 
 export default function GridLayout({children , title, onChange,selected, otherFieldValue }) {
 
+  const {isVisible , setIsVisible } = useContext(UserContext)
+  useEffect(()=>{
+     setIsVisible(true)
+  },[])
   const navigate = useNavigate()
   return (
     <div className="w-full h-full flex flex-col  gap-4 items-center">
