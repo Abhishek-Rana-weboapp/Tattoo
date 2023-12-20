@@ -17,7 +17,7 @@ function DoctorContactForm() {
   const yes=t("YES")
   const No=t('No')
   const options = [yes,No];
-  const { drformData, setdrFormData } = React.useContext(UserContext);
+  const { drformData, setdrFormData, setIsVisible } = React.useContext(UserContext);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -44,6 +44,7 @@ function DoctorContactForm() {
   };
 
   useEffect(() => {
+    setIsVisible(true)
     fetchData();
   }, []);
 

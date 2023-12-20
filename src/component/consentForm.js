@@ -1,15 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import { useTranslation } from 'react-i18next';
+import UserContext from '../context/UserContext';
 
 const ConsentFormGuard = () => {
   const { t } = useTranslation();
   var progressValue = 100;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [showPopup,setShowPopup] =useState(null);
+  const {setIsVisible} = useContext(UserContext)
 
   const [signature_type,setsignature_type]=useState(null);
 
@@ -33,6 +35,10 @@ const ConsentFormGuard = () => {
     clientSignature: '',
     clientSignatureDate: '',
   });
+
+  useEffect(()=>{
+    setIsVisible(true)
+  },[])
 
   const handleInputChange = (event) => {
   
@@ -125,7 +131,7 @@ const ConsentFormGuard = () => {
   return (
     <div className="w-full h-full flex flex-col items-center bg-black p-8 text-white">
     <h1 className="text-3xl font-bold mb-4 text-yellow-500">{t("Consent Form")}</h1>
-    <form className="bg-white p-6 rounded-md shadow-md w-4/5 text-black">
+    <form className="bg-gray-800 p-6 rounded-md shadow-md w-4/5">
 
     <section style={{ margin: '10px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
   <div style={{ flex: '1' }}>
