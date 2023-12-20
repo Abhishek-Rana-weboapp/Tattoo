@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import Title_logo from "../assets/Title_logo.png"
 
 
 function ResetPassword() {
@@ -54,61 +55,109 @@ function ResetPassword() {
   };
 
   return (
-    <div
-      className="container h-100"
-      style={{
-        backgroundColor: '#f5f5f5',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-      }}
-    >
-      <div className="mb-5">
-        <h3>Reset Password</h3>
-      </div>
-      <div className="col-md-6">
-        <form onSubmit={handleFormSubmit}>
-          <div className="mb-3">
-            <label htmlFor="Password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="Password"
-              placeholder="Enter Password"
-              value={psw}
-              onChange={(e) => setpsw(e.target.value)}
-            />
-            <label htmlFor="confirm_Password" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirm_Password"
-              placeholder="Confirm Password"
-              value={confirm_psw}
-              onChange={(e) => setconfirm_psw(e.target.value)}
-            />
-          </div>
 
-          <button type="submit" className="btn btn-primary">
+    <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+    <img src={Title_logo} className="w-3/6 md:w-1/6"></img>
+    <label className="text-yellow-500 text-xl font-bold uppercase underline">
+      Reset Password{" "}
+    </label>
+
+    <div className="col-md-6">
+      <form
+        className="flex flex-col gap-3 justify-between"
+        onSubmit={handleFormSubmit}
+      >
+        <div className="flex flex-col gap-2 items-center">
+          <input
+            type="password"
+            className="p-2 rounded-lg w-full"
+            id="Password"
+            placeholder="Enter New Password"
+            value={psw}
+            onChange={(e) => setpsw(e.target.value)}
+          />
+          <input
+            type="password"
+            className="p-2 rounded-lg w-full"
+            id="confirm_password"
+            placeholder="Confirm Password"
+            value={confirm_psw}
+            onChange={(e) => setconfirm_psw(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-3">
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
             Reset Password
           </button>
 
-          <Link to="/">Remember your password ?  Log in</Link>
-        </form>
-        {responseMessage && (
-          <div className="alert alert-info mt-3">
-            {responseMessage}
-          </div>
-        )}
-      </div>
+          <Link to="/login" className="text-right">
+            Remember your password? Log in
+          </Link>
+        </div>
+      </form>
+      {responseMessage && (
+        <div className="alert alert-info mt-3">{responseMessage}</div>
+      )}
     </div>
+  </div>
+    
   );
 }
 
 export default ResetPassword;
+
+
+// <div
+//       className="container h-100"
+//       style={{
+//         backgroundColor: '#f5f5f5',
+//         display: 'flex',
+//         flexDirection: 'column',
+//         justifyContent: 'center',
+//         alignItems: 'center',
+//         minHeight: '100vh',
+//       }}
+//     >
+//       <div className="mb-5">
+//         <h3>Reset Password</h3>
+//       </div>
+//       <div className="col-md-6">
+//         <form onSubmit={handleFormSubmit}>
+//           <div className="mb-3">
+//             <label htmlFor="Password" className="form-label">
+//               Password
+//             </label>
+//             <input
+//               type="password"
+//               className="form-control"
+//               id="Password"
+//               placeholder="Enter Password"
+//               value={psw}
+//               onChange={(e) => setpsw(e.target.value)}
+//             />
+//             <label htmlFor="confirm_Password" className="form-label">
+//               Confirm Password
+//             </label>
+//             <input
+//               type="password"
+//               className="form-control"
+//               id="confirm_Password"
+//               placeholder="Confirm Password"
+//               value={confirm_psw}
+//               onChange={(e) => setconfirm_psw(e.target.value)}
+//             />
+//           </div>
+
+//           <button type="submit" className="btn btn-primary">
+//             Reset Password
+//           </button>
+
+//           <Link to="/">Remember your password ?  Log in</Link>
+//         </form>
+//         {responseMessage && (
+//           <div className="alert alert-info mt-3">
+//             {responseMessage}
+//           </div>
+//         )}
+//       </div>
+//     </div>
