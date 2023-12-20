@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Title_logo from "../assets/Title_logo.png"
 import { PiUserCircleFill } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import Button_bg from "../assets/Button_bg.png"
-
+import UserContext from '../context/UserContext';
 
 
 function Login() {
@@ -18,6 +18,11 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const {isVisible, setIsVisible} = useContext(UserContext)
+
+  useEffect(()=>{
+     setIsVisible(false)
+   },[])
 
 
   const buttonStyle = {
@@ -82,9 +87,9 @@ function Login() {
     console.log(Button_bg)    
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>
-      <img src={Title_logo} className=' w-1/6' alt="Title Logo" />
-      <h1 className='text-white font-bold'>login</h1> {/* Use translation key */}
-      <div className="col-md-6">
+      <img src={Title_logo} className='w-3/6 md:w-1/6'></img>
+    <h1 className='text-white font-bold md:text-2xl text-lg'>LOGIN</h1>
+        <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
 

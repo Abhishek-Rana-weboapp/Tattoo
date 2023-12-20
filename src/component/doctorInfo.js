@@ -76,7 +76,6 @@ function DoctorContactForm() {
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      {/* <img src={Title} className="w-4/5 md:w-2/6 mb-8" alt="Logo" /> */}
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
@@ -112,11 +111,15 @@ function DoctorContactForm() {
         {t("Doctor Contact Information")}
       </h1>
       <form
-        className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black"
-        onSubmit={handleSubmit}
+               className="bg-gray-800 p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
+               onSubmit={handleSubmit}
       >
-        <div>
-          <label>{t("Name")}</label>
+        <div className='flex flex-col items-center gap-4 flex-1'>
+
+        
+<div className='w-2/5 flex justify-between items-center'>
+  <label className="text-white font-semibold text-md">{t("Name")}</label>
+ 
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -126,8 +129,9 @@ function DoctorContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("Phone #")}:</label>
+        
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("Phone #")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
@@ -137,8 +141,9 @@ function DoctorContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("City")}:</label>
+        
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("City")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -148,8 +153,9 @@ function DoctorContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("State")}:</label>
+        
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("State")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -160,8 +166,8 @@ function DoctorContactForm() {
           />
         </div>
 
-        <div>
-          <label>
+        <div>         
+           <label className="text-white font-semibold text-md">
             {t("Use Doctor Recommendation")}
             <input
               type="checkbox"
@@ -173,7 +179,7 @@ function DoctorContactForm() {
         </div>
 
         {drformData.useDoctorRecommendation && (
-          <div>
+          <div className='text-white font-semibold text-md'>
             <h2>{t("Doctor Information")}</h2>
             <p>
               {t("Carbon Health Urgent Care of Hialeah")}
@@ -184,15 +190,16 @@ function DoctorContactForm() {
             </p>
           </div>
         )}
-        <div className="mt-4 flex justify-between">
+          </div>
+        <div className="w-full flex justify-between">
           <button
-            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
+            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4 text-black"
             onClick={handlePrev}
           >
             Prev
           </button>
          <button
-          className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold mt-4"
+          className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold mt-4 text-black"
           type="submit"
         >
           Submit

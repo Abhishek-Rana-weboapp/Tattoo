@@ -51,9 +51,11 @@ const UserContextProvider = ({children})=>{
         useDoctorRecommendation: false,
       });
       const [initials, setInitials] = useState({});
+      const [isVisible , setIsVisible] = useState(false)
+
 
     return (
-        <UserContext.Provider value={{user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials}}>
+        <UserContext.Provider value={{isVisible , setIsVisible ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials}}>
             {children}
 
         </UserContext.Provider>

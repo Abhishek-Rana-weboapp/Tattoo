@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
@@ -9,8 +9,14 @@ const IDVerificationComponent = () => {
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { user, formData, emerformData, drformData } = React.useContext(UserContext);
+  const { user, formData, emerformData, drformData, setIsVisible } = React.useContext(UserContext);
+  const fileInputRef = useRef(null);
 
+  useEffect(()=>{
+    setIsVisible(true)
+  },[])
+  
+  
   const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   console.log("userdata====",user)
@@ -99,10 +105,14 @@ const IDVerificationComponent = () => {
     }
   };
 
+  const handleButton = ()=>{
+    fileInputRef?.current?.click()
+ }
+
   return (
     
-    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
+    <div className="w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white">
+    <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
       {idPhoto && (
         <img
@@ -113,49 +123,33 @@ const IDVerificationComponent = () => {
         />)
       }
 
-      <input
+      
+<input
         type="file"
-        accept="image/*"
+        accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+        ref={fileInputRef}
+        style={{ display: "none" }} // Hide the input element
         onChange={handlePhotoUpload}
-        style={{ display: 'none' }}
-        id="photoInput"
       />
-
-      <label
-        htmlFor="photoInput"
-        style={{
-          backgroundColor: '#0077b6',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          cursor: 'pointer',
-          margin: '10px',
-          fontSize: '16px',
-        }}
+      <button
+        className="flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 hover:cursor-pointer p-2 font-semibold hover:scale-105 ease-in-out duration-300"
+        onClick={handleButton}
       >
         {t("Upload ID Photo")}
-      </label>
+      </button>
+
 
       {isSubmitDisabled ? <p>{t("Please upload your ID photo before submitting.")}</p> : null}
 
       <button
         onClick={handleSubmit}
         disabled={isSubmitDisabled}
-        style={{
-          backgroundColor: '#0077b6',
-          color: 'white',
-          padding: '10px 20px',
-          border: 'none',
-          cursor: 'pointer',
-          margin: '10px',
-          fontSize: '16px',
-        }}
+        className="flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 p-2 hover:cursor-pointer font-semibold hover:scale-105 ease-in-out duration-300"
+
       >
-        {t("Submit")}
+      {t("Submit")}
       </button>
-      <div className='w-full h-10' >
-       
-       </div>
+    
     </div>
   );
 };

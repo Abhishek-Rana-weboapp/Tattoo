@@ -78,7 +78,6 @@ function EmergencyContactForm() {
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
-      {/* <img src={Title} className="w-4/5 md:w-2/6  mb-8" alt="Logo" /> */}
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your medical history?")}</p>
@@ -99,10 +98,11 @@ function EmergencyContactForm() {
         </Modal>
       )}
       <h1 className="text-3xl font-bold mb-4 text-yellow-500">Emergency Contact Information</h1>
-      <form className="bg-white p-6 rounded-md shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
- 
-        <div>
-          <label>{t("Name")}</label>
+      <form className="bg-gray-800 p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
+      <div className='flex flex-col gap-3 flex-1 items-center'>
+
+      <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("Name")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -112,8 +112,8 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("Phone #")}:</label>
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("Phone #")}:</label>
           <input
            className="bg-gray-700 text-white rounded-md m-1 p-1 "
             type="text"
@@ -123,8 +123,8 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("City")}</label>
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("City")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -134,8 +134,8 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div>
-          <label>{t("State")}</label>
+        <div className='w-2/5 flex justify-between items-center'>
+          <label className="text-white font-semibold text-md">{t("State")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1"
             type="text"
@@ -144,6 +144,7 @@ function EmergencyContactForm() {
             onChange={handleInputChange}
             required
           />
+        </div>
         </div>
         <div className='flex justify-between'>
         <button

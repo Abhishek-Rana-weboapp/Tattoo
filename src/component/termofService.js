@@ -45,12 +45,15 @@ function TermsOfService() {
     if (currentPage > 1) {
       setProgressValue_(progressValue_ - 1);
       setCurrentPage(currentPage - 1);
+    }if(currentPage === 1){
+      navigate(-1)
     }
   };
 
   // Return the JSX structure
   return (
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={3} about={t("Terms of Service")}>
+    <ConsentFormLayout title=""  about="Terms of Service">
+      <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
       <p className="text-white">{t(pageContents[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
         {t('Initials')}:
@@ -62,6 +65,8 @@ function TermsOfService() {
           className="bg-gray-700 text-white p-2 rounded-md"
         />
         </label>
+        </div>
+        <ProgressBar progress={progressValue_} count={3} />
         <div className="flex justify-between mt-4">
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -77,7 +82,6 @@ function TermsOfService() {
         </button>
       </div>
 
-     
     </ConsentFormLayout>
   );
 }
