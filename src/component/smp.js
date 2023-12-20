@@ -23,11 +23,11 @@ import SmpCard from './card/SmpCard';
 import GridLayout from './Layout/GridLayout';
 import SixGridLayout from './Layout/SixGridLayout';
 import Navigation from './navigation/Navigation';
-
+import { useTranslation } from 'react-i18next';
 
 const HairLossPatternSelection = () => {
   const progressValue = 30;
-
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { selectedPattern, setSelectedPattern } = React.useContext(UserContext);
   const [selected, setSelected] = useState()
@@ -61,7 +61,7 @@ const HairLossPatternSelection = () => {
     //   <h1>Which image most closely resembles your hair loss pattern?</h1>
     //   <div className="image-container">
     <>
-    <SixGridLayout title={"smp"} heading={"Which image most closely resembles your hair loss pattern?"}>
+    <SixGridLayout title={"smp"} heading={t("Which image most closely resembles your hair loss pattern?")}>
 
         {images.map((image, index) => (
           <SmpCard key={index} image={image} onClick={handlePatternSelection} selected={selected}/>

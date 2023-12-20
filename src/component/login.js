@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ import UserContext from '../context/UserContext';
 
 
 function Login() {
+  const { t } = useTranslation();
   const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
@@ -56,6 +58,7 @@ function Login() {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
+          sessionStorage.setItem('lang',responseData.lang)
   
           navigate("/AppointmentList");
         }
@@ -64,7 +67,8 @@ function Login() {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
-        sessionStorage.setItem('progress_bar',progress)
+        sessionStorage.setItem('lang',responseData.user.lang)
+     
         navigate("/dashboard");
         }
       }
@@ -82,10 +86,9 @@ function Login() {
     console.log("base url===",apiUrl)
     console.log(Button_bg)    
   return (
-    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
-    >    
-    <img src={Title_logo} className='w-3/6 md:w-1/6'></img>
-    <h1 className='text-white font-bold md:text-2xl text-lg'>LOGIN</h1>
+    <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>
+      <img src={Title_logo} className='w-3/6 md:w-1/6' alt="Title Logo" />
+      <h1 className='text-white font-bold md:text-2xl text-lg'>login</h1> {/* Use translation key */}
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
           <div className='flex flex-col itmes-center gap-3'>
@@ -127,7 +130,7 @@ function Login() {
             </div>
           </div>
           <button className='yellowButton py-2 px-8 rounded-3xl font-bold '>
-            Login
+          login
           </button>
           
         </form>

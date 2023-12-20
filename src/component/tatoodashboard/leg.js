@@ -19,10 +19,10 @@ function Leg() {
 
       const buttons = [
         {
-          name: "left-leg"
+          name: "leftleg"
         },
         {
-          name: "right-leg"
+          name: "rightleg"
         }
       ]
 

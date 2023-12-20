@@ -5,9 +5,9 @@ import UserContext from '../context/UserContext';
 
 import ProgressBar from './ProgressBar';
 import ConsentFormLayout from './Layout/FormLayout';
-
+import { useTranslation } from 'react-i18next';
 function ConsentForm() {
-
+  const { t } = useTranslation();
   var progressValue = 5;
   const[progressValue_,setprogressValue_]=useState(1)
 
@@ -61,9 +61,9 @@ function ConsentForm() {
   return (
     <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} about="Consent form">
       <div className='flex flex-col flex-1 overflow-y-auto p-3 md:p-1'>
-      <p className="text-white text-lg md:text-2xl font-semibold ">{statements[currentPage - 1]}</p>
+      <p className="text-white text-lg md:text-2xl font-semibold ">{t(statements[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
-        Initials:{' '}
+        {t("Initials")}:{' '}
         <input
           type="text"
           value={initials[currentPage] || ''}
@@ -80,13 +80,13 @@ function ConsentForm() {
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
           onClick={prevPage}
         >
-          Previous
+          {t("Previous")}
         </button>
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
           onClick={nextPage}
         >
-          Next
+          {t("Next")}
         </button>
       </div>
     </ConsentFormLayout>

@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import UserContext from '../../context/UserContext';
+import { useTranslation } from 'react-i18next';import UserContext from '../../context/UserContext';
 
 export default function ConsentFormLayout({ children, title, about }) {
+  const { t } = useTranslation();
   const {isVisible , setIsVisible } = useContext(UserContext)
   useEffect(()=>{
      setIsVisible(true)

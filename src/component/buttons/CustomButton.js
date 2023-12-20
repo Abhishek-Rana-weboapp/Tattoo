@@ -1,6 +1,8 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 
 export default function CustomButton({ children, onClick,  maxWidth, selected, value, def ,buttonStyle}) {
+  const { t } = useTranslation();
   const activeColor = `bg-gradient-to-b from-white to-yellow-400 to-10%`;
   const color = `bg-[#e8e2e3]`;
 
@@ -14,7 +16,7 @@ export default function CustomButton({ children, onClick,  maxWidth, selected, v
       onClick={() => onClick(value ? value : children)}
       style={buttonStyle}
     >
-      {children.split("-")?.join(" ")}
+      {t(children.split("-")?.join(" "))}
     </button>
   );
 }

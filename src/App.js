@@ -1,5 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { useTranslation, initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
+
+
+
 import Login from './component/login';
 import SignUp from './component/signup';
 import ForgetPassword from './component/forgetPassword';
@@ -74,13 +79,38 @@ import SignaturePad_see from './component/signature_see';
 import JewelleryPiercing from './component/piercingdashboard/jweleryPiercing';
 
 import Title from "./assets/Title.png"
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: require('./locales/en.json') },
+      es: { translation: require('./locales/es.json') },
+    },
+    lng: 'en', // Default language
+    interpolation: { escapeValue: false },
+  });
+
+
+
 import LogoWrapper from './component/wrapper/LogoWrapper';
 import RoutesComponent from './routes/RoutesComponent';
 
 function App() {
+  const [userLanguage, setUserLanguage] = useState('en'); // Replace with logic to get user language
+  const { t } = useTranslation();
+  
 
-  // const location = useLocation()
-  // console.log(location)
+
+
+  useEffect(() => {
+
+
+    i18n.changeLanguage('es');
+  }, []);
+
+
+
   return (
     <UserContextProvider>
     <Router>

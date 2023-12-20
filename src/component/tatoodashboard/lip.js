@@ -4,9 +4,10 @@ import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
-
+import { useTranslation } from 'react-i18next';
 
 function Lip() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { user, setUser } = React.useContext(UserContext);
   const [selected, setSelected] = useState()

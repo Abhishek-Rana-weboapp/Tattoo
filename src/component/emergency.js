@@ -4,14 +4,18 @@ import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
+import { useTranslation } from 'react-i18next';
 function EmergencyContactForm() {
+  const { t } = useTranslation();
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { emerformData, setemerFormData } = React.useContext(UserContext);
   const [data, setdata] = useState()
   const [showPopup_, setShowPopup_] = useState(true);
-  const options = ['yes', 'No',];
+  const yes=t("YES")
+  const No=t('No')
+  const options = [yes,No];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setemerFormData({ ...emerformData, [name]: value });
@@ -76,9 +80,9 @@ function EmergencyContactForm() {
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       {showPopup_ && (
         <Modal>
-          <p className="text-3xl font-bold mb-4 text-black">Do you want to update your emergency contact?</p>
+          <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your medical history?")}</p>
           <div className="flex gap-2">
-            <label className="text-xl font-bold text-black">Select an option:</label>
+            <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
             <select className="bg-black p-2 rounded-lg" onChange={(e) => handleUpdatedata(e.target.value)}>
               <option value="">Select...</option>
               {options.map((option, index) => (
@@ -89,7 +93,7 @@ function EmergencyContactForm() {
             </select>
           </div>
           <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold text-black" onClick={() => setShowPopup_(false)}>
-            Close Popup
+          {t("Close Popup")}
           </button>
         </Modal>
       )}
@@ -98,7 +102,7 @@ function EmergencyContactForm() {
     <div className='flex flex-col gap-3 flex-1 items-center'>
 
         <div className='w-2/6 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">Name:</label>
+          <label className="text-white font-semibold text-md">{t("Name")}</label>
           <input
           className="bg-gray-400 text-white rounded-md m-1 p-1"
             type="text"
@@ -109,7 +113,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div className='w-2/6 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">Phone #:</label>
+          <label className="text-white font-semibold text-md">{t("Phone #")}:</label>
           <input
            className="bg-gray-400 text-white rounded-md m-1 p-1 "
             type="text"
@@ -120,7 +124,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div className='w-2/6 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">City:</label>
+          <label className="text-white font-semibold text-md">{t("City")}</label>
           <input
           className="bg-gray-400 text-white rounded-md m-1 p-1"
           type="text"
@@ -131,7 +135,7 @@ function EmergencyContactForm() {
           />
         </div>
         <div className='w-2/6 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">State:</label>
+          <label className="text-white font-semibold text-md">{t("State")}</label>
           <input
           className="bg-gray-400 text-white rounded-md m-1 p-1 "
             type="text"
@@ -147,10 +151,10 @@ function EmergencyContactForm() {
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={handlePrev}
           >
-            Prev
+            {t("Prev")}
           </button>
         <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100%  py-2 px-8 rounded-3xl font-bold mt-4" type="submit">
-          Submit
+          {t("Submit")}
         </button>
         </div>
       </form>
