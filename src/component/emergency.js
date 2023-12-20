@@ -10,7 +10,7 @@ function EmergencyContactForm() {
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { emerformData, setemerFormData } = React.useContext(UserContext);
+  const { emerformData, setemerFormData, setIsVisible } = React.useContext(UserContext);
   const [data, setdata] = useState()
   const [showPopup_, setShowPopup_] = useState(true);
   const yes=t("YES")
@@ -39,6 +39,7 @@ function EmergencyContactForm() {
   }
 
   useEffect(() => {
+    setIsVisible(true)
     fetchData()
   }, [])
 
