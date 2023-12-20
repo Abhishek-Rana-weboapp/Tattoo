@@ -60,7 +60,8 @@ function ConsentForm() {
 
   return (
     <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} about="Consent form">
-      <p className="text-white">{t(statements[currentPage - 1])}</p>
+      <div className='flex flex-col flex-1 overflow-y-auto p-3 md:p-1'>
+      <p className="text-white text-lg md:text-2xl font-semibold ">{t(statements[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
         {t("Initials")}:{' '}
         <input
@@ -70,6 +71,10 @@ function ConsentForm() {
           className="bg-gray-700 text-white p-2 rounded-md"
         />
       </label>
+      </div>
+      <div className="w-full h-10 ">
+        <ProgressBar progress={progressValue_} count={13} />
+      </div>
       <div className="flex justify-between mt-4">
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
