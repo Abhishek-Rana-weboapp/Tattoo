@@ -56,7 +56,7 @@ function TermsOfService() {
       <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
       <p className="text-white">{t(pageContents[currentPage - 1])}</p>
       <label className="block mt-4 text-white">
-        {t('Initials')}:
+        {t('Initials')}
         <input
           type="text"
           value={initials[currentPage] || ''}

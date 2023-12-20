@@ -49,7 +49,7 @@ function HoldHarmlessAgreement() {
       </p>
       <div className="flex gap-1 items-center justify-center">
         <label>
-          Name: 
+          {t('Name')} 
           </label>
           <input
           className="bg-gray-700 text-white rounded-md p-2"
@@ -61,7 +61,7 @@ function HoldHarmlessAgreement() {
           </div>
         <div className="flex gap-1 items-center justify-center">
         <label>
-          Initials: 
+          {t('Initials')} 
         </label>
           <input
           className="bg-gray-700 text-white  rounded-md p-2"
@@ -77,13 +77,13 @@ function HoldHarmlessAgreement() {
             onChange={handleAgreementToggle}
             />
             <label>
-              I agree to the terms
+              {t('I agree to the terms')}
         </label>
       </div>
       {agreed && initials && (
         <div className='w-full flex justify-center'>
           {/* You may use a signature component or service here */}
-          <p>Your Signature: [Signature]</p>
+          {/* <p>Your Signature: [Signature]</p> */}
         </div>
       )}
       </div>

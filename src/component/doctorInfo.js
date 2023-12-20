@@ -5,6 +5,8 @@ import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
 import { useTranslation } from 'react-i18next';
+
+
 function DoctorContactForm() {
   const { t } = useTranslation();
   var progressValue = 70;
@@ -32,7 +34,8 @@ function DoctorContactForm() {
       const data = await response.json();
 
       if (data.data.length > 0) {
-        setdata(data.emergencycontectnumber);
+
+        setdata(data.doctor_information);
         setShowPopup_(true);
       }
     } catch (error) {
@@ -46,13 +49,8 @@ function DoctorContactForm() {
 
   const handleUpdatedata = (value) => {
     if (value === 'No') {
-      setdrFormData({
-        name: 'aniket',
-        phone: '1234567891',
-        city: 'lllll',
-        state: 'up',
-        useDoctorRecommendation: false,
-      });
+      setdrFormData(data);
+      console.log("updated datattatta====",drformData)
       navigate('/consent');
     }
     if (value === 'Yes') {

@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import UserContext from '../../context/UserContext';
-
+import { useTranslation } from 'react-i18next';
 export default function ConsentFormLayout({ children, title, about }) {
+  const { t } = useTranslation();
   const {setIsVisible } = useContext(UserContext)
   useEffect(()=>{
      setIsVisible(true)
@@ -9,7 +10,7 @@ export default function ConsentFormLayout({ children, title, about }) {
 
   return (
     <div className="w-full h-full  flex flex-col items-center gap-1 p-2 md:p-8">
-      {about && <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-yellow-500 text-center">{about}</h1>}
+      {about && <h1 className="text-lg md:text-2xl lg:text-3xl font-bold text-yellow-500 text-center">{t(about)}</h1>}
       <h1 className="font-bold text-md md:text-3xl text-white  uppercase text-center md:text-left">
         {title}
       </h1>

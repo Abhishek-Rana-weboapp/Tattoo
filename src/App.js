@@ -27,12 +27,6 @@ function App() {
 
 
 
-  useEffect(() => {
-
-
-    i18n.changeLanguage('es');
-  }, []);
-
 
 
   return (

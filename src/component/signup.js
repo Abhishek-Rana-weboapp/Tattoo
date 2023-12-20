@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
+import { useTranslation, initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
 
 
 function SignUp() {
+  const { t } = useTranslation();
   const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -52,6 +55,12 @@ function SignUp() {
         console.log('Sign-up Response:', responseData.userData);
         if(responseData.userData.usertype==="admin")
         {
+          if(responseData.userData.lang=="eng" || responseData.userData.lang=="english"){
+            i18n.changeLanguage('en');
+            }
+            else{
+              i18n.changeLanguage('es');
+            }
           sessionStorage.setItem('responseData',JSON.stringify(responseData));
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.userData.minor)
@@ -62,6 +71,12 @@ function SignUp() {
         }
         else 
         {
+          if(responseData.userData.lang=="eng" || responseData.userData.lang=="english"){
+            i18n.changeLanguage('en');
+            }
+            else{
+              i18n.changeLanguage('es');
+            }
         sessionStorage.setItem('responseData',JSON.stringify(responseData));
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.userData.minor)

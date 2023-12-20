@@ -92,7 +92,7 @@
   "No": "No",
   "Pregnant": "Embarazada",
   "Nursing": "Enfermería",
-  "Initials": "Iniciales",
+  "Initials": "Iniciales:",
   "Terms of Service": "Términos de servicio",
   "ID Verification": "Verificación de identidad",
   "Upload ID Photo": "Subir foto de identificación",
@@ -180,5 +180,14 @@
   "armpit": "axila",
   "Tooth gem": "Gema dental",
   "Select a Tooth": "Selecciona un diente",
-  "Upload": "Cargar"
+  "Upload": "Cargar",
+  "tattoo": "tatuaje",
+ "piercing": "piercing",
+ "permanent makeup": "maquillaje permanente",
+ "Select": "Seleccionar",
+ "Back": "Atrás",
+ "Emergency Contact Information": "Información de Contacto de Emergencia",
+ "Consent form": "Formulario de Consentimiento",
+ "I agree to the terms": "Estoy de acuerdo con los términos",
+ "By completing the following transaction, you acknowledge and agree that all sales are final and non-refundable.We accept all major credit cards, but there will be a 10% handling fee charged. For example, $100 you will pay a $10 fee.Cash is Always Better, Save Your Money! There is an ATM across the street at Chase Bank & the gas station next door.Some tattoos are done at a fixed price given by the artist or managers.Custom full sleeves and large-scale pieces are done at an hourly shop rate of $150-$350 per hour depending on the artist.Some artists charge between $1,200 - $2,800 for a full day up to 8 hours.All cover-ups and fix-ups are done at an hourly shop rate of $200-$350 per hour depending on the artist.If you are paying by the hour depending on the tattoo, some tattoo will be charged stencil time.":"Al completar la siguiente transacción, usted reconoce y acepta que todas las ventas son definitivas y no reembolsables. Aceptamos todas las principales tarjetas de crédito, pero se cobrará una tarifa de gestión del 10%. Por ejemplo, $100 pagará una tarifa de $10. ¡El efectivo siempre es mejor, ahorre su dinero! Hay un cajero automático al otro lado de la calle en Chase Bank y la gasolinera de al lado. Algunos tatuajes se realizan a un precio fijo dado por el artista o los gerentes. Las mangas completas personalizadas y las piezas a gran escala se realizan a una tarifa de tienda de $ 150 por hora. $ 350 por hora dependiendo del artista. Algunos artistas cobran entre $ 1200 y $ 2800 por un día completo de hasta 8 horas. Todos los encubrimientos y reparaciones se realizan a una tarifa de taller por hora de $ 200 a $ 350 por hora dependiendo del artista. Si paga por horas dependiendo del tatuaje, a algunos tatuajes se les cobrará el tiempo de plantilla."
 }

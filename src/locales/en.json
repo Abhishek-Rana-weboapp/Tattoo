@@ -94,7 +94,7 @@
   "lower": "lower",
   "Pregnant": "Pregnant",
   "Nursing": "Nursing",
-  "Initials": "Initials",
+  "Initials": "Initials:",
   "Terms of Service": "Terms of Service",
   "ID Verification": "ID Verification",
   "Upload ID Photo": "Upload ID Photo",
@@ -180,5 +180,15 @@
   "armpit": "armpit",
   "Tooth gem": "Tooth gem",
   "Select a Tooth": "Select a Tooth",
-  "Upload": "Upload"
+  "Upload": "Upload",
+  "tattoo":"tattoo",
+  "piercing": "piercing",
+  "permanent makeup": "permanent makeup",
+  "Select": "Select",
+  "Back": "Back",
+  "Emergency Contact Information": "Emergency Contact Information",
+  "Consent form": "Consent form",
+  "I agree to the terms": "I agree to the terms",
+  "By completing the following transaction, you acknowledge and agree that all sales are final and non-refundable.We accept all major credit cards, but there will be a 10% handling fee charged. For example, $100 you will pay a $10 fee.Cash is Always Better, Save Your Money! There is an ATM across the street at Chase Bank & the gas station next door.Some tattoos are done at a fixed price given by the artist or managers.Custom full sleeves and large-scale pieces are done at an hourly shop rate of $150-$350 per hour depending on the artist.Some artists charge between $1,200 - $2,800 for a full day up to 8 hours.All cover-ups and fix-ups are done at an hourly shop rate of $200-$350 per hour depending on the artist.If you are paying by the hour depending on the tattoo, some tattoo will be charged stencil time.":"By completing the following transaction, you acknowledge and agree that all sales are final and non-refundable.We accept all major credit cards, but there will be a 10% handling fee charged. For example, $100 you will pay a $10 fee.Cash is Always Better, Save Your Money! There is an ATM across the street at Chase Bank & the gas station next door.Some tattoos are done at a fixed price given by the artist or managers.Custom full sleeves and large-scale pieces are done at an hourly shop rate of $150-$350 per hour depending on the artist.Some artists charge between $1,200 - $2,800 for a full day up to 8 hours.All cover-ups and fix-ups are done at an hourly shop rate of $200-$350 per hour depending on the artist.If you are paying by the hour depending on the tattoo, some tattoo will be charged stencil time."
+  
 }

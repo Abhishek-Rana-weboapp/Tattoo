@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,8 @@ import { PiUserCircleFill } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
 import Button_bg from "../assets/Button_bg.png"
 import UserContext from '../context/UserContext';
-
+import { useTranslation, initReactI18next } from 'react-i18next';
+import i18n from 'i18next';
 
 function Login() {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ function Login() {
   useEffect(()=>{
      setIsVisible(false)
    },[])
-
+ 
 
   const buttonStyle = {
     backgroundImage: Button_bg,
@@ -52,7 +53,14 @@ function Login() {
        
       const responseData = await response.json();  
       if (responseData.message==='Login successful.')
-      {
+      {   
+          if(responseData.user.lang=="eng"){
+          i18n.changeLanguage('en');
+          }
+          else{
+            i18n.changeLanguage('es');
+          }
+      
         if(responseData.user.usertype==="admin")
         {
           sessionStorage.setItem('username', email);

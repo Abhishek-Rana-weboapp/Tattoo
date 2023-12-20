@@ -29,7 +29,7 @@ function EmergencyContactForm() {
 
       if (data.data.length > 0) {
 
-        //console.log("have medical history :",data.data[data.data.length-1])    
+       // console.log("have medical history :",data.emergencycontectnumber.name),    
         setdata(data.emergencycontectnumber)
         setShowPopup_(true);
       }
@@ -48,13 +48,8 @@ function EmergencyContactForm() {
     
 
     if (value === 'No') {
-      setemerFormData({
-        "name": 'aniket',
-        "phone": '1234567891',
-        "city": 'lllll',
-        "state": 'up'
-
-      })
+      console.log("datattatatatat====",data)
+      setemerFormData(data)
       console.log("update data====",emerformData)
       navigate('/doctor-info')
 
@@ -97,7 +92,7 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500">Emergency Contact Information</h1>
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500">{t('Emergency Contact Information')}</h1>
       <form className="bg-gray-800 p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
       <div className='flex flex-col gap-3 flex-1 items-center'>
 
