@@ -126,6 +126,7 @@ function Login() {
             </div>
             <div className='flex gap-2'>
         <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
+        <span className='text-white'>|</span>
         <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink>
             </div>
           </div>

@@ -118,11 +118,11 @@ function DoctorContactForm() {
         <div className='flex flex-col items-center gap-4 flex-1'>
 
         
-<div className='w-2/5 flex justify-between items-center'>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
   <label className="text-white font-semibold text-md">{t("Name")}</label>
  
           <input
-            className="bg-gray-700 text-white rounded-md m-1 p-1"
+            className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="name"
             value={drformData.name}
@@ -131,10 +131,10 @@ function DoctorContactForm() {
           />
         </div>
         
-        <div className='w-2/5 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">{t("Phone #")}:</label>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md">{t("Phone")}:</label>
           <input
-            className="bg-gray-700 text-white rounded-md m-1 p-1 "
+            className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="phone"
             value={drformData.phone}
@@ -143,10 +143,10 @@ function DoctorContactForm() {
           />
         </div>
         
-        <div className='w-2/5 flex justify-between items-center'>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md">{t("City")}:</label>
           <input
-            className="bg-gray-700 text-white rounded-md m-1 p-1"
+            className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="city"
             value={drformData.city}
@@ -155,10 +155,10 @@ function DoctorContactForm() {
           />
         </div>
         
-        <div className='w-2/5 flex justify-between items-center'>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md">{t("State")}:</label>
           <input
-            className="bg-gray-700 text-white rounded-md m-1 p-1"
+            className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="state"
             value={drformData.state}
@@ -167,16 +167,17 @@ function DoctorContactForm() {
           />
         </div>
 
-        <div>         
-           <label className="text-white font-semibold text-md">
-            {t("Use Doctor Recommendation")}
+        <div className='flex items-center gap-2'>         
             <input
               type="checkbox"
+              className='w-5 h-5'
               name="useDoctorRecommendation"
               checked={drformData.useDoctorRecommendation}
               onChange={handleInputChange}
             />
-          </label>
+           <label className="text-white font-semibold text-md">
+            {t("Use Doctor Recommendation")}
+            </label>
         </div>
 
         {drformData.useDoctorRecommendation && (
