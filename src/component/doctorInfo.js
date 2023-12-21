@@ -106,7 +106,7 @@ function DoctorContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500">
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500 ">
         {t("Doctor Contact Information")}
       </h1>
       <form
@@ -117,7 +117,7 @@ function DoctorContactForm() {
 
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-  <label className="text-white font-semibold text-md">{t("Name")}</label>
+  <label className="text-white font-semibold text-md w-20">{t("Name")}</label>
  
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
@@ -130,7 +130,7 @@ function DoctorContactForm() {
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("Phone")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
@@ -142,7 +142,7 @@ function DoctorContactForm() {
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("City")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("City")}</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
@@ -154,7 +154,7 @@ function DoctorContactForm() {
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("State")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("State")}</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"

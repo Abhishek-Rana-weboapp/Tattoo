@@ -61,7 +61,7 @@ function HoldHarmlessAgreement() {
           </div>
         <div className="flex gap-1 items-center justify-center">
         <label>
-          {t('Initials')} 
+          {t('Initials')}: 
         </label>
           <input
           className="bg-gray-700 text-white  rounded-md p-2"

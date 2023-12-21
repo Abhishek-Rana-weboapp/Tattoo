@@ -9,11 +9,13 @@ import { CiLock } from "react-icons/ci";
 import Button_bg from "../assets/Button_bg.png"
 import UserContext from '../context/UserContext';
 import { useTranslation, initReactI18next } from 'react-i18next';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import i18n from 'i18next';
 
 function Login() {
   const { t } = useTranslation();
   const progress=5;
+  const [showPassword, setShowPassword] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
   const [email, setEmail] = useState('');
@@ -113,19 +115,19 @@ function Login() {
             />
               {/* <input className='flex-1' placeholder='Email'/> */}
             </div>
+        <div className='flex gap-3 bg-white p-2 rounded-2xl items-center'>
+    <CiLock size={30}/>
+  <input
+    type={showPassword ? "text" : "password"}
+    className="flex-1 focus:outline-none bg-white p-2"
+    id="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+    {showPassword ? <RiEyeOffFill size={20} onClick={() => setShowPassword(!showPassword)}/> : <RiEyeFill size={20}onClick={() => setShowPassword(!showPassword)} />}
+</div>
 
-            <div className='flex gap-3 bg-white p-2 rounded-2xl items-center'>
-              <CiLock size={30}/>
-              <input
-              type="password"
-              className="flex-1 focus:outline-none bg-white p-2"
-              id="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            </div>
-         
           </div>
           <div className='flex gap-2 justify-between'>
             <div className='flex gap-2 text-white'>

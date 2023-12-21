@@ -57,7 +57,8 @@ const ConsentFormGuard = () => {
     signatureRef.current.clear();
     setSignatureImage(null);
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     setShowPopup(false);
   
     // You can now use the signatureImage state to submit the signature to your API
@@ -188,8 +189,8 @@ const ConsentFormGuard = () => {
 
         <section className='flex flex-col gap-2 items-start'>
           <h2 className="uppercase underline font-semibold">{t("Consent")}</h2>
-          <div className='w-full flex gap-2'>
-            <input type="checkbox" id="consentAgree" name="consentAgree" style={{ marginLeft: '5px' }} checked={formData.consentAgree} onChange={handleInputChange} required /><br />
+          <div className='w-full flex gap-2 items-center'>
+            <input className='w-6 h-6' type="checkbox" id="consentAgree" name="consentAgree"  checked={formData.consentAgree} onChange={handleInputChange} required /><br />
           <label style={{ fontWeight: 'bold' }} htmlFor="consentAgree">{t("I hereby consent to the chosen procedure and confirm that I am undertaking it willingly and voluntarily. I acknowledge that I have had the opportunity to ask questions, and all my concerns have been addressed to my satisfaction.")}</label>
             </div>
         </section>
@@ -201,8 +202,8 @@ const ConsentFormGuard = () => {
 
         <section className='flex flex-col gap-2 items-start'>
           <h2 className="uppercase underline font-semibold">{t("Before and After Photos")}</h2>
-          <div className='w-full flex gap-2'>
-          <input type="checkbox" id="photoConsent" name="photoConsent" style={{ marginLeft: '5px' }} checked={formData.photoConsent} onChange={handleInputChange} required /><br />
+          <div className='w-full flex gap-2 items-center'>
+          <input className='w-4 h-4' type="checkbox" id="photoConsent" name="photoConsent"  checked={formData.photoConsent} onChange={handleInputChange} required /><br />
           <label style={{ fontWeight: 'bold' }} htmlFor="photoConsent">{t("I agree to allow the technician to take before and after photos of the procedure for documentation and promotional purposes.")}</label>
           </div>
         </section>
@@ -222,14 +223,16 @@ const ConsentFormGuard = () => {
 
       {signatureImage && (
         <div style={{ marginTop: '20px' }}>
-          <img src={signatureImage} alt="Signature Preview" style={{ border: '1px solid #000', borderRadius: '5px', maxWidth: '100%' }} />
+          <img src={signatureImage} alt="Signature Preview" style={{ border: '1px solid #000',backgroundColor: '#9ca3af', borderRadius: '5px', maxWidth: '100%' }} />
         </div>
       )}
 
       {signatureImage && (
-        <button type="button" style={{ marginTop: '10px', padding: '8px', backgroundColor: '#3498db', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleSubmit}>
+        <div className='flex-justify-center'>
+        <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={handleSubmit}>
           {t('Submit Signature')}
         </button>
+        </div>
       )}
     </div>
       )}
@@ -239,7 +242,7 @@ const ConsentFormGuard = () => {
           <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="techName" name="techName" value={formData.techName} onChange={handleInputChange} required /><br />
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techSignature">{t("Technician's Signature:")}</label>
-          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={(e) => (e.preventDefault(), setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techDate">Date (MM/DD/YYYY):</label>
           <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="techDate" name="techDate" value={formData.techDate} onChange={handleInputChange} required /><br />
@@ -250,7 +253,7 @@ const ConsentFormGuard = () => {
           <h2 className="uppercase underline font-semibold">{t("Client's Signature")}</h2>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignature">{t("Signature:")}</label>
-          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={(e) => (e.preventDefault(),setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignatureDate">Date (MM/DD/YYYY):</label>
           <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="clientSignatureDate" name="clientSignatureDate" value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
