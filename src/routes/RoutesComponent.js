@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Login from '../component/login';
 import SignUp from '../component/signup';
 import ForgetPassword from '../component/forgetPassword';
@@ -74,10 +74,25 @@ import SignaturePad_see from '../component/signature_see';
 import JewelleryPiercing from '../component/piercingdashboard/jweleryPiercing';
 import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
+import PrivateRoutes from './PrivateRoutes';
 
 export default function RoutesComponent() {
 
   const {isVisible, setIsVisible} = useContext(UserContext)
+  const navigate = useNavigate()
+
+  const isLoggedIn = ()=>{
+     const token = sessionStorage.getitem("token")
+     if(token){
+      return true ;
+     }else return false
+  }
+
+  // const Route = ({element , path})=>{
+  //   return isLoggedIn() ? <Route exact path={path} element={element}/> : <Navigate to={"/"}/>
+  // }
+
+
 
   return (
     <>
@@ -89,6 +104,8 @@ export default function RoutesComponent() {
       <Route exact path="/signup" element={<SignUp />} />\
       <Route exact path="/forget_password" element={<ForgetPassword />} />
       <Route exact path="/reset_password" element={<Resetpassword/>} />
+      <Route element={<PrivateRoutes/>} >
+
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/tattoo" element={<TattooDashboard />} />
       <Route exact path="/head" element={<HeadTattoo />} />
@@ -167,6 +184,7 @@ export default function RoutesComponent() {
       <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
       <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
 
+      </Route>
 
     </Routes>
     </>

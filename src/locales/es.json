@@ -89,7 +89,7 @@
   "HaveYouEverBeenTattooedBefore?": ":¿Alguna vez te has tatuado antes?",
   "Select an option:": "Selecciona una opción:",
   "YES": "Sí",
-  "No": "No",
+  "NO": "No",
   "Pregnant": "Embarazada",
   "Nursing": "Enfermería",
   "Initials": "Iniciales",
@@ -103,7 +103,7 @@
   "Please upload your ID photo before submitting.": "Cargue su foto de identificación antes de enviarla.",
   "Doctor Contact Information": "Información de contacto del médico",
   "Do you want to update your Doctor's contact?": "¿Quieres actualizar el contacto de tu Doctor?",
-  "IF YES , PLEASE SELECT WHICH ONE": "Si es así, por favor selecciona cuál",
+  "PLEASE SELECT WHICH ONE": "por favor selecciona cuál",
   ": Are you Pregnant or Nursing?": ": ¿Estás embarazada o amamantando?",
   ": Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?": ": ¿Eres hemofílico o tomas algún medicamento que pueda causar sangrado o dificultar la coagulación sanguínea?",
   ": Do you have any medical or skin conditions?": ": ¿Tienes alguna condición médica o de la piel?",
@@ -180,5 +180,7 @@
   "armpit": "axila",
   "Tooth gem": "Gema dental",
   "Select a Tooth": "Selecciona un diente",
-  "Upload": "Cargar"
+  "Upload": "Cargar",
+  "IF YES" : "SI SÍ" ,
+  "PLEASE EXPLAIN" : "POR FAVOR EXPLICA"
 }

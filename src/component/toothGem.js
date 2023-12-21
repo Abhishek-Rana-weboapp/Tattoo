@@ -7,6 +7,8 @@ import Title from "../assets/Title.png"
 import { IoMdArrowRoundBack } from "react-icons/io";
 //const { user, setUser } = React.useContext(UserContext);
 import { useTranslation } from 'react-i18next';
+import Gem from "../assets/Gem.png"
+
 const ToothGems = () => {
   const { t } = useTranslation();
   const { user, setUser } = React.useContext(UserContext);
@@ -94,12 +96,12 @@ const ToothGems = () => {
   return (
     <div className='flex flex-col gap-3 items-center'>
       {/* <img src={Title} className='md:w-3/5 mt-5' ></img> */}
-      <label className=' text-white md:text-4xl font-bold uppercase'>{t('Tooth gem')}</label>
-      <label className=' text-white md:text-3xl font-bold uppercase'>{t('Select a Tooth')}</label>
+      <label className=' text-yellow-500 md:text-4xl font-bold uppercase'>{t('Tooth gem')}</label>
+      <label className=' text-yellow-500 md:text-3xl font-bold uppercase'>{t('Select a Tooth')}</label>
       <canvas
         ref={canvasRef}
-        width={isMobile ? 300 : 500}
-        height={isMobile ? 200 : 300}
+        width={isMobile ? "300px" : "900px"}
+        height={isMobile ? 200 : 500}
         onClick={handleToothClick}
         style={{ border: '1px solid #000' }}
       ></canvas>

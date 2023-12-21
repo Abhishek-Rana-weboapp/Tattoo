@@ -27,7 +27,7 @@ function Dashboard() {
 
   useEffect(() => {
     setIsVisible(true)
-    if(user.selectedTattooType !== null){
+    if(user?.selectedTattooType !== null){
       setUser({...user , selectedTattooType : null})
     }
   }, []);
@@ -80,17 +80,17 @@ function Dashboard() {
   return (
     <div className="w-3/4 h-full flex flex-col gap-5 justify-center items-center">
       <div className="grid grid-cols-2 gap-5 w-full">
-        {menu.map((menu, index) => {
+        {menu?.map((menu, index) => {
           return (
             <DisplayCard
               key={index}
               data={menu}
-              name={menu.name}
-              type={menu.type}
-              link={menu.link}
+              name={menu?.name}
+              type={menu?.type}
+              link={menu?.link}
               onClick={handleTattooTypeSelect}
-              selectedType={user.selectedTattooType}
-              src={menu.src}
+              selectedType={user?.selectedTattooType}
+              src={menu?.src}
             />
           );
         })}

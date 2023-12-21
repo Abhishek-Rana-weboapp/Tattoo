@@ -41,16 +41,13 @@ const ConsentFormGuard = () => {
   },[])
 
   const handleInputChange = (event) => {
-  
     const { name, value, type, checked } = event.target;
     setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
-
-    
   };
 
   const handleSave = () => {
     console.log("url===",signatureRef)
-    const dataUrl = signatureRef.current.toDataURL();
+    const dataUrl = signatureRef?.current?.toDataURL();
     setSignatureImage(dataUrl);
   };
   const handleClear = () => {
@@ -140,24 +137,24 @@ const ConsentFormGuard = () => {
             <div className='flex justify-between gap-2'>
               <div className='flex-1'>
                 <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="fullName">{t("Full Name:")}</label>
-                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="fullName" name="fullName"  value={formData.fullName} onChange={handleInputChange} required />
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="fullName" name="fullName"  value={formData?.fullName} onChange={handleInputChange} required />
               </div>
         
               <div style={{ flex: '1' }}>
                 <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="dateOfBirth">{t("Date of Birth:")}</label>
-                <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="dateOfBirth" name="dateOfBirth"  value={formData.dateOfBirth} onChange={handleInputChange} required />
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="dateOfBirth" name="dateOfBirth"  value={formData?.dateOfBirth} onChange={handleInputChange} required />
               </div>
             </div>
         
             <div className='flex justify-between gap-2'>
               <div style={{ flex: '1' }}>
                 <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="address">{t("Address")}:</label>
-                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="address" name="address" value={formData.address} onChange={handleInputChange} required />
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="address" name="address" value={formData?.address} onChange={handleInputChange} required />
               </div>
         
               <div style={{ flex: '1' }}>
                 <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="phone">{t("Phone")}:</label>
-                <input className='p-2 bg-gray-400 rounded-md w-full' type="tel" id="phone" name="phone"  value={formData.phone} onChange={handleInputChange} required />
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="tel" id="phone" name="phone"  value={formData?.phone} onChange={handleInputChange} required />
               </div>
             </div>
           </div>
@@ -167,13 +164,13 @@ const ConsentFormGuard = () => {
         <section className='flex flex-col gap-1' >
           <h2 className="uppercase underline font-semibold">{t("Procedure Information")}</h2>
           <label style={{ fontWeight: 'bold' }} htmlFor="procedureType">{t("Procedure")} (Tattoo/Piercing/Permanent Makeup):</label>
-          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureType" name="procedureType" value={formData.procedureType} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureType" name="procedureType" value={formData?.procedureType} onChange={handleInputChange} required /><br />
 
           <label style={{ fontWeight: 'bold' }} htmlFor="procedureDescription">{t("Description of Procedure:")}</label>
-          <textarea className='w-full p-2 bg-gray-400 rounded-md' id="procedureDescription" name="procedureDescription" rows="4" value={formData.procedureDescription} onChange={handleInputChange} required></textarea><br />
+          <textarea className='w-full p-2 bg-gray-400 rounded-md' id="procedureDescription" name="procedureDescription" rows="4" value={formData?.procedureDescription} onChange={handleInputChange} required></textarea><br />
 
           <label style={{ fontWeight: 'bold' }} htmlFor="procedureLocation">{t("Location of Procedure:")}</label>
-          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureLocation" name="procedureLocation" value={formData.procedureLocation} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureLocation" name="procedureLocation" value={formData?.procedureLocation} onChange={handleInputChange} required /><br />
         </section>
 
         <section className='flex flex-col gap-2 items-start'>
@@ -189,7 +186,7 @@ const ConsentFormGuard = () => {
         <section className='flex flex-col gap-2 items-start'>
           <h2 className="uppercase underline font-semibold">{t("Consent")}</h2>
           <div className='w-full flex gap-2'>
-            <input type="checkbox" id="consentAgree" name="consentAgree" style={{ marginLeft: '5px' }} checked={formData.consentAgree} onChange={handleInputChange} required /><br />
+            <input className='w-4 h-4' type="checkbox" id="consentAgree" name="consentAgree" style={{ marginLeft: '5px' }} checked={formData?.consentAgree} onChange={handleInputChange} required /><br />
           <label style={{ fontWeight: 'bold' }} htmlFor="consentAgree">{t("I hereby consent to the chosen procedure and confirm that I am undertaking it willingly and voluntarily. I acknowledge that I have had the opportunity to ask questions, and all my concerns have been addressed to my satisfaction.")}</label>
             </div>
         </section>
@@ -202,7 +199,7 @@ const ConsentFormGuard = () => {
         <section className='flex flex-col gap-2 items-start'>
           <h2 className="uppercase underline font-semibold">{t("Before and After Photos")}</h2>
           <div className='w-full flex gap-2'>
-          <input type="checkbox" id="photoConsent" name="photoConsent" style={{ marginLeft: '5px' }} checked={formData.photoConsent} onChange={handleInputChange} required /><br />
+          <input className='w-4 h-4 ' type="checkbox" id="photoConsent" name="photoConsent" style={{ marginLeft: '5px' }} checked={formData?.photoConsent} onChange={handleInputChange} required /><br />
           <label style={{ fontWeight: 'bold' }} htmlFor="photoConsent">{t("I agree to allow the technician to take before and after photos of the procedure for documentation and promotional purposes.")}</label>
           </div>
         </section>
@@ -236,13 +233,13 @@ const ConsentFormGuard = () => {
 
           <h2 className="uppercase underline font-semibold">{t("Witness (Technician)")}</h2>
           <label style={{ fontWeight: 'bold' }} htmlFor="techName">{t("Technician's Name:")}</label>
-          <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="techName" name="techName" value={formData.techName} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="techName" name="techName" value={formData?.techName} onChange={handleInputChange} required /><br />
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techSignature">{t("Technician's Signature:")}</label>
           <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techDate">Date (MM/DD/YYYY):</label>
-          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="techDate" name="techDate" value={formData.techDate} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="techDate" name="techDate" value={formData?.techDate} onChange={handleInputChange} required /><br />
 
         </section>
 
@@ -253,7 +250,7 @@ const ConsentFormGuard = () => {
           <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignatureDate">Date (MM/DD/YYYY):</label>
-          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="clientSignatureDate" name="clientSignatureDate" value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="clientSignatureDate" name="clientSignatureDate" value={formData?.clientSignatureDate} onChange={handleInputChange} required /><br />
         </section>
 
         <div className='w-full flex justify-center'>

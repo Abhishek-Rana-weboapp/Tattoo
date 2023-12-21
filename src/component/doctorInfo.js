@@ -12,7 +12,7 @@ function DoctorContactForm() {
   const navigate = useNavigate();
   const [data, setdata] = useState();
   const [showPopup_, setShowPopup_] = useState(true);
-  const yes=t("YES")
+  const yes=t("Yes")
   const No=t('No')
   const options = [yes,No];
   const { drformData, setdrFormData, setIsVisible } = React.useContext(UserContext);
@@ -45,7 +45,8 @@ function DoctorContactForm() {
     fetchData();
   }, []);
 
-  const handleUpdatedata = (value) => {
+  const handleUpdatedata = (e) => {
+    const value = e.target.value
     if (value === 'No') {
       setdrFormData({
         name: 'aniket',
@@ -56,8 +57,8 @@ function DoctorContactForm() {
       });
       navigate('/consent');
     }
-    if (value === 'Yes') {
-      setShowPopup_(!showPopup_);
+    if (value === 'Yes' || "Sí") {
+      setShowPopup_(false);
     }
   };
 
@@ -88,7 +89,7 @@ function DoctorContactForm() {
             </label>
             <select
               className="bg-black p-2 rounded-lg"
-              onChange={(e) => handleUpdatedata(e.target.value)}
+              onChange={handleUpdatedata}
             >
               <option value="">Select...</option>
               {options.map((option, index) => (
@@ -108,7 +109,7 @@ function DoctorContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500">
+      <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase">
         {t("Doctor Contact Information")}
       </h1>
       <form
@@ -119,49 +120,49 @@ function DoctorContactForm() {
 
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-  <label className="text-white font-semibold text-md">{t("Name")}</label>
+  <label className="text-white font-semibold text-md w-20">{t("Name")}</label>
  
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="name"
-            value={drformData.name}
+            value={drformData?.name}
             onChange={handleInputChange}
             required
           />
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("Phone")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="phone"
-            value={drformData.phone}
+            value={drformData?.phone}
             onChange={handleInputChange}
             required
           />
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("City")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("City")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="city"
-            value={drformData.city}
+            value={drformData?.city}
             onChange={handleInputChange}
             required
           />
         </div>
         
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md">{t("State")}:</label>
+          <label className="text-white font-semibold text-md w-20">{t("State")}:</label>
           <input
             className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="state"
-            value={drformData.state}
+            value={drformData?.state}
             onChange={handleInputChange}
             required
           />
@@ -172,7 +173,7 @@ function DoctorContactForm() {
               type="checkbox"
               className='w-5 h-5'
               name="useDoctorRecommendation"
-              checked={drformData.useDoctorRecommendation}
+              checked={drformData?.useDoctorRecommendation}
               onChange={handleInputChange}
             />
            <label className="text-white font-semibold text-md">
@@ -180,7 +181,7 @@ function DoctorContactForm() {
             </label>
         </div>
 
-        {drformData.useDoctorRecommendation && (
+        {drformData?.useDoctorRecommendation && (
           <div className='text-white font-semibold text-md'>
             <h2>{t("Doctor Information")}</h2>
             <p>
