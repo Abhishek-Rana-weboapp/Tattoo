@@ -130,89 +130,89 @@ const ConsentFormGuard = () => {
 
   return (
     <div className="w-full h-full flex flex-col items-center bg-black p-8 text-white">
-    <h1 className="text-3xl font-bold mb-4 text-yellow-500">{t("Consent Form")}</h1>
-    <form className="bg-gray-800 p-6 rounded-md shadow-md w-4/5">
+    <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase underline">{t("Consent Form")}</h1>
+    <form className="bg-gray-800 p-6 flex flex-col gap-5 rounded-md shadow-md w-4/5">
 
-    <section style={{ margin: '10px 0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-  <div style={{ flex: '1' }}>
-    <h2>{t("Client Information")}</h2>
-
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-      <div style={{ marginRight: '10px', flex: '1' }}>
-        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="fullName">{t("Full Name:")}</label>
-        <input type="text" id="fullName" name="fullName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.fullName} onChange={handleInputChange} required />
-      </div>
-
-      <div style={{ flex: '1' }}>
-        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="dateOfBirth">{t("Date of Birth:")}</label>
-        <input type="date" id="dateOfBirth" name="dateOfBirth" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.dateOfBirth} onChange={handleInputChange} required />
-      </div>
-    </div>
-
-    <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-      <div style={{ marginRight: '10px', flex: '1' }}>
-        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="address">{t("Address:")}</label>
-        <input type="text" id="address" name="address" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.address} onChange={handleInputChange} required />
-      </div>
-
-      <div style={{ flex: '1' }}>
-        <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="phone">{t("Phone:")}</label>
-        <input type="tel" id="phone" name="phone" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.phone} onChange={handleInputChange} required />
-      </div>
-    </div>
-  </div>
-</section>
-
-
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Procedure Information")}</h2>
-          <label style={{ fontWeight: 'bold' }} htmlFor="procedureType">{t("Procedure")} (Tattoo/Piercing/Permanent Makeup):</label>
-          <input type="text" id="procedureType" name="procedureType" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.procedureType} onChange={handleInputChange} required /><br />
-
-          <label style={{ fontWeight: 'bold' }} htmlFor="procedureDescription">{t("Description of Procedure:")}</label>
-          <textarea id="procedureDescription" name="procedureDescription" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} rows="4" value={formData.procedureDescription} onChange={handleInputChange} required></textarea><br />
-
-          <label style={{ fontWeight: 'bold' }} htmlFor="procedureLocation">{t("Location of Procedure:")}</label>
-          <input type="text" id="procedureLocation" name="procedureLocation" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.procedureLocation} onChange={handleInputChange} required /><br />
+        <section className='flex flex-col gap-2' >
+          <div className='flex flex-col gap-2'>
+            <h2 className="uppercase underline font-semibold">{t("Client Information")}</h2>
+        
+            <div className='flex justify-between gap-2'>
+              <div className='flex-1'>
+                <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="fullName">{t("Full Name:")}</label>
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="fullName" name="fullName"  value={formData.fullName} onChange={handleInputChange} required />
+              </div>
+        
+              <div style={{ flex: '1' }}>
+                <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="dateOfBirth">{t("Date of Birth:")}</label>
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="dateOfBirth" name="dateOfBirth"  value={formData.dateOfBirth} onChange={handleInputChange} required />
+              </div>
+            </div>
+        
+            <div className='flex justify-between gap-2'>
+              <div style={{ flex: '1' }}>
+                <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="address">{t("Address")}:</label>
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="address" name="address" value={formData.address} onChange={handleInputChange} required />
+              </div>
+        
+              <div style={{ flex: '1' }}>
+                <label style={{ fontWeight: 'bold', marginBottom: '5px' }} htmlFor="phone">{t("Phone")}:</label>
+                <input className='p-2 bg-gray-400 rounded-md w-full' type="tel" id="phone" name="phone"  value={formData.phone} onChange={handleInputChange} required />
+              </div>
+            </div>
+          </div>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Risks and Benefits")}</h2>
+
+        <section className='flex flex-col gap-1' >
+          <h2 className="uppercase underline font-semibold">{t("Procedure Information")}</h2>
+          <label style={{ fontWeight: 'bold' }} htmlFor="procedureType">{t("Procedure")} (Tattoo/Piercing/Permanent Makeup):</label>
+          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureType" name="procedureType" value={formData.procedureType} onChange={handleInputChange} required /><br />
+
+          <label style={{ fontWeight: 'bold' }} htmlFor="procedureDescription">{t("Description of Procedure:")}</label>
+          <textarea className='w-full p-2 bg-gray-400 rounded-md' id="procedureDescription" name="procedureDescription" rows="4" value={formData.procedureDescription} onChange={handleInputChange} required></textarea><br />
+
+          <label style={{ fontWeight: 'bold' }} htmlFor="procedureLocation">{t("Location of Procedure:")}</label>
+          <input className='p-2 bg-gray-400 w-full rounded-md' type="text" id="procedureLocation" name="procedureLocation" value={formData.procedureLocation} onChange={handleInputChange} required /><br />
+        </section>
+
+        <section className='flex flex-col gap-2 items-start'>
+          <h2 className="uppercase underline font-semibold">{t("Risks and Benefits")}</h2>
           <p style={{ fontWeight: 'bold' }}>{t("I have been informed of the potential risks, benefits, and alternatives associated with the chosen procedure, including but not limited to infection, allergic reactions, scarring, and dissatisfaction with the results. I understand that the results may vary based on my skin type, lifestyle, and adherence to aftercare instructions.")}</p>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Aftercare Instructions")}</h2>
+        <section className='flex flex-col gap-2 items-start'>
+          <h2 className="uppercase underline font-semibold">{t("Aftercare Instructions")}</h2>
           <p style={{ fontWeight: 'bold' }}>{t("I understand that proper aftercare is essential for the success of the procedure and to minimize the risk of complications. I commit to following the aftercare instructions provided by the technician.")}</p>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Consent")}</h2>
+        <section className='flex flex-col gap-2 items-start'>
+          <h2 className="uppercase underline font-semibold">{t("Consent")}</h2>
+          <div className='w-full flex gap-2'>
+            <input type="checkbox" id="consentAgree" name="consentAgree" style={{ marginLeft: '5px' }} checked={formData.consentAgree} onChange={handleInputChange} required /><br />
           <label style={{ fontWeight: 'bold' }} htmlFor="consentAgree">{t("I hereby consent to the chosen procedure and confirm that I am undertaking it willingly and voluntarily. I acknowledge that I have had the opportunity to ask questions, and all my concerns have been addressed to my satisfaction.")}</label>
-          <input type="checkbox" id="consentAgree" name="consentAgree" style={{ marginLeft: '5px' }} checked={formData.consentAgree} onChange={handleInputChange} required /><br />
+            </div>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Release of Liability")}</h2>
+        <section className='flex flex-col gap-2 items-start'>
+          <h2 className="uppercase underline font-semibold">{t("Release of Liability")}</h2>
           <p style={{ fontWeight: 'bold' }}>{t("I release the technician, the establishment, and their employees from any liability related to the procedure. I understand that the outcome may vary from person to person, and no guarantees have been made regarding the results.")}</p>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Before and After Photos")}</h2>
-          <label style={{ fontWeight: 'bold' }} htmlFor="photoConsent">{t("I agree to allow the technician to take before and after photos of the procedure for documentation and promotional purposes.")}</label>
+        <section className='flex flex-col gap-2 items-start'>
+          <h2 className="uppercase underline font-semibold">{t("Before and After Photos")}</h2>
+          <div className='w-full flex gap-2'>
           <input type="checkbox" id="photoConsent" name="photoConsent" style={{ marginLeft: '5px' }} checked={formData.photoConsent} onChange={handleInputChange} required /><br />
+          <label style={{ fontWeight: 'bold' }} htmlFor="photoConsent">{t("I agree to allow the technician to take before and after photos of the procedure for documentation and promotional purposes.")}</label>
+          </div>
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-
-
-
+        <section className='flex flex-col gap-2 items-start'>
         {showPopup && (
-
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '2px solid #3498db', padding: '20px', borderRadius: '10px', maxWidth: '400px', margin: 'auto', marginTop: '50px', backgroundColor: '#ecf0f1' }}>
+      <div className='flex items-center flex-col p-2 bg-gray-800 border-1 border-black rounded-md w-full'>
       <SignatureCanvas
-        penColor="black"
-        canvasProps={{ width: 300, height: 150, className: 'sigCanvas', style: { border: '1px solid #000', backgroundColor: 'white' } }}
+        penColor="white"
+        canvasProps={{ width: 500, height: 200, className: 'sigCanvas', style: { border: '1px solid #000', backgroundColor: '#9ca3af'  , borderRadius : "10px"} }}
         ref={signatureRef}
       />
       <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'center' }}>
@@ -232,45 +232,35 @@ const ConsentFormGuard = () => {
         </button>
       )}
     </div>
-        
-
-
       )}
-          <h2>{t("Witness (Technician)")}</h2>
+
+          <h2 className="uppercase underline font-semibold">{t("Witness (Technician)")}</h2>
           <label style={{ fontWeight: 'bold' }} htmlFor="techName">{t("Technician's Name:")}</label>
-          <input type="text" id="techName" name="techName" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techName} onChange={handleInputChange} required /><br />
-
-
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="text" id="techName" name="techName" value={formData.techName} onChange={handleInputChange} required /><br />
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techSignature">{t("Technician's Signature:")}</label>
-          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
-
-
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("techSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="techDate">Date (MM/DD/YYYY):</label>
-          <input type="text" id="techDate" name="techDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.techDate} onChange={handleInputChange} required /><br />
-              
-  
-
-
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="techDate" name="techDate" value={formData.techDate} onChange={handleInputChange} required /><br />
 
         </section>
 
-        <section style={{ margin: '10px 0' }}>
-          <h2>{t("Client's Signature")}</h2>
+        <section className='flex flex-col gap-2'>
+          <h2 className="uppercase underline font-semibold">{t("Client's Signature")}</h2>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignature">{t("Signature:")}</label>
-          <button type="button" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
+          <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black w-full' onClick={() => (setShowPopup(true),setsignature_type("clientSignature"))} >{t('add signature')}</button>
 
           <label style={{ fontWeight: 'bold' }} htmlFor="clientSignatureDate">Date (MM/DD/YYYY):</label>
-          <input type="text" id="clientSignatureDate" name="clientSignatureDate" style={{ width: '100%', padding: '5px', marginBottom: '10px', border: '1px solid #ccc' }} value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
+          <input className='p-2 bg-gray-400 rounded-md w-full' type="date" id="clientSignatureDate" name="clientSignatureDate" value={formData.clientSignatureDate} onChange={handleInputChange} required /><br />
         </section>
 
-        <button type="submit" className='yellowButton py-2 px-8 rounded-3xl font-bold' onClick={handelapi}>{t("Submit")}</button>
+        <div className='w-full flex justify-center'>
+        <button className='yellowButton py-2 px-8 rounded-3xl font-bold text-black' onClick={handelapi}>{t("Submit")}</button>
+        </div>
+
       </form>
-      <div className='w-full h-10' >
-       
-       </div>
     </div>
   );
 };

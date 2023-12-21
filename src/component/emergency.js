@@ -102,10 +102,10 @@ function EmergencyContactForm() {
       <form className="bg-gray-800 p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
       <div className='flex flex-col gap-3 flex-1 items-center'>
 
-      <div className='w-2/5 flex justify-between items-center'>
+      <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md">{t("Name")}</label>
           <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1"
+          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="name"
             value={emerformData.name}
@@ -113,10 +113,10 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div className='w-2/5 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">{t("Phone #")}:</label>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md">{t("Phone")}:</label>
           <input
-           className="bg-gray-700 text-white rounded-md m-1 p-1 "
+           className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="phone"
             value={emerformData.phone}
@@ -124,10 +124,10 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div className='w-2/5 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">{t("City")}</label>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md">{t("City")}:</label>
           <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1"
+          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="city"
             value={emerformData.city}
@@ -135,10 +135,10 @@ function EmergencyContactForm() {
             required
           />
         </div>
-        <div className='w-2/5 flex justify-between items-center'>
-          <label className="text-white font-semibold text-md">{t("State")}</label>
+<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md">{t("State")}:</label>
           <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1"
+          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
             type="text"
             name="state"
             value={emerformData.state}
