@@ -305,7 +305,7 @@ function MedicalForm() {
             </div>
           </div>
 
-          <label className="text-white">{t("IF YES , PLEASE SELECT WHICH ONE")}</label>
+          <label className="text-white uppercase">{t("IF YES")} ,{t("PLEASE SELECT WHICH ONE")}</label>
           <div className="flex gap-10">
             <div className="flex gap-2 items-center">
               <input
@@ -386,7 +386,7 @@ function MedicalForm() {
 
             <div className="flex-col flex gap-2 items-center w-full">
               <label className="text-lg uppercase text-white">
-              {t("IF YES , PLEASE SELECT WHICH ONE")}
+              {t("IF YES")},{t("PLEASE EXPLAIN")}
               </label>
               <textarea
                 // type="text"
@@ -455,7 +455,7 @@ function MedicalForm() {
 
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-            {t("IF YES , PLEASE SELECT WHICH ONE")}
+            {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
             <textarea
             ref={textRef}
@@ -526,7 +526,7 @@ function MedicalForm() {
 
           <div className="flex-col  flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-             {t("IF YES , PLEASE SELECT WHICH ONE")}
+            {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
             <textarea
             ref={textRef}
@@ -596,7 +596,7 @@ function MedicalForm() {
 
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              {t("IF YES , PLEASE SELECT WHICH ONE")}
+            {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
             <textarea
             ref={textRef}
@@ -664,7 +664,7 @@ function MedicalForm() {
           </div>
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              {t("IF YES , PLEASE SELECT WHICH ONE")}
+              {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
             <textarea
             ref={textRef}
@@ -732,7 +732,7 @@ function MedicalForm() {
           </div>
           <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
-              {t("IF YES , PLEASE SELECT WHICH ONE")}
+            {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
             <textarea
             ref={textRef}
