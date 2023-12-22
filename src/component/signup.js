@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
+import i18n from 'i18next';
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 
 function SignUp() {
   const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [usertype,setusertype]=useState('admin');
+  const [showPassword, setShowPassword] = useState(false);
+   const [usertype,setusertype]=useState('admin');
   const [showPopup,setshowPopup]=useState(false)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -138,13 +141,14 @@ function SignUp() {
             <div className='flex gap-3 bg-white p-2 rounded-lg items-center'>
               {/* <CiLock size={30}/> */}
               <input
-              type="password"
-              className="flex-1 focus:outline-none bg-white p-1"
-              id="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+    type={showPassword ? "text" : "password"}
+    className="flex-1 focus:outline-none bg-white p-2"
+    id="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+    {showPassword ? <RiEyeOffFill size={20} onClick={() => setShowPassword(!showPassword)}/> : <RiEyeFill size={20}onClick={() => setShowPassword(!showPassword)} />}
             </div>
             <select
               id="language"

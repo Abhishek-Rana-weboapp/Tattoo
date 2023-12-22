@@ -78,7 +78,7 @@ function EmergencyContactForm() {
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       {showPopup_ && (
         <Modal>
-          <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your medical history?")}</p>
+          <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your emergency contact")}?</p>
           <div className="flex gap-2">
             <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
             <select className="bg-black p-2 rounded-lg" onChange={handleUpdatedata}>
