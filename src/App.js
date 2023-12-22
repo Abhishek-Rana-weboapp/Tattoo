@@ -38,7 +38,7 @@ function App() {
   return (
     <UserContextProvider>
     <Router>
-      <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto p-2 gap-2" style={{height : "100dvh"}}>
+      <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto p-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded" style={{height : "100dvh"}}>
          <RoutesComponent/>
       </div>
     </Router>

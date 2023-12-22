@@ -69,22 +69,27 @@ const ToothGems = () => {
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
+    
     const image = new Image();
     image.src = ToothGem;
     image.onload = () => {
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);    
       selectedTeeth.forEach((tooth) => {
         const { x, y } = tooth.coordinates;
-        const size = 5;
+        const newImage = new Image();
+        newImage.src = Gem;
+        newImage.onload = () => {
+                context.drawImage(newImage, x-30, y-30, 60, 60); // Adjust the size as needed
+              };
+        // const size = 20;
         context.beginPath();
-        context.moveTo(x, y - size);
-        context.lineTo(x + size, y);
-        context.lineTo(x, y + size);
-        context.lineTo(x - size, y);
-        context.closePath();
-        context.fillStyle = 'rgba(255, 215, 0, 0.8)';
-        context.fill();
+        // context.moveTo(x, y - size);
+        // context.lineTo(x + size, y);
+        // context.lineTo(x, y + size);
+        // context.lineTo(x - size, y);
+        // context.closePath();
+      //   context.fillStyle = 'rgba(255, 215, 0, 0.8)';
+        // context.fill();
       });
     };
   };
@@ -100,10 +105,10 @@ const ToothGems = () => {
       <label className=' text-yellow-500 md:text-3xl font-bold uppercase'>{t('Select a Tooth')}</label>
       <canvas
         ref={canvasRef}
-        width={isMobile ? "300px" : "900px"}
+        width={isMobile ? 300 : 900}
         height={isMobile ? 200 : 500}
         onClick={handleToothClick}
-        style={{ border: '1px solid #000' }}
+        style={{ border: '1px solid #000' , backgroundColor:"transparent" }}
       ></canvas>
 
 
