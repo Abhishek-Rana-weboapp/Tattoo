@@ -27,34 +27,34 @@ function PiercingDashboard() {
 
   const partButton = [
     {
-      name: t("Belly Piercing"),
+      name: "Belly Piercing",
     },
     {
-      name: t("nipple-piercing"),
+      name: "nipple-piercing",
     }
   ];
 
   const buttons = [
     {
-      name: t("ear-piercing"),
+      name: "ear-piercing",
     },
     {
-      name: t("facial-piercing"),
+      name: "facial-piercing",
     },
     {
-      name: t("jewellery-piercing"),
+      name: "jewellery-piercing",
     },
     {
-      name: t("nose-piercing"),
+      name: "nose-piercing",
     },
     {
-      name: t("oral-piercing"),
+      name: "oral-piercing",
     },
     {
-      name: t("surface-piercing"),
+      name: "surface-piercing",
     },
     {
-      name: t("vaginal-piercing"),
+      name: "vaginal-piercing",
     },
   ];
 

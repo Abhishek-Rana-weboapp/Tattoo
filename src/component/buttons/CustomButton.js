@@ -5,6 +5,8 @@ export default function CustomButton({ children, onClick,  maxWidth, selected, v
   const { t } = useTranslation();
   const activeColor = `bg-gradient-to-b from-white to-yellow-400 to-10%`;
   const color = `bg-[#e8e2e3]`;
+  const buttonName = children.split("-")?.join(" ")
+  console.log(buttonName)
 
   const dynamicPadding = `${children.split(" ").length > 1 ? "py-2" : "py-2"}`; // Adjust this condition as needed
 

@@ -47,6 +47,11 @@ const IDVerificationComponent = () => {
       });
   };
 
+  // console.log("emerformData==" , emerformData)
+  console.log("doctor==" , drformData)
+  // console.log("doctor==" , JSON.parse(drformData))
+  // console.log("doctorstring==" , JSON.stringify(drformData))
+
   const handleSubmit = async () => {
     const username = sessionStorage.getItem('username');
     const minor = sessionStorage.getItem('minor');
@@ -74,8 +79,8 @@ const IDVerificationComponent = () => {
               "allergies": formData?.page7,
               "heart condition": formData?.page8,
             },
-            emergencycontectnumber: emerformData.phone,
-            doctor_information: drformData.name,
+            emergencycontectnumber: JSON.stringify(emerformData),
+            doctor_information: JSON.stringify(drformData),
             WaiverRelease_url: true,
             HoldHarmlessAgreement_url: true,
             id_url: idPhoto,
