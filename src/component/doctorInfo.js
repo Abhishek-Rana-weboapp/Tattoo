@@ -10,7 +10,7 @@ function DoctorContactForm() {
   var progressValue = 70;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [data, setdata] = useState();
+  const [data, setData] = useState();
   const [showPopup_, setShowPopup_] = useState(true);
   const yes=t("Yes")
   const No=t('No')
@@ -30,15 +30,18 @@ function DoctorContactForm() {
     try {
       const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
       const data = await response.json();
+      console.log("response === " ,response)
+      console.log("parsedData === " ,JSON.parse(data.doctor_information))
 
       if (data.data.length > 0) {
-        setdata(data.emergencycontectnumber);
+        setData(JSON.parse(data.doctor_information));
         setShowPopup_(true);
       }
     } catch (error) {
       console.error('Error fetching previous medical history:', error);
     }
   };
+  console.log(data)
 
   useEffect(() => {
     setIsVisible(true)
@@ -48,13 +51,8 @@ function DoctorContactForm() {
   const handleUpdatedata = (e) => {
     const value = e.target.value
     if (value === 'No') {
-      setdrFormData({
-        name: 'aniket',
-        phone: '1234567891',
-        city: 'lllll',
-        state: 'up',
-        useDoctorRecommendation: false,
-      });
+      console.log("prevData" ,data)
+      setdrFormData(data);
       navigate('/consent');
     }
     if (value === 'Yes' || "Sí") {

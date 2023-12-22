@@ -5,8 +5,9 @@ import Title from "../../assets/Title.png"
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
-
+import { useTranslation } from 'react-i18next';
 function FaceDashboard() {
+  const { t } = useTranslation();
   const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser } = React.useContext(UserContext);
