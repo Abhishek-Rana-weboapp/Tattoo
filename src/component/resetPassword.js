@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
-
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 function ResetPassword() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword_, setShowPassword_] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [psw, setpsw] = useState('');
@@ -67,23 +69,31 @@ function ResetPassword() {
         className="flex flex-col gap-3 justify-between"
         onSubmit={handleFormSubmit}
       >
-        <div className="flex flex-col gap-2 items-center">
-          <input
-            type="password"
+       <div className="flex flex-col gap-2 items-center">
+        <div className='flex gap-3 bg-white p-2 rounded-lg items-center w-full'>
+              {/* <CiLock size={30}/> */}
+              <input
+          type={showPassword ? "text" : "password"}
             className="p-2 rounded-lg w-full"
             id="Password"
             placeholder="Enter New Password"
             value={psw}
             onChange={(e) => setpsw(e.target.value)}
           />
-          <input
-            type="password"
+          {showPassword ? <RiEyeOffFill size={20} onClick={() => setShowPassword(!showPassword)}/> : <RiEyeFill size={20}onClick={() => setShowPassword(!showPassword)} />}
+            </div>
+            <div className='flex gap-3 bg-white p-2 rounded-lg items-center w-full'>
+              {/* <CiLock size={30}/> */}
+              <input
+            type={showPassword_ ? "text" : "password"}
             className="p-2 rounded-lg w-full"
             id="confirm_password"
             placeholder="Confirm Password"
             value={confirm_psw}
             onChange={(e) => setconfirm_psw(e.target.value)}
           />
+          {showPassword_ ? <RiEyeOffFill size={20} onClick={() => setShowPassword_(!showPassword_)}/> : <RiEyeFill size={20}onClick={() => setShowPassword_(!showPassword_)} />}
+            </div>
         </div>
         <div className="flex flex-col gap-3">
           <button className="yellowButton py-2 px-8 rounded-3xl font-bold">

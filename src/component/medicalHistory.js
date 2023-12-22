@@ -54,6 +54,7 @@ function MedicalForm() {
   }, []);
 
   const handleUpdatedata = (value) => {
+    setShowPopup_(false)
     if (value === "No") {
       setFormData({
         page1: data?.tattooedBefore,

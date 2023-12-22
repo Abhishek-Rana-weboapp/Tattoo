@@ -47,10 +47,6 @@ const IDVerificationComponent = () => {
       });
   };
 
-  // console.log("emerformData==" , emerformData)
-  console.log("doctor==" , drformData)
-  // console.log("doctor==" , JSON.parse(drformData))
-  // console.log("doctorstring==" , JSON.stringify(drformData))
 
   const handleSubmit = async () => {
     const username = sessionStorage.getItem('username');
