@@ -5,7 +5,6 @@ import Title_logo from "../assets/Title_logo.png"
 import i18n from 'i18next';
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
-
 function SignUp() {
   const progress=5;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -17,7 +16,7 @@ function SignUp() {
   const [password, setPassword] = useState('');
   const [adminUsername,setadminUsername]=useState('')
 
-  const [selectedLanguage, setSelectedLanguage] = useState('english'); 
+  const [selectedLanguage, setSelectedLanguage] = useState('eng'); 
   const [minor,setMinor] = useState('false')
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +53,15 @@ function SignUp() {
         const responseData = await response.json();
         console.log('Sign-up Response:', responseData.userData);
         if(responseData.userData.usertype==="admin")
-        {
+        { 
+          console.log("select lang======",responseData.userData.lang)
+          if(responseData.userData.lang=="eng"){
+            i18n.changeLanguage('en');
+            }
+            else{
+              i18n.changeLanguage('es');
+            }
+
           sessionStorage.setItem('responseData',JSON.stringify(responseData));
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.userData.minor)
@@ -65,6 +72,13 @@ function SignUp() {
         }
         else 
         {
+          console.log("select lang======",responseData.userData.lang)
+          if(responseData.userData.lang=="eng"){
+            i18n.changeLanguage('en');
+            }
+            else{
+              i18n.changeLanguage('es');
+            }
         sessionStorage.setItem('responseData',JSON.stringify(responseData));
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.userData.minor)
@@ -156,8 +170,8 @@ function SignUp() {
               value={selectedLanguage} // Set the selected value
               onChange={(e) => setSelectedLanguage(e.target.value)} // Update state on change
             >
-              <option value="english">English</option>
-              <option value="spanish">Spanish</option>
+              <option value="eng">English</option>
+              <option value="spa">Spanish</option>
             </select>
             
    <div className='flex gap-2'>
