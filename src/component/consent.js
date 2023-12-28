@@ -46,6 +46,7 @@ function ConsentForm() {
         setCurrentPage(currentPage + 1);
       }
     } else if (currentPage === 13) {
+      
       navigate('/harmless-agreement');
     }
   };
