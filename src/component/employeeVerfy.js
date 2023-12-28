@@ -4,12 +4,13 @@ import UserContext from '../context/UserContext';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import { useTranslation } from 'react-i18next';
+
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { user, formData, emerformData, drformData, setIsVisible } = React.useContext(UserContext);
+  const { user, formData, emerformData, drformData, setIsVisible,harmlessagreement,initials} = React.useContext(UserContext);
   const fileInputRef = useRef(null);
 
   useEffect(()=>{
@@ -77,8 +78,8 @@ const IDVerificationComponent = () => {
             },
             emergencycontectnumber: JSON.stringify(emerformData),
             doctor_information: JSON.stringify(drformData),
-            WaiverRelease_url: true,
-            HoldHarmlessAgreement_url: true,
+            WaiverRelease_url: JSON.stringify(initials),
+            HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
             id_url: idPhoto,
             ArtistPiercerNames: " ",
           }),

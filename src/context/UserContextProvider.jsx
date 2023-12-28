@@ -45,17 +45,22 @@ const UserContextProvider = ({children})=>{
     
       const [drformData, setdrFormData] = useState({
         name: '',
-        phone: '',
+        name: '',
         city: '',
         state: '',
         useDoctorRecommendation: false,
       });
+      const [harmlessagreement,setharmlessagreement]=useState({
+        name: '',
+        initials:'',
+        signatureurl:''
+      })
       const [initials, setInitials] = useState({});
       const [isVisible , setIsVisible] = useState(false)
 
 
     return (
-        <UserContext.Provider value={{isVisible , setIsVisible ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials}}>
+        <UserContext.Provider value={{isVisible , setIsVisible ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
             {children}
 
         </UserContext.Provider>
