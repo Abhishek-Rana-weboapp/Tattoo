@@ -7,7 +7,7 @@ import Navigation from "../navigation/Navigation";
 
 function Torso() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
 
   useEffect(()=>{
@@ -44,7 +44,8 @@ function Torso() {
     setUser({ ...user, bodyPart : selected});
     navigate("/medical-form");
    }else{
-    alert("Please select a part of Torso")
+    setAlert(!alert)
+    setAlertMessage("Please select a part")
    }
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import ProgressBar from "../ProgressBar";
@@ -10,19 +10,24 @@ function PiercingDashboard() {
   const { t } = useTranslation();
   const progressValue = 20;
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [partSelected, setPartSelected] = useState()
   const [selected, setSelected] = useState()
 
   const handlepartLocation = (bodyPart) => {
     setSelected()
     setPartSelected(bodyPart)
-   
   };
   const handpiercingLocation = (piercingLocation) => {
     setPartSelected()
     setSelected(piercingLocation)
   };
+
+  useEffect(()=>{
+    if(user.bodyPart){
+      setUser(prev=>({...prev , bodyPart: null}))
+    }
+  },[])
 
 
   const partButton = [
@@ -61,12 +66,14 @@ function PiercingDashboard() {
 
   const handleNext = ()=>{
      if(selected){
-      setPartSelected()
       setUser({ ...user, piercingLocation: selected });
       navigate(`/${selected}`);
      }if(partSelected){
       setUser({ ...user, bodyPart : partSelected});
       navigate("/medical-form");
+     }if(!selected && !partSelected){
+      setAlert(!alert)
+      setAlertMessage(t("Please select an option"))
      }
   }
 

@@ -4,13 +4,15 @@ import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function Hand() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected , setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
       if(user.handLocation) setSelected(user.handLocation)
@@ -30,7 +32,8 @@ function Hand() {
           setUser({ ...user, handLocation : selected });
           navigate('/hand-inside')
         }else{
-          alert("Please select which ear.")
+          setAlert(!alert)
+          setAlertMessage(t("Please select an option"))
         }
     }
   

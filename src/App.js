@@ -4,6 +4,7 @@ import { useTranslation, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import UserContextProvider from './context/UserContextProvider';
 import RoutesComponent from './routes/RoutesComponent';
+import AlertModal from './component/modal/AlertModal';
 
 
 i18n
@@ -23,22 +24,14 @@ i18n
 function App() {
   const [userLanguage, setUserLanguage] = useState('en'); // Replace with logic to get user language
   const { t } = useTranslation();
-  
 
-
-
-  useEffect(() => {
-
-
-    i18n.changeLanguage('es');
-  }, []);
 
 
 
   return (
     <UserContextProvider>
     <Router>
-      <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto p-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded" style={{height : "100dvh"}}>
+      <div className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto px-2 md:py-4 py-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded" style={{height : "100dvh"}}>
          <RoutesComponent/>
       </div>
     </Router>

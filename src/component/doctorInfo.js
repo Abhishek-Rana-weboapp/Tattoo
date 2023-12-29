@@ -15,7 +15,7 @@ function DoctorContactForm() {
   const yes=t("Yes")
   const No=t('No')
   const options = [yes,No];
-  const { drformData, setdrFormData, setIsVisible } = React.useContext(UserContext);
+  const { drformData, setdrFormData, setIsVisible, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -64,7 +64,8 @@ function DoctorContactForm() {
     e.preventDefault();
 
     if (!drformData.name || !drformData.phone || !drformData.city || !drformData.state) {
-      alert('All fields are required. Please fill in all the fields before submitting.');
+      setAlertMessage(t("Please fill all the details"))
+      setAlert(!alert)
     } else {
       navigate('/consent');
     }
@@ -126,7 +127,7 @@ function DoctorContactForm() {
             name="name"
             value={drformData?.name}
             onChange={handleInputChange}
-            required
+            
           />
         </div>
         
@@ -138,7 +139,7 @@ function DoctorContactForm() {
             name="phone"
             value={drformData?.phone}
             onChange={handleInputChange}
-            required
+            
           />
         </div>
         
@@ -150,7 +151,7 @@ function DoctorContactForm() {
             name="city"
             value={drformData?.city}
             onChange={handleInputChange}
-            required
+            
           />
         </div>
         
@@ -162,7 +163,7 @@ function DoctorContactForm() {
             name="state"
             value={drformData?.state}
             onChange={handleInputChange}
-            required
+            
           />
         </div>
 

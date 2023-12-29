@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 function Lip() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState()
 
   useEffect(()=>{
@@ -35,7 +35,7 @@ function Lip() {
       setUser({ ...user, bodyPart : selected});
     navigate("/medical-form")
   }else{
-    alert("Please select a lip.")
+    setAlertMessage("Please select a lip.")
   }
   }
 

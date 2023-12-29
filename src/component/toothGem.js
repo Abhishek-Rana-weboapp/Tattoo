@@ -9,7 +9,7 @@ import Gem from '../assets/Gem.png';
 
 const ToothGems = () => {
   const { t } = useTranslation();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [selectedTeeth, setSelectedTeeth] = useState([]);

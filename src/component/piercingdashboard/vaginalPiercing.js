@@ -4,22 +4,14 @@ import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 function VaginalPiercing() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
+  const {t} = useTranslation()
   const [buttonHeight, setButtonHeight] = useState('auto');
-
-  useEffect(() => {
-    // Calculate the maximum height among all buttons
-    const maxHeight = Math.max(...buttons.map(button => {
-      // You can adjust the padding as needed
-      const padding = 16; // Adjust this value based on your design
-      return buttonRef.current.clientHeight + padding * 2;
-    }));
-    setButtonHeight(`${maxHeight}px`);
-  }, [buttons]);
 
   const buttonRef = useRef()
 
@@ -70,7 +62,8 @@ function VaginalPiercing() {
       setUser({ ...user, bodyPart : selected});
     navigate('/medical-form'); 
     }else{
-      alert("Please Select an option")
+      setAlert(!alert)
+      setAlertMessage(t("Please select an option"))
     }
   }
 
@@ -82,7 +75,7 @@ function VaginalPiercing() {
 
     <>
     <GridLayout title={"vaginal piercing"}>
-    {buttons.map((button, index) => {
+    {buttons?.map((button, index) => {
           return (
             <CustomButton key={index} def={buttonRef} buttonStyle={{ height: buttonHeight }} onClick={handlepartLocation} selected={selected}>
               {button.name}

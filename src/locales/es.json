@@ -89,7 +89,7 @@
   "HaveYouEverBeenTattooedBefore?": ":Alguna vez te has tatuado antes?",
   "Select an option:": "Selecciona una opción:",
   "YES": "Sí",
-  "NO": "No",
+  "NO": "NO",
   "Pregnant": "Embarazada",
   "Nursing": "Enfermería",
   "Initials": "Iniciales",
@@ -183,5 +183,15 @@
   "Upload": "Cargar",
   "IF YES" : "SI SÍ" ,
   "PLEASE EXPLAIN" : "POR FAVOR EXPLICA",
-  "Do you want to update your emergency contact":"¿Quieres actualizar tu contacto de emergencia"
+  "Do you want to update your emergency contact":"¿Quieres actualizar tu contacto de emergencia",
+  "Please provide your initials before moving to the next question":"Por favor, proporciona tus iniciales antes de pasar a la siguiente pregunta.",
+  "All fields are required. Please fill in all the fields before submitting": "Todos los campos son obligatorios. Por favor, completa todos los campos antes de enviar.",
+  "Okay" : "De acuerdo",
+  "Please select your tattoo location":"Por favor, selecciona la ubicación de tu tatuaje",
+  "Please Select an head location":"Por favor, selecciona una ubicación en la cabeza.",
+  "Please select an option" : "Por favor, selecciona una opción.",
+  "Please select a face location": "Por favor, selecciona una ubicación en el rostro.",
+  "Please enter the explanation" : "Por favor, ingresa la explicación.",
+  "Please fill all the details":"Por favor, completa todos los detalles.",
+  "Please provide your initials":"Por favor, proporciona tus iniciales."
 }

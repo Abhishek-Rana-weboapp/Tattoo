@@ -4,13 +4,15 @@ import UserContext from '../../context/UserContext';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
+import { useTranslation } from 'react-i18next';
 
 
 function HandInside() {
   const progressValue = 40;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser,alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected , setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
       if(user.bodyPart) setSelected(user.bodyPart)
@@ -32,13 +34,17 @@ function HandInside() {
         name:"fingers"
       }
     ]
-  
+
+    console.log(selected)
+
+    
     const handleNext = ()=>{
         if(selected){
           setUser({ ...user, bodyPart : selected });
           navigate('/medical-form')
         }else{
-          alert("Please select an option")
+          setAlertMessage(t("Please select an option"))
+          setAlert(!alert)
         }
     }
   
@@ -49,6 +55,7 @@ function HandInside() {
     const handlepartLocation = (bodyPart) => {
         setSelected(bodyPart)
       }
+
     return (
       <>
       <GridLayout title={"hand"}>
@@ -60,64 +67,7 @@ function HandInside() {
       </GridLayout>
       <Navigation next={handleNext}  prev={handlePrev} />
           </>
-     
     );
   }
   
 export default HandInside
-
-
-{/* <div className='outer container' style={{
-  border: '1px solid #d8d6d6'
-
-}}>
-<div className='container h-100' style={{
-  backgroundColor: '#f5f5f5',
-
-  alignItems: 'center',
-  minHeight: '100vh',
-  width:'100%',
-  border: '3px solid black',
-
-
-}}>
-  <h1> Hand</h1>
-  <div className='outer-container' style={{
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center',
-      gap:'30px',
-      marginTop:'55px'
-  }}>
-
-  
-  <div className='inner-item' onClick={()=>handlepartLocation('top')}>
-    <h5>Top</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('palm')}>
-
-    <h5>Palm</h5>
-  
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('side')}>
-
-<h5>Side</h5>
-
-</div>
-<div className='inner-item' onClick={()=>handlepartLocation('fingers')}>
-
-<h5>Fingers</h5>
-
-</div>
-
-  </div>
-
-
-
-</div>
-
-</div> */}
-
-

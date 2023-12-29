@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Link, NavLink } from 'react-router-dom';
@@ -22,8 +22,17 @@ function Login() {
   const navigate = useNavigate();
   const {isVisible, setIsVisible} = useContext(UserContext)
 
+  const rememberMeRef = useRef()
+
   useEffect(()=>{
      setIsVisible(false)
+     const storedEmail = localStorage.getItem("email")
+     const storedPassword = localStorage.getItem("password")
+
+     if(storedEmail && storedPassword){
+      setEmail(storedEmail)
+      setPassword(storedPassword)
+     }
    },[])
 
 
@@ -68,7 +77,7 @@ function Login() {
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
           sessionStorage.setItem('lang',responseData.lang)
-  
+          handleRememberMe()
           navigate("/AppointmentList");
         }
         else
@@ -92,8 +101,18 @@ function Login() {
     }
   
     }
-    console.log("base url===",apiUrl)
-    console.log(Button_bg)    
+    
+    // Function to handle the remember me functionality
+
+    const handleRememberMe = ()=>{
+      if(rememberMeRef.current.checked){
+        localStorage.setItem("email" , email)
+        localStorage.setItem("password" , password)
+      }else{
+        localStorage.setItem("email", ""); localStorage.setItem("password", "")
+      }
+    }
+
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>
       <img src={Title_logo} className='w-3/6 md:w-1/6'></img>
@@ -131,9 +150,9 @@ function Login() {
          
           </div>
           <div className='flex gap-2 justify-between'>
-            <div className='flex gap-2 text-white'>
-              <input type='checkbox'/>
-              Remember me?
+            <div className='flex gap-2 text-white items-center'>
+              <input type='checkbox' className='w-4 h-4' ref={rememberMeRef} />
+              <label>Remember me?</label>
             </div>
             <div className='flex gap-2'>
         <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>

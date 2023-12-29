@@ -1,10 +1,11 @@
 // Import necessary modules and components
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ConsentFormLayout from './Layout/FormLayout';
 import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import { useTranslation } from 'react-i18next';
+import UserContext from '../context/UserContext';
 // Define the component
 function TermsOfService() {
   const { t } = useTranslation();
@@ -14,6 +15,7 @@ function TermsOfService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
+  const {user , alert , setAlert , setAlertMessage} = useContext(UserContext)
   const pageContents = [
     "No Foods or Drinks allowed in tattoo workstation.Please sit as still as possible while being tattooed, your final satisfaction is our priority.Only (1) additional person is allowed in tattoo station aside from the individual being tattooed.Please do not leave the workstation during a break or once the tattoo has been completed without it being covered by the artist.During a break or while being tattooed, DO NOT TOUCH YOUR TATTOO.",
 
@@ -32,11 +34,16 @@ function TermsOfService() {
 
   // Navigate to the next page
   const nextPage = () => {
-    if (currentPage < totalPages) {
-      setProgressValue_(progressValue_ + 1);
-      setCurrentPage(currentPage + 1);
-    } else if (currentPage === 3) {
-      navigate('/verify');
+    if(!initials[currentPage]){
+      setAlert(!alert)
+      setAlertMessage("Please provide your initials")
+    }else{
+      if (currentPage < totalPages) {
+        setProgressValue_(progressValue_ + 1);
+        setCurrentPage(currentPage + 1);
+      } else if (currentPage === 3) {
+        navigate('/verify');
+      }
     }
   };
 
@@ -54,17 +61,18 @@ function TermsOfService() {
   return (
     <ConsentFormLayout title=""  about="Terms of Service">
       <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
-      <p className="text-white">{t(pageContents[currentPage - 1])}</p>
-      <label className="block mt-4 text-white">
+      <p className="text-white text-center">{t(pageContents[currentPage - 1])}</p>
+      <div className='flex gap-2 justify-center items-center'>
+      <label className="text-white">
         {t('Initials')}:
+        </label>
         <input
           type="text"
           value={initials[currentPage] || ''}
-          
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
           className="bg-gray-700 text-white p-2 rounded-md"
         />
-        </label>
+      </div>
         </div>
         <ProgressBar progress={progressValue_} count={3} />
         <div className="flex justify-between mt-4">

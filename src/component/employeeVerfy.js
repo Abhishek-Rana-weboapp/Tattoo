@@ -10,7 +10,7 @@ const IDVerificationComponent = () => {
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { user, formData, emerformData, drformData, setIsVisible,harmlessagreement,initials} = React.useContext(UserContext);
+  const { user, formData, emerformData, drformData, setIsVisible,harmlessagreement,initials, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
   const fileInputRef = useRef(null);
 
   useEffect(()=>{
@@ -88,8 +88,8 @@ const IDVerificationComponent = () => {
         const responseData = await response.json();
 
         if (response.status === 201) {
-          alert("Appointment booked");
-
+          setAlert(!alert)
+          setAlertMessage("Appointment booked");
           if (minor === "true") {
             sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
             navigate('/consent-guard');

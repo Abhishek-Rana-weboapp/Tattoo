@@ -8,7 +8,7 @@ import CustomButton from '../buttons/CustomButton';
 
 function Cheeks() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState()
 
   const handlePartLocation = (bodyPart) => {
@@ -33,7 +33,7 @@ function Cheeks() {
       setUser({ ...user, bodyPart : selected});
     navigate("/medical-form")
   }else{
-    alert("Please select a location for the cheek.")
+    setAlertMessage("Please select a location for the cheek.")
   }
   }
 

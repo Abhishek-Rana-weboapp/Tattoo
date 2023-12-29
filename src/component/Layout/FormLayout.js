@@ -13,7 +13,7 @@ export default function ConsentFormLayout({ children, title, about }) {
       <h1 className="font-bold text-md md:text-3xl text-yellow-500 underline uppercase text-center md:text-left">
         {title}
       </h1>
-      <div className="w-full md:w-2/4 flex flex-col flex-1 bg-gray-800 rounded-md md:p-4 overflow-y-auto overflow-x-hidden">
+      <div className="w-full md:w-2/4 flex flex-col flex-1 bg-gray-800 rounded-md md:p-4 overflow-y-auto overflow-x-hidden backdrop-blur bg-opacity-50">
         {children}
       </div>
      

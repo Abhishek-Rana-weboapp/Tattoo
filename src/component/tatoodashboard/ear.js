@@ -8,7 +8,7 @@ import GridLayout from "../Layout/GridLayout";
 
 function Ear() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState();
   
     useEffect(() => {
@@ -33,7 +33,7 @@ function Ear() {
       setUser({ ...user, earLocation: selected });
       navigate("/ear-dashboard");
     } else {
-      alert("Please select a face location");
+      setAlertMessage("Please select a face location");
     }
   };
 

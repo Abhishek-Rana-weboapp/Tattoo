@@ -5,12 +5,14 @@ import ProgressBar from "./ProgressBar";
 import GridLayout from "./Layout/GridLayout";
 import CustomButton from "./buttons/CustomButton";
 import Navigation from "./navigation/Navigation"
+import { useTranslation } from "react-i18next";
 
 function PermanentMakeup() {
   const progressValue = 20;
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState();
+  const {t} = useTranslation()
 
   const handlepartLocation = (bodyPart) => {
     setSelected(bodyPart);
@@ -33,7 +35,8 @@ function PermanentMakeup() {
       setUser({ ...user, bodyPart: selected });
       navigate("/medical-form");
     }else{
-      alert("Please select an option")
+      setAlert(!alert)
+      setAlertMessage(t("Please select an option"))
     }
   };
 

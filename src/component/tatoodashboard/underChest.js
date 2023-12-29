@@ -6,7 +6,7 @@ import UserContext from '../../context/UserContext';
 function UnderChest() {
 
     const navigate = useNavigate()
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
 
     const handlepartLocation = (bodyPart) => {
         setUser({ ...user, bodyPart });

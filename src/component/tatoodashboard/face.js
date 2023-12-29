@@ -10,7 +10,7 @@ function FaceDashboard() {
   const { t } = useTranslation();
   const progressValue = 40;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
@@ -53,7 +53,8 @@ function FaceDashboard() {
     setUser({ ...user, faceLocation : selected });
     navigate(`/${selected}`); 
   }else{
-    alert("Please select a face location")
+    setAlert(!alert)
+    setAlertMessage(t("Please select a face location"))
   }
   }
 

@@ -5,12 +5,14 @@ import Title from "../../assets/Title.png";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
 import GridLayout from '../Layout/GridLayout';
+import { useTranslation } from 'react-i18next';
 
 
 function Eyelid() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState();
+  const {t} = useTranslation()
   
   useEffect(() => {
     if (user.bodyPart) setSelected(user.bodyPart);
@@ -34,7 +36,8 @@ const handleNext = () => {
     setUser({ ...user, bodyPart: selected });
     navigate("/medical-form");
   } else {
-    alert("Please select an option");
+    setAlert(!alert)
+    setAlertMessage(t("Please select an option"));
   }
 };
 

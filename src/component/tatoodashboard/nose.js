@@ -8,7 +8,7 @@ import Navigation from '../navigation/Navigation';
 
 function Nose() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
 
   useEffect(()=>{
@@ -33,7 +33,7 @@ function Nose() {
         setUser({ ...user, bodyPart : selected });
         navigate("/medical-form")
       }else{
-        alert("Please select which ear.")
+        setAlertMessage("Please select which ear.")
       }
   }
 

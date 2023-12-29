@@ -8,7 +8,7 @@ import GridLayout from "../Layout/GridLayout";
 
 function FaceDashboard() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState();
 
   useEffect(() => {
@@ -36,7 +36,7 @@ function FaceDashboard() {
       setUser({ ...user, bodyPart: selected });
       navigate("/medical-form");
     } else {
-      alert("Please select a face location");
+      setAlertMessage("Please select a face location");
     }
   };
 
