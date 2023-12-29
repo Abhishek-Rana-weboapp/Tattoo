@@ -9,7 +9,7 @@ import Navigation from '../navigation/Navigation';
 function ArmDashboard() {
   const progressValue = 40;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
 
     useEffect(()=>{

@@ -5,13 +5,15 @@ import CustomButton from '../buttons/CustomButton';
 import Title from "../../assets/Title.png"
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
+import { useTranslation } from 'react-i18next';
 
 
 function HeadTattoo() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser,alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
        if(user.headLocation) setSelected(user.headLocation)
@@ -38,7 +40,8 @@ function HeadTattoo() {
         setUser({ ...user, selected });
         navigate(`/${selected}`); 
       }else{
-        alert("Please Select an head location")
+        setAlertMessage(t("Please Select an head location"))
+        setAlert(!alert)
       }
         
     }

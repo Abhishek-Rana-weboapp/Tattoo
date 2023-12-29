@@ -8,7 +8,7 @@ import Navigation from '../navigation/Navigation';
 
 function Jaw() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected, setSelected] = useState()
 
   useEffect(()=>{
@@ -34,7 +34,7 @@ const handlePartLocation = (bodyPart) => {
       setUser({ ...user, bodyPart : selected});
     navigate("/medical-form")
   }else{
-    alert("Please select a jaw.")
+    setAlertMessage("Please select a jaw.")
   }
   }
 

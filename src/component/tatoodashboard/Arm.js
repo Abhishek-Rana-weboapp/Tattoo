@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import NavigationButton from '../buttons/NavigationButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function Arm() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} =useTranslation()
 
     useEffect(()=>{
         if(user.armLocation) setSelected(user.armLocation)
@@ -35,7 +37,8 @@ function Arm() {
         setUser({ ...user, armLocation : selected });
         navigate('/arm-dashboard'); 
       }else{
-        alert("Please select an option")
+        setAlert(!alert)
+        setAlertMessage(t("Please select an option"))
       }
     }
 

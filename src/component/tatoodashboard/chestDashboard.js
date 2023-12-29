@@ -4,13 +4,15 @@ import UserContext from '../../context/UserContext';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
+import { useTranslation } from 'react-i18next';
 
 
 function ChestDeshboard() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
     if(user.chestLocation)  setSelected(user.chestLocation)
@@ -51,7 +53,8 @@ function ChestDeshboard() {
         setUser({...user , chestLocation : selected})
       navigate('/under-chest'); 
       }else{
-        alert("Select a tattoo Location")
+        setAlert(!alert)
+        setAlertMessage(t("Select a tattoo Location"))
       }
     }
 

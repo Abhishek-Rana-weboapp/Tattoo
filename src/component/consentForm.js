@@ -11,7 +11,7 @@ const ConsentFormGuard = () => {
   var progressValue = 100;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [showPopup,setShowPopup] =useState(null);
-  const {setIsVisible} = useContext(UserContext)
+  const {setIsVisible, alert, setAlert, setAlertMessage} = useContext(UserContext)
 
   const [signature_type,setsignature_type]=useState(null);
 
@@ -109,7 +109,7 @@ const ConsentFormGuard = () => {
    
       if (response.status === 201) {
 
-        alert("Appointment booked");
+        setAlertMessage("Appointment booked");
           navigate('/');
         }
         else{

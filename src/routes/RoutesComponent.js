@@ -75,10 +75,11 @@ import JewelleryPiercing from '../component/piercingdashboard/jweleryPiercing';
 import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
 import PrivateRoutes from './PrivateRoutes';
+import AlertModal from '../component/modal/AlertModal';
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible} = useContext(UserContext)
+  const {isVisible, setIsVisible , alert , setAlert} = useContext(UserContext)
   const navigate = useNavigate()
 
   const isLoggedIn = ()=>{
@@ -96,6 +97,9 @@ export default function RoutesComponent() {
 
   return (
     <>
+      {
+        alert && <AlertModal/>
+       }
     {isVisible && <div className='flex justify-center'>
         <img src={Title} className='w-4/5 md:w-2/5'></img>
           </div>}

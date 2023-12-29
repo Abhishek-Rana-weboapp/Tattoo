@@ -5,14 +5,16 @@ import { useNavigate } from "react-router-dom";
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function LegInside({}) {
   const progressValue = 45;
     const { state } = useLocation();
     const navigate = useNavigate()
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] =useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
       if(user.legLocation) setSelected(user.legLocation)
@@ -79,7 +81,8 @@ function LegInside({}) {
           setUser({ ...user, bodyPart:selected });
       navigate('/medical-form');
         }else{
-          alert("Please select an option")
+          setAlert(!alert)
+          setAlertMessage(t("Please select an option"))
         }
       }
   

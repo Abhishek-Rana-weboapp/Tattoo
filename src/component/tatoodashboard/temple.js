@@ -7,7 +7,7 @@ import CustomButton from '../buttons/CustomButton';
 
 function FaceTemple() {
   const navigate = useNavigate();
-  const { user, setUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
 
   useEffect(()=>{
@@ -28,7 +28,7 @@ function FaceTemple() {
         setUser({ ...user, bodyPart : selected });
         navigate("/medical-form")
       }else{
-        alert("Please select which ear.")
+        setAlertMessage("Please select which ear.")
       }
   }
 

@@ -4,13 +4,15 @@ import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function Glute() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
       if(user.bodyPart) setSelected(user.bodyPart)
@@ -34,7 +36,8 @@ function Glute() {
           setUser({ ...user, bodyPart : selected });
           navigate('/medical-form'); 
         }else{
-          alert("Please select an option")
+          setAlert(!alert)
+          setAlertMessage(t("Please select an option"))
         }
       }
   
@@ -57,46 +60,3 @@ function Glute() {
   }
   
 export default Glute
-
-{/* <div className='outer container' style={{
-  border: '1px solid #d8d6d6'
-
-}}>
-<div className='container h-100' style={{
-  backgroundColor: '#f5f5f5',
-
-  alignItems: 'center',
-  minHeight: '100vh',
-  width:'100%',
-  border: '3px solid black',
-
-
-}}>
-  <h1> Glutes</h1>
-  <div className='outer-container' style={{
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center',
-      gap:'30px',
-      marginTop:'55px'
-  }}>
-
-  
-  <div className='inner-item' onClick={()=>handlepartLocation('left glute')}>
-    <h5>Left Glutes</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('right glute')}>
-
-    <h5>Right Glutes</h5>
-  
-  </div>
- 
-  </div>
-
-
-
-</div>
-
-</div> */}

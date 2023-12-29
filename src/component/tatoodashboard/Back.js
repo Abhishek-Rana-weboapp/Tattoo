@@ -5,6 +5,7 @@ import { Button } from 'bootstrap';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function Back() {
@@ -12,8 +13,9 @@ function Back() {
   const navigate = useNavigate();
   const [showOtherField, setShowOtherField] = useState(false);
   const [otherFieldValue, setOtherFieldValue] = useState('');
-  const { user, setUser } = React.useContext(UserContext);
-  const [selected , setSelected] = useState()
+  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const [selected , setSelected] = useState("")
+  const {t} =useTranslation()
 
   const handlePartLocation = (bodyPart) => {
     if(bodyPart === "other"){
@@ -23,13 +25,15 @@ function Back() {
   }
 
   useEffect(()=>{
-    if(user.bodyPart)
-   if(buttons.find(item=>item.name !== user.bodyPart)){
-    setSelected("other")
-   }
-   else{
-    setSelected(user.bodyPart)
-   }
+    if(user?.bodyPart){
+      if(buttons.find(item=>item?.name !== user?.bodyPart)){
+        setSelected("other")
+        setOtherFieldValue(user.bodyPart)
+      }
+      if(buttons.find(item=>item.name === user?.bodyPart)){
+        setSelected(user?.bodyPart)
+      }
+    }
   },[])
 
   const buttons = [
@@ -53,9 +57,7 @@ function Back() {
     },
   ]
 
-  console.log("input===" ,otherFieldValue)
-  console.log("bodypart===" ,user.bodyPart)
-  console.log("selected===" ,selected)
+  console.log(selected)
 
   const handleNext = ()=>{
    if(selected && selected !== "other"){
@@ -66,8 +68,12 @@ function Back() {
       setUser({...user , bodyPart : otherFieldValue})
       navigate("/medical-form")
     }else{
-      alert("Please select an option")
+      setAlert(!alert)
+      setAlertMessage(t("Please select an option"))
     }
+  }if(!selected){
+    setAlert(!alert)
+    setAlertMessage(t("Please select an option"))
    }
   }
 
@@ -94,54 +100,3 @@ function Back() {
 
 export default Back;
 
-//<div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
-    //   <div
-    //     className="container h-100"
-    //     style={{
-    //       backgroundColor: '#f5f5f5',
-    //       alignItems: 'center',
-    //       minHeight: '100vh',
-    //       width: '100%',
-    //       border: '3px solid black',
-    //     }}
-    //   >
-    //     <h1> BACK</h1>
-    //     <div className="big-container">
-    //       <div className="outer-item">
-    //         <div className="inner-item" onClick={()=>handlepartLocation('Full Back Piece')}>
-    //           <h5>Full Back Piece</h5>
-    //         </div>
-    //         <div className="inner-item" onClick={()=>handlepartLocation('Right Shoulder')}>
-    //           <h5>Right Shoulder</h5>
-    //         </div>
-    //       </div>
-    //       <div className="outer-item">
-    //         <div className="inner-item" onClick={()=>handlepartLocation('Left Shoulder')}>
-    //           <h5>Left Shoulder</h5>
-    //         </div>
-    //         <div className="inner-item" onClick={()=>handlepartLocation('Spine')}>
-    //           <h5>Spine</h5>
-    //         </div>
-    //       </div>
-    //       <div className="outer-item">
-    //         <div className="inner-item" onClick={()=>handlepartLocation('Lower Back')}>
-    //           <h5>Lower Back</h5>
-    //         </div>
-    //         <div className="inner-item" onClick={()=>setShowOtherField(true)}>
-    //           <h5>Other </h5>
-    //         </div>
-    //       </div>
-    //       {showOtherField && (
-    //         <div>
-    //           <label>Explanation:</label>
-    //           <input
-    //             type="text"
-    //             value={otherFieldValue}
-    //             onChange={(e) => setOtherFieldValue(e.target.value)}
-    //           />
-    //           <button onClick={()=> handlepartLocation(otherFieldValue)}>Submit</button>
-    //         </div>
-    //       )}
-    //     </div>
-    //   </div>
-    // </div>

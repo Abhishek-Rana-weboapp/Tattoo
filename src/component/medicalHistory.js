@@ -12,8 +12,7 @@ function MedicalForm() {
   const [progressValue_, setprogressValue_] = useState(1);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { user, selectedPattern } = useContext(UserContext);
-  const { formData, setFormData } = useContext(UserContext);
+  const { user, selectedPattern, formData, setFormData , alert, setAlert , setAlertMessage } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup_, setShowPopup_] = useState(false);
@@ -151,7 +150,8 @@ function MedicalForm() {
           setprogressValue_(progressValue_ + 1);
           setCurrentPage(currentPage + 1);
         } else {
-          alert("Please Select an option");
+          setAlert(!alert)
+          setAlertMessage(t("Please Select an option"));
         }
       } else if (currentPage !== 1 && currentPage !== 2) {
         if (currentPageData.explanation) {
@@ -161,7 +161,8 @@ function MedicalForm() {
             navigate("/emergency-contact");
           }
         } else {
-          alert("Please enter the explanation");
+          setAlert(!alert)
+          setAlertMessage(t("Please enter the explanation"));
         }
       }
     }
@@ -173,7 +174,8 @@ function MedicalForm() {
       }
     } else if (!currentPageData.no && !currentPageData.yes) {
       // Show an alert message if the user doesn't select a choice
-      alert("Please choose an option before moving to the next question.");
+      setAlert(!alert)
+      setAlertMessage("Please select an option");
     }
   };
 
@@ -230,7 +232,7 @@ function MedicalForm() {
             <span className="underline">{t("Q1")}</span>{t("HaveYouEverBeenTattooedBefore?")}
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -241,7 +243,7 @@ function MedicalForm() {
               />
               <label className="md:text-2xl text-lg uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 name="page1"
@@ -282,7 +284,7 @@ function MedicalForm() {
             <span className="underline">{t("Q2")}</span>{t(": Are you Pregnant or Nursing?")}
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -293,7 +295,7 @@ function MedicalForm() {
               />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -361,7 +363,7 @@ function MedicalForm() {
               <span className="underline">Q3</span>{t(": Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}
             </label>
             <div className="flex flex-col items-center gap-4">
-              <div className="flex gap-2 items-center">
+              <div className="w-20 justify-start flex gap-2 items-center">
                 <input
                   type="checkbox"
                   className=" w-6 h-6"
@@ -372,7 +374,7 @@ function MedicalForm() {
                 />
                 <label className="text-2xl uppercase text-white">{t("YES")}</label>
               </div>
-              <div className="flex gap-2 items-center">
+              <div className="w-20 justify-start flex gap-2 items-center">
                 <input
                   type="checkbox"
                   className=" w-6 h-6"
@@ -430,7 +432,7 @@ function MedicalForm() {
             <span className="underline">Q4</span>{t(": Do you have any medical or skin conditions?")}
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -441,7 +443,7 @@ function MedicalForm() {
                 />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -501,7 +503,7 @@ function MedicalForm() {
             </span>
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -512,7 +514,7 @@ function MedicalForm() {
               />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -571,7 +573,7 @@ function MedicalForm() {
             </span>
           </label>
           <div className="flex flex-col items-center  gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -582,7 +584,7 @@ function MedicalForm() {
               />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className=" w-full flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -640,7 +642,7 @@ function MedicalForm() {
             <span>{t(": Do you have any allergies?")}</span>
           </label>
           <div className="flex flex-col items-center  gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -651,7 +653,7 @@ function MedicalForm() {
                 />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -708,7 +710,7 @@ function MedicalForm() {
             <span>{t(": Do you have a heart condition, epilepsy, or diabetes?")}</span>
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -719,7 +721,7 @@ function MedicalForm() {
               />
               <label className="text-2xl uppercase text-white">{t("YES")}</label>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="w-20 justify-start flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"

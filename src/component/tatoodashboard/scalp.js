@@ -10,7 +10,7 @@ import GridLayout from '../Layout/GridLayout';
 function Scalp() {
   const progressValue = 40;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
@@ -44,7 +44,7 @@ function Scalp() {
         setUser({ ...user, bodyPart : selected });
         navigate(`/medical-form`); 
       }else{
-        alert("Please select a face location")
+        setAlertMessage("Please select a face location")
       }
       }
     

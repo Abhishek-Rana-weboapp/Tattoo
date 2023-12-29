@@ -4,13 +4,15 @@ import UserContext from '../../context/UserContext';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
+import { useTranslation } from 'react-i18next';
 
 
 function Foot() {
   const progressValue = 30;
     const navigate = useNavigate();
-    const { user, setUser } = React.useContext(UserContext);
+    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} = useTranslation()
 
     useEffect(()=>{
       if(user.footLocation) setSelected(user.footLocation)
@@ -34,7 +36,8 @@ function Foot() {
         setUser({ ...user, footLocation:selected });
     navigate('/foot-dashboard');
       }else{
-        alert("Please select an option")
+        setAlert(!alert)
+        setAlertMessage(t("Please select an option"))
       }
     }
 

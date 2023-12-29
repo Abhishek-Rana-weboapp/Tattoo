@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 const ProgressBar = ({ progress, count }) => {
   const totalSteps = count; // Set your static total steps here
   const [markers, setMarkers] = useState([]);
-  console.log("currentvalue===", progress)
   useEffect(() => {
     const generateMarkers = () => {
       const newMarkers = [];

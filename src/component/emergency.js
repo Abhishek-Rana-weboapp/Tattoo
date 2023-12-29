@@ -5,12 +5,13 @@ import ProgressBar from './ProgressBar';
 import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
 import { useTranslation } from 'react-i18next';
+import AlertModal from './modal/AlertModal';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { emerformData, setemerFormData, setIsVisible } = React.useContext(UserContext);
+  const { emerformData, setemerFormData, setIsVisible,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
   const [data, setdata] = useState()
   const [showPopup_, setShowPopup_] = useState(true);
   const Yes=t("Yes")
@@ -63,8 +64,9 @@ function EmergencyContactForm() {
 
     // Check if any of the form fields are empty
     if (!emerformData.name || !emerformData.phone || !emerformData.city || !emerformData.state) {
-      alert('All fields are required. Please fill in all the fields before submitting.');
-    } else {
+    setAlert(!alert)
+    setAlertMessage(t("Please fill all the details"))
+  } else {
       console.log('Emergency contact form submitted with data:', emerformData);
       navigate('/doctor-info');
     }
@@ -75,6 +77,7 @@ function EmergencyContactForm() {
   }
 
   return (
+    <>
     <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
       {showPopup_ && (
         <Modal>
@@ -103,44 +106,40 @@ function EmergencyContactForm() {
           <label className="text-white font-semibold text-md w-20">{t("Name")}</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
-            type="text"
-            name="name"
-            value={emerformData?.name}
+          type="text"
+          name="name"
+          value={emerformData?.name}
             onChange={handleInputChange}
-            required
-          />
+            />
         </div>
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
           <input
            className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
-            type="text"
-            name="phone"
-            value={emerformData?.phone}
-            onChange={handleInputChange}
-            required
-          />
+           type="text"
+           name="phone"
+           value={emerformData?.phone}
+           onChange={handleInputChange}
+           />
         </div>
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("City")}:</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
-            type="text"
-            name="city"
-            value={emerformData?.city}
+          type="text"
+          name="city"
+          value={emerformData?.city}
             onChange={handleInputChange}
-            required
           />
         </div>
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("State")}:</label>
           <input
           className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
-            type="text"
-            name="state"
-            value={emerformData?.state}
-            onChange={handleInputChange}
-            required
+          type="text"
+          name="state"
+          value={emerformData?.state}
+          onChange={handleInputChange}
           />
         </div>
         </div>
@@ -148,7 +147,7 @@ function EmergencyContactForm() {
         <button
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={handlePrev}
-          >
+            >
             {t("Prev")}
           </button>
         <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100%  py-2 px-8 rounded-3xl font-bold mt-4" type="submit">
@@ -160,6 +159,7 @@ function EmergencyContactForm() {
         <ProgressBar progress={progressValue} />
       </div>
     </div>
+            </>
   );
 }
 

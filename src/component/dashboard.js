@@ -25,6 +25,8 @@ function Dashboard() {
     setUser({ ...user, selectedTattooType: selectedType });
   };
 
+  console.log(user)
+
   useEffect(() => {
     setUser({
       selectedTattooType: null, 
@@ -74,7 +76,51 @@ function Dashboard() {
     })
     setIsVisible(true)
     if(user?.selectedTattooType !== null){
-      setUser({...user , selectedTattooType : null})
+      setUser({
+        selectedTattooType: null, 
+        tattooLocation: null, 
+        headLocation: null,
+        faceLocation : null,
+        scalpLocation : null,
+        earLocation : null,
+        chestLocation : null,
+        armLocation:null,
+        armInside:null,
+        handLocation:null,
+        legLocation:null,
+        legInside:null,
+        footLocation:null,
+        piercingLocation:null,
+        images: [], 
+        bodyPart : null,
+        hairLoss:[]
+  
+      })
+      setFormData({
+        page1: { yes: false, no: false },
+        page2: { yes: false, no: false, pregnant: false, nursing: false },
+        page3: { yes: false, no: false, explanation: '' },
+        page4: { yes: false, no: false, explanation: '' },
+        page5: { yes: false, no: false, explanation: '' },
+        page6: { yes: false, no: false, explanation: '' },
+        page7: { yes: false, no: false, explanation: '' },
+        page8: { yes: false, no: false, explanation: '' },
+      })
+  
+      setemerFormData({
+        name: '',
+        phone: '',
+        city: '',
+        state: '',
+      })
+  
+      setdrFormData({
+        name: '',
+        phone: '',
+        city: '',
+        state: '',
+        useDoctorRecommendation: false,
+      })
     }
   }, []);
 
@@ -126,7 +172,7 @@ function Dashboard() {
   ];
 
   return (
-    <div className="w-3/4 h-full flex flex-col gap-5 justify-center items-center">
+    <div className="md:w-3/4 w-full h-full flex flex-col gap-5 justify-center items-center">
       <div className="grid grid-cols-2 gap-5 w-full">
         {menu?.map((menu, index) => {
           return (
