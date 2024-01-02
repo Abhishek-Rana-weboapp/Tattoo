@@ -193,5 +193,8 @@
   "Please select a face location": "Por favor, selecciona una ubicación en el rostro.",
   "Please enter the explanation" : "Por favor, ingresa la explicación.",
   "Please fill all the details":"Por favor, completa todos los detalles.",
-  "Please provide your initials":"Por favor, proporciona tus iniciales."
+  "Please provide your initials":"Por favor, proporciona tus iniciales.",
+  "All fields are required, please refill the form":"Todos los campos son obligatorios, por favor vuelve a llenar el formulario.",
+  "Appointment booked" : "¡Cita reservada!",
+  "Please fill in all the required fields." : "Por favor, completa todos los campos obligatorios."
 }

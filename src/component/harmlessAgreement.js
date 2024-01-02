@@ -86,6 +86,8 @@ function HoldHarmlessAgreement() {
               )}
             </p>
           </div>
+
+          <div className="flex flex-col  md:flex-row gap-2 justify-center">
           <div className="flex gap-1 items-center justify-center">
             <label>Name:</label>
             <input
@@ -93,7 +95,7 @@ function HoldHarmlessAgreement() {
               type="text"
               value={harmlessagreement.name}
               onChange={handleNameChange}
-            />
+              />
           </div>
           <div className="flex gap-1 items-center justify-center">
             <label>Initials:</label>
@@ -110,11 +112,12 @@ function HoldHarmlessAgreement() {
               className="w-5 h-5"
               checked={agreed}
               onChange={handleAgreementToggle}
-            />
+              />
             <label>I agree to the terms</label>
           </div>
+          </div>
           {showpop && agreed && harmlessagreement.initials && (
-            <div className="w-full flex justify-center items-center">
+            <div className="w-full flex flex-col justify-center items-center">
               <SignatureCanvas
                 penColor="black"
                 canvasProps={{
@@ -129,7 +132,7 @@ function HoldHarmlessAgreement() {
                 }}
                 ref={signatureRef}
               />
-
+              <div className="flex gap-4 items-center">
               <button
                 type="button"
                 className="mx-2 "
@@ -148,9 +151,10 @@ function HoldHarmlessAgreement() {
               <button
                 className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold "
                 onClick={handleSaveSignature}
-              >
+                >
                 {t("Save")}
               </button>
+                </div>
             </div>
           )}
         </div>
