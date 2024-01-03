@@ -16,7 +16,7 @@ function EmergencyContactForm() {
   const [showPopup_, setShowPopup_] = useState(true);
   const Yes=t("Yes")
   const No=t('No')
-  const options = [Yes,No];
+  const options = ["Yes","No"];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setemerFormData({ ...emerformData, [name]: value });
@@ -31,7 +31,7 @@ function EmergencyContactForm() {
       if (data?.data?.length > 0) {
 
         //console.log("have medical history :",data.data[data.data.length-1])    
-        setdata(data?.emergencycontectnumber)
+        setdata(JSON.parse(data?.emergencycontectnumber))
         setShowPopup_(true);
       }
     } catch (error) {
@@ -47,12 +47,7 @@ function EmergencyContactForm() {
   const handleUpdatedata = (e) => {
   const value = e.target.value
     if (value === 'No') {
-      setemerFormData({
-        "name": 'aniket',
-        "phone": '1234567891',
-        "city": 'lllll',
-        "state": 'up'
-      })
+      setemerFormData(data)
       navigate('/doctor-info')
     }
     if(value === "Yes" || "Sí"){
@@ -85,12 +80,9 @@ function EmergencyContactForm() {
           <div className="flex gap-2">
             <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
             <select className="bg-black p-2 rounded-lg" onChange={handleUpdatedata}>
-              <option value="">Select...</option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
+              <option value="">{t("Select")}...</option>
+              <option value={Yes}>{t("Yes")}</option>
+              <option value={No}>{t("No")}</option>
             </select>
           </div>
           <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold text-black" onClick={() => setShowPopup_(false)}>

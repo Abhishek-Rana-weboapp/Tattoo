@@ -1,5 +1,5 @@
 // Import necessary modules and components
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import ConsentFormLayout from './Layout/FormLayout';
 import ProgressBar from './ProgressBar';
@@ -23,6 +23,12 @@ function TermsOfService() {
 
     "By completing the following transaction, you acknowledge and agree that all sales are final and non-refundable.We accept all major credit cards, but there will be a 10% handling fee charged. For example, $100 you will pay a $10 fee.Cash is Always Better, Save Your Money! There is an ATM across the street at Chase Bank & the gas station next door.Some tattoos are done at a fixed price given by the artist or managers.Custom full sleeves and large-scale pieces are done at an hourly shop rate of $150-$350 per hour depending on the artist.Some artists charge between $1,200 - $2,800 for a full day up to 8 hours.All cover-ups and fix-ups are done at an hourly shop rate of $200-$350 per hour depending on the artist.If you are paying by the hour depending on the tattoo, some tattoo will be charged stencil time.",
   ];
+
+  const inputRef = useRef()
+
+  useEffect(()=>{
+    inputRef?.current?.focus()
+  },[currentPage])
 
   // Navigation function
   const navigate = useNavigate();
@@ -59,7 +65,7 @@ function TermsOfService() {
 
   // Return the JSX structure
   return (
-    <ConsentFormLayout title=""  about="Terms of Service">
+    <ConsentFormLayout  title="Terms of Service">
       <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
       <p className="text-white text-center">{t(pageContents[currentPage - 1])}</p>
       <div className='flex gap-2 justify-center items-center'>
@@ -67,6 +73,7 @@ function TermsOfService() {
         {t('Initials')}:
         </label>
         <input
+        ref={inputRef}
           type="text"
           value={initials[currentPage] || ''}
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}

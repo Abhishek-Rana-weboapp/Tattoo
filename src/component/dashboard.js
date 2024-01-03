@@ -18,62 +18,14 @@ import tattoo_gold from "../assets/tattoo_gold.png";
 import { useTranslation } from 'react-i18next';
 function Dashboard() {
   const { t } = useTranslation();
-  const { user, setUser, setIsVisible,setFormData , setemerFormData , setdrFormData } = React.useContext(UserContext);
+  const { user, setUser, setIsVisible,setFormData , setemerFormData , setdrFormData, setInitials, setharmlessagreement } = React.useContext(UserContext);
   const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
   };
 
-  console.log(user)
-
   useEffect(() => {
-    setUser({
-      selectedTattooType: null, 
-      tattooLocation: null, 
-      headLocation: null,
-      faceLocation : null,
-      scalpLocation : null,
-      earLocation : null,
-      chestLocation : null,
-      armLocation:null,
-      armInside:null,
-      handLocation:null,
-      legLocation:null,
-      legInside:null,
-      footLocation:null,
-      piercingLocation:null,
-      images: [], 
-      bodyPart : null,
-      hairLoss:[]
-
-    })
-
-    setFormData({
-      page1: { yes: false, no: false },
-      page2: { yes: false, no: false, pregnant: false, nursing: false },
-      page3: { yes: false, no: false, explanation: '' },
-      page4: { yes: false, no: false, explanation: '' },
-      page5: { yes: false, no: false, explanation: '' },
-      page6: { yes: false, no: false, explanation: '' },
-      page7: { yes: false, no: false, explanation: '' },
-      page8: { yes: false, no: false, explanation: '' },
-    })
-
-    setemerFormData({
-      name: '',
-      phone: '',
-      city: '',
-      state: '',
-    })
-
-    setdrFormData({
-      name: '',
-      phone: '',
-      city: '',
-      state: '',
-      useDoctorRecommendation: false,
-    })
     setIsVisible(true)
     if(user?.selectedTattooType !== null){
       setUser({
@@ -105,6 +57,15 @@ function Dashboard() {
         page6: { yes: false, no: false, explanation: '' },
         page7: { yes: false, no: false, explanation: '' },
         page8: { yes: false, no: false, explanation: '' },
+      })
+
+      setInitials({})
+
+      setharmlessagreement({
+        name: '',
+        initials:'',
+        signatureurl:'',
+        agreed:false
       })
   
       setemerFormData({

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
@@ -14,7 +14,9 @@ function ConsentForm() {
 
   const navigate = useNavigate();
   const { initials, setInitials,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
+  const inputRef = useRef()
 
+  
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 13; 
   const statements = [
@@ -32,6 +34,10 @@ function ConsentForm() {
     "I hereby consent to receive text messages and emails from Fame Tattoos, Inc., for transactional, informational, and promotional purposes. I understand that standard message and data rates may apply for SMS messages, and I acknowledge that I'm responsible for any such charges incurred",
     "I swear, affirm, and agree that all the above information is true and correct and that I understand it."
   ];
+  
+  useEffect(()=>{
+      inputRef?.current?.focus()
+  },[currentPage])
 
   const handleInitialsChange = (page, initialsValue) => {
     setInitials({ ...initials, [page]: initialsValue });
@@ -72,6 +78,7 @@ function ConsentForm() {
       <label className="block mt-4 text-white">
         {t("Initials")}:{' '}
         <input
+          ref={inputRef}
           type="text"
           value={initials[currentPage] || ''}
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
