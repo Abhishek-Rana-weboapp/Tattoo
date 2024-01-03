@@ -4,6 +4,7 @@ import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 import { data } from "autoprefixer";
+import SignatureModal from "./modal/SignatureModal";
 
 function HoldHarmlessAgreement() {
   const { harmlessagreement, setharmlessagreement } =
@@ -17,9 +18,10 @@ function HoldHarmlessAgreement() {
   const [showpop, setshowpop] = useState(true);
   const { setIsVisible, alert, setAlert, setAlertMessage } =
     useContext(UserContext);
-  const signatureRef = useRef(null);
+  const [signatureRef,setSignatureRef]=useState() 
 
   useEffect(() => {
+    setshowpop(true);
     setIsVisible(true);
   }, []);
 
@@ -38,6 +40,7 @@ function HoldHarmlessAgreement() {
   };
 
   const handleAgreementToggle = () => {
+    setshowpop(true);
     setAgreed(!agreed);
   };
   const handleClear = () => {
@@ -116,47 +119,52 @@ function HoldHarmlessAgreement() {
             <label>I agree to the terms</label>
           </div>
           </div>
-          {showpop && agreed && harmlessagreement.initials && (
-            <div className="w-full flex flex-col justify-center items-center">
-              <SignatureCanvas
-                penColor="black"
-                canvasProps={{
-                  width: 300,
-                  height: 150,
-                  className: "sigCanvas",
-                  style: {
-                    border: "1px solid #000",
-                    backgroundColor: "#9ca3af",
-                    borderRadius: "10px",
-                  },
-                }}
-                ref={signatureRef}
-              />
-              <div className="flex gap-4 items-center">
-              <button
-                type="button"
-                className="mx-2 "
-                style={{
-                  background: "#e74c3c",
-                  color: "white",
-                  padding: "8px",
-                  borderRadius: "4px",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-                onClick={handleClear}
-              >
-                {t("Clear")}
-              </button>
-              <button
-                className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold "
-                onClick={handleSaveSignature}
-                >
-                {t("Save")}
-              </button>
-                </div>
-            </div>
-          )}
+          {showpop && agreed && harmlessagreement.initials && 
+          <SignatureModal setSignatureRef={setSignatureRef} handleSave={handleSaveSignature} handleClear={handleClear} setShowPopup={setshowpop} showPopup={showpop}/>
+            
+          // (
+          //   <div className="w-full flex flex-col justify-center items-center">
+          //     <SignatureCanvas
+          //       penColor="black"
+          //       canvasProps={{
+          //         width: 300,
+          //         height: 150,
+          //         className: "sigCanvas",
+          //         style: {
+          //           border: "1px solid #000",
+          //           backgroundColor: "#9ca3af",
+          //           borderRadius: "10px",
+          //         },
+          //       }}
+          //       ref={signatureRef}
+          //     />
+          //     <div className="flex gap-4 items-center">
+          //     <button
+          //       type="button"
+          //       className="mx-2 "
+          //       style={{
+          //         background: "#e74c3c",
+          //         color: "white",
+          //         padding: "8px",
+          //         borderRadius: "4px",
+          //         border: "none",
+          //         cursor: "pointer",
+          //       }}
+          //       onClick={handleClear}
+          //     >
+          //       {t("Clear")}
+          //     </button>
+          //     <button
+          //       className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold "
+          //       onClick={handleSaveSignature}
+          //       >
+          //       {t("Save")}
+          //     </button>
+          //       </div>
+          //   </div>
+          // )
+
+        }
         </div>
         <div className="w-full flex justify-between">
           <button

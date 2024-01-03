@@ -187,42 +187,14 @@ function MedicalForm() {
   console.log(user);
 
   return (
+    <>
     <MedicalFormLayout
       title={t("Medical history")}
       progressValue={progressValue}
       progressValue_={progressValue_}
       progressValue_count_={8}
     >
-     {showPopup_ && (
-        <Modal>
-          <h3 className="font-bold">{t("Do you want to update your medical history?")}</h3>
-
-          {/* // Dropdown menu */}
-          <div className="flex gap-1 items-center">
-            <label className="text-xl font-bold">{t("Select an option:")}</label>
-            <select
-              className="rounded p-2 border-1 bg-black text-white"
-              onChange={(e) => handleUpdatedata(e.target.value)}
-            >
-              <option value="">Select...</option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button
-            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-            onClick={() => {
-              setShowPopup_(false);
-            }}
-          >
-            {t("Close Popup")}
-          </button>
-        </Modal>
-      )}
+   
 
       {currentPage === 1 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
@@ -768,6 +740,37 @@ function MedicalForm() {
         </div>
       )}
     </MedicalFormLayout>
+      {showPopup_ && (
+        <Modal>
+          <h3 className="font-bold">{t("Do you want to update your medical history?")}</h3>
+
+          {/* // Dropdown menu */}
+          <div className="flex gap-1 items-center">
+            <label className="text-xl font-bold">{t("Select an option:")}</label>
+            <select
+              className="rounded p-2 border-1 bg-black text-white"
+              onChange={(e) => handleUpdatedata(e.target.value)}
+            >
+              <option value="">Select...</option>
+              {options.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+            onClick={() => {
+              setShowPopup_(false);
+            }}
+          >
+            {t("Close Popup")}
+          </button>
+        </Modal>
+      )}
+    </>
   );
 }
 export default MedicalForm;
