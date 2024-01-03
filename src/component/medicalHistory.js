@@ -175,7 +175,7 @@ function MedicalForm() {
     } else if (!currentPageData.no && !currentPageData.yes) {
       // Show an alert message if the user doesn't select a choice
       setAlert(!alert)
-      setAlertMessage("Please select an option");
+      setAlertMessage(t("Please select an option"));
     }
   };
 
@@ -213,7 +213,7 @@ function MedicalForm() {
                 checked={formData?.page1?.yes}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("YES")}</label>
+              <label className="md:text-2xl text-lg uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -224,7 +224,7 @@ function MedicalForm() {
                 checked={formData?.page1?.no}
                 onChange={(e) => handleRadioButtons(e ,"page1")}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("NO")}</label>
+              <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
             </div>
           </div>
                     </div>
@@ -265,7 +265,7 @@ function MedicalForm() {
                 checked={formData?.page2?.yes}
                 onChange={(e) => handleRadioButtons(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -276,7 +276,7 @@ function MedicalForm() {
                 checked={formData?.page2?.no}
                 onChange={(e) => handleRadioButtons(e, "page2")}
               />
-              <label className="text-2xl uppercase text-white">{t("NO")}</label>
+              <label className="text-2xl uppercase text-white">{t("No")}</label>
             </div>
           </div>
 
@@ -344,7 +344,7 @@ function MedicalForm() {
                   checked={formData?.page3?.yes}
                   onChange={(e) => handleRadioButtons(e, "page3")}
                 />
-                <label className="text-2xl uppercase text-white">{t("YES")}</label>
+                <label className="text-2xl uppercase text-white">{t("Yes")}</label>
               </div>
               <div className="w-20 justify-start flex gap-2 items-center">
                 <input
@@ -413,7 +413,7 @@ function MedicalForm() {
                 checked={formData?.page4?.yes}
                 onChange={(e) => handleRadioButtons(e, "page4")}
                 />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -484,7 +484,7 @@ function MedicalForm() {
                 checked={formData?.page5?.yes}
                 onChange={(e) => handleRadioButtons(e, "page5")}
               />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -554,7 +554,7 @@ function MedicalForm() {
                 checked={formData?.page6?.yes}
                 onChange={(e) => handleRadioButtons(e, "page6")}
               />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -623,7 +623,7 @@ function MedicalForm() {
                 checked={formData?.page7?.yes}
                 onChange={(e) => handleRadioButtons(e, "page7")}
                 />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input
@@ -691,7 +691,7 @@ function MedicalForm() {
                 checked={formData?.page8?.yes}
                 onChange={(e) => handleRadioButtons(e, "page8")}
               />
-              <label className="text-2xl uppercase text-white">{t("YES")}</label>
+              <label className="text-2xl uppercase text-white">{t("Yes")}</label>
             </div>
             <div className="w-20 justify-start flex gap-2 items-center">
               <input

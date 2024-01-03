@@ -54,7 +54,8 @@ const UserContextProvider = ({children})=>{
       const [harmlessagreement,setharmlessagreement]=useState({
         name: '',
         initials:'',
-        signatureurl:''
+        signatureurl:'',
+        agreed:false
       })
       const [initials, setInitials] = useState({});
       const [isVisible , setIsVisible] = useState(false)

@@ -85,7 +85,7 @@ function TattooDashboard() {
 
   return (
     <>
-    <GridLayout title={"tattoo"}>
+    <GridLayout title={"Tattoo"}>
         { buttons.map((button, index) => {
           return (
               <CustomButton

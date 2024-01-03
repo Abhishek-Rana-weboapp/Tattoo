@@ -20,7 +20,7 @@ const IDVerificationComponent = () => {
   
   const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  console.log("userdata====",user)
+
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     uploadIdPhoto(file);
@@ -99,7 +99,8 @@ const IDVerificationComponent = () => {
             navigate('/');
           }
         } else {
-          alert('All fields are required, please refill the form.');
+          setAlertMessage(t('Please fill in all the required fields.'));
+          setAlert(!alert)
         }
       } catch (error) {
         console.error('Error:', error);

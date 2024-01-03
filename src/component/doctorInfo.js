@@ -102,7 +102,7 @@ function DoctorContactForm() {
               className="bg-black p-2 rounded-lg"
               onChange={handleUpdatedata}
             >
-              <option value="">Select...</option>
+              <option value="">{t("Select")}...</option>
               {options.map((option, index) => (
                 <option key={index} value={option}>
                   {option}
