@@ -94,7 +94,6 @@ function SignUp() {
     }
 
     const handleInviteClick = () => {
-
       fetch(`http://localhost:4000/add_admin?username_admin=${email}&psw=${password}`, {
         method: 'POST',
         headers: {
@@ -120,15 +119,9 @@ function SignUp() {
         .catch(error => {
           console.log(error)
         });
-
-
-
-
-
       
     };
 
-    console.log(navigator.language)    
 
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
