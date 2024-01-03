@@ -171,7 +171,7 @@ function SignUp() {
               onChange={(e) => setSelectedLanguage(e.target.value)} // Update state on change
             >
               <option value="eng">English</option>
-              <option value="spa">Spanish</option>
+              <option value="es">Spanish</option>
             </select>
             
    <div className='flex gap-2'>
