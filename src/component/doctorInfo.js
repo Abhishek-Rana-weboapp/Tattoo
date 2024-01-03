@@ -12,7 +12,7 @@ function DoctorContactForm() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [data, setData] = useState();
-  const [showPopup_, setShowPopup_] = useState(true);
+  const [showPopup_, setShowPopup_] = useState(false);
   const yes = t("Yes");
   const No = t("No");
   const options = [yes, No];
