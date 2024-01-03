@@ -13,7 +13,7 @@ function EmergencyContactForm() {
   const navigate = useNavigate();
   const { emerformData, setemerFormData, setIsVisible,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
   const [data, setdata] = useState()
-  const [showPopup_, setShowPopup_] = useState(true);
+  const [showPopup_, setShowPopup_] = useState(false);
   const Yes=t("Yes")
   const No=t('No')
   const options = ["Yes","No"];
