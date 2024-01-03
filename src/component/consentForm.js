@@ -124,8 +124,8 @@ const ConsentFormGuard = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: appointment_detail.username,
-          id: appointment_detail.id,
+          username: appointment_detail?.username,
+          id: appointment_detail?.id,
           consent_guard: formData,
         }),
       });
