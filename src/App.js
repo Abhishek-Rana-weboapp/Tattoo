@@ -25,7 +25,15 @@ function App() {
   const [userLanguage, setUserLanguage] = useState('en'); // Replace with logic to get user language
   const { t } = useTranslation();
 
+useEffect(()=>{
+  if(sessionStorage.getItem("lang")){
+    const language = sessionStorage.getItem("lang")
+    console.log(language)
+    i18n.changeLanguage(sessionStorage.getItem("lang"))
+  }
 
+  console.log("App started")
+},[])
 
 
   return (
