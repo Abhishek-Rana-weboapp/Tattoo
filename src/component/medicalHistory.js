@@ -198,7 +198,7 @@ function MedicalForm() {
 
       {currentPage === 1 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
-                    <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
+        <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
             <span className="underline">{t("Q1")}</span>{t("HaveYouEverBeenTattooedBefore?")}
@@ -280,7 +280,7 @@ function MedicalForm() {
             </div>
           </div>
 
-          <label className="text-white uppercase">{t("IF YES")} ,{t("PLEASE SELECT WHICH ONE")}</label>
+          {formData?.page2?.yes === true && <><label className="text-white uppercase">{t("IF YES")} ,{t("PLEASE SELECT WHICH ONE")}</label>
           <div className="flex gap-10">
             <div className="flex gap-2 items-center">
               <input
@@ -305,6 +305,7 @@ function MedicalForm() {
               <label className="text-2xl uppercase text-white">{t("Nursing")}</label>
             </div>
           </div>
+          </>}
                 </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
@@ -320,6 +321,7 @@ function MedicalForm() {
             >
               {t("Next")}
             </button>
+            
           </div>
         </div>
       )}
@@ -358,8 +360,8 @@ function MedicalForm() {
                 <label className="text-2xl uppercase text-white">NO</label>
               </div>
             </div>
-
-            <div className="flex-col flex gap-2 items-center w-full">
+ /////////
+          {formData?.page3?.yes === true && <div className="flex-col flex gap-2 items-center w-full">
               <label className="text-lg uppercase text-white">
               {t("IF YES")},{t("PLEASE EXPLAIN")}
               </label>
@@ -374,7 +376,7 @@ function MedicalForm() {
                   handleInputChange("page3", "explanation", e.target.value)
                 }
                 />
-            </div>
+            </div>}
                 </div>
             <ProgressBar progress={progressValue_} />
             <div className=" w-full flex justify-between">
@@ -428,7 +430,7 @@ function MedicalForm() {
             </div>
           </div>
 
-          <div className="flex-col flex gap-2 items-center w-full">
+          {formData?.page4?.yes === true &&  <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
             {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
@@ -443,7 +445,7 @@ function MedicalForm() {
                 handleInputChange("page4", "explanation", e.target.value)
               }
               />
-          </div>
+          </div>}
               </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
@@ -499,7 +501,7 @@ function MedicalForm() {
             </div>
           </div>
 
-          <div className="flex-col  flex gap-2 items-center w-full">
+          {formData?.page5?.yes === true &&    <div className="flex-col  flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
             {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
@@ -514,7 +516,7 @@ function MedicalForm() {
               handleInputChange("page5", "explanation", e.target.value)
             }
             />
-          </div>
+          </div>}
             </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
@@ -569,7 +571,7 @@ function MedicalForm() {
             </div>
           </div>
 
-          <div className="flex-col flex gap-2 items-center w-full">
+          {formData?.page6?.yes === true &&    <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
             {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
@@ -584,7 +586,7 @@ function MedicalForm() {
               handleInputChange("page6", "explanation", e.target.value)
               }
               />
-          </div>
+          </div>}
               </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
@@ -637,7 +639,8 @@ function MedicalForm() {
               <label className="text-2xl uppercase text-white">NO</label>
             </div>
           </div>
-          <div className="flex-col flex gap-2 items-center w-full">
+
+         {formData?.page7?.yes === true &&   <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
               {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
@@ -652,7 +655,7 @@ function MedicalForm() {
                 handleInputChange("page7", "explanation", e.target.value)
               }
             />
-          </div>
+          </div>}
             </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
@@ -705,7 +708,7 @@ function MedicalForm() {
               <label className="text-2xl uppercase text-white">NO</label>
             </div>
           </div>
-          <div className="flex-col flex gap-2 items-center w-full">
+         {formData?.page8?.yes === true &&   <div className="flex-col flex gap-2 items-center w-full">
             <label className="text-lg uppercase text-white">
             {t("IF YES")},{t("PLEASE EXPLAIN")}
             </label>
@@ -720,7 +723,7 @@ function MedicalForm() {
               handleInputChange("page8", "explanation", e.target.value)
               }
               />
-          </div>
+          </div>}
               </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">

@@ -126,7 +126,7 @@ function SignUp() {
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'
     >    
-    <img src={Title_logo} className=' w-1/6'></img>
+    <img src={Title_logo} className='w-3/6 md:w-1/6'></img>
     <h1 className='text-white font-bold uppercase'>Signup</h1>
       <div className="col-md-6">
         <form onSubmit={handleFormSubmit} className='flex flex-col justify-center gap-3'>
