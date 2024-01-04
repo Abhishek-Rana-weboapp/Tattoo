@@ -90,14 +90,14 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase ">Emergency Contact Information</h1>
-      <form className="bg-gray-800 p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
+      <h1 className="text-3xl font-bold mb-4 text-white uppercase ">Emergency Contact Information</h1>
+      <form className="bg-black p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
       <div className='flex flex-col gap-3 flex-1 items-center'>
 
       <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("Name")}</label>
+          <label className="text-white font-semibold text-md w-20">{t("Name")}:</label>
           <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+          className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
           type="text"
           name="name"
           value={emerformData?.name}
@@ -107,7 +107,7 @@ function EmergencyContactForm() {
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
           <input
-           className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+           className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
            type="text"
            name="phone"
            value={emerformData?.phone}
@@ -117,7 +117,7 @@ function EmergencyContactForm() {
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("City")}:</label>
           <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+          className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
           type="text"
           name="city"
           value={emerformData?.city}
@@ -126,13 +126,66 @@ function EmergencyContactForm() {
         </div>
 <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md w-20">{t("State")}:</label>
-          <input
-          className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
-          type="text"
-          name="state"
-          value={emerformData?.state}
-          onChange={handleInputChange}
-          />
+          <select
+            className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
+            style={{ width: "225px" }}
+            name="state"
+            value={emerformData?.state}
+            onChange={handleInputChange}
+          >
+                         <option value="Florida">Florida</option>
+<option value="Alabama">Alabama</option>
+<option value="Alaska">Alaska</option>
+<option value="Arizona">Arizona</option>
+<option value="Arkansas">Arkansas</option>
+<option value="California">California</option>
+<option value="Colorado">Colorado</option>
+<option value="Connecticut">Connecticut</option>
+<option value="Delaware">Delaware</option>
+<option value="Florida">Florida</option>
+<option value="Georgia">Georgia</option>
+<option value="Hawaii">Hawaii</option>
+<option value="Idaho">Idaho</option>
+<option value="Illinois">Illinois</option>
+<option value="Indiana">Indiana</option>
+<option value="Iowa">Iowa</option>
+<option value="Kansas">Kansas</option>
+<option value="Kentucky">Kentucky</option>
+<option value="Louisiana">Louisiana</option>
+<option value="Maine">Maine</option>
+<option value="Maryland">Maryland</option>
+<option value="Massachusetts">Massachusetts</option>
+<option value="Michigan">Michigan</option>
+<option value="Minnesota">Minnesota</option>
+<option value="Mississippi">Mississippi</option>
+<option value="Missouri">Missouri</option>
+<option value="Montana">Montana</option>
+<option value="Nebraska">Nebraska</option>
+<option value="Nevada">Nevada</option>
+<option value="New Hampshire">New Hampshire</option>
+<option value="New Jersey">New Jersey</option>
+<option value="New Mexico">New Mexico</option>
+<option value="New York">New York</option>
+<option value="North Carolina">North Carolina</option>
+<option value="North Dakota">North Dakota</option>
+<option value="Ohio">Ohio</option>
+<option value="Oklahoma">Oklahoma</option>
+<option value="Oregon">Oregon</option>
+<option value="Pennsylvania">Pennsylvania</option>
+<option value="Rhode Island">Rhode Island</option>
+<option value="South Carolina">South Carolina</option>
+<option value="South Dakota">South Dakota</option>
+<option value="Tennessee">Tennessee</option>
+<option value="Texas">Texas</option>
+<option value="Utah">Utah</option>
+<option value="Vermont">Vermont</option>
+<option value="Virginia">Virginia</option>
+<option value="Washington">Washington</option>
+<option value="West Virginia">West Virginia</option>
+<option value="Wisconsin">Wisconsin</option>
+<option value="Wyoming">Wyoming</option>
+ 
+          </select>
         </div>
         </div>
         <div className='flex justify-between'>
