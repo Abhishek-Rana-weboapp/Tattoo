@@ -76,6 +76,7 @@ import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
 import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
+import ArtistDashboard from '../component/dashboard/ArtistDashboard';
 
 export default function RoutesComponent() {
 
@@ -108,6 +109,7 @@ export default function RoutesComponent() {
       <Route exact path="/signup" element={<SignUp />} />\
       <Route exact path="/forget_password" element={<ForgetPassword />} />
       <Route exact path="/reset_password" element={<Resetpassword/>} />
+      <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>
       <Route element={<PrivateRoutes/>} >
 
       <Route exact path="/dashboard" element={<Dashboard />} />
@@ -117,6 +119,7 @@ export default function RoutesComponent() {
       <Route exact path="/forehead" element={<Forehead />} />
       <Route exact path="/neck" element={<Neck />} />
       <Route exact path="/face-temple" element={<FaceTemple />} />
+
 
       <Route exact path="/eyebrow" element={<Eyebrow />} />
       <Route exact path="/eyelid" element={<Eyelid />} />

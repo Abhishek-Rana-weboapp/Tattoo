@@ -66,7 +66,6 @@ const UserContextProvider = ({children})=>{
     return (
         <UserContext.Provider value={{isVisible , setIsVisible, alert , setAlert, alertMessage , setAlertMessage ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
             {children}
-
         </UserContext.Provider>
     )
 }

@@ -9,13 +9,15 @@ import UserContext from '../context/UserContext';
 // Define the component
 function TermsOfService() {
   const { t } = useTranslation();
+  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+
   // State and initialization
   const [progressValue, setProgressValue] = useState(90);
   const [progressValue_, setProgressValue_] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
-  const {user , alert , setAlert , setAlertMessage} = useContext(UserContext)
+  const {user , alert , setAlert , setAlertMessage , formData, emerformData, drformData, setIsVisible,harmlessagreement,} = useContext(UserContext)
   const pageContents = [
     "No Foods or Drinks allowed in tattoo workstation.Please sit as still as possible while being tattooed, your final satisfaction is our priority.Only (1) additional person is allowed in tattoo station aside from the individual being tattooed.Please do not leave the workstation during a break or once the tattoo has been completed without it being covered by the artist.During a break or while being tattooed, DO NOT TOUCH YOUR TATTOO.",
 
@@ -48,7 +50,8 @@ function TermsOfService() {
         setProgressValue_(progressValue_ + 1);
         setCurrentPage(currentPage + 1);
       } else if (currentPage === 3) {
-        navigate('/verify');
+        handleSubmit()
+        // navigate('/verify');
       }
     }
   };
@@ -61,6 +64,63 @@ function TermsOfService() {
     }if(currentPage === 1){
       navigate(-1)
     }
+  };
+
+
+  const handleSubmit = async () => {
+    const username = sessionStorage.getItem('username');
+    const minor = sessionStorage.getItem('minor');
+    const toothgem_url=sessionStorage.getItem('toothgem_url')
+      try {
+        const response = await fetch(`${apiUrl}/appointment/post`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: username,
+            minor: minor,
+            typeofservice: user.selectedTattooType,
+            bodyloacation: JSON.stringify(user),
+            medicalhistory: {
+              "tattooed before": formData?.page1,
+              "Pregnant or Nursing": formData?.page2,
+              "hemophiliac": formData?.page3,
+              "medical condition": formData?.page4,
+              "communicable diseases": formData?.page5,
+              "alcohol": formData?.page6,
+              "allergies": formData?.page7,
+              "heart condition": formData?.page8,
+            },
+            emergencycontectnumber: JSON.stringify(emerformData),
+            doctor_information: JSON.stringify(drformData),
+            WaiverRelease_url: JSON.stringify(initials),
+            HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
+            id_url: null,
+            ArtistPiercerNames: null,
+          }),
+        });
+
+        const responseData = await response.json();
+
+        if (response.status === 201) {
+          setAlert(!alert)
+          setAlertMessage("Appointment booked");
+          if (minor === "true") {
+            sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
+            navigate('/consent-guard');
+          } else {
+            progressValue=100
+            //sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
+            navigate('/employeePrompt');
+          }
+        } else {
+          setAlertMessage(t('Please fill in all the required fields.'));
+          setAlert(!alert)
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
   };
 
   // Return the JSX structure

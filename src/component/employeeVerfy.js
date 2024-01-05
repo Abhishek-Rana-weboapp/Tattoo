@@ -81,7 +81,7 @@ const IDVerificationComponent = () => {
             WaiverRelease_url: JSON.stringify(initials),
             HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
             id_url: idPhoto,
-            ArtistPiercerNames: " ",
+            ArtistPiercerNames: null,
           }),
         });
 
