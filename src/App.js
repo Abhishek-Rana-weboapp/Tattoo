@@ -5,6 +5,7 @@ import i18n from 'i18next';
 import UserContextProvider from './context/UserContextProvider';
 import RoutesComponent from './routes/RoutesComponent';
 import AlertModal from './component/modal/AlertModal';
+import "./App.css"
 
 
 i18n

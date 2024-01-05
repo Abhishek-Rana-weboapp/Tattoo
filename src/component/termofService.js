@@ -104,6 +104,7 @@ function TermsOfService() {
         const responseData = await response.json();
 
         if (response.status === 201) {
+          localStorage.setItem("appointmentID" , responseData.userData.id)
           setAlert(!alert)
           setAlertMessage("Appointment booked");
           if (minor === "true") {
