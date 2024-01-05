@@ -9,6 +9,7 @@ import VerifyPin from './sub-Components/VerifyPin';
 import axios from 'axios';
 
 const IDVerificationComponent = () => {
+  const token=sessionStorage.getItem('token');
   const { t } = useTranslation();
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -142,13 +143,29 @@ const IDVerificationComponent = () => {
         updateField : "id_url",
         updateValue : imageUrl
       }
-      await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
-        if(res.status === 201){
-          setStep(2)
+      
+        try {
+          const response = await fetch(`${apiUrl}/artist/post_new`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+      
+          if (response.status === 201) {
+            setStep(2);
+          } else {
+            // Handle other response statuses if needed
+            console.error(`Error: ${response.status} - ${response.statusText}`);
+          }
+        } catch (err) {
+          console.error(err.message);
         }
-      }).catch((err)=>{
-        console.error(err.message)
-      })
+    
+      
+      // Call the function
+  
     }
   }
 
@@ -176,7 +193,7 @@ const IDVerificationComponent = () => {
  ]
 
  const handleShopLocation = async()=>{
-  if(shopLocation){
+  if(shopLocation===""){
     setAlertMessage(t("Please select shop location"))
     setAlert(!alert)
   }else{
@@ -185,7 +202,7 @@ const IDVerificationComponent = () => {
       updateField : "shop_location",
       updateValue : shopLocation
     }
-    await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
         setStep(3)
       }
@@ -196,7 +213,7 @@ const IDVerificationComponent = () => {
  }
 
  const handleFrontDesk = async()=>{
-  if(frontDesk){
+  if(frontDesk===""){
     setAlertMessage(t("Please select employee name"))
     setAlert(!alert)
   }else{
@@ -205,10 +222,11 @@ const IDVerificationComponent = () => {
       updateField : "frontDeskEmployee",
       updateValue : frontDesk
     }
-    await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
         setAlertMessage("Verification Done")
         setAlert(!alert)
+        
       }
     }).catch((err)=>{
       console.error(err.message)

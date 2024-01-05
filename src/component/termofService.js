@@ -1,5 +1,6 @@
 // Import necessary modules and components
 import React, { useContext, useEffect, useRef, useState } from 'react';
+
 import { useNavigate } from "react-router-dom";
 import ConsentFormLayout from './Layout/FormLayout';
 import ProgressBar from './ProgressBar';
@@ -8,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import UserContext from '../context/UserContext';
 // Define the component
 function TermsOfService() {
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -33,7 +35,7 @@ function TermsOfService() {
   },[currentPage])
 
   // Navigation function
-  const navigate = useNavigate();
+
 
   // Handle change in initials
   const handleInitialsChange = (page, initialsValue) => {
@@ -104,16 +106,19 @@ function TermsOfService() {
         const responseData = await response.json();
 
         if (response.status === 201) {
+          console.log("iffffffff")
           localStorage.setItem("appointmentID" , responseData.userData.id)
-          setAlert(!alert)
-          setAlertMessage("Appointment booked");
+          //setAlert(!alert)
+          //setAlertMessage("Appointment booked");
           if (minor === "true") {
+            console.log("iff")
             sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
             navigate('/consent-guard');
           } else {
-            progressValue=100
+            console.log("else")
+        
             //sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
-            navigate('/employeePrompt');
+            navigate('/verify');
           }
         } else {
           setAlertMessage(t('Please fill in all the required fields.'));
