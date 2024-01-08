@@ -49,18 +49,31 @@ const BillingComponent = () => {
   const [finalPrice, setFinalPrice] = useState(null);
 
   const handleStartDate = () => {
-    if(beforeImage){
+    if(updateAppointment.typeofservice === "tattoo"){
+      if(beforeImage){
+        setIsRunning(!isRunning);
+        const now = new Date();
+        const formattedDateTime = now.toISOString().slice(0, 16);
+        console.log(formattedDateTime)
+        setBillingData((prevData) => ({
+          ...prevData,
+          start_time: formattedDateTime,
+        }));
+      }else{
+        setAlertMessage("Please Provide before Image")
+        setAlert(!alert)
+      }
+    }
+     if(updateAppointment.typeofservice !== "tattoo"){  
       setIsRunning(!isRunning);
       const now = new Date();
-      const formattedDateTime = now.toISOString().slice(0, 16).replace("T", " ");
+      const formattedDateTime = now.toISOString().slice(0, 16);
       setBillingData((prevData) => ({
         ...prevData,
         start_time: formattedDateTime,
       }));
-    }else{
-      setAlertMessage("Please Provide before Image")
-      setAlert(!alert)
-    }
+     }
+     
   };
 
   const handleEndDate = () => {
@@ -139,8 +152,7 @@ const BillingComponent = () => {
   };
 
   const handleBillingSubmit = () => {
-    if(beforeImage && afterImage){
-
+    if(afterImage){
       axios
       .post("http://localhost:8080/artist/calculate-billing", billingData)
       .then((billingResponse) => {
@@ -162,6 +174,10 @@ const BillingComponent = () => {
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
       <h1>Billing</h1>
+      <div className="flex gap-2 items-center">
+        <label>Service :</label>
+        <label>{updateAppointment?.typeofservice}</label>
+      </div>
       {/* <label>
         Username:
         <input type="text" name="username" value={billingData.username} onChange={handleInputChange} placeholder="Username" />
@@ -199,7 +215,7 @@ const BillingComponent = () => {
       </div>
 
       {/* <div className='w-full flex gap-4 justify-center'> */}
-      {updateAppointment?.typeofservice === "tattoo" &&<div className="flex flex-col md:flex-row gap-2 items-center">
+      {updateAppointment?.typeofservice === "tattoo" &&<div className="flex flex-col gap-2 items-center">
         {/* Image upload for before */}
         <label>Before Image:</label>
         <input
