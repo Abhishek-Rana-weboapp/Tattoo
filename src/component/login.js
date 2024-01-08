@@ -77,8 +77,9 @@ function Login() {
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
           sessionStorage.setItem('lang',responseData.lang)
+          sessionStorage.setItem('userType',responseData.usertype)
           handleRememberMe()
-          navigate("/AppointmentList");
+          navigate("/artist-dashboard");
         }
         else
         {
@@ -86,7 +87,7 @@ function Login() {
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
         sessionStorage.setItem('lang',responseData.user.lang)
-     
+        sessionStorage.setItem('userType',responseData.usertype)
         navigate("/dashboard");
         }
       }

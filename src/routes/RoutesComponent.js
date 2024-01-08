@@ -76,6 +76,9 @@ import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
 import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
+import ArtistDashboard from '../component/dashboard/ArtistDashboard';
+import BillingComponent from '../component/billing';
+import AdminRoutes from './AdminRoutes';
 
 export default function RoutesComponent() {
 
@@ -117,6 +120,7 @@ export default function RoutesComponent() {
       <Route exact path="/forehead" element={<Forehead />} />
       <Route exact path="/neck" element={<Neck />} />
       <Route exact path="/face-temple" element={<FaceTemple />} />
+
 
       <Route exact path="/eyebrow" element={<Eyebrow />} />
       <Route exact path="/eyelid" element={<Eyelid />} />
@@ -184,11 +188,13 @@ export default function RoutesComponent() {
 
 
       <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
-      <Route exact path="/CalculateBilling" element={<CalculateBilling/>}/>
+      <Route exact path="/billing" element={<BillingComponent/>}/>
       <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
       <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
-
+      <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>
       </Route>
+      {/* <Route element={<AdminRoutes/>}>
+      </Route> */}
 
     </Routes>
     </>

@@ -72,7 +72,6 @@ function SignUp() {
         }
         else 
         {
-          console.log("select lang======",responseData.userData.lang)
           if(responseData.userData.lang=="eng"){
             i18n.changeLanguage('en');
             }

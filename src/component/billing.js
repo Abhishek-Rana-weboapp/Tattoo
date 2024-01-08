@@ -1,119 +1,319 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import axios from "axios";
+import UserContext from "../context/UserContext";
+import { useTranslation } from "react-i18next";
+import SkinCondition from "./skinCondition";
+import { data } from "autoprefixer";
+import { apiUrl } from "../url";
+import Timer from "./timer/Timer";
 
 const BillingComponent = () => {
+  const { setIsVisible, setAlert, setAlertMessage, alert,updateAppointment , setUpdateAppointment } =
+    useContext(UserContext);
+  const beforeRef = useRef();
+  const afterRef = useRef();
+  const { t } = useTranslation();
+  const [isRunning, setIsRunning] = useState(false);
+  const [appointments, setAppointments] = useState()
+  const [beforeImage, setBeforeImage] = useState()
+  const [afterImage, setAfterImage] = useState()
+
+  useEffect(() => {
+    setIsVisible(true);
+    fetchAppointments()
+  }, []);
+
+
+  const fetchAppointments = async () => {
+    await axios
+      .get(`${apiUrl}/artist/appointment_list`)
+      .then((res) => setAppointments(res?.data?.data))
+      .catch((err) => console.log(err));
+  };
+
   const [billingData, setBillingData] = useState({
-    username: '',
-    price: 0,
-    fix: 'yes',
-    before_image: '',
-    after_image: '',
-    start_time: '',
-    end_time: ''
+    username: updateAppointment?.username,
+    price: 10,
+    fix: "yes",
+    before_image: "",
+    after_image: "",
+    start_time: "",
+    end_time: "",
   });
 
   const [uploadedImages, setUploadedImages] = useState({
     before_image: null,
-    after_image: null
+    after_image: null,
   });
 
   const [finalPrice, setFinalPrice] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBillingData(prevData => ({
+  const handleStartDate = () => {
+    if(beforeImage){
+      setIsRunning(!isRunning);
+      const now = new Date();
+      const formattedDateTime = now.toISOString().slice(0, 16).replace("T", " ");
+      setBillingData((prevData) => ({
+        ...prevData,
+        start_time: formattedDateTime,
+      }));
+    }else{
+      setAlertMessage("Please Provide before Image")
+      setAlert(!alert)
+    }
+  };
+
+  const handleEndDate = () => {
+    setIsRunning(!isRunning);
+    const now = new Date();
+    const formattedDateTime = now.toISOString().slice(0, 16).replace("T", " ");
+    setBillingData((prevData) => ({
       ...prevData,
-      [name]: value
+      end_time: formattedDateTime,
     }));
   };
 
-  const handleImageUpload = (imagePath, type) => {
-    axios.post('http://localhost:3000/upload', { profileImage: imagePath })
-      .then(response => {
-        const imageUrl = response.data.url;
-        setBillingData(prevData => ({
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setBillingData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdateSkin = async (value, field) => {
+    if (value) {
+      const data = {
+        id: updateAppointment?.id,
+        updateField: field,
+        updateValue: value,
+      };
+      await axios
+        .post(`${apiUrl}/artist/post_new`, data)
+        .then((res) => console.log(res.data))
+        .catch((err) => console.log(err));
+    } else {
+      setAlertMessage("Please Enter the skin explanation");
+      setAlert(!alert);
+    }
+  };
+
+  console.log(updateAppointment);
+
+  const handleImageUpload = async (imagePath, type) => {
+    const url = URL.createObjectURL(imagePath)
+    if(type === "before_image"){
+      setBeforeImage(url)
+    }
+    if(type === "after_image"){
+      setAfterImage(url)
+    }
+    const formData = new FormData();
+    formData.append("profile", imagePath);
+    await axios
+      .post(`${apiUrl}/upload`, formData)
+      .then((response) => {
+        const imageUrl = response.data.profile_url;
+        setBillingData((prevData) => ({
           ...prevData,
-          [type]: imageUrl
+          [type]: imageUrl,
         }));
 
         // Display uploaded image
-        setUploadedImages(prevImages => ({
+        setUploadedImages((prevImages) => ({
           ...prevImages,
-          [type]: imageUrl
+          [type]: imageUrl,
         }));
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle image upload error
       });
   };
 
+  const handleBeforeButton = () => {
+    beforeRef?.current?.click();
+  };
+
+  const handleAfterButton = () => {
+    afterRef?.current?.click();
+  };
+
   const handleBillingSubmit = () => {
-    axios.post('http://localhost:3000/artist/calculate-billing', billingData)
-      .then(billingResponse => {
+    if(beforeImage && afterImage){
+
+      axios
+      .post("http://localhost:8080/artist/calculate-billing", billingData)
+      .then((billingResponse) => {
         // Handle billing response
-        console.log('Billing response:', billingResponse.data);
         setFinalPrice(billingResponse.data.finalPrice);
+        setAlertMessage(`Final Price : $${billingResponse?.data?.finalPrice}`)
+        setAlert(true)
       })
-      .catch(error => {
+      .catch((error) => {
         // Handle billing error
-        console.error('Billing error:', error);
+        console.error("Billing error:", error);
       });
+    }else{
+      setAlertMessage("Please provide all details")
+      setAlert(!alert)
+    }
   };
 
   return (
-    <div style={{ maxWidth: '400px', margin: 'auto', padding: '20px', backgroundColor: '#f0f0f0', borderRadius: '8px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-      <label>
+    <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
+      <h1>Billing</h1>
+      {/* <label>
         Username:
         <input type="text" name="username" value={billingData.username} onChange={handleInputChange} placeholder="Username" />
-      </label>
+      </label> */}
+      <div className="flex flex-col md:flex-row gap-2 items-center">
+        <div className="flex gap-2 items-center">
+          <label>Price:</label>
+          <input
+            type="number"
+            name="price"
+            className="p-2 rounded-xl text-black"
+            disabled={updateAppointment?.typeofservice !== "tattoo" ? true : false}
+            value={billingData.price}
+            onChange={handleInputChange}
+            placeholder="Price"
+          />
+        </div>
 
-      <label>
-        Price:
-        <input type="number" name="price" value={billingData.price} onChange={handleInputChange} placeholder="Price" />
-      </label>
+        {updateAppointment.typeofservice === "tattoo" &&
+          <div className="flex gap-2 items-center">
+          <label>
+            Fix Price:
+            </label>
+            <select
+              name="fix"
+              value={billingData.fix}
+              className="p-2 rounded-xl text-black font-semibold"
+              onChange={handleInputChange}
+            >
+              <option value="yes" className="text-black font-semibold">Yes</option>
+              <option value="no" className="text-black font-semibold">No</option>
+            </select>
+        </div>
+}
+      </div>
 
-      <label>
-        Fix Price:
-        <select name="fix" value={billingData.fix} onChange={handleInputChange}>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-      </label>
+      {/* <div className='w-full flex gap-4 justify-center'> */}
+      {updateAppointment?.typeofservice === "tattoo" &&<div className="flex flex-col md:flex-row gap-2 items-center">
+        {/* Image upload for before */}
+        <label>Before Image:</label>
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+          ref={beforeRef}
+          style={{ display: "none" }} // Hide the input element
+          onChange={(e) => handleImageUpload(e.target.files[0], "before_image")}
+        />
+        <button
+          className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+          onClick={handleBeforeButton}
+        >
+          Upload Before Image
+        </button>
 
-      {/* Image upload for before */}
-      <label>
-        Before Image:
-        <input type="file" onChange={(e) => handleImageUpload(e.target.files[0], 'before_image')} />
-        {uploadedImages.before_image && <img src={uploadedImages.before_image} alt="Before" style={{ width: '100%', marginTop: '5px' }} />}
-      </label>
+        {/* <input type="file" onChange={(e) => handleImageUpload(e.target.files[0], 'before_image')} /> */}
+        {uploadedImages.before_image && (
+          <img
+            src={beforeImage}
+            alt="Before"
+            className="w-20 h-20"
+          />
+        )}
+      </div>}
+
+      <SkinCondition onClick={handleUpdateSkin} />
+      {/* </div> */}
 
       {/* Image upload for after */}
+      
+
+      {/* <input type="datetime-local" name="start_time" value={billingData.start_time} onChange={handleInputChange} /> */}
+      <div>
+        <Timer isRunning={isRunning} setIsRunning={setIsRunning} />
+        {!isRunning && !billingData.start_time && (
+          <button
+            name="start_time"
+            className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
+            value={billingData.start_time}
+            onClick={handleStartDate}
+          >
+            Start
+          </button>
+        ) }
+        {
+          isRunning && !billingData.end_time &&
+          (
+            <button
+            className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
+            name="end_time"
+            value={billingData.end_time}
+            onClick={handleEndDate}
+            >
+            End
+          </button>
+        )}
+       
+      </div>
+
+{
+   billingData.start_time && billingData.end_time &&
+   <>
+      <div className="flex flex-col gap-2 items-center">
+
       <label>
         After Image:
-        <input type="file" onChange={(e) => handleImageUpload(e.target.files[0], 'after_image')} />
-        {uploadedImages.after_image && <img src={uploadedImages.after_image} alt="After" style={{ width: '100%', marginTop: '5px' }} />}
-      </label>
+        </label>
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+          ref={afterRef}
+          style={{ display: "none" }} // Hide the input element
+          onChange={(e) => handleImageUpload(e.target.files[0], "after_image")}
+          />
+        <button
+          className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+          onClick={handleAfterButton}
+          >
+          Upload After Image
+        </button>
+        {/* <input type="file" onChange={(e) => handleImageUpload(e.target.files[0], 'after_image')} /> */}
+        {uploadedImages.after_image && (
+          
+          <img
+          src={afterImage}
+          alt="After"
+          className="w-20 h-20"
+          />
+          )}
+          </div>
 
-      {/* Start date-time */}
-      <label>
-        Start Time:
-        <input type="datetime-local" name="start_time" value={billingData.start_time} onChange={handleInputChange} />
-      </label>
+      <button
+        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+        onClick={handleBillingSubmit}
+        >
+        Calculate
+      </button>
+</>
+}
 
-      {/* End date-time */}
-      <label>
-        End Time:
-        <input type="datetime-local" name="end_time" value={billingData.end_time} onChange={handleInputChange} />
-      </label>
-
-      <button style={{ marginTop: '10px', padding: '8px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }} onClick={handleBillingSubmit}>Calculate</button>
-
-      {finalPrice !== null && (
-        <div style={{ marginTop: '10px', backgroundColor: '#DFF2BF', padding: '10px', borderRadius: '4px' }}>
+      {/* {finalPrice !== null && (
+        <div
+        style={{
+          marginTop: "10px",
+            backgroundColor: "#DFF2BF",
+            padding: "10px",
+            borderRadius: "4px",
+          }}
+          >
           <p>Final Price:</p>
           <strong>${finalPrice}</strong>
-        </div>
-      )}
+          </div>
+        )} */}
     </div>
   );
 };
