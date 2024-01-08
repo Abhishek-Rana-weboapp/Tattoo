@@ -105,15 +105,14 @@ function TermsOfService() {
 
         if (response.status === 201) {
           localStorage.setItem("appointmentID" , responseData.userData.id)
-          setAlert(!alert)
-          setAlertMessage("Appointment booked");
+          // setAlert(!alert)
+          // setAlertMessage("Appointment booked");
           if (minor === "true") {
             sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
             navigate('/consent-guard');
           } else {
-            progressValue=100
             //sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
-            navigate('/employeePrompt');
+            navigate('/verify');
           }
         } else {
           setAlertMessage(t('Please fill in all the required fields.'));

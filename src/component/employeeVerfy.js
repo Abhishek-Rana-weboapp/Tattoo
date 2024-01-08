@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import VerifyUpload from './sub-Components/VerifyUpload';
 import VerifyPin from './sub-Components/VerifyPin';
 import axios from 'axios';
+import CustomAlertModal from './modal/CustomAlertModal';
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ const IDVerificationComponent = () => {
   const [spanMessage,setSpanMessage] = useState()
   const [shopLocation , setShopLocation] = useState("")
   const [frontDesk , setFrontDesk] = useState("")
+  const [finalAlert , setFinalAlert] = useState(false)
 
   useEffect(()=>{
     setIsVisible(true)
@@ -142,7 +144,7 @@ const IDVerificationComponent = () => {
         updateField : "id_url",
         updateValue : imageUrl
       }
-      await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
+      await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
         if(res.status === 201){
           setStep(2)
         }
@@ -176,7 +178,7 @@ const IDVerificationComponent = () => {
  ]
 
  const handleShopLocation = async()=>{
-  if(shopLocation){
+  if(!shopLocation){
     setAlertMessage(t("Please select shop location"))
     setAlert(!alert)
   }else{
@@ -185,7 +187,7 @@ const IDVerificationComponent = () => {
       updateField : "shop_location",
       updateValue : shopLocation
     }
-    await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
         setStep(3)
       }
@@ -196,7 +198,7 @@ const IDVerificationComponent = () => {
  }
 
  const handleFrontDesk = async()=>{
-  if(frontDesk){
+  if(!frontDesk){
     setAlertMessage(t("Please select employee name"))
     setAlert(!alert)
   }else{
@@ -205,10 +207,9 @@ const IDVerificationComponent = () => {
       updateField : "frontDeskEmployee",
       updateValue : frontDesk
     }
-    await axios.post(`${apiUrl}/appointment/post?update=true` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
-        setAlertMessage("Verification Done")
-        setAlert(!alert)
+        setFinalAlert(!finalAlert)
       }
     }).catch((err)=>{
       console.error(err.message)
@@ -216,8 +217,16 @@ const IDVerificationComponent = () => {
   }
  }
 
+ const handleFinalClick = ()=>{
+  setFinalAlert(!finalAlert)
+  navigate("/dashboard")
+ }
+
   return (
     <>
+    {
+      finalAlert && <CustomAlertModal message={"Verification Done"} onClick={handleFinalClick} />
+    }
     {
       step === 0 && <VerifyPin handleSubmit={handlePinSubmit} pin={pin}  setPin={setPin} spanMessage={spanMessage} />
     }

@@ -77,6 +77,8 @@ import UserContext from '../context/UserContext';
 import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
 import ArtistDashboard from '../component/dashboard/ArtistDashboard';
+import BillingComponent from '../component/billing';
+import AdminRoutes from './AdminRoutes';
 
 export default function RoutesComponent() {
 
@@ -109,7 +111,6 @@ export default function RoutesComponent() {
       <Route exact path="/signup" element={<SignUp />} />\
       <Route exact path="/forget_password" element={<ForgetPassword />} />
       <Route exact path="/reset_password" element={<Resetpassword/>} />
-      <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>
       <Route element={<PrivateRoutes/>} >
 
       <Route exact path="/dashboard" element={<Dashboard />} />
@@ -187,11 +188,13 @@ export default function RoutesComponent() {
 
 
       <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
-      <Route exact path="/CalculateBilling" element={<CalculateBilling/>}/>
+      <Route exact path="/billing" element={<BillingComponent/>}/>
       <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
       <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
-
+      <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>
       </Route>
+      {/* <Route element={<AdminRoutes/>}>
+      </Route> */}
 
     </Routes>
     </>

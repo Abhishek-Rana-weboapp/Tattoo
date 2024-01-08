@@ -1,93 +1,30 @@
-import React, { useState } from 'react';
-import SignatureCanvas from 'react-signature-canvas';
+import React, { useContext, useEffect, useState } from 'react';
+import UserContext from '../context/UserContext';
 
-const containerStyle = {
-  border: '1px solid #ddd',
-  borderRadius: '5px',
-  padding: '20px',
-  margin: '10px',
-};
 
-const labelStyle = {
-  display: 'block',
-  marginBottom: '10px',
-  fontWeight: 'bold',
-};
-
-const inputStyle = {
-  padding: '5px',
-  border: '1px solid #ccc',
-  borderRadius: '3px',
-};
-
-const canvasStyle = {
-  border: '1px solid #ccc',
-  backgroundColor: 'white',
-};
-
-function SkinCondition() {
-  const [skinCondition, setSkinCondition] = useState('good');
+function SkinCondition({onClick}) {
   const [explanation, setExplanation] = useState('');
   const [signature, setSignature] = useState(null);
+  const {setIsVisible} = useContext(UserContext)
 
-  const sigCanvas = React.createRef();
+  useEffect(()=>{
+   setIsVisible(true)
+  },[])
 
-  const handleSkinConditionChange = (e) => {
-    setSkinCondition(e.target.value);
-    if (e.target.value === 'good') {
-      setExplanation('');
-    }
-  };
-
-  const clearSignature = () => {
-    sigCanvas.current.clear();
-    setSignature(null);
-  };
 
   return (
-    <div style={containerStyle}>
-      <h2>Skin Condition:</h2>
-      <label style={labelStyle}>
-        <input
-          type="radio"
-          value="good"
-          checked={skinCondition === 'good'}
-          onChange={handleSkinConditionChange}
-        /> Good
-      </label>
-      <label style={labelStyle}>
-        <input
-          type="radio"
-          value="bad"
-          checked={skinCondition === 'bad'}
-          onChange={handleSkinConditionChange}
-        /> Bad: Please explain
-      </label>
-
-      {skinCondition === 'bad' && (
-        <div>
-          <label style={labelStyle}>Explanation:</label>
+    <div className='flex flex-col gap-2 items-center '>
+        <div className='w-full flex flex-col gap-3 items-center'>
+          <label className='text-white'>Explain the skin condition :</label>
           <textarea
+            className='w-full h-28 md:w-96 rounded-xl p-2 text-black'
             value={explanation}
             onChange={(e) => setExplanation(e.target.value)}
-            style={{ ...inputStyle, height: '100px' }}
           />
-          <div>
-            <label style={labelStyle}>Signature:</label>
-            <div>
-              <div style={canvasStyle}>
-                <SignatureCanvas
-                  ref={sigCanvas}
-                  penColor="black"
-                  canvasProps={{ width: 2000, height: 200, className: 'sigCanvas' }}
-                  onEnd={() => setSignature(sigCanvas.current.toDataURL())}
-                />
-              </div>
-              <button onClick={clearSignature}>Clear Signature</button>
-            </div>
-          </div>
+        <div>
+          <button className='yellowButton rounded-xl py-2 px-4 font-bold text-black' onClick={()=>onClick(explanation, "skin_conditions")}>Update Skin Condition</button>
         </div>
-      )}
+        </div>
     </div>
   );
 }

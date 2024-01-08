@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
+import { apiUrl } from '../../url';
 
 export default function VerifyUpload({handleSubmit}) {
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const fileInputRef = useRef(null);
   const { t } = useTranslation();
 
     const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+  const [imagePrev , setImagePrev] = useState()
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -26,7 +27,9 @@ export default function VerifyUpload({handleSubmit}) {
           .then((response) => response.json())
           .then((data) => {
             if (data.profile_url) {
+              const url =  URL.createObjectURL(file)
               setIdPhoto(data.profile_url);
+              setImagePrev(url)
               setIsSubmitDisabled(false); // Enable the submit button
             } else {
               console.error('Failed to upload ID photo.');
@@ -46,16 +49,15 @@ export default function VerifyUpload({handleSubmit}) {
     <div className="w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white">
     <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
-      {idPhoto && (
+      {imagePrev && (
         <img
-          src={idPhoto}
+          src={imagePrev}
           width={'50%'}
           style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
           alt="ID Photo"
         />)
       }
 
-      
 <input
         type="file"
         accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types

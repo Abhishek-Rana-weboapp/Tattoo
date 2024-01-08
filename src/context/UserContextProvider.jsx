@@ -61,10 +61,11 @@ const UserContextProvider = ({children})=>{
       const [isVisible , setIsVisible] = useState(false)
       const [alert , setAlert] = useState(false)
       const[alertMessage , setAlertMessage] = useState()
+      const [updateAppointment , setUpdateAppointment] = useState()
 
 
     return (
-        <UserContext.Provider value={{isVisible , setIsVisible, alert , setAlert, alertMessage , setAlertMessage ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
+        <UserContext.Provider value={{updateAppointment , setUpdateAppointment, isVisible , setIsVisible, alert , setAlert, alertMessage , setAlertMessage ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
             {children}
         </UserContext.Provider>
     )
