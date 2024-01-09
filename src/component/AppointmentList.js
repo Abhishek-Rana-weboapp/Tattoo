@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../context/UserContext';
 
 const AppointmentList = () => {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
@@ -8,6 +9,9 @@ const AppointmentList = () => {
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [assignedArtist, setAssignedArtist] = useState('');
   const appointmentsPerPage = 10;
+  const [tableHeaders, setTableHeaders] = useState()
+  const [filteredHeaders, setFilteredHeaders] = useState()
+  const {setIsVisible} = useContext(UserContext)
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -23,7 +27,20 @@ const AppointmentList = () => {
     };
 
     fetchAppointments();
+    setIsVisible(true)
   }, []);
+
+  useEffect(()=>{
+       if(appointments.length !== 0){
+         setTableHeaders(Object.keys(appointments[0]))
+       }
+  },[appointments])
+
+  useEffect(()=>{
+   displayHeaders()
+  },[tableHeaders])
+
+  console.log(tableHeaders)
 
   // Pagination logic
   const indexOfLastAppointment = currentPage * appointmentsPerPage;
@@ -56,52 +73,48 @@ const AppointmentList = () => {
     setSelectedAppointment(null)
   };
 
+  const displayHeaders = ()=>{
+    setFilteredHeaders(tableHeaders?.filter((header)=>{
+      if(header === "username" || header ===  "typeofservice" || header === "Date"){
+        return header
+      }
+    }))
+  }
+
   const handleUsernameClick = appointment => {
     setSelectedAppointment(appointment);
     // Open your popup/modal here
   };
 
   return (
-    <div>
-      <h2>Appointments</h2>
-      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
+    <div className='w-full h-full overflow-hidden flex flex-col gap-2 items-center'>
+      <h1 className='text-white font-bold'>Appointments</h1>
+      <div className='w-full h-full flex justify-center overflow-y-scroll flex-1'>
+
+      <table className='border-1 border-white '>
         <thead>
-          <tr>
-            <th style={cellStyle}>Username</th>
-            <th style={cellStyle}>Minor</th>
-            <th style={cellStyle}>Type of Service</th>
-            <th style={cellStyle}>Body Location</th>
-            <th style={cellStyle}>Medical History</th>
-            <th style={cellStyle}>Emergency Contact Number</th>
-            <th style={cellStyle}>Doctor Information</th>
-            <th style={cellStyle}>Waiver Release URL</th>
-            <th style={cellStyle}>Hold Harmless Agreement URL</th>
-            <th style={cellStyle}>ID URL</th>
-            <th style={cellStyle}>Artist/Piercer Names</th>
-            <th style={cellStyle}>Date</th>
+          <tr className='sticky top-0'>
+            {
+              filteredHeaders?.map((header, index)=>{
+                return <th key={index} className='capitalize font-bold bg-yellow-400 text-xl  text-black text-center p-2'>{header}</th>
+              })
+            }
           </tr>
         </thead>
         <tbody>
-          {currentAppointments.map(appointment => (
-            <tr key={appointment.id}>
-              <td style={cellStyle}>
-                <button onClick={() => handleUsernameClick(appointment)}>
-                  {appointment.username}
-                </button>
-              </td>
-              <td style={cellStyle}>{appointment.minor}</td>
-              <td style={cellStyle}>{appointment.typeofservice}</td>
-              <td style={cellStyle}>{appointment.bodyloacation}</td>
-              <td style={cellStyle}>{appointment.medicalhistory}</td>
-              <td style={cellStyle}>{appointment.emergencycontectnumber}</td>
-              <td style={cellStyle}>{appointment.doctor_information}</td>
-              <td style={cellStyle}>{appointment.WaiverRelease_url}</td>
-              <td style={cellStyle}>{appointment.HoldHarmlessAgreement_url}</td>
-              <td style={cellStyle}>{appointment.id_url}</td>
-              <td style={cellStyle}>{appointment.ArtistPiercerNames}</td>
-              <td style={cellStyle}>{appointment.Date}</td>
-            </tr>
-          ))}
+            {
+              appointments?.map(appointment=>{
+                return <tr className='border-b-1 border-white border-1 hover:scale-105 text-lg ease-in-out transition-all hover:bg-yellow-400'>
+                  {
+                  Object.keys(appointment)?.map(header=>{
+                    if(filteredHeaders?.includes(header)){
+                      return <td key={header} className='p-2 px-4 font-bold text-white'>{appointment[header]}</td>
+                    }
+                  })
+              }
+                </tr>
+              })
+            }
         </tbody>
       </table>
 
@@ -129,14 +142,15 @@ const AppointmentList = () => {
       )}
 
       {/* Pagination */}
-      <div>
+      {/* <div>
         {Array.from({ length: Math.ceil(appointments.length / appointmentsPerPage) }, (_, index) => (
           <button key={index + 1} onClick={() => paginate(index + 1)}>
             {index + 1}
           </button>
         ))}
-      </div>
+      </div> */}
     </div>
+</div>
   );
 };
 
