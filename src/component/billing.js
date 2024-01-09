@@ -154,7 +154,7 @@ const BillingComponent = () => {
   const handleBillingSubmit = () => {
     if(afterImage){
       axios
-      .post("http://localhost:8080/artist/calculate-billing", billingData)
+      .post(`${apiUrl}artist/calculate-billing`, billingData)
       .then((billingResponse) => {
         // Handle billing response
         setFinalPrice(billingResponse.data.finalPrice);
