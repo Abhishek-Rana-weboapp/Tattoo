@@ -219,7 +219,7 @@ const IDVerificationComponent = () => {
 
  const handleFinalClick = ()=>{
   setFinalAlert(!finalAlert)
-  navigate("/dashboard")
+  navigate("/")
  }
 
   return (
