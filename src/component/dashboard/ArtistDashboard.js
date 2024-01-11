@@ -20,9 +20,13 @@ export default function ArtistDashboard() {
   const fetchAppointments = async () => {
     await axios
       .get(`${apiUrl}/artist/appointment_list`)
-      .then((res) => setAppointments(res?.data?.data))
+      .then((res) => setAppointments(res?.data?.data.filter(a=>{
+        return a.Date.slice(0,9) === new Date().toLocaleDateString("en-us")
+      })))
       .catch((err) => console.log(err));
   };
+
+
 
   const fetchMedicalHistory = async () => {
     await axios
@@ -40,6 +44,7 @@ export default function ArtistDashboard() {
     fetchAppointments();
     setIsVisible(true);
   }, []);
+
 
 
   useEffect(() => {
@@ -115,9 +120,8 @@ export default function ArtistDashboard() {
       }
       if(step === 2){
         if(acknowledgement){
-          updateField(selectedClient?.id ,"ArtistAcknowledgement" , acknowledgement ).then(res=>{
-              navigate("/billing")
-          }).catch(err=>console.log(err))
+          updateField(selectedClient?.id ,"ArtistAcknowledgement" , acknowledgement ).then(res=>{console.log(res)}).catch(err=>console.log(err))
+          navigate("/billing")
         }else{
           setAlertMessage("Please acknowledge that you understand the condition.")
           setAlert(!alert)
@@ -159,7 +163,11 @@ export default function ArtistDashboard() {
       updateValue : updateValue
     }
      await axios.post(`${apiUrl}/artist/post_new` ,data )
-     .then(res=> console.log(res))
+     .then(res=> {
+      if(res.status === 201){
+        axios.get(`${apiUrl}/artist/appointment_list_id?id=${id}`).then(res=>{sessionStorage.setItem("selectedAppointment" , JSON.stringify(res.data.data))}).catch(err=>console.log(err))
+      }
+     })
      .catch(err=>console.error(err))
   }
 
@@ -171,7 +179,7 @@ export default function ArtistDashboard() {
       <div className="flex flex-col justify-center gap-2 items-center">
         <h2 className="text-white font-medium ">Select the Client </h2>
         <select
-          className="p-2 rounded-lg w-2/4"
+          className="p-2 rounded-lg md:w-2/4 w-full"
           value={selectedClient?.id}
           onChange={handleClientSelect}
         >
@@ -193,7 +201,7 @@ export default function ArtistDashboard() {
 
       { step === 1 && <div className="flex flex-col justify-center gap-2 items-center">
         <h2 className="text-white font-medium">Select Your Name</h2>
-        <select className="p-2 rounded-lg w-2/4" onChange={handleArtistSelect}>
+        <select className="p-2 rounded-lg w-full md:w-2/4" onChange={handleArtistSelect}>
           <option value={""}>Select your Name</option>
           {employeeNames?.map((employee, index) => {
             return (
@@ -214,16 +222,16 @@ export default function ArtistDashboard() {
         <>
           <div className="flex flex-col gap-4 items-center overflow-hidden">
             <h1 className="font-bold text-white">Client's Medical History</h1>
-            <div className="flex flex-col gap-4 items-center overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
+            <div className="flex flex-col gap-4 items-start overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
 
             {Object.keys(medicalQuestions).map((med, index) => {
               return (
-                <div className="flex flex-col gap-1 text-white items-center">
-                  <div className="font-bold">
-                    <span>{`Q${index + 1} :`}</span>
+                <div className="flex flex-col gap-1 text-white w-full ">
+                  <div className="font-bold flex justify-start gap-1">
+                    <div className="md:w-10 ">{`Q${index + 1}: `}</div>
                     {medicalQuestions[med]}
                   </div>
-                  <div className="">
+                  <div className="w-full text-start pl-10">
                     {selectedMedicalHistory[med]?.yes === true
                       ? med === "tattooedBefore"
                         ? "Yes"
@@ -235,7 +243,7 @@ export default function ArtistDashboard() {
                           }`
                           : `yes , ${selectedMedicalHistory[med]?.explanation}`
                           : "No"}
-                  </div>
+                  </div> 
                 </div>
               );
             })}

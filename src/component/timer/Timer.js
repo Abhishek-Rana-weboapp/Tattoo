@@ -24,7 +24,7 @@ const Timer = ({isRunning, setIsRunning}) => {
 
   return (
     <div>
-      <p className='text-2xl'>{formatTime(seconds)}</p>
+      <p className='text-5xl'>{formatTime(seconds)}</p>
     </div>
   );
 };

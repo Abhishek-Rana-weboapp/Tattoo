@@ -20,7 +20,6 @@ function ChestDeshboard() {
 
     const handleChestLocation = (chestLocation) => {
       setSelected(chestLocation)
-
     }
 
     const buttons = [
@@ -39,6 +38,10 @@ function ChestDeshboard() {
       {
         name:"collar chest"
       },
+      
+    ]
+
+    const insideButtons = [
       {
         name:"Nipple"
       },
@@ -47,12 +50,18 @@ function ChestDeshboard() {
       }
     ]
 
-
+console.log(selected)
     const handleNext = ()=>{
       if(selected){
         setUser({...user , chestLocation : selected})
-      navigate('/under-chest'); 
-      }else{
+        if(insideButtons.find(b=>b.name === selected)){
+          navigate("/under-chest")
+        }
+        if(buttons.find(b=>b.name === selected)){
+          navigate("/medical-form")  
+        }
+      }
+      else{
         setAlert(!alert)
         setAlertMessage(t("Select a tattoo Location"))
       }
@@ -67,7 +76,12 @@ function ChestDeshboard() {
       <GridLayout title={"chest"}>
         {
           buttons.map((button, index)=>{
-            return <CustomButton onClick={handleChestLocation} selected={selected}>{button.name}</CustomButton>
+            return <CustomButton key={index} onClick={handleChestLocation} selected={selected}>{button.name}</CustomButton>
+          })
+        }
+        {
+          insideButtons.map((button, index)=>{
+            return <CustomButton key={index} onClick={handleChestLocation} selected={selected}>{button.name}</CustomButton>
           })
         }
         </GridLayout>

@@ -18,7 +18,7 @@ import tattoo_gold from "../assets/tattoo_gold.png";
 import { useTranslation } from 'react-i18next';
 function Dashboard() {
   const { t } = useTranslation();
-  const { user, setUser, setIsVisible,setFormData , setemerFormData , setdrFormData, setInitials, setharmlessagreement } = React.useContext(UserContext);
+  const { user, setUser, setIsVisible,setFormData , setemerFormData , setdrFormData, setInitials, setharmlessagreement , initials } = React.useContext(UserContext);
   const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
@@ -59,7 +59,6 @@ function Dashboard() {
         page8: { yes: false, no: false, explanation: '' },
       })
 
-      setInitials({})
 
       setharmlessagreement({
         name: '',
@@ -85,7 +84,7 @@ function Dashboard() {
     }
   }, []);
 
-
+console.log(initials)
 
   const menu = [
     {
@@ -133,7 +132,8 @@ function Dashboard() {
   ];
 
   return (
-    <div className="md:w-3/4 w-full h-full flex flex-col gap-5 justify-center items-center">
+    <div className="md:w-3/4 w-full h-full flex flex-col gap-3 justify-center items-center">
+      <h1 className="uppercase text-white font-bold">Select a service</h1>
       <div className="grid grid-cols-2 gap-5 w-full">
         {menu?.map((menu, index) => {
           return (

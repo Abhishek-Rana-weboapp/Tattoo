@@ -17,6 +17,7 @@ function TermsOfService() {
   const [currentPage, setCurrentPage] = useState(1);
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
+  const [storedInitials , setStoredInitials] = useState(sessionStorage.getItem("initials"))
   const {user , alert , setAlert , setAlertMessage , formData, emerformData, drformData, setIsVisible,harmlessagreement,} = useContext(UserContext)
   const pageContents = [
     "No Foods or Drinks allowed in tattoo workstation.Please sit as still as possible while being tattooed, your final satisfaction is our priority.Only (1) additional person is allowed in tattoo station aside from the individual being tattooed.Please do not leave the workstation during a break or once the tattoo has been completed without it being covered by the artist.During a break or while being tattooed, DO NOT TOUCH YOUR TATTOO.",
@@ -29,7 +30,12 @@ function TermsOfService() {
   const inputRef = useRef()
 
   useEffect(()=>{
+    setInitials({ ...initials, [currentPage]: storedInitials });
+  },[])
+
+  useEffect(()=>{
     inputRef?.current?.focus()
+    setInitials({ ...initials, [currentPage]: storedInitials });
   },[currentPage])
 
   // Navigation function

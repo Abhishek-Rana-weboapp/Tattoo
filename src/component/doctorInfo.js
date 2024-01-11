@@ -99,7 +99,7 @@ function DoctorContactForm() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
+    <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
@@ -135,7 +135,8 @@ function DoctorContactForm() {
         {t("Doctor Contact Information")}
       </h1>
       <form
-        className="bg-black p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
+        className="p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
+
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
@@ -145,7 +146,7 @@ function DoctorContactForm() {
             </label>
 
             <input
-              className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="name"
               value={drformData?.name}
@@ -158,7 +159,7 @@ function DoctorContactForm() {
               {t("Phone")}:
             </label>
             <input
-              className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="phone"
               value={drformData?.phone}
@@ -171,7 +172,7 @@ function DoctorContactForm() {
               {t("City")}:
             </label>
             <input
-              className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="city"
               value={drformData?.city}
@@ -183,66 +184,13 @@ function DoctorContactForm() {
             <label className="text-white font-semibold text-md w-20">
               {t("State")}:
             </label>
-            <select
-            className="bg-white text-black rounded-md m-1 p-2 flex-1 text-lg"
-            style={{ width: "225px" }}
-            name="state"
-            value={drformData?.state}
-            onChange={handleInputChange}
-                    >
-             <option value="Florida">Florida</option>
-<option value="Alabama">Alabama</option>
-<option value="Alaska">Alaska</option>
-<option value="Arizona">Arizona</option>
-<option value="Arkansas">Arkansas</option>
-<option value="California">California</option>
-<option value="Colorado">Colorado</option>
-<option value="Connecticut">Connecticut</option>
-<option value="Delaware">Delaware</option>
-<option value="Florida">Florida</option>
-<option value="Georgia">Georgia</option>
-<option value="Hawaii">Hawaii</option>
-<option value="Idaho">Idaho</option>
-<option value="Illinois">Illinois</option>
-<option value="Indiana">Indiana</option>
-<option value="Iowa">Iowa</option>
-<option value="Kansas">Kansas</option>
-<option value="Kentucky">Kentucky</option>
-<option value="Louisiana">Louisiana</option>
-<option value="Maine">Maine</option>
-<option value="Maryland">Maryland</option>
-<option value="Massachusetts">Massachusetts</option>
-<option value="Michigan">Michigan</option>
-<option value="Minnesota">Minnesota</option>
-<option value="Mississippi">Mississippi</option>
-<option value="Missouri">Missouri</option>
-<option value="Montana">Montana</option>
-<option value="Nebraska">Nebraska</option>
-<option value="Nevada">Nevada</option>
-<option value="New Hampshire">New Hampshire</option>
-<option value="New Jersey">New Jersey</option>
-<option value="New Mexico">New Mexico</option>
-<option value="New York">New York</option>
-<option value="North Carolina">North Carolina</option>
-<option value="North Dakota">North Dakota</option>
-<option value="Ohio">Ohio</option>
-<option value="Oklahoma">Oklahoma</option>
-<option value="Oregon">Oregon</option>
-<option value="Pennsylvania">Pennsylvania</option>
-<option value="Rhode Island">Rhode Island</option>
-<option value="South Carolina">South Carolina</option>
-<option value="South Dakota">South Dakota</option>
-<option value="Tennessee">Tennessee</option>
-<option value="Texas">Texas</option>
-<option value="Utah">Utah</option>
-<option value="Vermont">Vermont</option>
-<option value="Virginia">Virginia</option>
-<option value="Washington">Washington</option>
-<option value="West Virginia">West Virginia</option>
-<option value="Wisconsin">Wisconsin</option>
-<option value="Wyoming">Wyoming</option>
- 
-</select>
+            <input
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
+              type="text"
+              name="state"
+              value={drformData?.state}
+              onChange={handleInputChange}
+            />
           </div>
 
           <div className="flex items-center gap-2">
