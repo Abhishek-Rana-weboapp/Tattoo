@@ -88,7 +88,7 @@ function DoctorContactForm() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center overflow-auto bg-black p-8 text-white">
+    <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
@@ -124,7 +124,7 @@ function DoctorContactForm() {
         {t("Doctor Contact Information")}
       </h1>
       <form
-        className="bg-gray-800 p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
+        className="p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
@@ -134,7 +134,7 @@ function DoctorContactForm() {
             </label>
 
             <input
-              className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="name"
               value={drformData?.name}
@@ -147,7 +147,7 @@ function DoctorContactForm() {
               {t("Phone")}:
             </label>
             <input
-              className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="phone"
               value={drformData?.phone}
@@ -160,7 +160,7 @@ function DoctorContactForm() {
               {t("City")}:
             </label>
             <input
-              className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="city"
               value={drformData?.city}
@@ -173,7 +173,7 @@ function DoctorContactForm() {
               {t("State")}:
             </label>
             <input
-              className="bg-gray-700 text-white rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="state"
               value={drformData?.state}

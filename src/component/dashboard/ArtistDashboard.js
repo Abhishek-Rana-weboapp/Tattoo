@@ -26,10 +26,7 @@ export default function ArtistDashboard() {
       .catch((err) => console.log(err));
   };
 
-  console.log(appointments);
 
-  const currentDate = new Date();
-  console.log(currentDate.toLocaleDateString('en-US'))
 
   const fetchMedicalHistory = async () => {
     await axios
@@ -47,6 +44,7 @@ export default function ArtistDashboard() {
     fetchAppointments();
     setIsVisible(true);
   }, []);
+
 
 
   useEffect(() => {
@@ -122,9 +120,8 @@ export default function ArtistDashboard() {
       }
       if(step === 2){
         if(acknowledgement){
-          updateField(selectedClient?.id ,"ArtistAcknowledgement" , acknowledgement ).then(res=>{
-              navigate("/billing")
-          }).catch(err=>console.log(err))
+          updateField(selectedClient?.id ,"ArtistAcknowledgement" , acknowledgement ).then(res=>{console.log(res)}).catch(err=>console.log(err))
+          navigate("/billing")
         }else{
           setAlertMessage("Please acknowledge that you understand the condition.")
           setAlert(!alert)
@@ -166,7 +163,11 @@ export default function ArtistDashboard() {
       updateValue : updateValue
     }
      await axios.post(`${apiUrl}/artist/post_new` ,data )
-     .then(res=> console.log(res))
+     .then(res=> {
+      if(res.status === 201){
+        axios.get(`${apiUrl}/artist/appointment_list_id?id=${id}`).then(res=>{sessionStorage.setItem("selectedAppointment" , JSON.stringify(res.data.data))}).catch(err=>console.log(err))
+      }
+     })
      .catch(err=>console.error(err))
   }
 

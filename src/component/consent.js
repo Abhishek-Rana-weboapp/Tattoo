@@ -15,6 +15,7 @@ function ConsentForm() {
   const navigate = useNavigate();
   const { initials, setInitials,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
   const inputRef = useRef()
+  const [storedInitials , setStoredInitials] = useState(sessionStorage.getItem("initials"))
 
   
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,13 +35,18 @@ function ConsentForm() {
     "I hereby consent to receive text messages and emails from Fame Tattoos, Inc., for transactional, informational, and promotional purposes. I understand that standard message and data rates may apply for SMS messages, and I acknowledge that I'm responsible for any such charges incurred",
     "I swear, affirm, and agree that all the above information is true and correct and that I understand it."
   ];
+
+  useEffect(()=>{
+    setInitials({ ...initials, [currentPage]: storedInitials });
+  },[])
   
   useEffect(()=>{
       inputRef?.current?.focus()
+      setInitials({ ...initials, [currentPage]: storedInitials });
   },[currentPage])
 
   const handleInitialsChange = (page, initialsValue) => {
-    setInitials({ ...initials, [page]: initialsValue });
+    setInitials({ ...initials, [page]: storedInitials });
   };
 
   const nextPage = () => {
@@ -82,7 +88,7 @@ function ConsentForm() {
         <input
           ref={inputRef}
           type="text"
-          value={initials[currentPage] || ''}
+          value={storedInitials}
           onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
           className="bg-gray-700 text-white p-2 rounded-md"
           />

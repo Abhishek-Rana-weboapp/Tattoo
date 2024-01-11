@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../context/UserContext";
 
 function SkinCondition({ onClick, handlePrev }) {
+
   const [condition, setCondition] = useState();
   const [explanation, setExplanation] = useState("");
   const { setIsVisible } = useContext(UserContext);
 
   useEffect(() => {
     setIsVisible(true);
+    
   }, []);
 
   return (

@@ -17,9 +17,13 @@ function HoldHarmlessAgreement() {
   const [signatureRef, setSignatureRef] = useState();
   const inputRef = useRef()
 
+  const initials = sessionStorage.getItem("initials")
+  const name = `${sessionStorage.getItem("firstname")} ${sessionStorage.getItem("lastname")}`
+
   useEffect(() => {
     setIsVisible(true);
     inputRef?.current?.focus()
+    setharmlessagreement({...harmlessagreement , initials : initials , name:name})
   }, []);
 
   const handleNameChange = (e) => {
@@ -87,7 +91,7 @@ function HoldHarmlessAgreement() {
       <h1 className="text-xl md:text-4xl font-bold mb-4 text-yellow-500">
         {t("Hold Harmless Agreement")}
       </h1>
-      <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between bg-gray-800 overflow-hidden backdrop-blur bg-opacity-50">
+      <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
         
           <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-thumb-rounded scrollbar-track -rounded">
             <p className="text-center outline-1 outline-white">

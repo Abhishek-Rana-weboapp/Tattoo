@@ -20,7 +20,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const {isVisible, setIsVisible} = useContext(UserContext)
+  const {isVisible, setIsVisible, setInitials} = useContext(UserContext)
 
   const rememberMeRef = useRef()
 
@@ -76,8 +76,10 @@ function Login() {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
-          sessionStorage.setItem('lang',responseData.lang)
-          sessionStorage.setItem('userType',responseData.usertype)
+          sessionStorage.setItem('lang',responseData.user.lang)
+          sessionStorage.setItem('userType',responseData.user.usertype)
+          sessionStorage.setItem('firstname',responseData.user.firstname)
+          sessionStorage.setItem('lastname',responseData.user.lastname)
           handleRememberMe()
           navigate("/artist-dashboard");
         }
@@ -87,7 +89,11 @@ function Login() {
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
         sessionStorage.setItem('lang',responseData.user.lang)
-        sessionStorage.setItem('userType',responseData.usertype)
+        sessionStorage.setItem('userType',responseData.user.usertype)
+        sessionStorage.setItem('firstname',responseData.user.firstname)
+        sessionStorage.setItem('lastname',responseData.user.lastname)
+        console.log(responseData.user)
+        sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
         navigate("/dashboard");
         }
       }

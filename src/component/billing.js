@@ -28,10 +28,24 @@ const BillingComponent = () => {
   const [afterImage, setAfterImage] = useState();
   const [step, setStep] = useState(1);
 
+const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointment"))
+console.log(selectedAppointment)
+
   useEffect(() => {
     setIsVisible(true);
     fetchAppointments();
+    if(selectedAppointment !== "undefined"){
+      setUpdateAppointment(selectedAppointment[0])
+    }else{
+      navigate("/artist-dashboard")
+    }
   }, []);
+  
+  useEffect(()=>{
+    if(updateAppointment){
+      setBillingData(prev=>({...prev, bill_by :updateAppointment?.ArtistPiercerNames, username:updateAppointment?.username }))
+    }
+  },[updateAppointment])
 
   const fetchAppointments = async () => {
     await axios
@@ -39,16 +53,61 @@ const BillingComponent = () => {
       .then((res) => setAppointments(res?.data?.data))
       .catch((err) => console.log(err));
   };
-
   const [billingData, setBillingData] = useState({
-    username: updateAppointment?.username,
-    price: 10,
+    username: "",
+    price: 0,
     fix: "",
     before_image: "",
     after_image: "",
     start_time: "",
     end_time: "",
+    bill_by:""
   });
+  console.log(billingData)
+
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      if (step === 4 && !billingData.end_time) {
+        const message = "You have unsaved data. Are you sure you want to leave?";
+        event.returnValue = message;
+        return message;
+      }
+    };
+  
+    const handlePopstate = (event) => {
+      if (event.state && event.state.direction === "back" && step === 4 && !billingData.end_time) {
+        const message = "You have unsaved data. Are you sure you want to leave?";
+        const isConfirmed = window.confirm(message);
+  
+        if (!isConfirmed){
+          window.history.forward();
+        }
+      }
+    };
+  
+    const handleBeforeReload = (event) => {
+      if (step === 4 && !billingData.end_time) {
+        const message = "You have unsaved data. Reloading will discard your changes. Are you sure?";
+        const isConfirmed = window.confirm(message);
+  
+        if (!isConfirmed) {
+          event.preventDefault();
+        }
+      }
+    };
+  
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("popstate", handlePopstate);
+    window.addEventListener("beforereload", handleBeforeReload);
+  
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("popstate", handlePopstate);
+      window.removeEventListener("beforereload", handleBeforeReload);
+    };
+  }, [step, billingData.end_time]);
+  
+
 
   const [uploadedImages, setUploadedImages] = useState({
     before_image: null,
@@ -82,12 +141,11 @@ const BillingComponent = () => {
   };
 
   const handleStartDate = () => {
-    if (updateAppointment.typeofservice === "tattoo") {
+    if (updateAppointment?.typeofservice === "tattoo") {
       if (beforeImage) {
         setIsRunning(!isRunning);
         const now = new Date();
         const formattedDateTime = now.toISOString().slice(0, 16);
-        console.log(formattedDateTime);
         setBillingData((prevData) => ({
           ...prevData,
           start_time: formattedDateTime,
@@ -97,7 +155,7 @@ const BillingComponent = () => {
         setAlert(!alert);
       }
     }
-    if (updateAppointment.typeofservice !== "tattoo") {
+    if (updateAppointment?.typeofservice !== "tattoo") {
       setIsRunning(!isRunning);
       const now = new Date();
       const formattedDateTime = now.toISOString().slice(0, 16);
@@ -210,7 +268,7 @@ const BillingComponent = () => {
   const handleBillingSubmit = () => {
     if (afterImage) {
       axios
-        .post(`${apiUrl}artist/calculate-billing`, billingData)
+        .post(`${apiUrl}/artist/calculate-billing`, billingData)
         .then((billingResponse) => {
           // Handle billing response
           setFinalPrice(billingResponse.data.finalPrice);
@@ -343,7 +401,7 @@ const BillingComponent = () => {
       {step === 5 && billingData.start_time && billingData.end_time && (
         <>
           <div className="flex flex-col gap-2 items-center">
-            <label>After Image:</label>
+            <h3 >After Image</h3>
             <input
               type="file"
               accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types

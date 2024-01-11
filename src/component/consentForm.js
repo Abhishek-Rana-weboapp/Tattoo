@@ -40,6 +40,8 @@ const ConsentFormGuard = () => {
     clientSignatureDate: "",
   });
 
+  console.log(formData)
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -105,6 +107,9 @@ const ConsentFormGuard = () => {
     const appointment_detail = JSON.parse(
       sessionStorage.getItem("appointment_detail")
     );
+
+    console.log(appointment_detail)
+
     console.log("apoinment detail", formData);
     for (const key in formData) {
       if (
@@ -124,8 +129,8 @@ const ConsentFormGuard = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: appointment_detail?.username,
-          id: appointment_detail?.id,
+          id: 23,
+          username:"user@123",
           consent_guard: formData,
         }),
       });
@@ -160,7 +165,7 @@ const ConsentFormGuard = () => {
         <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase underline">
           {t("Consent Form")}
         </h1>
-        <form className="bg-gray-800 p-3 flex flex-col gap-2 rounded-md shadow-md w-4/5 backdrop-blur bg-opacity-50 overflow-hidden">
+        <form className=" p-3 flex flex-col gap-2 rounded-md shadow-md w-4/5 backdrop-blur bg-opacity-50 overflow-hidden">
           <div className="flex flex-col gap-4 overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
             <section className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
@@ -177,7 +182,7 @@ const ConsentFormGuard = () => {
                       {t("Full Name:")}
                     </label>
                     <input
-                      className="p-2 bg-gray-400 rounded-md w-full text-black"
+                      className="p-2  rounded-md w-full text-black"
                       type="text"
                       id="fullName"
                       name="fullName"
@@ -195,7 +200,7 @@ const ConsentFormGuard = () => {
                       {t("Date of Birth:")}
                     </label>
                     <input
-                      className="p-2 bg-gray-400 rounded-md w-full text-black"
+                      className="p-2  rounded-md w-full text-black"
                       type="date"
                       id="dateOfBirth"
                       name="dateOfBirth"
@@ -215,7 +220,7 @@ const ConsentFormGuard = () => {
                       {t("Address")}:
                     </label>
                     <input
-                      className="p-2 bg-gray-400 rounded-md w-full text-black"
+                      className="p-2  rounded-md w-full text-black"
                       type="text"
                       id="address"
                       name="address"
@@ -233,7 +238,7 @@ const ConsentFormGuard = () => {
                       {t("Phone")}:
                     </label>
                     <input
-                      className="p-2 bg-gray-400 rounded-md w-full text-black"
+                      className="p-2  rounded-md w-full text-black"
                       type="tel"
                       id="phone"
                       name="phone"
@@ -254,7 +259,7 @@ const ConsentFormGuard = () => {
                 {t("Procedure")} (Tattoo/Piercing/Permanent Makeup):
               </label>
               <input
-                className="p-2 bg-gray-400 w-full rounded-md text-black"
+                className="p-2  w-full rounded-md text-black"
                 type="text"
                 id="procedureType"
                 name="procedureType"
@@ -271,7 +276,7 @@ const ConsentFormGuard = () => {
                 {t("Description of Procedure:")}
               </label>
               <textarea
-                className="w-full p-2 bg-gray-400 rounded-md text-black"
+                className="w-full p-2  rounded-md text-black"
                 id="procedureDescription"
                 name="procedureDescription"
                 rows="4"
@@ -285,7 +290,7 @@ const ConsentFormGuard = () => {
                 {t("Location of Procedure:")}
               </label>
               <input
-                className="p-2 bg-gray-400 w-full rounded-md text-black"
+                className="p-2  w-full rounded-md text-black"
                 type="text"
                 id="procedureLocation"
                 name="procedureLocation"
@@ -386,7 +391,7 @@ const ConsentFormGuard = () => {
                 {t("Technician's Name:")}
               </label>
               <input
-                className="p-2 bg-gray-400 rounded-md w-full text-black"
+                className="p-2  rounded-md w-full text-black"
                 type="text"
                 id="techName"
                 name="techName"
@@ -429,7 +434,7 @@ const ConsentFormGuard = () => {
                 Date (MM/DD/YYYY):
               </label>
               <input
-                className="p-2 bg-gray-400 rounded-md w-full text-black"
+                className="p-2  rounded-md w-full text-black"
                 type="date"
                 id="techDate"
                 name="techDate"
@@ -481,10 +486,10 @@ const ConsentFormGuard = () => {
                 Date (MM/DD/YYYY):
               </label>
               <input
-                className="p-2 bg-gray-400 rounded-md w-full"
+                className="p-2  rounded-md w-full text-black"
                 type="date"
                 id="clientSignatureDate"
-                name="clientSignatureDate"
+                name="techDate"
                 value={formData?.clientSignatureDate}
                 onChange={handleInputChange}
                 required
