@@ -92,12 +92,14 @@ function EmergencyContactForm() {
       )}
       <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase ">Emergency Contact Information</h1>
       <form className=" p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
+
       <div className='flex flex-col gap-3 flex-1 items-center'>
 
       <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("Name")}</label>
+          <label className="text-white font-semibold text-md w-20">{t("Name")}:</label>
           <input
           className="bg-white text-black rounded-md m-1 p-1 flex-1"
+
           type="text"
           name="name"
           value={emerformData?.name}
@@ -108,6 +110,7 @@ function EmergencyContactForm() {
           <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
           <input
            className="bg-white text-black rounded-md m-1 p-1 flex-1"
+
            type="text"
            name="phone"
            value={emerformData?.phone}
@@ -118,6 +121,7 @@ function EmergencyContactForm() {
           <label className="text-white font-semibold text-md w-20">{t("City")}:</label>
           <input
           className="bg-white text-black rounded-md m-1 p-1 flex-1"
+
           type="text"
           name="city"
           value={emerformData?.city}
@@ -133,6 +137,7 @@ function EmergencyContactForm() {
           value={emerformData?.state}
           onChange={handleInputChange}
           />
+
         </div>
         </div>
         <div className='flex justify-between'>

@@ -27,10 +27,23 @@ function DoctorContactForm() {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setdrFormData({
-      ...drformData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+    if (name === "useDoctorRecommendation" && checked) {
+      // Set default values when Use Doctor Recommendation is checked
+      setdrFormData({
+        ...drformData,
+        [name]: checked,
+        name: "Carbon Health Urgent Care of Hialeah",
+        phone: "(305) 200-1225",
+        city: "915 W 49th St. Hialeah, FL 33012",
+        state: "Florida", // Default state as Florida
+      });
+      setShowPopup_(false);
+    } else {
+      setdrFormData({
+        ...drformData,
+        [name]: type === "checkbox" ? checked : value,
+      });
+    }
   };
 
   const fetchData = async () => {
@@ -70,17 +83,15 @@ function DoctorContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      !drformData.name ||
-      !drformData.phone ||
-      !drformData.city ||
-      !drformData.state
-    ) {
+  if (!drformData.useDoctorRecommendation) {
+    // Check if Doctor Recommendation is not chosen
+    if (!drformData.name || !drformData.phone || !drformData.city || !drformData.state) {
       setAlertMessage(t("Please fill all the details"));
-      setAlert(!alert);
-    } else {
-      navigate("/consent");
+      setAlert(true);
+      return; // Stop further execution
     }
+  }
+  navigate("/consent");
   };
 
   const handlePrev = () => {
@@ -120,11 +131,12 @@ function DoctorContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase">
+      <h1 className="text-3xl font-bold mb-4 text-white uppercase">
         {t("Doctor Contact Information")}
       </h1>
       <form
         className="p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
+
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
