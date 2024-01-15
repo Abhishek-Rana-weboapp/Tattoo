@@ -8,6 +8,7 @@ import VerifyUpload from './sub-Components/VerifyUpload';
 import VerifyPin from './sub-Components/VerifyPin';
 import axios from 'axios';
 import CustomAlertModal from './modal/CustomAlertModal';
+import { states } from '../data/states';
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const IDVerificationComponent = () => {
   const [step , setStep] = useState(0)
   const [pin , setPin] = useState()
   const [spanMessage,setSpanMessage] = useState()
-  const [shopLocation , setShopLocation] = useState("")
+  const [shopLocation , setShopLocation] = useState("Florida")
   const [frontDesk , setFrontDesk] = useState("")
   const [finalAlert , setFinalAlert] = useState(false)
 
@@ -31,7 +32,7 @@ const IDVerificationComponent = () => {
   
   const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const appointmentID = localStorage.getItem("appointmentID")
+  const appointmentID = sessionStorage.getItem("appointmentID")
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -237,8 +238,9 @@ const IDVerificationComponent = () => {
       step === 2 &&  <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
         <h2 className='text-white font-bold'>Select Shop Location</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
-          <option value={""}>Select shop location</option>
-          <option value={"Florida"}>Florida</option>
+        {states.map((state, index)=>{
+          return <option key={state} value={state}>{state}</option>
+        })}
         </select>
         <button className='yellowButton py-2 px-5 rounded-xl font-bold text-black' onClick={handleShopLocation}>Submit</button>
       </div>

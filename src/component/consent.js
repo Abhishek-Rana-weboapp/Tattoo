@@ -78,7 +78,7 @@ function ConsentForm() {
 
   return (
     <>
-    <ConsentFormLayout title="" progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} about="Consent form">
+    <ConsentFormLayout  progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} title="Consent form">
       <div className='flex flex-col flex-1 items-center overflow-y-auto p-3 md:p-1 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded'>
       <p className="text-white text-lg md:text-2xl font-semibold text-center">{t(statements[currentPage - 1])}</p>
       </div>

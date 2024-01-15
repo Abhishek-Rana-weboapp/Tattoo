@@ -6,6 +6,7 @@ import Title from '../assets/Title.png';
 import Modal from './modal/Modal';
 import { useTranslation } from 'react-i18next';
 import AlertModal from './modal/AlertModal';
+import {states} from '../data/states';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
@@ -90,15 +91,15 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase ">Emergency Contact Information</h1>
+      <h1 className="text-3xl font-bold mb-4 text-white uppercase ">Emergency Contact Information</h1>
       <form className=" p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
 
       <div className='flex flex-col gap-3 flex-1 items-center'>
 
-      <div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("Name")}:</label>
+      <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("Name")}:</label>
           <input
-          className="bg-white text-black rounded-md m-1 p-1 flex-1"
+          className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
 
           type="text"
           name="name"
@@ -106,10 +107,10 @@ function EmergencyContactForm() {
             onChange={handleInputChange}
             />
         </div>
-<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("Phone")}:</label>
+<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("Phone")}:</label>
           <input
-           className="bg-white text-black rounded-md m-1 p-1 flex-1"
+           className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
 
            type="text"
            name="phone"
@@ -117,10 +118,10 @@ function EmergencyContactForm() {
            onChange={handleInputChange}
            />
         </div>
-<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("City")}:</label>
+<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("City")}:</label>
           <input
-          className="bg-white text-black rounded-md m-1 p-1 flex-1"
+          className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
 
           type="text"
           name="city"
@@ -128,15 +129,22 @@ function EmergencyContactForm() {
             onChange={handleInputChange}
           />
         </div>
-<div className='w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md w-20">{t("State")}:</label>
-          <input
+<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("State")}:</label>
+          <select value={emerformData?.state} className='rounded-md m-1 p-1 md:flex-1 w-full'>
+            {
+              states?.map((state, index)=>{
+                return <option key={state} value={state}>{state}</option>
+              })
+            }
+          </select>
+          {/* <input
           className="bg-white text-black rounded-md m-1 p-1 flex-1"
           type="text"
           name="state"
           value={emerformData?.state}
           onChange={handleInputChange}
-          />
+          /> */}
 
         </div>
         </div>

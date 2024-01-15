@@ -88,7 +88,7 @@ function HoldHarmlessAgreement() {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 items-center justify-between p-2 md:p-8 text-white  md:w-4/6 overflow-hidden">
-      <h1 className="text-xl md:text-4xl font-bold mb-4 text-yellow-500">
+      <h1 className="text-xl md:text-4xl font-bold mb-4 text-white">
         {t("Hold Harmless Agreement")}
       </h1>
       <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
