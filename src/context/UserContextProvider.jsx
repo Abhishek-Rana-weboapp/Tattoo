@@ -41,14 +41,14 @@ const UserContextProvider = ({children})=>{
         name: '',
         phone: '',
         city: '',
-        state: '',
+        state: 'Florida',
       });
     
       const [drformData, setdrFormData] = useState({
         name: '',
         name: '',
         city: '',
-        state: '',
+        state: 'Florida',
         useDoctorRecommendation: false,
       });
       const [harmlessagreement,setharmlessagreement]=useState({

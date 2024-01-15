@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
@@ -22,6 +22,11 @@ function SignUp() {
   const [adminUsername, setadminUsername] = useState("");
 
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
+
+  useEffect(()=>{
+    sessionStorage.clear()
+  },[])
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const user = {
@@ -71,9 +76,15 @@ function SignUp() {
           }
 
           sessionStorage.setItem("responseData", JSON.stringify(responseData));
-          sessionStorage.setItem("username", email);
-          sessionStorage.setItem("minor", responseData.userData.minor);
-          sessionStorage.setItem("token", responseData.token);
+          sessionStorage.setItem('username', email);
+          sessionStorage.setItem('minor', responseData.userData.minor)
+          sessionStorage.setItem('token', responseData.token);
+          sessionStorage.setItem('lang',responseData.userData.lang)
+          sessionStorage.setItem('userType',responseData.userData.usertype)
+          sessionStorage.setItem('firstname',responseData.userData.firstname)
+          sessionStorage.setItem('lastname',responseData.userData.lastname)
+        sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
+
           sessionStorage.setItem("progress_bar", progress);
           navigate("/AppointmentList");
         } else {
@@ -83,9 +94,15 @@ function SignUp() {
             i18n.changeLanguage("es");
           }
           sessionStorage.setItem("responseData", JSON.stringify(responseData));
-          sessionStorage.setItem("username", email);
-          sessionStorage.setItem("minor", responseData.userData.minor);
-          sessionStorage.setItem("token", responseData.token);
+          sessionStorage.setItem('username', email);
+          sessionStorage.setItem('minor', responseData.userData.minor)
+          sessionStorage.setItem('token', responseData.token);
+          sessionStorage.setItem('lang',responseData.userData.lang)
+          sessionStorage.setItem('userType',responseData.userData.usertype)
+          sessionStorage.setItem('firstname',responseData.userData.firstname)
+          sessionStorage.setItem('lastname',responseData.userData.lastname)
+        sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
+
           sessionStorage.setItem("progress_bar", progress);
           navigate("/dashboard");
         }

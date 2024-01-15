@@ -34,8 +34,10 @@ console.log(selectedAppointment)
   useEffect(() => {
     setIsVisible(true);
     fetchAppointments();
-    if(selectedAppointment !== "undefined"){
-      setUpdateAppointment(selectedAppointment[0])
+    if(selectedAppointment  ){
+      if(selectedAppointment.length > 0){
+        setUpdateAppointment(selectedAppointment[0])
+      }
     }else{
       navigate("/artist-dashboard")
     }

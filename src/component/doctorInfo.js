@@ -4,6 +4,7 @@ import UserContext from "../context/UserContext";
 import ProgressBar from "./ProgressBar";
 import Modal from "./modal/Modal";
 import { useTranslation } from "react-i18next";
+import { states } from "../data/states";
 
 
 function DoctorContactForm() {
@@ -140,13 +141,13 @@ function DoctorContactForm() {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
-          <div className="w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md w-20">
+          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Name")}
             </label>
 
             <input
-              className="bg-white text-black rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="text"
               name="name"
               value={drformData?.name}
@@ -154,12 +155,12 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md w-20">
+          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Phone")}:
             </label>
             <input
-              className="bg-white text-black rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="text"
               name="phone"
               value={drformData?.phone}
@@ -167,12 +168,12 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md w-20">
+          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("City")}:
             </label>
             <input
-              className="bg-white text-black rounded-md m-1 p-1 flex-1"
+              className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="text"
               name="city"
               value={drformData?.city}
@@ -180,17 +181,24 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md w-20">
+          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("State")}:
             </label>
-            <input
+            <select value={drformData?.state} className='rounded-md m-1 p-1  md:flex-1 w-full text-black'>
+            {
+              states?.map((state, index)=>{
+                return <option key={state} value={state}>{state}</option>
+              })
+            }
+          </select>
+            {/* <input
               className="bg-white text-black rounded-md m-1 p-1 flex-1"
               type="text"
               name="state"
               value={drformData?.state}
               onChange={handleInputChange}
-            />
+            /> */}
           </div>
 
           <div className="flex items-center gap-2">

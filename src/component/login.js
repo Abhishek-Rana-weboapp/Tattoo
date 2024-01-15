@@ -29,6 +29,8 @@ function Login() {
      const storedEmail = localStorage.getItem("email")
      const storedPassword = localStorage.getItem("password")
 
+     sessionStorage.clear()
+
      if(storedEmail && storedPassword){
       setEmail(storedEmail)
       setPassword(storedPassword)
@@ -80,6 +82,7 @@ function Login() {
           sessionStorage.setItem('userType',responseData.user.usertype)
           sessionStorage.setItem('firstname',responseData.user.firstname)
           sessionStorage.setItem('lastname',responseData.user.lastname)
+        sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
           handleRememberMe()
           navigate("/artist-dashboard");
         }
