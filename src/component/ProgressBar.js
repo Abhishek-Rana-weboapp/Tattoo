@@ -48,7 +48,8 @@ const ProgressBar = ({ progress, count }) => {
   }, [progress, totalSteps]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px', width: '100%' }}>
+    // <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '20px', width: '100%' }}>
+    <div className='flex justify-center items-center p-2 flex-wrap max-w-full'>
       {markers}
     </div>
   );

@@ -12,7 +12,7 @@ function HoldHarmlessAgreement() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
-  const { setIsVisible, alert, setAlert, setAlertMessage } =
+  const { setIsVisible, alert, setAlert, setAlertMessage, signature, setSignature } =
     useContext(UserContext);
   const [signatureRef, setSignatureRef] = useState();
   const inputRef = useRef()
@@ -23,25 +23,31 @@ function HoldHarmlessAgreement() {
   useEffect(() => {
     setIsVisible(true);
     inputRef?.current?.focus()
-    setharmlessagreement({...harmlessagreement , initials : initials , name:name})
   }, []);
 
-  const handleNameChange = (e) => {
-    setharmlessagreement({
-      ...harmlessagreement,
-      name: e.target.value,
-    });
-  };
+  // const handleNameChange = (e) => {
+  //   setharmlessagreement({
+  //     ...harmlessagreement,
+  //     name: e.target.value,
+  //   });
+  // };
 
-  const handleInitialsChange = (e) => {
-    setharmlessagreement({
-      ...harmlessagreement,
-      initials: e.target.value,
-    });
-  };
+  // const handleInitialsChange = (e) => {
+  //   setharmlessagreement({
+  //     ...harmlessagreement,
+  //     initials: e.target.value,
+  //   });
+  // };
 
+  console.log(harmlessagreement)
   const handleAgreementToggle = (e) => {
-    setharmlessagreement({...harmlessagreement, agreed : e.target.checked})
+    console.log(e.target.checked);
+    setharmlessagreement(prev=>({...prev, agreed : e.target.checked}))
+    if(e.target.checked === true){
+     setharmlessagreement(prev=>({...prev , initials : initials , name:name, signatureurl: signature}))
+    }else{
+      setharmlessagreement(prev=>({...prev , initials : "" , name:"", signatureurl:undefined}))
+    }
   };
 
   const handleClear = () => {
@@ -88,9 +94,9 @@ function HoldHarmlessAgreement() {
 
   return (
     <div className="w-full h-full flex flex-col gap-2 items-center justify-between p-2 md:p-8 text-white  md:w-4/6 overflow-hidden">
-      <h1 className="text-xl md:text-4xl font-bold mb-4 text-white">
+      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
         {t("Hold Harmless Agreement")}
-      </h1>
+      </label>
       <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
         
           <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-thumb-rounded scrollbar-track -rounded">
@@ -110,7 +116,7 @@ function HoldHarmlessAgreement() {
                 className="bg-gray-700 text-white rounded-md p-2"
                 type="text"
                 value={harmlessagreement?.name}
-                onChange={handleNameChange}
+                // onChange={handleNameChange}
               />
             </div>
             <div className="flex gap-1 items-center justify-center">
@@ -119,7 +125,7 @@ function HoldHarmlessAgreement() {
                 className="bg-gray-700 text-white  rounded-md p-2"
                 type="text"
                 value={harmlessagreement?.initials}
-                onChange={handleInitialsChange}
+                // onChange={handleInitialsChange}
               />
             </div>
             <div className="flex gap-1 items-center justify-center">
@@ -129,7 +135,7 @@ function HoldHarmlessAgreement() {
                 checked={harmlessagreement?.agreed}
                 onChange={handleAgreementToggle}
               />
-              <label>{t("I agree to the terms")}</label>
+              <label>{t("Select to add your name , initials and signature")}</label>
             </div>
           </div>
           
@@ -138,10 +144,11 @@ function HoldHarmlessAgreement() {
                   <img className="w-1/4 h-full bg-white" src= {harmlessagreement?.signatureurl} />
                   </div>
           }
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button className="yellowButton py-2 px-3 rounded-3xl text-black font-bold" onClick={handleSignature}>{t("Add Signature")}</button>
-          </div>
-          {
+          </div> */}
+          {/* {
+            
             showPopup &&(
                 <SignatureModal
                   setSignatureRef={setSignatureRef}
@@ -153,48 +160,48 @@ function HoldHarmlessAgreement() {
               )
 
 
-            // (
-            //   <div className="w-full flex flex-col justify-center items-center">
-            //     <SignatureCanvas
-            //       penColor="black"
-            //       canvasProps={{
-            //         width: 300,
-            //         height: 150,
-            //         className: "sigCanvas",
-            //         style: {
-            //           border: "1px solid #000",
-            //           backgroundColor: "#9ca3af",
-            //           borderRadius: "10px",
-            //         },
-            //       }}
-            //       ref={signatureRef}
-            //     />
-            //     <div className="flex gap-4 items-center">
-            //     <button
-            //       type="button"
-            //       className="mx-2 "
-            //       style={{
-            //         background: "#e74c3c",
-            //         color: "white",
-            //         padding: "8px",
-            //         borderRadius: "4px",
-            //         border: "none",
-            //         cursor: "pointer",
-            //       }}
-            //       onClick={handleClear}
-            //     >
-            //       {t("Clear")}
-            //     </button>
-            //     <button
-            //       className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold "
-            //       onClick={handleSaveSignature}
-            //       >
-            //       {t("Save")}
-            //     </button>
-            //       </div>
-            //   </div>
-            // )
-          }
+            (
+              <div className="w-full flex flex-col justify-center items-center">
+                <SignatureCanvas
+                  penColor="black"
+                  canvasProps={{
+                    width: 300,
+                    height: 150,
+                    className: "sigCanvas",
+                    style: {
+                      border: "1px solid #000",
+                      backgroundColor: "#9ca3af",
+                      borderRadius: "10px",
+                    },
+                  }}
+                  ref={signatureRef}
+                />
+                <div className="flex gap-4 items-center">
+                <button
+                  type="button"
+                  className="mx-2 "
+                  style={{
+                    background: "#e74c3c",
+                    color: "white",
+                    padding: "8px",
+                    borderRadius: "4px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleClear}
+                >
+                  {t("Clear")}
+                </button>
+                <button
+                  className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold "
+                  onClick={handleSaveSignature}
+                  >
+                  {t("Save")}
+                </button>
+                  </div>
+              </div>
+            )
+          } */}
         <div className="w-full flex justify-between">
           <button
             type="submit"

@@ -89,7 +89,7 @@ const AppointmentList = () => {
   return (
     <div className='w-full h-full overflow-hidden flex flex-col gap-2 items-center'>
       <h1 className='text-white font-bold'>Appointments</h1>
-      <div className='w-full h-full flex justify-center overflow-y-scroll flex-1'>
+      <div className='w-full h-full flex justify-center overflow-y-scroll flex-1 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded'>
 
       <table className='border-1 border-white '>
         <thead>
@@ -117,58 +117,9 @@ const AppointmentList = () => {
             }
         </tbody>
       </table>
-
-      {/* Popup/Modal for Artist Assignment */}
-      {selectedAppointment && (
-        <div style={popupStyle}>
-          <h3>Assign Artist to Client</h3>
-          <p>Client: {selectedAppointment.username}</p>
-          <label>
-            Select Artist:
-            <select
-              value={assignedArtist}
-              onChange={e => setAssignedArtist(e.target.value)}
-            >
-              <option value="">Select an Artist</option>
-              <option value="Adonay Llerena">Adonay Llerena</option>
-              <option value="Barbie Gonzalez">Barbie Gonzalez</option>
-              <option value="Cheppy Sotelo">Cheppy Sotelo</option>
-              {/* Add the rest of the artists here */}
-            </select>
-          </label>
-          <button onClick={handleAssignArtist}>Assign Artist</button>
-          <button onClick={() => setSelectedAppointment(null)}>Close</button>
-        </div>
-      )}
-
-      {/* Pagination */}
-      {/* <div>
-        {Array.from({ length: Math.ceil(appointments.length / appointmentsPerPage) }, (_, index) => (
-          <button key={index + 1} onClick={() => paginate(index + 1)}>
-            {index + 1}
-          </button>
-        ))}
-      </div> */}
     </div>
 </div>
   );
-};
-
-const cellStyle = {
-  border: '1px solid #dddddd',
-  textAlign: 'left',
-  padding: '8px',
-};
-
-const popupStyle = {
-  position: 'fixed',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  padding: '20px',
-  background: '#ffffff',
-  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  zIndex: '9999',
 };
 
 export default AppointmentList;

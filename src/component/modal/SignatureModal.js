@@ -12,7 +12,7 @@ export default function SignatureModal({ handleSave , handleClear, showPopup, se
   setSignatureRef(signatureRef)
 
   return (
-    <div className='fixed inset-0 z-50 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' onClick={()=>setShowPopup(!showPopup)}>
+    <div className='fixed inset-0 z-40 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center' onClick={()=>setShowPopup(!showPopup)}>
     <div className='w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg' onClick={e=>e.stopPropagation()}>
       <h2 className='font-semibold'>Add Your signature</h2>
     <SignatureCanvas

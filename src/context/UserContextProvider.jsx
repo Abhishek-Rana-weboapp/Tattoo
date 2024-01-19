@@ -57,15 +57,31 @@ const UserContextProvider = ({children})=>{
         signatureurl:'',
         agreed:false
       })
-      const [initials, setInitials] = useState({});
+      const [initials, setInitials] = useState({
+        1:"",
+        2:"",
+        3:"",
+        4:"",
+        5:"",
+        6:"",
+        7:"",
+        8:"",
+        9:"",
+        10:"",
+        11:"",
+        12:"",
+        13:""
+      });
+      const [checked, setChecked] = useState({});
       const [isVisible , setIsVisible] = useState(false)
       const [alert , setAlert] = useState(false)
       const[alertMessage , setAlertMessage] = useState()
       const [updateAppointment , setUpdateAppointment] = useState()
+      const [signature, setSignature] = useState()
 
 
     return (
-        <UserContext.Provider value={{updateAppointment , setUpdateAppointment, isVisible , setIsVisible, alert , setAlert, alertMessage , setAlertMessage ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
+        <UserContext.Provider value={{checked, setChecked,updateAppointment, signature, setSignature , setUpdateAppointment, isVisible , setIsVisible, alert , setAlert, alertMessage , setAlertMessage ,user,setUser,formData,setFormData,selectedPattern,setSelectedPattern,emerformData,setemerFormData,drformData,setdrFormData,initials,setInitials,harmlessagreement,setharmlessagreement}}>
             {children}
         </UserContext.Provider>
     )

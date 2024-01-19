@@ -18,6 +18,11 @@ function TermsOfService() {
   const [initials, setInitials] = useState({});
   const totalPages = 3; 
   const [storedInitials , setStoredInitials] = useState(sessionStorage.getItem("initials"))
+  const [checked, setChecked] = useState({
+    1:false,
+    2:false,
+    3:false
+  })
   const {user , alert , setAlert , setAlertMessage , formData, emerformData, drformData, setIsVisible,harmlessagreement,} = useContext(UserContext)
   const pageContents = [
     "No Foods or Drinks allowed in tattoo workstation.Please sit as still as possible while being tattooed, your final satisfaction is our priority.Only (1) additional person is allowed in tattoo station aside from the individual being tattooed.Please do not leave the workstation during a break or once the tattoo has been completed without it being covered by the artist.During a break or while being tattooed, DO NOT TOUCH YOUR TATTOO.",
@@ -29,13 +34,13 @@ function TermsOfService() {
 
   const inputRef = useRef()
 
-  useEffect(()=>{
-    setInitials({ ...initials, [currentPage]: storedInitials });
-  },[])
+  // useEffect(()=>{
+  //   setInitials({ ...initials, [currentPage]: storedInitials });
+  // },[])
 
   useEffect(()=>{
     inputRef?.current?.focus()
-    setInitials({ ...initials, [currentPage]: storedInitials });
+    // setInitials({ ...initials, [currentPage]: storedInitials });
   },[currentPage])
 
   // Navigation function
@@ -129,12 +134,28 @@ function TermsOfService() {
       }
   };
 
+  const handleCheckbox = (e)=>{
+    console.log(e.target.checked)
+     setChecked(prev=>({...prev, [currentPage] : e.target.checked}))
+     if(e.target.checked === true){
+      setInitials(prev=>({...prev, [currentPage] : storedInitials}))
+     }
+     if(e.target.checked === false){
+      setInitials(prev=>({...prev, [currentPage] : ""}))
+     }
+  }
+
+
   // Return the JSX structure
   return (
     <ConsentFormLayout  title="Terms of Service">
       <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
       <p className="text-white text-center">{t(pageContents[currentPage - 1])}</p>
-      <div className='flex gap-2 justify-center items-center'>
+        <div className='flex gap-2 items-center justify-center'>
+        <input type='checkbox' className='w-6 h-6' checked={checked[currentPage]} onChange={handleCheckbox}></input>
+        <label className='text-white'>{t("Select to add your initials")}</label>
+        </div>
+      <div className='flex md:flex-row flex-col gap-2 justify-center items-center'>
       <label className="text-white">
         {t('Initials')}:
         </label>
@@ -142,7 +163,8 @@ function TermsOfService() {
         ref={inputRef}
           type="text"
           value={initials[currentPage] || ''}
-          onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+          disabled
+          // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
           className="bg-gray-700 text-white p-2 rounded-md"
         />
       </div>

@@ -27,14 +27,15 @@ const BillingComponent = () => {
   const [beforeImage, setBeforeImage] = useState();
   const [afterImage, setAfterImage] = useState();
   const [step, setStep] = useState(1);
+  const [startTime, setStartTime] = useState("")
+  const [endTime, setEndTime] = useState("")
 
 const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointment"))
-console.log(selectedAppointment)
 
   useEffect(() => {
     setIsVisible(true);
     fetchAppointments();
-    if(selectedAppointment  ){
+    if(selectedAppointment ){
       if(selectedAppointment.length > 0){
         setUpdateAppointment(selectedAppointment[0])
       }
@@ -43,9 +44,10 @@ console.log(selectedAppointment)
     }
   }, []);
   
+  
   useEffect(()=>{
     if(updateAppointment){
-      setBillingData(prev=>({...prev, bill_by :updateAppointment?.ArtistPiercerNames, username:updateAppointment?.username }))
+      setBillingData(prev=>({...prev, bill_by :updateAppointment?.ArtistPiercerNames, username:updateAppointment?.username, id:updateAppointment?.id }))
     }
   },[updateAppointment])
 
@@ -57,14 +59,17 @@ console.log(selectedAppointment)
   };
   const [billingData, setBillingData] = useState({
     username: "",
+    id:"",
     price: 0,
     fix: "",
     before_image: "",
     after_image: "",
     start_time: "",
     end_time: "",
+    break_time:"",
     bill_by:""
   });
+
   console.log(billingData)
 
   useEffect(() => {
@@ -140,12 +145,16 @@ console.log(selectedAppointment)
         setAlertMessage(t("Please Provide an image"));
       }
     }
+    if(step === 4){
+      setStep(5)
+    }
   };
 
   const handleStartDate = () => {
     if (updateAppointment?.typeofservice === "tattoo") {
       if (beforeImage) {
         setIsRunning(!isRunning);
+        setStartTime(formatStartTime())
         const now = new Date();
         const formattedDateTime = now.toISOString().slice(0, 16);
         setBillingData((prevData) => ({
@@ -159,6 +168,7 @@ console.log(selectedAppointment)
     }
     if (updateAppointment?.typeofservice !== "tattoo") {
       setIsRunning(!isRunning);
+      setStartTime(formatStartTime())
       const now = new Date();
       const formattedDateTime = now.toISOString().slice(0, 16);
       setBillingData((prevData) => ({
@@ -170,13 +180,13 @@ console.log(selectedAppointment)
 
   const handleEndDate = () => {
     setIsRunning(!isRunning);
+    setEndTime(formatEndTime())
     const now = new Date();
     const formattedDateTime = now.toISOString().slice(0, 16);
     setBillingData((prevData) => ({
       ...prevData,
       end_time: formattedDateTime,
     }));
-    setStep(5)
   };
 
   const handleInputChange = (e) => {
@@ -186,6 +196,14 @@ console.log(selectedAppointment)
       [name]: value,
     }));
   };
+
+  const handlePrice = (name , value)=>{
+    setBillingData(prev=>({
+      ...prev, [name]:value
+    }))
+  }
+
+  console.log("price" ,billingData.price)
 
   const handleUpdateSkin = async (option, explanation, field) => {
     let data;
@@ -213,11 +231,16 @@ console.log(selectedAppointment)
         await axios
           .post(`${apiUrl}/artist/post_new`, data)
           .then((res) => {
-            if (updateAppointment?.typeofservice === "tattoo") {
-              setStep(3);
-            } else {
-              setStep(4);
-            }
+             axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`).then(response=>{
+              if(response.status === 200){
+                setUpdateAppointment(response.data.data[0])
+                if (response?.data.data[0]?.typeofservice === "tattoo") {
+                  setStep(3);
+                } else {
+                  setStep(4);
+                }
+              }
+              })
           })
           .catch((err) => console.log(err));
       }
@@ -225,9 +248,8 @@ console.log(selectedAppointment)
       setAlertMessage("Please Enter the skin explanation");
       setAlert(!alert);
     }
-  };
+  };  
 
-  console.log(updateAppointment);
 
   const handleImageUpload = async (imagePath, type) => {
     const url = URL.createObjectURL(imagePath);
@@ -310,6 +332,22 @@ console.log(selectedAppointment)
     }
   };
 
+  const formatStartTime = () => {
+    const startTime = new Date();
+    const hours = startTime.getHours();
+    const minutes = startTime.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+  };
+
+  const formatEndTime = () => {
+    const endTime = new Date();
+    const hours = endTime.getHours();
+    const minutes = endTime.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+  };
+
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
       {step === 1 && (
@@ -317,6 +355,7 @@ console.log(selectedAppointment)
           updateAppointment={updateAppointment}
           billingData={billingData}
           handleInputChange={handleInputChange}
+          handlePrice={handlePrice}
           handleNext={handleNext}
           handlePrev={handlePrev}
         />
@@ -375,8 +414,8 @@ console.log(selectedAppointment)
 
       {/* <input type="datetime-local" name="start_time" value={billingData.start_time} onChange={handleInputChange} /> */}
       {step === 4 && (
-        <div className="flex flex-col items-center w-full h-full justify-center">
-          <Timer isRunning={isRunning} setIsRunning={setIsRunning} />
+        <div className="flex flex-col items-center w-full h-full">
+          <Timer isRunning={isRunning} setIsRunning={setIsRunning} startTime={startTime} endTime={endTime} billingData={billingData} setBillingData={setBillingData} />
           {!isRunning && !billingData.start_time && (
             <button
               name="start_time"
@@ -395,6 +434,16 @@ console.log(selectedAppointment)
               onClick={handleEndDate}
             >
               End
+            </button>
+          )}
+          {billingData.end_time && billingData.start_time && (
+            <button
+              className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
+              name="end_time"
+              value={billingData.end_time}
+              onClick={handleNext}
+            >
+              Next
             </button>
           )}
         </div>

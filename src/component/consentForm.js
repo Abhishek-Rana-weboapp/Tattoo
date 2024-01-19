@@ -40,8 +40,6 @@ const ConsentFormGuard = () => {
     clientSignatureDate: "",
   });
 
-  console.log(formData)
-
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -50,6 +48,7 @@ const ConsentFormGuard = () => {
     const { name, value, type, checked } = event.target;
     setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
   };
+
 
   const handleSave = (e) => {
     e.preventDefault();
@@ -74,6 +73,8 @@ const ConsentFormGuard = () => {
     signatureRef.current.clear();
     setSignatureImage(null);
   };
+
+  const token = sessionStorage.getItem("token")
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -101,6 +102,8 @@ const ConsentFormGuard = () => {
   //   }
   // };
 
+  console.log(formData)
+
   const handelapi = async (event) => {
     event.preventDefault();
 
@@ -109,30 +112,23 @@ const ConsentFormGuard = () => {
     );
 
     console.log(appointment_detail)
-
-    console.log("apoinment detail", formData);
-    for (const key in formData) {
-      if (
-        formData.hasOwnProperty(key) &&
-        (formData[key] === "" || formData[key] === null)
-      ) {
-        setAlert(!alert);
-        setAlertMessage(t(`Please fill in all the required fields.`));
-        return;
-      }
-    }
-
     try {
-      const response = await fetch(`${apiUrl}/appointment/post?update=true`, {
+      const response = await fetch(`${apiUrl}artist/post_new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          // "Authorization":`Bearer ${token}`
         },
-        body: JSON.stringify({
-          id: 23,
-          username:"user@123",
-          consent_guard: formData,
-        }),
+        // body: JSON.stringify({
+        //   id: appointment_detail?.id,
+        //   username:appointment_detail?.username,
+        //   consent_guard: formData,
+        // }),
+        body:JSON.stringify({
+          id:appointment_detail?.id,
+          updateField : "consent_guard",
+          updateValue: formData,
+        })
       });
 
       if (response.status === 201) {
@@ -162,7 +158,7 @@ const ConsentFormGuard = () => {
       )}
 
       <div className="w-full h-full flex flex-col items-center bg-black p-8 text-white overflow-hidden ">
-        <h1 className="text-3xl font-bold mb-4 text-yellow-500 uppercase underline">
+        <h1 className="text-3xl font-bold mb-4 text-white uppercase underline">
           {t("Consent Form")}
         </h1>
         <form className=" p-3 flex flex-col gap-2 rounded-md shadow-md w-4/5 backdrop-blur bg-opacity-50 overflow-hidden">
@@ -489,7 +485,7 @@ const ConsentFormGuard = () => {
                 className="p-2  rounded-md w-full text-black"
                 type="date"
                 id="clientSignatureDate"
-                name="techDate"
+                name="clientSignatureDate"
                 value={formData?.clientSignatureDate}
                 onChange={handleInputChange}
                 required
