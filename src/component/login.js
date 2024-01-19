@@ -67,13 +67,17 @@ function Login() {
       if (responseData.message==='Login successful.')
       {
 
-        if(responseData.user.lang=="eng"){
+        if(responseData?.user?.lang=="eng"){
           i18n.changeLanguage('en');
           }
           else{
             i18n.changeLanguage('es');
           }
-        if(responseData.user.usertype==="admin")
+          if(!responseData.hasOwnProperty("user")){
+            sessionStorage.setItem("token",responseData.token )
+            navigate("/admin")
+           } 
+        if(responseData?.user?.usertype==="admin")
         {
           sessionStorage.setItem('username', email);
           sessionStorage.setItem('minor', responseData.user.minor)
@@ -82,11 +86,12 @@ function Login() {
           sessionStorage.setItem('userType',responseData.user.usertype)
           sessionStorage.setItem('firstname',responseData.user.firstname)
           sessionStorage.setItem('lastname',responseData.user.lastname)
-        sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
+          sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
+          sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
           handleRememberMe()
           navigate("/artist-dashboard");
         }
-        else
+       if(responseData?.user?.usertype === "user")
         {
         sessionStorage.setItem('username', email);
         sessionStorage.setItem('minor', responseData.user.minor)
@@ -94,15 +99,14 @@ function Login() {
         sessionStorage.setItem('lang',responseData.user.lang)
         sessionStorage.setItem('userType',responseData.user.usertype)
         sessionStorage.setItem('firstname',responseData.user.firstname)
-        sessionStorage.setItem('lastname',responseData.user.lastname)
-        console.log(responseData.user)
+          sessionStorage.setItem('lastname',responseData.user.lastname)
+        sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
         sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
         navigate("/dashboard");
         }
       }
       else{
         setResponseMessage('Invalid credentials');
-
       }
 
       console.log('Response:', responseData);

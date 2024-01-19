@@ -91,7 +91,7 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-white uppercase ">Emergency Contact Information</h1>
+      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">Emergency Contact Information</label>
       <form className=" p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
 
       <div className='flex flex-col gap-3 flex-1 items-center'>
@@ -118,7 +118,7 @@ function EmergencyContactForm() {
            onChange={handleInputChange}
            />
         </div>
-<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+        <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("City")}:</label>
           <input
           className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
@@ -129,9 +129,9 @@ function EmergencyContactForm() {
             onChange={handleInputChange}
           />
         </div>
-<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+        <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("State")}:</label>
-          <select value={emerformData?.state} className='rounded-md m-1 p-1 md:flex-1 w-full'>
+          <select value={emerformData?.state} name='state' className='rounded-md m-1 p-1 md:flex-1 w-full' onChange={handleInputChange}>
             {
               states?.map((state, index)=>{
                 return <option key={state} value={state}>{state}</option>

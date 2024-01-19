@@ -1,25 +1,46 @@
-
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from '../context/UserContext';
+import UserContext from "../context/UserContext";
 
-import ProgressBar from './ProgressBar';
-import ConsentFormLayout from './Layout/FormLayout';
-import { useTranslation } from 'react-i18next';
-import AlertModal from "../component/modal/AlertModal"
+import ProgressBar from "./ProgressBar";
+import ConsentFormLayout from "./Layout/FormLayout";
+import { useTranslation } from "react-i18next";
+import SignatureModal from "./modal/SignatureModal";
 function ConsentForm() {
   const { t } = useTranslation();
   var progressValue = 5;
-  const[progressValue_,setprogressValue_]=useState(1)
+  const [progressValue_, setprogressValue_] = useState(1);
 
   const navigate = useNavigate();
-  const { initials, setInitials,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
-  const inputRef = useRef()
-  const [storedInitials , setStoredInitials] = useState(sessionStorage.getItem("initials"))
+  const {
+    initials,
+    setInitials,
+    alert,
+    setAlert,
+    setAlertMessage,
+    harmlessagreement,
+    setharmlessagreement,
+    checked,
+    setChecked,
+    signature,
+    setSignature,
+  } = React.useContext(UserContext);
+  const inputRef = useRef();
+  const [fullName, setFullName] = useState(
+    `${sessionStorage.getItem("firstname")} ${sessionStorage.getItem(
+      "lastname"
+    )}`
+  );
+  const [storedInitials, setStoredInitials] = useState(
+    sessionStorage.getItem("initials")
+  );
+  const [initialsModal, setInitiallsModal] = useState(true);
+  const [isChanged, setIsChanged] = useState();
+  const [signatureModal, setSignatureModal] = useState(false);
+  const [signatureRef, setSignatureRef] = useState();
 
-  
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 13; 
+  const totalPages = 13;
   const statements = [
     "I am at least 18 years of age.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get a tattoo.",
@@ -33,86 +54,201 @@ function ConsentForm() {
     "I hereby grant irrevocable consent to and authorize the use of any reproduction by Fame Tattoos, Inc. Any and all photographs and/or video which are taken this day of me, negative or positive proof which will be hereby attached for any purposes whatsoever, without further compensation to me. All negatives, together with the prints, video, or live internet stream shall become and remain the property of Fame Tattoos, Inc., solely and completely",
     "I acknowledge infection is always possible as a result of obtaining a tattoo. I have been provided with information describing the tattoo procedure to be performed and instructions on aftercare. I have been made aware that if I have any signs or symptoms of infection, such as swelling, pain, redness, warmth, fever, unusual discharge, or odor to contact my physician. Additionally, I take full responsibility for the care of my new tattoo and/or piercing site, following the provided instructions given verbally, via text message, email, or on WWW.FAMETATTOOS.COM",
     "I hereby consent to receive text messages and emails from Fame Tattoos, Inc., for transactional, informational, and promotional purposes. I understand that standard message and data rates may apply for SMS messages, and I acknowledge that I'm responsible for any such charges incurred",
-    "I swear, affirm, and agree that all the above information is true and correct and that I understand it."
+    "I swear, affirm, and agree that all the above information is true and correct and that I understand it.",
   ];
 
-  useEffect(()=>{
-    setInitials({ ...initials, [currentPage]: storedInitials });
-  },[])
   
-  useEffect(()=>{
-      inputRef?.current?.focus()
-      setInitials({ ...initials, [currentPage]: storedInitials });
-  },[currentPage])
+
+  useEffect(() => {
+    inputRef?.current?.focus();
+  }, [currentPage]);
 
   const handleInitialsChange = (page, initialsValue) => {
     setInitials({ ...initials, [page]: storedInitials });
+  };
+
+  const handleSignatureSave = ()=>{
+      if(signatureRef?.current?.isEmpty()){
+        setAlertMessage(t("Please add your signature"))
+        setAlert(!alert)
+      }else{
+        const dataUrl = signatureRef?.current?.toDataURL();
+        setSignature(dataUrl)
+        setSignatureModal(false);
+      }
+    };
+  
+  const handleCheckbox = (page, e) => {
+    setChecked({ ...checked, [page]: e.target.checked });
+    if (e.target.checked === true) {
+      setInitials({ ...initials, [page]: storedInitials });
+    } else {
+      setInitials({ ...initials, [page]: "" });
+    }
   };
 
   const nextPage = () => {
     if (currentPage < totalPages && currentPage !== 13) {
       // Check if the initials for the current page have been filled
       if (!initials[currentPage]) {
-        setAlert(!alert)
-        setAlertMessage(t("Please provide your initials"))
+        setAlert(!alert);
+        setAlertMessage(t("Please provide your initials"));
       } else {
-        setprogressValue_(progressValue_+1)
+        setprogressValue_(progressValue_ + 1);
         setCurrentPage(currentPage + 1);
       }
     } else if (currentPage === 13) {
-      
-      navigate('/harmless-agreement');
+      navigate("/harmless-agreement");
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setprogressValue_(progressValue_-1)
+      setprogressValue_(progressValue_ - 1);
       setCurrentPage(currentPage - 1);
     }
-    if(currentPage === 1) navigate(-1)
+    if (currentPage === 1) navigate(-1);
+  };
+  
+  const handleAdopt = () => {
+    if(signature){
+      setharmlessagreement({ ...harmlessagreement, name: fullName });
+      setInitiallsModal(!initialsModal);
+    }else{
+      setAlertMessage(t("Please add your signature"))
+      setAlert(!alert)
+    }
   };
 
-
-  const message = "Please provide your initials before moving to the next question"
-
+  const handleClear = ()=>{
+    signatureRef?.current?.clear();
+  }
   return (
     <>
-    <ConsentFormLayout  progressValue={progressValue} progressValue_={progressValue_} progressValue_count_={13} title="Consent form">
-      <div className='flex flex-col flex-1 items-center overflow-y-auto p-3 md:p-1 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded'>
-      <p className="text-white text-lg md:text-2xl font-semibold text-center">{t(statements[currentPage - 1])}</p>
-      </div>
-      <div className='flex flex-col items-center'>
-      <label className="block mt-4 text-white">
-        {t("Initials")}:{' '}
-        <input
-          ref={inputRef}
-          type="text"
-          value={storedInitials}
-          onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-          className="bg-gray-700 text-white p-2 rounded-md"
+        {signatureModal && (
+          <div>
+          <SignatureModal
+            setSignatureRef={setSignatureRef}
+            handleSave={handleSignatureSave}
+            handleClear={handleClear}
+            showPopup={signatureModal}
+            setShowPopup={setSignatureModal}
           />
-      </label>
+      </div>
+        )}
+      {
+        //Modal for confirming initials and signature
+        initialsModal && (
+          <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
+            <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
+              <h1>Adopt Your Initials and Signature</h1>
+              <label className="font-bold">
+                Confirm Your Name and Initials
+              </label>
+              <div className="flex items-center gap-2 w-3/4">
+                <div className="flex flex-col text-start w-3/4">
+                  <label className="font-bold">
+                    Full Name<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="p-1 border-gray-400 border-1 rounded-lg font-bold"
+                    value={fullName}
+                  ></input>
+                </div>
+                <div className="flex flex-col text-start w-1/4">
+                  <label className="font-bold">
+                    Initials<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="p-1 border-gray-400 border-1 rounded-lg font-bold"
+                    value={storedInitials}
+                  ></input> 
+                </div>
+              </div>
+              <button className="bg-yellow-400 font-bold text-black py-2 rounded-lg px-4" onClick={()=>setSignatureModal(!signatureModal)}>Add Signature</button>
+                {
+                  signature && <div className="border-1 rounded-lg border-gray-500 w-2/4"> 
+                    <img src={signature} className="w-full h-40"></img>
+                    </div>
+                }
+              <p className=" text-xs">
+                {t(
+                  "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
+                )}
+              </p>
+              <div className="flex justify-between w-full">
+                <button className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300">
+                  Cancel
+                </button>
+                <button
+                  className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
+                  onClick={handleAdopt}
+                >
+                  Adopt and Initial
+                </button>
+              </div>
+            </div>
           </div>
-      <div className="w-full h-10 ">
-        <ProgressBar progress={progressValue_} count={13} />
-      </div>
-      <div className="flex justify-between mt-4">
-        <button
-          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-          onClick={prevPage}
+        )
+      }
+      <ConsentFormLayout
+        progressValue={progressValue}
+        progressValue_={progressValue_}
+        progressValue_count_={13}
+        title="Consent form"
+      >
+        <div className="flex flex-col flex-1 items-center overflow-y-auto p-3 md:p-1 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded">
+          <p className="text-white text-lg md:text-2xl font-semibold text-center">
+            {t(statements[currentPage - 1])}
+          </p>
+        </div>
+        <div className="flex md:flex-col justify-center gap-2">
+          <div className="flex gap-2 items-center justify-center">
+            <input
+              type="checkbox"
+              className=" w-6 h-6"
+              checked={checked[currentPage]}
+              onChange={(e) => handleCheckbox(currentPage, e)}
+            ></input>
+            <label className=" text-white">
+              {t("Select to add your initials")}
+            </label>
+          </div>
+          <div className="flex flex-col md:flex-row items-center justify-center">
+            <label className=" text-white md:block hidden">
+              {t("Initials")}:{" "}
+            </label>
+            <input
+              ref={inputRef}
+              type="text"
+              value={initials[currentPage]}
+              // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+              disabled
+              className="bg-gray-700 text-white p-2 rounded-md font-bold"
+            />
+          </div>
+        </div>
+        <div className="w-full h-10 ">
+          <ProgressBar progress={progressValue_} count={13} />
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+            onClick={prevPage}
           >
-          {t("Previous")}
-        </button>
-        <button
-          className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-          onClick={nextPage}
+            {t("Previous")}
+          </button>
+          <button
+            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+            onClick={nextPage}
           >
-          {t("Next")}
-        </button>
-      </div>
-    </ConsentFormLayout>
-          </>
+            {t("Next")}
+          </button>
+        </div>
+      </ConsentFormLayout>
+    </>
   );
 }
 

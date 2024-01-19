@@ -253,7 +253,7 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">{t("Q2")}</span>{t("Are you Pregnant or Nursing?")}
+            <span className="underline">{t("Q2")}:</span>{t("Are you Pregnant or Nursing?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -334,7 +334,7 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
             <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-              <span className="underline">Q3</span>{t("Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}
+              <span className="underline">Q3 :</span>{t("Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}
             </label>
             <div className="flex flex-col items-center gap-4">
               <div className="w-20 justify-start flex gap-2 items-center">
@@ -403,7 +403,7 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">Q4</span>{t("Do you have any medical or skin conditions?")}
+            <span className="underline">Q4:</span>{t("Do you have any medical or skin conditions?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -471,7 +471,7 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-1">
-            <span className="underline">Q5 </span> 
+            <span className="underline">Q5:</span> 
             <span>
               {t("Do you have any communicable diseases?")}
             </span>
@@ -542,7 +542,7 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
-            <span className="underline">Q6</span>
+            <span className="underline">Q6:</span>
             <span>{t("Are you under the influence of alcohol or drugs, prescribed or otherwise?")}
             </span>
           </label>

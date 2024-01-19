@@ -1,15 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function PriceComponent({
   updateAppointment,
   billingData,
+  handlePrice,
   handleInputChange,
   handleNext,
-  handlePrev
+  handlePrev,
 }) 
 {
 
-console.log(billingData.fix)
+  useEffect(()=>{
+     if(billingData.price){
+      setFormatedPrice(`${parseFloat(billingData.price).toFixed(2)}`);
+     }
+  },[])
+
+
+  const [formatedPrice, setFormatedPrice] = useState()
+
+  const handleInputChangeInternal = (event) => {
+    // Update the raw price in the state
+    const rawPrice = parseInt(event.target.value.replace(/[^0-9.]/g, ""));
+    handlePrice("price", rawPrice);
+    setFormatedPrice(rawPrice)
+    // Format for display
+  };
+  
+  const handleZeros = ()=>{
+    if(formatedPrice){
+      setFormatedPrice(formatedPrice === "" ? "" : `${parseFloat(formatedPrice).toFixed(2)}`);
+    }
+  }
+
+
   return (
     <div className="flex flex-col items-center w-full gap-4">
       <h3>Is this hourly or set price?</h3>
@@ -34,8 +58,9 @@ console.log(billingData.fix)
               name="price"
               className="p-2 rounded-lg text-black flex-1"
               disabled={billingData.fix === ""}
-              value={billingData?.price}
-              onChange={handleInputChange}
+              value={formatedPrice}
+              onChange={handleInputChangeInternal}
+              onBlur={handleZeros}
               placeholder="Price"
             />
           </span>

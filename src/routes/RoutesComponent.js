@@ -79,6 +79,8 @@ import AlertModal from '../component/modal/AlertModal';
 import ArtistDashboard from '../component/dashboard/ArtistDashboard';
 import BillingComponent from '../component/billing';
 import AdminRoutes from './AdminRoutes';
+import SuperAdminDashboard from '../component/dashboard/SuperAdminDashboard';
+import AdminInvite from '../component/dashboard/AdminInvite';
 
 export default function RoutesComponent() {
 
@@ -111,6 +113,8 @@ export default function RoutesComponent() {
       <Route exact path="/signup" element={<SignUp />} />\
       <Route exact path="/forget_password" element={<ForgetPassword />} />
       <Route exact path="/reset_password" element={<Resetpassword/>} />
+      <Route exact path="/invite_artist" element={<AdminInvite/>} />
+      <Route exact path="/admin" element={<SuperAdminDashboard/>} />
       <Route element={<PrivateRoutes/>} >
 
       <Route exact path="/dashboard" element={<Dashboard />} />

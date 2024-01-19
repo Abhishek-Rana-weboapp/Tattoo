@@ -132,9 +132,9 @@ function DoctorContactForm() {
           </button>
         </Modal>
       )}
-      <h1 className="text-3xl font-bold mb-4 text-white uppercase">
+      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
         {t("Doctor Contact Information")}
-      </h1>
+      </label>
       <form
         className="p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
 

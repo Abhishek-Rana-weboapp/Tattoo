@@ -204,5 +204,9 @@
   "Please fill in all the required fields." : "Por favor, completa todos los campos obligatorios.",
   "Add Signature": "Agregar firma",
   "I agree to the terms": "acepto los términos",
-  "Hold Harmless Agreement" : "Acuerdo de exención de responsabilidad"
+  "Hold Harmless Agreement" : "Acuerdo de exención de responsabilidad",
+  "Send Invite" : "Enviar invitación",
+  "Invite Sent Successfully" :"Invitación enviada exitosamente.",
+  "Select to add your initials":"Selecciona para añadir tus iniciales.",
+  "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial":"Al seleccionar Adoptar e Inicializar, acepto que la firma y las iniciales serán la representación electrónica de mi firma e iniciales para todos los fines cuando yo (o mi representante) las utilice en documentos, incluyendo contratos legalmente vinculantes, de la misma manera que una firma o inicial con papel y bolígrafo."
 }
