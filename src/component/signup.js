@@ -66,7 +66,6 @@ function SignUp() {
         }
 
         const responseData = await response.json();
-        console.log("Sign-up Response:", responseData.userData);
         if (responseData.userData.usertype === "admin") {
           console.log("select lang======", responseData.userData.lang);
           if (responseData.userData.lang == "eng") {
@@ -83,7 +82,7 @@ function SignUp() {
           sessionStorage.setItem('userType',responseData.userData.usertype)
           sessionStorage.setItem('firstname',responseData.userData.firstname)
           sessionStorage.setItem('lastname',responseData.userData.lastname)
-          sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
+          sessionStorage.setItem('fullname',`${responseData.userData.firstname} ${responseData.userData.lastname}`)
           sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
 
           sessionStorage.setItem("progress_bar", progress);
@@ -102,7 +101,7 @@ function SignUp() {
           sessionStorage.setItem('userType',responseData.userData.usertype)
           sessionStorage.setItem('firstname',responseData.userData.firstname)
           sessionStorage.setItem('lastname',responseData.userData.lastname)
-          sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
+          sessionStorage.setItem('fullname',`${responseData?.userData.firstname} ${responseData.userData.lastname}`)
         sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
 
           sessionStorage.setItem("progress_bar", progress);
