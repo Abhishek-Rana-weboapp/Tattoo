@@ -6,6 +6,9 @@ import ProgressBar from "./ProgressBar";
 import ConsentFormLayout from "./Layout/FormLayout";
 import { useTranslation } from "react-i18next";
 import SignatureModal from "./modal/SignatureModal";
+import html2canvas from "html2canvas";
+import SignatureCanvas from "react-signature-canvas"
+
 function ConsentForm() {
   const { t } = useTranslation();
   var progressValue = 5;
@@ -37,7 +40,11 @@ function ConsentForm() {
   const [initialsModal, setInitiallsModal] = useState(true);
   const [isChanged, setIsChanged] = useState();
   const [signatureModal, setSignatureModal] = useState(false);
-  const [signatureRef, setSignatureRef] = useState();
+  // const [signatureRef, setSignatureRef] = useState();
+  const [activeTab , setActiveTab] = useState(1)
+  const [drawnSignature, setDrawnSignature] = useState()
+  const [cursiveSignatureImage, setCursiveSignatureImage] = useState('');
+  const signatureRef = useRef()
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 13;
@@ -73,8 +80,7 @@ function ConsentForm() {
         setAlert(!alert)
       }else{
         const dataUrl = signatureRef?.current?.toDataURL();
-        setSignature(dataUrl)
-        setSignatureModal(false);
+        setDrawnSignature(dataUrl)
       }
     };
   
@@ -86,6 +92,14 @@ function ConsentForm() {
       setInitials({ ...initials, [page]: "" });
     }
   };
+
+  useEffect(()=>{
+    const handleCursive = async()=>{
+      const cursiveSignatureImage = await captureCursiveSignature();
+      setCursiveSignatureImage(cursiveSignatureImage);
+    }
+    handleCursive()
+  },[])
 
   const nextPage = () => {
     if (currentPage < totalPages && currentPage !== 13) {
@@ -110,10 +124,20 @@ function ConsentForm() {
     if (currentPage === 1) navigate(-1);
   };
   
-  const handleAdopt = () => {
-    if(signature){
-      setharmlessagreement({ ...harmlessagreement, name: fullName });
-      setInitiallsModal(!initialsModal);
+  const handleAdopt = async() => {
+    if(activeTab === 1){
+      if(cursiveSignatureImage){
+        setSignature(cursiveSignatureImage)
+        setInitiallsModal(!initialsModal);
+        setharmlessagreement({ ...harmlessagreement, name: fullName });
+      }
+    }
+    if(activeTab === 2){
+      if(drawnSignature){
+        setSignature(drawnSignature)
+        setharmlessagreement({ ...harmlessagreement, name: fullName });
+        setInitiallsModal(!initialsModal);
+      }
     }else{
       setAlertMessage(t("Please add your signature"))
       setAlert(!alert)
@@ -123,17 +147,32 @@ function ConsentForm() {
   const handleClear = ()=>{
     signatureRef?.current?.clear();
   }
+
+  
+  const captureCursiveSignature = async () => {
+    // Use html2canvas to capture the cursive signature as an image
+    const cursiveSignatureCanvas = await html2canvas(document.getElementById('cursiveSignature'), {
+      scale: 3, // Increase the scale for higher resolution
+      logging: false, // Disable logging to console
+      useCORS: true, // Enable cross-origin resource sharing
+      allowTaint: true, // Allow tainting of the canvas (useful if the content includes images from other domains)
+      backgroundColor: null, // Set background color to null to capture transparency
+    });
+    // Convert the canvas to a base64-encoded image
+    return cursiveSignatureCanvas.toDataURL();
+  };
+
   return (
     <>
         {signatureModal && (
           <div>
-          <SignatureModal
+          {/* <SignatureModal
             setSignatureRef={setSignatureRef}
             handleSave={handleSignatureSave}
             handleClear={handleClear}
             showPopup={signatureModal}
             setShowPopup={setSignatureModal}
-          />
+          /> */}
       </div>
         )}
       {
@@ -167,12 +206,87 @@ function ConsentForm() {
                   ></input> 
                 </div>
               </div>
-              <button className="bg-yellow-400 font-bold text-black py-2 rounded-lg px-4" onClick={()=>setSignatureModal(!signatureModal)}>Add Signature</button>
-                {
-                  signature && <div className="border-1 rounded-lg border-gray-500 w-2/4"> 
-                    <img src={signature} className="w-full h-40"></img>
+              <div>
+                <div className="flex gap-2">
+                  <button className={`bg-none font-semibold text-black hover:bg-gray-300 ${activeTab === 1 && "bg-gray-300"} p-2 rounded-lg`} onClick={()=>setActiveTab(1)}>Written</button>
+                  <button className={`bg-none font-semibold text-black hover:bg-gray-300 ${activeTab === 2 && "bg-gray-300"} p-2 rounded-lg`} onClick={()=>setActiveTab(2)}>Draw</button>
+                </div>
+                <div>
+                  {
+                    activeTab === 1 && 
+                 <div className="border-1 rounded-lg border-gray-500 w-full"> 
+                    <img src={cursiveSignatureImage} className="w-full h-40"></img>
                     </div>
+                  }
+                </div>
+              </div>
+                { activeTab === 2 &&
+                <div className="flex flex-col items-center">
+                  <SignatureCanvas
+                penColor="black"
+                canvasProps={{
+                  width: 400,
+                  height:200,
+                  className: "sigCanvas",
+                  style: {
+                    border: "1px solid #000",
+                    backgroundColor: "#9ca3af",
+                    borderRadius: "10px",
+                  },
+                }}
+                ref={signatureRef}
+              />
+
+              {/* Buttons to handle the save and clear methods */}
+              <div
+                style={{
+                  marginTop: "10px",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  type="button"
+                  style={{
+                    background: "#e74c3c",
+                    color: "white",
+                    padding: "8px",
+                    borderRadius: "4px",
+                    border: "none",
+                    cursor: "pointer",
+                    marginRight: "10px",
+                  }}
+                  onClick={handleClear}
+                >
+                  {t("Clear")}
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    background: "#2ecc71",
+                    color: "white",
+                    padding: "8px",
+                    borderRadius: "4px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={handleSignatureSave}
+                >
+                  {t("Save")}
+                </button>
+              </div>
+                 {/* <button className="bg-yellow-400 font-bold text-black py-2 rounded-lg px-4" onClick={()=>setSignatureModal(!signatureModal)}>Add Signature</button> */}
+                    {drawnSignature && <div className="border-1 rounded-lg border-gray-500 w-1/4 flex justify-center"> 
+                    <img src={drawnSignature} className="w-full h-20"></img>
+                    </div>
+                  }
+                  </div>
                 }
+                <div id="cursiveSignature">
+                  {/* Display a preview of the name in cursive writing here */}
+                  {/* You can add a cursive font style or any other styling as needed */}
+                  <p style={{ fontFamily: 'cursive', fontSize: '18px'} }>{fullName}</p>
+                </div>
               <p className=" text-xs">
                 {t(
                   "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"

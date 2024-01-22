@@ -29,6 +29,8 @@ const BillingComponent = () => {
   const [step, setStep] = useState(1);
   const [startTime, setStartTime] = useState("")
   const [endTime, setEndTime] = useState("")
+  const [bill, setBill] = useState()
+  const [resultantMinutes, setResultantMinutes] = useState()
 
 const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointment"))
 
@@ -296,10 +298,8 @@ const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointmen
         .then((billingResponse) => {
           // Handle billing response
           setFinalPrice(billingResponse.data.finalPrice);
-          setAlertMessage(
-            `Final Price : $${billingResponse?.data?.finalPrice}`
-          );
-          setAlert(true);
+          setBill(billingResponse.data.insertedData)
+          setStep(6)
         })
         .catch((error) => {
           // Handle billing error
@@ -332,22 +332,34 @@ const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointmen
     }
   };
 
-  const formatStartTime = () => {
-    const startTime = new Date();
-    const hours = startTime.getHours();
-    const minutes = startTime.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
-  };
+  
+  useEffect(()=>{
+    if(bill){
+      const startTime = new Date(bill.start_time)
+    const endTime = new Date(bill.end_time)
+    setResultantMinutes((endTime - startTime)/1000)
+  }
+},[bill])
 
-  const formatEndTime = () => {
-    const endTime = new Date();
-    const hours = endTime.getHours();
-    const minutes = endTime.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
-  };
+const formatStartTime = () => {
+  const startTime = new Date();
+  const hours = startTime.getHours();
+  const minutes = startTime.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+};
 
+const formatEndTime = () => {
+  const endTime = new Date();
+  const hours = endTime.getHours();
+  const minutes = endTime.getMinutes();
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  return `${String(hours % 12).padStart(2, '0')}:${String(minutes).padStart(2, '0')} ${ampm}`;
+};
+
+
+
+console.log(bill  )
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
       {step === 1 && (
@@ -482,6 +494,40 @@ const selectedAppointment= JSON.parse(sessionStorage.getItem("selectedAppointmen
           </button>
         </>
       )}
+      {
+        step === 6 && <div className="flex flex-col gap-2 items-center">
+          <h3 className="font-bold text-white">Bill</h3>
+          <label className="text-xl font-semibold">Price calculation</label>
+          <div className="flex gap-2 ">
+            <label>Bill by : </label>
+            <label>{bill.bill_by}</label>
+          </div>
+          <div className="flex gap-2 ">
+            <label>Total Time : </label>
+            <label>{resultantMinutes
+    ? `${String(Math.floor(resultantMinutes / 3600)).padStart(2, '0')} : ${String(
+      Math.floor((resultantMinutes % 3600) / 60)
+    ).padStart(2, '0')}`
+    : '00:00'}</label>
+          </div>
+          <div className="flex gap-2 ">
+            <label>Break Time : </label>
+            <label>{String(Math.floor(bill.break_time/60)).padStart(2, "0")} : {String(Math.floor(bill.break_time%60)).padStart(2, "0")}</label>
+          </div>
+          <div className="flex gap-2 ">
+            <label>Total Work Time : </label>
+            <label>{`${String(Math.floor(bill.totalWorkingTime / 3600)).padStart(2, '0')} : ${String(
+            Math.floor((bill.totalWorkingTime % 3600) / 60)
+          ).padStart(2, '0')}`}</label>
+          </div>
+
+          <div className="flex gap-2 ">
+            <label className="text-xl font-bold">Total Price : </label>
+            <label className="text-xl font-bold">{parseInt(bill.price)}$</label>
+          </div>
+        </div>
+      }
+      
     </div>
   );
 };
