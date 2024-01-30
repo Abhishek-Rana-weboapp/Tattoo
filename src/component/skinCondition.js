@@ -9,7 +9,6 @@ function SkinCondition({ onClick, handlePrev }) {
 
   useEffect(() => {
     setIsVisible(true);
-    
   }, []);
 
   return (

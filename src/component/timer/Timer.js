@@ -78,7 +78,7 @@ const Timer = ({ isRunning, setIsRunning, startTime, endTime, billingData, setBi
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="flex flex-col gap-3">
-        <label className="md:text-4xl font-bold text-white uppercase">{t('time calculation')}</label>
+        <label className="md:text-4xl font-bold text-white uppercase text-center">{t('time calculation')}</label>
         <p className="text-xl text-yellow-400 font-bold text-center">Start Time: {startTime}</p>
         <p className="text-xl text-yellow-400 font-bold text-center">End Time: {endTime}</p>
         <div className="flex flex-col items-center">

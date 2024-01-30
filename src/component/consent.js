@@ -138,9 +138,6 @@ function ConsentForm() {
         setharmlessagreement({ ...harmlessagreement, name: fullName });
         setInitiallsModal(!initialsModal);
       }
-    }else{
-      setAlertMessage(t("Please add your signature"))
-      setAlert(!alert)
     }
   };
 
@@ -282,11 +279,9 @@ function ConsentForm() {
                   }
                   </div>
                 }
-                <div id="cursiveSignature">
-                  {/* Display a preview of the name in cursive writing here */}
-                  {/* You can add a cursive font style or any other styling as needed */}
-                  <p style={{ fontFamily: 'cursive', fontSize: '18px'} }>{fullName}</p>
-                </div>
+                {activeTab === 1 && <div id="cursiveSignature">
+                  <p className="selector" style={{ fontFamily: 'Blacksword', fontSize: '18px'} }>{fullName}</p>
+                </div>}
               <p className=" text-xs">
                 {t(
                   "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"

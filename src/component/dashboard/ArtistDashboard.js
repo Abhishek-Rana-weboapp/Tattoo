@@ -31,7 +31,7 @@ export default function ArtistDashboard() {
         setAppointments(
           res?.data?.data.filter((a) => {
             return (
-              a.Date.slice(0, 9) === new Date().toLocaleDateString("en-us")
+              (a.Date.slice(0, 9) === new Date().toLocaleDateString("en-us") && a.Sign_completion === null)
             );
           })
         )
@@ -117,7 +117,6 @@ export default function ArtistDashboard() {
     if (step === 1) {
       if (selectedArtist) {
         if (selectedYes.length !== 0) {
-          // updateField(selectedClient?.id, "ArtistPiercerNames", selectedArtist);
           const data = {
             id: selectedClient?.id,
             updateField: "ArtistPiercerNames",
@@ -138,7 +137,6 @@ export default function ArtistDashboard() {
             }
           });
         }else {
-          // updateField(selectedClient?.id, "ArtistPiercerNames", selectedArtist);
           const data = {
             id: selectedClient?.id,
             updateField: "ArtistPiercerNames",
@@ -166,11 +164,6 @@ export default function ArtistDashboard() {
     }
     if (step === 2) {
       if (acknowledgement) {
-        // updateField(
-        //   selectedClient?.id,
-        //   "ArtistAcknowledgement",
-        //   acknowledgement
-        // );
         const data = {
           id: selectedClient?.id,
           updateField: "ArtistAcknowledgement",
@@ -227,27 +220,6 @@ export default function ArtistDashboard() {
     }
   };
 
-  // const updateField = async (id, updateField, updateValue) => {
-  //   const data = {
-  //     id: id,
-  //     updateField: updateField,
-  //     updateValue: updateValue,
-  //   };
-  //   await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-  //     if (res.status === 201) {
-  //       axios
-  //         .get(`${apiUrl}/artist/appointment_list_id?id=${id}`)
-  //         .then((res) => {
-  //           sessionStorage.setItem(
-  //             "selectedAppointment",
-  //             JSON.stringify(res.data.data)
-  //           );
-  //         })
-  //         .catch((err) => console.log(err));
-  //     }
-  //   });
-  // };
-
   return (
     <div className="w-full h-full p-2 flex justify-center overflow-hidden">
       <div className="w-full h-full flex flex-col gap-2 p-1 pb-3">
@@ -264,7 +236,7 @@ export default function ArtistDashboard() {
               {appointments?.map((appointment) => {
                 return (
                   <option key={appointment?.id} value={appointment?.id}>
-                    {appointment?.username}
+                    {`${appointment?.firstname} ${appointment?.lastname}`}
                   </option>
                 );
               })}

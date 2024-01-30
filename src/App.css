@@ -9,3 +9,13 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+@font-face {
+  font-family: "Blacksword";
+  src: url("./fonts/Blacksword.otf");
+  font-weight: normal;
+}
+
+.Blacksword {
+  font-family: "Blacksword";
+  }
