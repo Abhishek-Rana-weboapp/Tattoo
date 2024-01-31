@@ -27,7 +27,7 @@ export default function CompleteAgreement() {
        if(res.status === 201){
         setAlertMessage(t("Signature Uploaded"))
         setAlert(!alert)
-        navigate("/artist-dashboard")
+        navigate("/artist-dashboard", {replace:true})
        }
     }).catch(err=>{
        console.err(err)
@@ -39,7 +39,7 @@ export default function CompleteAgreement() {
     signatureRef?.current?.clear()
   }
 
-  console.log(updateAppointment)
+  const selectedAppointment = JSON.parse(sessionStorage.getItem("selectedAppointment"))
 
   return (
     <div className="flex md:w-2/4 w-full flex-col gap-3 items-center overflow-hidden p-2">
@@ -50,9 +50,9 @@ export default function CompleteAgreement() {
       </h3>
       <div className="overflow-auto p-2">
         <p className="text-center">
-          {t(`Yo,`)} {},
+          {t(`I,`)} {selectedAppointment[0]?.ArtistPiercerNames},
           {t(
-            `por la presente confirmo que he revisado minuciosamente la información enviada por el cliente, incluido su historial médico, detalles de contacto de emergencia e información del médico. También me he asegurado de que el cliente haya firmado y aceptado debidamente las exenciones de responsabilidad, el acuerdo de exención de responsabilidad y los términos de servicio. Como contratista independiente o empleado de Fame Tattoos Inc., afirmo que he completado de manera competente los servicios solicitados por el cliente en Fame Tattoos Inc., de acuerdo con sus instrucciones.`
+            "hereby confirm that I have thoroughly reviewed the client's submitted information, including their medical history, emergency contact details, and doctor's information. I have also ensured that the client has duly signed and agreed to the waiver releases, hold harmless agreement, and terms of service. As a self-employed contractor or employee of Fame Tattoos Inc., I affirm that I have competently completed the services requested by the client at Fame Tattoos Inc., in accordance with their instructions."
           )}
         </p>
       </div>
