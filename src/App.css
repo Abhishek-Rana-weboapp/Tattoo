@@ -19,3 +19,18 @@ input[type="number"] {
 .Blacksword {
   font-family: "Blacksword";
   }
+
+  .img-del-icon{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    transition: 300ms ease-in-out;
+  }
+
+  .img-del-icon:hover{
+    cursor: pointer;
+    border-radius: 50%;
+    background: white;
+    color: black;
+    scale: 1.2;
+  }

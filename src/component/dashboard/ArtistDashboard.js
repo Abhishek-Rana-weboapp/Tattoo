@@ -18,7 +18,7 @@ export default function ArtistDashboard() {
   const [selectedClient, setSelectedClient] = useState();
   const [selectedArtist, setSelectedArtist] = useState([]);
   const [selectedMedicalHistory, setSelectedMedicalHistory] = useState();
-  const [selectedYes, setSelectedYes] = useState(false);
+  const [selectedYes, setSelectedYes] = useState([]);
   const [acknowledgement, setAcknowledgement] = useState(false);
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
@@ -64,6 +64,7 @@ export default function ArtistDashboard() {
       const yesAnswers = Object.keys(selectedMedicalHistory).filter((key) => {
         return selectedMedicalHistory[key].yes === true;
       });
+      console.log(yesAnswers)
       setSelectedYes(yesAnswers);
     }
   }, [selectedClient, selectedArtist]);
@@ -101,96 +102,102 @@ export default function ArtistDashboard() {
     setUpdateAppointment(selectedAppointment);
   };
 
-  const handleArtistSelect = (e) => {
-    setSelectedArtist(e.target.value);
-  };
+  console.log(selectedYes)
 
-  const handleNext = async() => {
+
+  const handleNext = () => {
     if (step === 0) {
       if (selectedClient) {
-        setStep(step + 1);
-      } else {
+        sessionStorage.setItem("selectedAppointment",  JSON.stringify(selectedClient))
+              if (selectedYes.length !== 0){
+                setStep(step + 1);
+              }else{
+                navigate("/billing")
+              }
+            }
+       else {
         setAlertMessage("Please select a client");
         setAlert(!alert);
       }
     }
-    if (step === 1) {
-      if (selectedArtist) {
-        if (selectedYes.length !== 0) {
-          const data = {
-            id: selectedClient?.id,
-            updateField: "ArtistPiercerNames",
-            updateValue: selectedArtist,
-          };
-          await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-            if (res.status === 201) {
-              axios
-                .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
-                .then((res) => {
-                  sessionStorage.setItem(
-                    "selectedAppointment",
-                    JSON.stringify(res.data.data)
-                  );
-                  setStep(2);
-                })
-                .catch((err) => console.log(err));
-            }
-          });
-        }else {
-          const data = {
-            id: selectedClient?.id,
-            updateField: "ArtistPiercerNames",
-            updateValue: selectedArtist,
-          };
-          await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-            if (res.status === 201) {
-              axios
-                .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
-                .then((res) => {
-                  sessionStorage.setItem(
-                    "selectedAppointment",
-                    JSON.stringify(res.data.data)
-                  );
-                  navigate("/billing");
-                })
-                .catch((err) => console.log(err));
-            }
-          });
-        }
-      } else {
-        setAlertMessage("Please select an Artist");
-        setAlert(!alert);
-      }
-    }
-    if (step === 2) {
-      if (acknowledgement) {
-        const data = {
-          id: selectedClient?.id,
-          updateField: "ArtistAcknowledgement",
-          updateValue: acknowledgement,
-        };
-        await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-          if (res.status === 201) {
-            axios
-              .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
-              .then((res) => {
-                sessionStorage.setItem(
-                  "selectedAppointment",
-                  JSON.stringify(res.data.data)
-                );
-                navigate("/billing");
-              })
-              .catch((err) => console.log(err));
-          }
-        });
-      } else {
-        setAlertMessage(
-          "Please acknowledge that you understand the condition."
-        );
-        setAlert(!alert);
-      }
-    }
+    // if (step === 1) {
+    //   if (selectedArtist) {
+    //     if (selectedYes.length !== 0) {
+    //       const data = {
+    //         id: selectedClient?.id,
+    //         updateField: "ArtistPiercerNames",
+    //         updateValue: selectedArtist,
+    //       };
+    //       await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
+    //         if (res.status === 201) {
+    //           axios
+    //             .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
+    //             .then((res) => {
+    //               sessionStorage.setItem(
+    //                 "selectedAppointment",
+    //                 JSON.stringify(res.data.data)
+    //               );
+    //               setStep(2);
+    //             })
+    //             .catch((err) => console.log(err));
+    //         }
+    //       });
+    //     }else {
+    //       const data = {
+    //         id: selectedClient?.id,
+    //         updateField: "ArtistPiercerNames",
+    //         updateValue: selectedArtist,
+    //       };
+    //       await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
+    //         if (res.status === 201) {
+    //           axios
+    //             .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
+    //             .then((res) => {
+    //               sessionStorage.setItem(
+    //                 "selectedAppointment",
+    //                 JSON.stringify(res.data.data)
+    //               );
+    //               navigate("/billing");
+    //             })
+    //             .catch((err) => console.log(err));
+    //         }
+    //       });
+    //     }
+    //   } else {
+    //     setAlertMessage("Please select an Artist");
+    //     setAlert(!alert);
+    //   }
+    // }
+    // if (step === 2) {
+    //   if (acknowledgement) {
+    //     const data = {
+    //       id: selectedClient?.id,
+    //       updateField: "ArtistAcknowledgement",
+    //       updateValue: acknowledgement,
+    //     };
+    //     await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
+    //       if (res.status === 201) {
+    //         axios
+    //           .get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
+    //           .then((res) => {
+    //             sessionStorage.setItem(
+    //               "selectedAppointment",
+    //               JSON.stringify(res.data.data)
+    //             );
+    //             navigate("/billing");
+    //           })
+    //           .catch((err) => console.log(err));
+    //       }
+    //     });
+    //   } else {
+    //     setAlertMessage(
+    //       "Please acknowledge that you understand the condition."
+    //     );
+    //     setAlert(!alert);
+    //   }
+    // }
   };
+
 
   const employeeNames = [
     "Adonay Llerena",
@@ -253,7 +260,7 @@ export default function ArtistDashboard() {
           </div>
         )}
 
-        {step === 1 && (
+        {/* {step === 1 && (
           <div className="flex flex-col justify-center gap-2 items-center">
             <h2 className="text-white font-medium">Select Your Name</h2>
             <select
@@ -284,9 +291,9 @@ export default function ArtistDashboard() {
               </button>
             </div>
           </div>
-        )}
+        )} */}
 
-        {step === 2 && (
+        {step === 1 && (
           <>
             <div className="flex flex-col gap-4 items-center overflow-hidden">
               <h1 className="font-bold text-white">Client's Medical History</h1>
