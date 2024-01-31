@@ -122,7 +122,7 @@ function HoldHarmlessAgreement() {
             <div className="flex gap-1 items-center justify-center">
               <label>{t("Initials")}:</label>
               <input
-                className="bg-gray-700 text-white  rounded-md p-2"
+                className="bg-gray-700 text-white  rounded-md p-2 Blacksword"
                 type="text"
                 value={harmlessagreement?.initials}
                 // onChange={handleInitialsChange}

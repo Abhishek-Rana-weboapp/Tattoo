@@ -151,8 +151,10 @@ function TermsOfService() {
   // Return the JSX structure
   return (
     <ConsentFormLayout  title="Terms of Service">
-      <div className='flex flex-col gap-2 flex-1 md:p-1 p-2'>
+      <div className='flex flex-col gap-2 flex-1 md:p-1 p-2 justify-between'>
       <p className="text-white text-center">{t(pageContents[currentPage - 1])}</p>
+      <div>
+
         <div className='flex gap-2 items-center justify-center'>
         <input type='checkbox' className='w-6 h-6' checked={checked[currentPage]} onChange={handleCheckbox}></input>
         <label className='text-white'>{t("Select to add your initials")}</label>
@@ -163,13 +165,14 @@ function TermsOfService() {
         </label>
         <input
         ref={inputRef}
-          type="text"
-          value={initials[currentPage] || ''}
-          disabled
-          // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-          className="bg-gray-700 text-white p-2 rounded-md"
+        type="text"
+        value={initials[currentPage] || ''}
+        disabled
+        // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+        className="bg-gray-700 text-white p-2 rounded-md Blacksword"
         />
       </div>
+        </div>
         </div>
         <ProgressBar progress={progressValue_} count={3} />
         <div className="flex justify-between mt-4">

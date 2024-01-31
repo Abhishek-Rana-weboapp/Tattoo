@@ -17,7 +17,7 @@ export default function UploadAfterImage({
 
   const imageRef = useRef(null);
   const videoRef=useRef(null)
-  const selectedAppointment = sessionStorage.getItem("selectedAppointment")
+  const selectedAppointment = JSON.parse(sessionStorage.getItem("selectedAppointment"))
 
   const uploadFile = async (file) => {
     const formData = new FormData();
@@ -80,11 +80,14 @@ export default function UploadAfterImage({
       })
     );
   };
+  console.log(selectedAppointment)
 
   return (
     <>
-      <div className="flex flex-col gap-2 items-center overflow-hidden">
+      <div className="flex flex-col gap-4 items-center overflow-hidden">
         <h3>After Image</h3>
+        <div className="flex flex-col gap-2 items-center overflow-hidden">
+
         <input
           type="file"
           accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
@@ -92,12 +95,12 @@ export default function UploadAfterImage({
           multiple
           style={{ display: "none" }} // Hide the input element
           onChange={handleAfterImage}
-        />
+          />
         <button
           className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
           onClick={handleAfterButton}
           disabled={imageStatus === "UPLOADING"}
-        >
+          >
           {imageStatus === "UPLOADING" ? "..." :"After Image"}
         </button>
 
@@ -110,13 +113,14 @@ export default function UploadAfterImage({
                 <IoMdClose
                   className="img-del-icon"
                   onClick={() => handleDeleteImage(index)}
-                />
+                  />
               </div>
             );
           })}
         </div>
+          </div>
 
-        {selectedAppointment?.typeofservice === "tattoo" && (
+        {selectedAppointment[0]?.typeofservice === "tattoo" && (
           <>
             <input
               type="file"
@@ -134,13 +138,13 @@ export default function UploadAfterImage({
             </button>
 
             {/* Video Preview */}
-            {/* {videoUrl && (
+            {uploadedVideoUrl && (
               <div className="w-30 h-30">
-                <video controls>
-                  <source src={videoUrl} type="video/mp4"></source>
+                <video  controls width="320" height="240">
+                  <source src={uploadedVideoUrl} type="video/mp4"></source>
                 </video>
               </div>
-            )} */}
+            )}
           </>
         )}
       </div>

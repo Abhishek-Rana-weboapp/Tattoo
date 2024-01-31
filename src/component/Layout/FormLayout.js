@@ -16,7 +16,7 @@ export default function ConsentFormLayout({ children, title, about }) {
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center ">
         {t(title)}
       </label>
-      <div className="w-full md:w-2/4 flex flex-col gap-2 flex-1  rounded-md md:p-4 overflow-hidden backdrop-blur bg-opacity-50">
+      <div className="w-full md:w-2/4 flex flex-col justify-between gap-2 flex-1 rounded-md md:p-4 overflow-hidden backdrop-blur bg-opacity-50">
         {children}
       </div>
      

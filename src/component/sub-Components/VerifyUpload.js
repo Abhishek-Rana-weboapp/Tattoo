@@ -73,7 +73,7 @@ export default function VerifyUpload({handleSubmit}) {
       </button>
 
 
-      {isSubmitDisabled ? <p>{t("Please upload your ID photo before submitting.")}</p> : null}
+      {isSubmitDisabled ? <p className='text-center'>{t("Please upload client ID photo before submitting.")}</p> : null}
 
       <button
         onClick={()=>handleSubmit(idPhoto)}
