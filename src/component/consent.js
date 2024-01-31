@@ -198,7 +198,7 @@ function ConsentForm() {
                   </label>
                   <input
                     type="text"
-                    className="p-1 border-gray-400 border-1 rounded-lg font-bold"
+                    className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
                     value={storedInitials}
                   ></input> 
                 </div>
@@ -335,7 +335,7 @@ function ConsentForm() {
               value={initials[currentPage]}
               // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
               disabled
-              className="bg-gray-700 text-white p-2 rounded-md font-bold"
+              className="bg-gray-700 text-white p-2 rounded-md font-bold Blacksword"
             />
           </div>
         </div>

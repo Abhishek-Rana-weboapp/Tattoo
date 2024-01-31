@@ -276,6 +276,14 @@ const BillingComponent = () => {
     }
   };
 
+  const fetchBill = async()=>{
+    await axios.get(`${apiUrl}/artist/billing_list_id?id=${bill.id}`)
+    .then((res)=>{
+      setBill(res.data.data[0])
+      setStep(7)
+    })
+  }
+
   const handleBillingUpdate = async(afterImageUrls , afterVideoUrl)=>{
       if(afterImageUrls.length > 0){
         const encodedString = encodeUrls(afterImageUrls)
@@ -293,12 +301,13 @@ const BillingComponent = () => {
               updateValue:afterVideoUrl
             }
             axios.post(`${apiUrl}/artist/post_new_billing`, videoData)
-            .then(res=>{
-             setStep(7)
+            .then(response=>{
+              fetchBill()
+              return
             })
             .catch(err=>console.error(err))
           }else{
-            setStep(7)
+            fetchBill()
           }
         })
         .catch(err=>console.log(err))
@@ -380,17 +389,6 @@ const BillingComponent = () => {
   };
 
 
-  const handleUpdateBill = async(id, updateField, updateValue)=>{
-    const data = {
-      id:id,
-      updateField:updateField,
-      updateValue:updateValue
-    }
-    await axios.post(`${apiUrl}/artist/post_new_billing`,data )
-    .then(res=>console.log(res))
-    .catch(err=>console.error(err))
-  }
-
   const handlePrev = () => {
     switch (step) {
       case 1:
@@ -442,7 +440,7 @@ const BillingComponent = () => {
     )} ${ampm}`;
   };
 
-
+console.log(bill)
   
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
@@ -505,7 +503,7 @@ const BillingComponent = () => {
       )}
 
       {step === 4 && (
-        <div className="flex flex-col items-center w-full h-full">
+        <div className="flex flex-col items-center w-full h-full gap-3">
           <Timer
             isRunning={isRunning}
             setIsRunning={setIsRunning}
