@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import ShowBill from "./sub-Components/billing/ShowBill";
 import UploadAfterImage from "./sub-Components/billing/UploadAfterImage";
 import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
+import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
 
 const BillingComponent = () => {
   const {
@@ -37,7 +38,8 @@ const BillingComponent = () => {
   const [videoUrl, setVideoUrl] = useState();
   const videoRef = useRef();
   const [uploadedUrls, setUploadedUrls] = useState([]);
-  const [encodedUrlString, setEncodedUrlString] = useState([])
+  const [encodedUrlString, setEncodedUrlString] = useState([]);
+  const artistLogged = sessionStorage.getItem("fullname");
 
   const selectedAppointment = JSON.parse(
     sessionStorage.getItem("selectedAppointment")
@@ -59,7 +61,7 @@ const BillingComponent = () => {
     if (updateAppointment) {
       setBillingData((prev) => ({
         ...prev,
-        bill_by: updateAppointment?.ArtistPiercerNames,
+        bill_by: artistLogged,
         username: updateAppointment?.username,
         id: updateAppointment?.id,
       }));
@@ -97,7 +99,6 @@ const BillingComponent = () => {
     };
 
     const handlePopstate = (event) => {
-      console.log("worked?");
       if (step === 4 && !billingData.end_time) {
         const message =
           "You have unsaved data. Are you sure you want to leave?";
@@ -275,46 +276,41 @@ const BillingComponent = () => {
     }
   };
 
-  const encodeUrls = (urlList) => {
-    return urlList.map(url => encodeURIComponent(url)).join('||');
-  };
-
-  const handleAfterImage = async (e)=>{
-    const selectedFiles = e.target.files
-
-    const uploadPromises = Array.from(selectedFiles).map(uploadFile);
-    const urls = await Promise.all(uploadPromises)
-    const filteredUrls = urls.filter(url=>url!==null)
-    console.log(filteredUrls  )
-    setUploadedUrls(prev=>([...prev, ...filteredUrls]))
-
-     const encodeList = encodeUrls(uploadedUrls)
-     console.log(encodeList)
-     setEncodedUrlString(encodeList)
+  const handleBillingUpdate = async(afterImageUrls , afterVideoUrl)=>{
+      if(afterImageUrls.length > 0){
+        const encodedString = encodeUrls(afterImageUrls)
+        const data = {
+          id:bill?.id,
+          updateField:"after_image",
+          updateValue:encodedString
+        }
+        await axios.post(`${apiUrl}/artist/post_new_billing`, data)
+        .then(res=>{
+          if(afterVideoUrl){
+            const videoData = {
+              id:bill?.id,
+              updateField:"video_url",
+              updateValue:afterVideoUrl
+            }
+            axios.post(`${apiUrl}/artist/post_new_billing`, videoData)
+            .then(res=>{
+             setStep(7)
+            })
+            .catch(err=>console.error(err))
+          }else{
+            setStep(7)
+          }
+        })
+        .catch(err=>console.log(err))
+      }
   }
 
-  const uploadFile = async (file) => {
-    const formData = new FormData();
-    formData.append("profile", file);
-    try {
-      const response = await axios.post(`${apiUrl}/upload`, formData);
-      console.log(response.data.profile_url);
-      return response.data.profile_url;
-    } catch (err) {
-      console.error("File Upload Failed", err.message);
-      return null;
-    }
-
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   // Assuming the response contains the URL of the uploaded file
-      //   setUploadedUrls(prevUrls => [...prevUrls, data.url]);
-      // } else {
-      //   console.error('File upload failed:', response.statusText);
-      // }
-  };
-
-
+  useEffect(() => {
+    // This will be executed after uploadedUrls is updated
+    const encodeList = encodeUrls(uploadedUrls);
+    console.log(encodeList);
+    setEncodedUrlString(encodeList);
+  }, [uploadedUrls]);
 
 
   const handleImageUpload = async (imagePath, type) => {
@@ -351,24 +347,49 @@ const BillingComponent = () => {
     beforeRef?.current?.click();
   };
 
-  const handleAfterButton = () => {
-    afterRef?.current?.click();
+
+  const handleBillingSubmit = async () => {
+    await axios
+      .post(`${apiUrl}/artist/calculate-billing`, billingData)
+      .then((billingResponse) => {
+        const data = {
+                  id: updateAppointment?.id,
+                  updateField: "ArtistPiercerNames",
+                  updateValue: artistLogged,
+                };
+                axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
+                  if (res.status === 201) {
+                    axios
+                      .get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
+                      .then((res) => {
+                        sessionStorage.setItem(
+                          "selectedAppointment",
+                          JSON.stringify(res.data.data)
+                        );
+                        setFinalPrice(billingResponse.data.finalPrice);
+                        setBill(billingResponse.data.insertedData);
+                        setStep(5);
+                      })
+                      .catch((err) => console.log(err));
+                  }
+                });
+      })
+      .catch((error) => {
+        console.error("Billing error:", error);
+      });
   };
 
-  const handleBillingSubmit = async() => {
-      await axios
-        .post(`${apiUrl}/artist/calculate-billing`, billingData)
-        .then((billingResponse) => {
-          // Handle billing response
-          setFinalPrice(billingResponse.data.finalPrice);
-          setBill(billingResponse.data.insertedData);
-          setStep(5);
-        })
-        .catch((error) => {
-          // Handle billing error
-          console.error("Billing error:", error);
-        });
-  };
+
+  const handleUpdateBill = async(id, updateField, updateValue)=>{
+    const data = {
+      id:id,
+      updateField:updateField,
+      updateValue:updateValue
+    }
+    await axios.post(`${apiUrl}/artist/post_new_billing`,data )
+    .then(res=>console.log(res))
+    .catch(err=>console.error(err))
+  }
 
   const handlePrev = () => {
     switch (step) {
@@ -421,31 +442,8 @@ const BillingComponent = () => {
     )} ${ampm}`;
   };
 
-  const handleAfterVideoButton = () => {
-    videoRef?.current?.click();
-  };
 
-  const handleAfterVideo = async (file, field) => {
-    if (!file) {
-      setAlertMessage(t("Please upload a video"));
-      setAlert(!alert);
-    } else {
-      const videoURL = URL.createObjectURL(file);
-      setVideoUrl(videoURL);
-      const formData = new FormData();
-      formData.append("profile", file);
-      await axios
-        .post(`${apiUrl}/upload`, formData)
-        .then((res) => {
-          console.log(res);
-          setBillingData((prev) => ({
-            ...prev,
-            video_url: res.data.profile_url,
-          }));
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
       {step === 1 && (
@@ -462,7 +460,7 @@ const BillingComponent = () => {
       {step === 2 && (
         <SkinCondition onClick={handleUpdateSkin} handlePrev={handlePrev} />
       )}
-      
+
       {step === 3 && (
         <>
           {updateAppointment?.typeofservice === "tattoo" && (
@@ -558,17 +556,7 @@ const BillingComponent = () => {
       )}
       {step === 6 && (
         <UploadAfterImage
-          handleAfterButton={handleAfterButton}
-          handleAfterVideo={handleAfterVideo}
-          handleBillingSubmit={handleBillingSubmit}
-          handleAfterVideoButton={handleAfterVideoButton}
-          handleAfterImage={handleAfterImage}
-          videoUrl={videoUrl}
-          updateAppointment={updateAppointment}
-          afterRef={afterRef}
-          videoRef={videoRef}
-          uploadedImages={uploadedImages}
-          afterImage={afterImage}
+          handleBillingUpdate={handleBillingUpdate}
         />
       )}
 

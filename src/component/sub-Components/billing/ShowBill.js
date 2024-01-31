@@ -33,25 +33,6 @@ export default function ShowBill({resultantMinutes, bill, handleNext}) {
             <label className="text-xl font-bold">{parseInt(bill?.price)}$</label>
           </div>
 
-          <div className='md:flex gap-2 grid grid-cols-4'>
-            <div className='flex flex-col gap-2 col-start-1 col-end-2'>
-            <img src={bill?.before_image}></img>
-            <label>Before image</label>
-            </div>
-
-            <div className='flex flex-col gap-2 col-start-3 col-end-4'>
-            <img src={bill?.after_image}></img>
-            <label>After image</label>
-            </div>
-
-            <div className='flex flex-col gap-2 col-start-2 col-end-3'>
-            <video controls>
-                <source src={bill?.video_url} ></source>
-            </video>
-            <label>After Video</label>
-            </div>
-          </div>
-
           <div>
             <button className='text-black yellowButton rounded-xl py-2 px-4 font-bold' onClick={handleNext}>Next</button>
           </div>
