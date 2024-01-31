@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { apiUrl } from "../../../url";
 import UserContext from "../../../context/UserContext";
@@ -80,14 +80,18 @@ export default function UploadAfterImage({
       })
     );
   };
-  console.log(selectedAppointment)
+  
+  const handleDeleteVideo = ()=>{
+    setUploadedVideoUrl()
+  }
+
+  console.log(uploadedVideoUrl)
 
   return (
     <>
       <div className="flex flex-col gap-4 items-center overflow-hidden">
         <h3>After Image</h3>
         <div className="flex flex-col gap-2 items-center overflow-hidden">
-
         <input
           type="file"
           accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
@@ -143,6 +147,10 @@ export default function UploadAfterImage({
                 <video  controls width="320" height="240">
                   <source src={uploadedVideoUrl} type="video/mp4"></source>
                 </video>
+                <IoMdClose
+                  className="img-del-icon"
+                  onClick={handleDeleteVideo}
+                  />
               </div>
             )}
           </>
