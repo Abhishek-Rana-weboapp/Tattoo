@@ -92,6 +92,8 @@ function TermsOfService() {
             username: username,
             minor: minor,
             typeofservice: user.selectedTattooType,
+            firstname:sessionStorage.getItem("firstname"),
+            lastname:sessionStorage.getItem("lastname"),
             bodyloacation: JSON.stringify(user),
             medicalhistory: {
               "tattooed before": formData?.page1,

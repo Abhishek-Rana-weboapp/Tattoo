@@ -21,7 +21,7 @@ const IDVerificationComponent = () => {
   const [step , setStep] = useState(0)
   const [pin , setPin] = useState()
   const [spanMessage,setSpanMessage] = useState()
-  const [shopLocation , setShopLocation] = useState("Florida")
+  const [shopLocation , setShopLocation] = useState("Hialeah, Fl")
   const [frontDesk , setFrontDesk] = useState("")
   const [finalAlert , setFinalAlert] = useState(false)
 
@@ -223,6 +223,10 @@ const IDVerificationComponent = () => {
   navigate("/")
  }
 
+ const shopLocationOption = [
+  "Hialeah, Fl"
+ ]
+
   return (
     <>
     {
@@ -238,7 +242,7 @@ const IDVerificationComponent = () => {
       step === 2 &&  <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
         <h2 className='text-white font-bold'>Select Shop Location</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
-        {states.map((state, index)=>{
+        {shopLocationOption.map((state, index)=>{
           return <option key={state} value={state}>{state}</option>
         })}
         </select>
