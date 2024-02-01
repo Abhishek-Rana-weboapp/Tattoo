@@ -30,8 +30,12 @@ export default function ArtistDashboard() {
       .then((res) =>
         setAppointments(
           res?.data?.data.filter((a) => {
+            const appDate = new Date(a.Date)
+            const todayDate = new Date();
+            todayDate.setHours(0, 0, 0, 0);
             return (
-              (a.Date.slice(0, 9) === new Date().toLocaleDateString("en-us") && a.Sign_completion === null)
+              // (a.Date.slice(0, 8) === new Date().toLocaleDateString("en-us") && a.Sign_completion === null)
+              (appDate.toLocaleDateString() === todayDate.toLocaleDateString() && a.Sign_completion === null)
             );
           })
         )
@@ -102,7 +106,6 @@ export default function ArtistDashboard() {
     setUpdateAppointment(selectedAppointment);
   };
 
-  console.log(selectedYes)
 
 
   const handleNext = () => {

@@ -40,13 +40,19 @@ export default function UploadAfterImage({
   };
 
   const handleAfterVideo = async (e) => {
-    const selectedFile = e.target.files[0]
+    const selectedFile = e.target.files[0]  
     if (!selectedFile) {
       setAlertMessage(t("Please upload a video"));
       setAlert(!alert);
       return
     } else {
       setVideoStatus("UPLOADING")
+      if(selectedFile.size > 15 * 1024 * 1024){
+        setAlertMessage(t('The size of the uploaded video should not exceed 15M'))
+        setAlert(!alert)
+        setVideoStatus("IDLE")
+        return
+      }
       const formData = new FormData();
       formData.append("profile", selectedFile);
       await axios
@@ -60,11 +66,19 @@ export default function UploadAfterImage({
   };
 
   const handleAfterImage = async (e) => {
-    const selectedFiles = e.target.files;
+    const selectedFiles = e.target.files
     if(selectedFiles.length === 0){
       setAlert(!alert)
       setAlertMessage(t("Please upload  an image"))
       return ;
+    }
+    const size = Array.from(selectedFiles).reduce((acc,file)=>{return acc+ file.size},0)
+    console.log(size)
+    if(size > 15 * 1024 * 1024){
+      setAlertMessage(t('The size of the Images should not exceed 15M'))
+      setAlert(!alert)
+      setImageStatus("IDLE")
+      return
     }
     setImageStatus("UPLOADING");
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
@@ -85,7 +99,6 @@ export default function UploadAfterImage({
     setUploadedVideoUrl()
   }
 
-  console.log(uploadedVideoUrl)
 
   return (
     <>
