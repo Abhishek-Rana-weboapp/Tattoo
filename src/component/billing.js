@@ -3,17 +3,18 @@ import axios from "axios";
 import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
 import SkinCondition from "./skinCondition";
-import { data } from "autoprefixer";
 import { apiUrl } from "../url";
 import Timer from "./timer/Timer";
 import PriceComponent from "./sub-Components/billing/PriceComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import ShowBill from "./sub-Components/billing/ShowBill";
 import UploadAfterImage from "./sub-Components/billing/UploadAfterImage";
 import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
 import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
+import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
 
 const BillingComponent = () => {
+  let { id, step } = useParams();
   const {
     setIsVisible,
     setAlert,
@@ -23,35 +24,40 @@ const BillingComponent = () => {
     setUpdateAppointment,
   } = useContext(UserContext);
   const navigate = useNavigate();
-  const beforeRef = useRef();
-  const afterRef = useRef();
   const { t } = useTranslation();
-  const [isRunning, setIsRunning] = useState(false);
   const [appointments, setAppointments] = useState();
-  const [beforeImage, setBeforeImage] = useState();
-  const [afterImage, setAfterImage] = useState();
-  const [step, setStep] = useState(1);
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [currentStep, setCurrentStep] = useState();
   const [bill, setBill] = useState({});
   const [resultantMinutes, setResultantMinutes] = useState();
-  const [videoUrl, setVideoUrl] = useState();
-  const videoRef = useRef();
-  const [uploadedUrls, setUploadedUrls] = useState([]);
-  const [encodedUrlString, setEncodedUrlString] = useState([]);
   const artistLogged = sessionStorage.getItem("fullname");
 
   const selectedAppointment = JSON.parse(
     sessionStorage.getItem("selectedAppointment")
   );
 
+  const fetchAppointment = async () => {
+    axios
+      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`)
+      .then((res) => {
+        console.log(res)
+        sessionStorage.setItem(
+          "selectedAppointment",
+          JSON.stringify(res.data.data[0])
+        );
+        setUpdateAppointment(res.data.data[0])
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    setCurrentStep(parseInt(step) || 1);
+    fetchAppointment();
+  }, [step, id]);
+
   useEffect(() => {
     setIsVisible(true);
-    fetchAppointments();
     if (selectedAppointment) {
-      if (selectedAppointment.length > 0) {
-        setUpdateAppointment(selectedAppointment[0]);
-      }
+      setUpdateAppointment(selectedAppointment);
     } else {
       navigate("/artist-dashboard");
     }
@@ -68,12 +74,6 @@ const BillingComponent = () => {
     }
   }, [updateAppointment]);
 
-  const fetchAppointments = async () => {
-    await axios
-      .get(`${apiUrl}/artist/appointment_list`)
-      .then((res) => setAppointments(res?.data?.data))
-      .catch((err) => console.log(err));
-  };
   const [billingData, setBillingData] = useState({
     username: "",
     id: "",
@@ -90,7 +90,7 @@ const BillingComponent = () => {
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      if (step === 4 && !billingData.end_time) {
+      if (currentStep === 4 && !updateAppointment.end_time) {
         const message =
           "You have unsaved data. Are you sure you want to leave?";
         event.returnValue = message;
@@ -99,22 +99,19 @@ const BillingComponent = () => {
     };
 
     const handlePopstate = (event) => {
-      if (step === 4 && !billingData.end_time) {
+      if (currentStep === 4 && !updateAppointment.end_time) {
         const message =
           "You have unsaved data. Are you sure you want to leave?";
         const isConfirmed = window.confirm(message);
 
         if (!isConfirmed) {
-          // If the user cancels, prevent the default behavior and stay on the current page.
           event.preventDefault();
-          // You might also want to consider navigating forward again to keep the user on the same page.
-          // window.history.forward();
         }
       }
     };
 
     const handleBeforeReload = (event) => {
-      if (step === 4 && !billingData.end_time) {
+      if (currentStep === 4 && !updateAppointment.end_time) {
         const message =
           "You have unsaved data. Reloading will discard your changes. Are you sure?";
         const isConfirmed = window.confirm(message);
@@ -134,7 +131,7 @@ const BillingComponent = () => {
       window.removeEventListener("popstate", handlePopstate);
       window.removeEventListener("beforeunload", handleBeforeReload);
     };
-  }, [step, billingData.end_time]);
+  }, [currentStep, billingData.end_time]);
 
   const [uploadedImages, setUploadedImages] = useState({
     before_image: null,
@@ -142,75 +139,6 @@ const BillingComponent = () => {
   });
 
   const [finalPrice, setFinalPrice] = useState(null);
-
-  const handleNext = () => {
-    if (step === 1) {
-      if (billingData.fix) {
-        if (billingData.price) {
-          setStep(2);
-        } else {
-          setAlert(!alert);
-          setAlertMessage(t("Please Enter the Price"));
-        }
-      } else {
-        setAlert(!alert);
-        setAlertMessage(t("Please Select an option"));
-      }
-    }
-    if (step === 3) {
-      if (beforeImage) {
-        setStep(4);
-      } else {
-        setAlert(!alert);
-        setAlertMessage(t("Please Provide an image"));
-      }
-    }
-    if (step === 5) {
-      setStep(6);
-    }
-    if (step === 6) {
-      setStep(7);
-    }
-  };
-
-  const handleStartDate = () => {
-    if (updateAppointment?.typeofservice === "tattoo") {
-      if (beforeImage) {
-        setIsRunning(!isRunning);
-        setStartTime(formatStartTime());
-        const now = new Date();
-        const formattedDateTime = now.toISOString().slice(0, 16);
-        setBillingData((prevData) => ({
-          ...prevData,
-          start_time: formattedDateTime,
-        }));
-      } else {
-        setAlertMessage("Please Provide before Image");
-        setAlert(!alert);
-      }
-    }
-    if (updateAppointment?.typeofservice !== "tattoo") {
-      setIsRunning(!isRunning);
-      setStartTime(formatStartTime());
-      const now = new Date();
-      const formattedDateTime = now.toISOString().slice(0, 16);
-      setBillingData((prevData) => ({
-        ...prevData,
-        start_time: formattedDateTime,
-      }));
-    }
-  };
-
-  const handleEndDate = () => {
-    setIsRunning(!isRunning);
-    setEndTime(formatEndTime());
-    const now = new Date();
-    const formattedDateTime = now.toISOString().slice(0, 16);
-    setBillingData((prevData) => ({
-      ...prevData,
-      end_time: formattedDateTime,
-    }));
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -232,17 +160,25 @@ const BillingComponent = () => {
     if (option) {
       if (option === "good") {
         data = {
-          id: updateAppointment?.id,
-          updateField: field,
-          updateValue: option,
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: field,
+              updateValue: option,
+            },
+          ],
         };
       }
       if (option === "bad") {
         if (explanation) {
           data = {
-            id: updateAppointment?.id,
-            updateField: field,
-            updateValue: explanation,
+            updates: [
+              {
+                id: updateAppointment?.id,
+                updateField: field,
+                updateValue: explanation,
+              },
+            ],
           };
         } else {
           setAlert(!alert);
@@ -261,9 +197,9 @@ const BillingComponent = () => {
                 if (response.status === 200) {
                   setUpdateAppointment(response.data.data[0]);
                   if (response?.data.data[0]?.typeofservice === "tattoo") {
-                    setStep(3);
+                    setCurrentStep(3);
                   } else {
-                    setStep(4);
+                    setCurrentStep(4);
                   }
                 }
               });
@@ -276,289 +212,129 @@ const BillingComponent = () => {
     }
   };
 
-  const fetchBill = async()=>{
-    await axios.get(`${apiUrl}/artist/billing_list_id?id=${bill.id}`)
-    .then((res)=>{
-      setBill(res.data.data[0])
-      setStep(7)
-    })
-  }
-
-  const handleBillingUpdate = async(afterImageUrls , afterVideoUrl)=>{
-      if(afterImageUrls.length > 0){
-        const encodedString = encodeUrls(afterImageUrls)
-        const data = {
-          id:bill?.id,
-          updateField:"after_image",
-          updateValue:encodedString
-        }
-        await axios.post(`${apiUrl}/artist/post_new_billing`, data)
-        .then(res=>{
-          if(afterVideoUrl){
-            const videoData = {
-              id:bill?.id,
-              updateField:"video_url",
-              updateValue:afterVideoUrl
-            }
-            axios.post(`${apiUrl}/artist/post_new_billing`, videoData)
-            .then(response=>{
-              fetchBill()
-              return
-            })
-            .catch(err=>console.error(err))
-          }else{
-            fetchBill()
-          }
-        })
-        .catch(err=>console.log(err))
-      }
-  }
-
-  useEffect(() => {
-    // This will be executed after uploadedUrls is updated
-    const encodeList = encodeUrls(uploadedUrls);
-    console.log(encodeList);
-    setEncodedUrlString(encodeList);
-  }, [uploadedUrls]);
-
-
-  const handleImageUpload = async (imagePath, type) => {
-    const url = URL.createObjectURL(imagePath);
-    if (type === "before_image") {
-      setBeforeImage(url);
-    }
-    if (type === "after_image") {
-      setAfterImage(url);
-    }
-    const formData = new FormData();
-    formData.append("profile", imagePath);
+  const fetchBill = async () => {
     await axios
-      .post(`${apiUrl}/upload`, formData)
-      .then((response) => {
-        const imageUrl = response.data.profile_url;
-        setBillingData((prevData) => ({
-          ...prevData,
-          [type]: imageUrl,
-        }));
-
-        // Display uploaded image
-        setUploadedImages((prevImages) => ({
-          ...prevImages,
-          [type]: imageUrl,
-        }));
-      })
-      .catch((error) => {
-        // Handle image upload error
-      });
-  };
-
-  const handleBeforeButton = () => {
-    beforeRef?.current?.click();
-  };
-
-
-  const handleBillingSubmit = async () => {
-    await axios
-      .post(`${apiUrl}/artist/calculate-billing`, billingData)
-      .then((billingResponse) => {
-        const data = {
-                  id: updateAppointment?.id,
-                  updateField: "ArtistPiercerNames",
-                  updateValue: artistLogged,
-                };
-                axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-                  if (res.status === 201) {
-                    axios
-                      .get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
-                      .then((res) => {
-                        sessionStorage.setItem(
-                          "selectedAppointment",
-                          JSON.stringify(res.data.data)
-                        );
-                        setFinalPrice(billingResponse.data.finalPrice);
-                        setBill(billingResponse.data.insertedData);
-                        setStep(5);
-                      })
-                      .catch((err) => console.log(err));
-                  }
-                });
-      })
-      .catch((error) => {
-        console.error("Billing error:", error);
+      .get(`${apiUrl}/artist/billing_list_id?id=${bill.id}`)
+      .then((res) => {
+        setBill(res.data.data[0]);
+        setCurrentStep(7);
       });
   };
 
 
   const handlePrev = () => {
-    switch (step) {
+    switch (currentStep) {
       case 1:
-        navigate(-1);
+        navigate("/artist-dashboard");
+        break;
       case 2:
-        setStep(1);
+        navigate(`/billing/${updateAppointment?.id}/1`)
         break;
 
       case 3:
-        setStep(2);
+        navigate(`/billing/${updateAppointment?.id}/2`)
         break;
 
       case 4:
         if (updateAppointment?.typeofservice === "tattoo") {
-          setStep(3);
+          navigate(`/billing/${updateAppointment?.id}/3`)
+          break;
         } else {
-          setStep(2);
+          navigate(`/billing/${updateAppointment?.id}/2`)
+          break;
         }
+
+        case 5 :
+          navigate(`/billing/${updateAppointment?.id}/4`)
+          break;
+
+        case 6 :
+          navigate(`/billing/${updateAppointment?.id}/5`)
+          break;
+        
+        case 7:
+          navigate(`/billing/${updateAppointment?.id}/6`)
+          break;
     }
   };
 
   useEffect(() => {
-    if (bill) {
-      const startTime = new Date(bill.start_time);
-      const endTime = new Date(bill.end_time);
-      setResultantMinutes((endTime - startTime) / 1000);
+    if (updateAppointment?.start_time && updateAppointment?.end_time) {
+      const startTime = new Date(updateAppointment.start_time);
+      const endTime = new Date(updateAppointment.end_time);
+      setResultantMinutes(Math.floor((endTime - startTime) / 1000));
     }
-  }, [bill]);
+  }, [updateAppointment]);
 
-  const formatStartTime = () => {
-    const startTime = new Date();
-    const hours = startTime.getHours();
-    const minutes = startTime.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    return `${String(hours % 12).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )} ${ampm}`;
-  };
-
-  const formatEndTime = () => {
-    const endTime = new Date();
-    const hours = endTime.getHours();
-    const minutes = endTime.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    return `${String(hours % 12).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )} ${ampm}`;
-  };
-
-console.log(bill)
-  
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
-      {step === 1 && (
+      {currentStep === 1 && (
         <PriceComponent
           updateAppointment={updateAppointment}
-          billingData={billingData}
-          handleInputChange={handleInputChange}
+          setUpdateAppointment={setUpdateAppointment}
           handlePrice={handlePrice}
-          handleNext={handleNext}
           handlePrev={handlePrev}
         />
       )}
 
-      {step === 2 && (
-        <SkinCondition onClick={handleUpdateSkin} handlePrev={handlePrev} />
+      {currentStep === 2 && (
+        <SkinCondition
+          onClick={handleUpdateSkin}
+          handlePrev={handlePrev}
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+        />
       )}
 
-      {step === 3 && (
+      {currentStep === 3 && (
         <>
           {updateAppointment?.typeofservice === "tattoo" && (
-            <div className="flex flex-col gap-2 items-center">
-              {/* Image upload for before */}
-              <h3>Please Provide Before Image:</h3>
-              {uploadedImages.before_image && (
-                <img src={beforeImage} alt="Before" className="w-40 h-40" />
-              )}
-              <input
-                type="file"
-                accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
-                ref={beforeRef}
-                style={{ display: "none" }} // Hide the input element
-                onChange={(e) =>
-                  handleImageUpload(e.target.files[0], "before_image")
-                }
-              />
-              <button
-                className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-                onClick={handleBeforeButton}
-              >
-                Upload Before Image
-              </button>
-              <div className="flex gap-5 items-center">
-                <button
-                  className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
-                  onClick={handlePrev}
-                >
-                  Prev
-                </button>
-                <button
-                  className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
-                  onClick={handleNext}
-                >
-                  Next
-                </button>
-              </div>
-            </div>
+            <UploadBeforeImage
+              handlePrev={handlePrev}
+              updateAppointment={updateAppointment}
+              setUpdateAppointment={setUpdateAppointment}
+            />
           )}
         </>
       )}
 
-      {step === 4 && (
+      {currentStep === 4 && (
         <div className="flex flex-col items-center w-full h-full gap-3">
           <Timer
-            isRunning={isRunning}
-            setIsRunning={setIsRunning}
-            startTime={startTime}
-            endTime={endTime}
-            billingData={billingData}
-            setBillingData={setBillingData}
+            updateAppointment={updateAppointment}
+            setUpdateAppointment={setUpdateAppointment}
+            bill={bill}
+            setBill={setBill}
+            handlePrev = {handlePrev}
           />
-          {!isRunning && !billingData.start_time && (
-            <button
-              name="start_time"
-              className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
-              value={billingData.start_time}
-              onClick={handleStartDate}
-            >
-              Start
-            </button>
-          )}
-          {isRunning && !billingData.end_time && (
-            <button
-              className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
-              name="end_time"
-              value={billingData.end_time}
-              onClick={handleEndDate}
-            >
-              End
-            </button>
-          )}
-          {billingData.end_time && billingData.start_time && (
-            <button
-              className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
-              name="end_time"
-              value={billingData.end_time}
-              onClick={handleBillingSubmit}
-            >
-              Next
-            </button>
-          )}
         </div>
       )}
 
-      {step === 5 && (
+      {currentStep === 5 && (
         <ShowBill
           bill={bill}
+          setBill={setBill}
           resultantMinutes={resultantMinutes}
-          handleNext={handleNext}
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+          handlePrev={handlePrev}
         />
       )}
-      {step === 6 && (
+      {currentStep === 6 && (
         <UploadAfterImage
-          handleBillingUpdate={handleBillingUpdate}
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+          handlePrev={handlePrev}
         />
       )}
 
-      {step === 7 && <CompleteAgreement />}
+      {currentStep === 7 && (
+        <CompleteAgreement
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+          handlePrev={handlePrev}
+        />
+      )}
     </div>
   );
 };

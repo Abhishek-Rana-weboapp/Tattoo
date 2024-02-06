@@ -8,7 +8,6 @@ export const states = [
   "Colorado",
   "Connecticut",
   "Delaware",
-  "Florida",
   "Georgia",
   "Hawaii",
   "Idaho",

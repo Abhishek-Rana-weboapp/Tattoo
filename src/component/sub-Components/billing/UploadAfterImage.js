@@ -4,20 +4,35 @@ import { IoMdClose } from "react-icons/io";
 import { apiUrl } from "../../../url";
 import UserContext from "../../../context/UserContext";
 import { useTranslation } from "react-i18next";
+import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
+import { useNavigate } from "react-router-dom";
 
 export default function UploadAfterImage({
-  handleBillingUpdate
+  updateAppointment,
+  setUpdateAppointment,
+  handlePrev
 }) {
-  const {alert, setAlert, setAlertMessage} = useContext(UserContext)
-  const {t} = useTranslation()
+  const navigate = useNavigate();
+  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
+  const { t } = useTranslation();
   const [uploadedUrls, setUploadedUrls] = useState([]);
   const [imageStatus, setImageStatus] = useState("IDLE");
-  const [uploadedVideoUrl, setUploadedVideoUrl] = useState();
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState([]);
   const [videoStatus, setVideoStatus] = useState("IDLE");
 
+
+  useEffect(()=>{
+      if(updateAppointment.after_image){
+        setUploadedUrls(decodeUrls(updateAppointment.after_image))
+      }
+
+      if(updateAppointment.video_url){
+        setUploadedVideoUrl(decodeUrls(updateAppointment.video_url))
+      }
+  },[])
+
   const imageRef = useRef(null);
-  const videoRef=useRef(null)
-  const selectedAppointment = JSON.parse(sessionStorage.getItem("selectedAppointment"))
+  const videoRef = useRef(null);
 
   const uploadFile = async (file) => {
     const formData = new FormData();
@@ -39,46 +54,30 @@ export default function UploadAfterImage({
     videoRef?.current?.click();
   };
 
+
   const handleAfterVideo = async (e) => {
-    const selectedFile = e.target.files[0]  
-    if (!selectedFile) {
+    const selectedFiles = e.target.files;
+    if (selectedFiles.length === 0) {
       setAlertMessage(t("Please upload a video"));
       setAlert(!alert);
-      return
+      return;
     } else {
-      setVideoStatus("UPLOADING")
-      if(selectedFile.size > 15 * 1024 * 1024){
-        setAlertMessage(t('The size of the uploaded video should not exceed 15M'))
-        setAlert(!alert)
-        setVideoStatus("IDLE")
-        return
-      }
-      const formData = new FormData();
-      formData.append("profile", selectedFile);
-      await axios
-        .post(`${apiUrl}/upload`, formData)
-        .then((res) => {
-          setUploadedVideoUrl(res.data.profile_url)
-          setVideoStatus("IDLE")
-        })
-        .catch((err) => console.log(err));
+      setVideoStatus("UPLOADING");
+      const uploadPromises = Array.from(selectedFiles).map(uploadFile);
+      const urls = await Promise.all(uploadPromises);
+      const filteredUrls = urls.filter((url) => url !== null);
+      setVideoStatus("IDLE");
+      setUploadedVideoUrl((prev) => [...prev, ...filteredUrls]);
     }
   };
 
+
   const handleAfterImage = async (e) => {
-    const selectedFiles = e.target.files
-    if(selectedFiles.length === 0){
-      setAlert(!alert)
-      setAlertMessage(t("Please upload  an image"))
-      return ;
-    }
-    const size = Array.from(selectedFiles).reduce((acc,file)=>{return acc+ file.size},0)
-    console.log(size)
-    if(size > 15 * 1024 * 1024){
-      setAlertMessage(t('The size of the Images should not exceed 15M'))
-      setAlert(!alert)
-      setImageStatus("IDLE")
-      return
+    const selectedFiles = e.target.files;
+    if (selectedFiles.length === 0) {
+      setAlert(!alert);
+      setAlertMessage(t("Please upload  an image"));
+      return;
     }
     setImageStatus("UPLOADING");
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
@@ -94,88 +93,188 @@ export default function UploadAfterImage({
       })
     );
   };
-  
-  const handleDeleteVideo = ()=>{
-    setUploadedVideoUrl()
-  }
 
+  const handleDeleteVideo = () => {
+    setUploadedVideoUrl();
+  };
+
+  const handleNext = async () => {
+    let data;
+    if (uploadedUrls.length > 0 || uploadedVideoUrl.length > 0) {
+      if (uploadedUrls.length > 0 && uploadedVideoUrl.length === 0) {
+        const encodedAfterImage = encodeUrls(uploadedUrls);
+        data = {
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: "after_image",
+              updateValue: encodedAfterImage,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "process_step",
+              updateValue: 7,
+            },
+          ],
+        };
+      }
+      if (uploadedUrls.length === 0 && uploadedVideoUrl.length > 0) {
+        const encodedAfterVideo = encodeUrls(uploadedVideoUrl);
+        data = {
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: "video_url",
+              updateValue: encodedAfterVideo,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "process_step",
+              updateValue: 7,
+            },
+          ],
+        };
+      }
+       if (uploadedUrls.length > 0 && uploadedVideoUrl.length > 0) {
+        const encodedAfterImage = encodeUrls(uploadedUrls);
+        const encodedAfterVideo = encodeUrls(uploadedVideoUrl);
+        data = {
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: "after_image",
+              updateValue: encodedAfterImage,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "video_url",
+              updateValue: encodedAfterVideo,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "process_step",
+              updateValue: 7,
+            },
+          ],
+        };
+      }
+        await axios.post(`${apiUrl}/artist/post_new`, data).
+        then((res) => {
+          axios
+          .get(
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+            )
+            .then((response) => {
+              setUpdateAppointment(response.data.data[0]);
+              navigate(
+                `/billing/${updateAppointment?.id}/${response.data.data[0].process_step}`
+                );
+              })
+              .catch((err) =>
+              console.log("Error in getting the appointment list by ID : ", err)
+              );
+            });
+    } else {
+      setAlert(!alert);
+      setAlertMessage(t("Please upload a image or video"));
+      return;
+    }
+  };
 
   return (
     <>
       <div className="flex flex-col gap-4 items-center overflow-hidden">
         <h3>After Image</h3>
         <div className="flex flex-col gap-2 items-center overflow-hidden">
-        <input
-          type="file"
-          accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
-          ref={imageRef}
-          multiple
-          style={{ display: "none" }} // Hide the input element
-          onChange={handleAfterImage}
-          />
-        <button
-          className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-          onClick={handleAfterButton}
-          disabled={imageStatus === "UPLOADING"}
-          >
-          {imageStatus === "UPLOADING" ? "..." :"After Image"}
-        </button>
-
-        {/* Images preview */}
-        <div className="flex md:flex-row flex-col gap-2 overflow-auto">
-          {uploadedUrls?.map((image, index) => {
-            return (
-              <div className="relative">
-                <img key={image} src={image} alt={`after-${index}`} className="w-40 h-40 rounded-lg"></img>
-                <IoMdClose
-                  className="img-del-icon"
-                  onClick={() => handleDeleteImage(index)}
+          {/* Images preview */}
+          <div className="md:flex grid grid-cols-2 gap-2 overflow-auto">
+            {uploadedUrls?.map((image, index) => {
+              return (
+                <div className="relative">
+                  <img
+                    key={image}
+                    src={image}
+                    alt={`after-${index}`}
+                    className="w-40 h-40 rounded-lg"
+                  ></img>
+                  <IoMdClose
+                    className="img-del-icon"
+                    onClick={() => handleDeleteImage(index)}
                   />
-              </div>
-            );
-          })}
-        </div>
+                </div>
+              );
+            })}
           </div>
+          <input
+            type="file"
+            accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+            ref={imageRef}
+            multiple
+            style={{ display: "none" }} // Hide the input element
+            onChange={handleAfterImage}
+          />
+          <button
+            className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+            onClick={handleAfterButton}
+            disabled={imageStatus === "UPLOADING"}
+          >
+            {imageStatus === "UPLOADING" ? "..." : "After Image"}
+          </button>
+        </div>
 
-        {selectedAppointment[0]?.typeofservice === "tattoo" && (
-          <>
-            <input
-              type="file"
-              accept=".mp4, .webm, .ogg" // Specify allowed file types
-              ref={videoRef}
-              style={{ display: "none" }} // Hide the input element
-              onChange={handleAfterVideo}
-            />
-            <button
-              className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-              onClick={handleAfterVideoButton}
-              disabled={videoStatus === "UPLOADING"}
-            >
-             {videoStatus === "UPLOADING" ? "..." : "Upload Video"}
-            </button>
-
-            {/* Video Preview */}
-            {uploadedVideoUrl && (
-              <div className="w-30 h-30">
-                <video  controls width="320" height="240">
-                  <source src={uploadedVideoUrl} type="video/mp4"></source>
-                </video>
-                <IoMdClose
-                  className="img-del-icon"
-                  onClick={handleDeleteVideo}
-                  />
-              </div>
-            )}
-          </>
-        )}
+        <>
+          {/* Video Preview */}
+          {uploadedVideoUrl && (
+            <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
+              {uploadedVideoUrl.map((url, index) => {
+                return (
+                  <div className="relative">
+                    <video controls width="320" height="240">
+                      <source src={url} type="video/mp4"></source>
+                    </video>
+                    <IoMdClose
+                      className="img-del-icon"
+                      onClick={handleDeleteVideo}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <input
+            type="file"
+            accept=".mp4, .webm, .ogg" // Specify allowed file types
+            ref={videoRef}
+            multiple
+            style={{ display: "none" }} // Hide the input element
+            onChange={handleAfterVideo}
+          />
+          <button
+            className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+            onClick={handleAfterVideoButton}
+            disabled={videoStatus === "UPLOADING"}
+          >
+            {videoStatus === "UPLOADING" ? "..." : "Upload Video"}
+          </button>
+        </>
       </div>
+      <div className="flex justify-center gap-4">
+      <button
+        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+        onClick={handlePrev}
+        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+      >
+        Prev
+      </button>
 
       <button
         className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-        onClick={()=>handleBillingUpdate(uploadedUrls, uploadedVideoUrl)}
-      >
+        onClick={handleNext}
+        disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+        >
         Save
       </button>
+        </div>
     </>
   );
 }

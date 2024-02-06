@@ -1,9 +1,155 @@
-import React from 'react'
+import axios from "axios";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { apiUrl } from "../../../url";
+import UserContext from "../../../context/UserContext";
+import { useTranslation } from "react-i18next";
+import { IoMdClose } from "react-icons/io";
+import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
+import { useNavigate } from "react-router-dom";
 
-export default function UploadBeforeImage() {
+export default function UploadBeforeImage({ handlePrev, updateAppointment, setUpdateAppointment }) {
+  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
+  const [uploadedUrls, setUploadedUrls] = useState([]);
+  const [imageStatus, setImageStatus] = useState("IDLE");
+  const { t } = useTranslation();
+  const beforeRef = useRef(null);
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+      if(updateAppointment?.before_image){
+        setUploadedUrls(decodeUrls(updateAppointment.before_image))
+      }
+  },[])
+
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("profile", file);
+    try {
+      const response = await axios.post(`${apiUrl}/upload`, formData);
+      return response.data.profile_url;
+    } catch (err) {
+      console.error("File Upload Failed", err.message);
+      return null;
+    }
+  };
+
+  const handleBeforeButton = () => {
+    beforeRef?.current?.click();
+  };
+
+  const handleUploadBeforeImage = async (e) => {
+    const selectedFiles = e.target.files;
+    if (selectedFiles.length === 0) {
+      setAlert(!alert);
+      setAlertMessage(t("Please upload  an image"));
+      return;
+    }
+    setImageStatus("UPLOADING");
+    const uploadPromises = Array.from(selectedFiles).map(uploadFile);
+    const urls = await Promise.all(uploadPromises);
+    setImageStatus("IDLE");
+    setUploadedUrls((prev) => [...prev, ...urls]);
+  };
+
+    const handleDeleteImage = (index) => {
+      setUploadedUrls(
+        uploadedUrls.filter((img, imageIndex) => {
+          if (imageIndex !== index) return img;
+        })
+      );
+    };
+
+      const handleNext = async()=>{
+        if(uploadedUrls){
+          const encodeUrlString = encodeUrls(uploadedUrls)
+          const data = {
+            updates: [
+              {
+                id: updateAppointment?.id,
+                updateField: "before_image",
+                updateValue:encodeUrlString,
+              },
+              {
+                id: updateAppointment?.id,
+                updateField: "process_step",
+                updateValue: 4,
+              },
+            ],
+          };
+          await axios
+          .post(`${apiUrl}/artist/post_new`, data)
+          .then((res) => {
+            axios
+            .get(
+              `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+              )
+              .then((res) => {
+                setUpdateAppointment(res.data.data[0]);
+                navigate(`/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`);
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+              })
+              .catch((err) => {
+                console.error(err);
+              });
+            }
+      }
+
   return (
-    <div>
-      
+    <div className="flex flex-col gap-2 items-center overflow-hidden">
+      {/* Image upload for before */}
+      <h3>Please Provide Before Image:</h3>
+      {uploadedUrls.length !== 0 && (
+        <div className="flex md:flex-row flex-col gap-2 overflow-y-auto overflow-x-hidden md:w-full  md:justify-center items-center">
+          {uploadedUrls.map((url, index) => {
+            return (
+              <div className="relative md:w-1/3 w-2/3 h-60">
+                <img
+                  key={url}
+                  src={url}
+                  alt="Before"
+                  className={`rounded-lg w-full h-full`}
+                />
+                <IoMdClose
+                  className="img-del-icon"
+                  onClick={() => handleDeleteImage(index)}
+                />
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <input
+        type="file"
+        accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
+        ref={beforeRef}
+        multiple
+        style={{ display: "none" }} // Hide the input element
+        onChange={handleUploadBeforeImage}
+      />
+      <button
+        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+        onClick={handleBeforeButton}
+        disabled={imageStatus === "UPLOADING"}
+      >
+        {imageStatus === "UPLOADING" ? "..." : "Upload Before Image"}
+      </button>
+      <div className="flex gap-5 items-center">
+        <button
+          className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
+          onClick={handlePrev}
+        >
+          Prev
+        </button>
+        <button
+          className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
+          onClick={() => handleNext(uploadedUrls)}
+        >
+          Next
+        </button>
+      </div>
     </div>
-  )
+  );
 }

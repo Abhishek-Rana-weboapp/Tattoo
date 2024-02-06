@@ -1,35 +1,83 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { apiUrl } from "../../../url";
+import { useNavigate } from "react-router-dom";
 
 export default function PriceComponent({
   updateAppointment,
-  billingData,
+  setUpdateAppointment,
   handlePrice,
-  handleInputChange,
-  handleNext,
   handlePrev,
 }) 
 {
 
-  useEffect(()=>{
-     if(billingData.price){
-      setFormatedPrice(`${parseFloat(billingData.price).toFixed(2)}`);
-     }
-  },[])
-
+  const navigate = useNavigate()
 
   const [formatedPrice, setFormatedPrice] = useState()
-
+  const [price, setPrice] = useState(updateAppointment.price ||  "")
+  const [fix, setFix] = useState(updateAppointment.fix_price || "")
+  
+  useEffect(()=>{
+     if(updateAppointment.price){
+      setFormatedPrice(`${parseFloat(updateAppointment.price).toFixed(2)}`);
+     }
+  },[updateAppointment])
+  
+  
   const handleInputChangeInternal = (event) => {
     // Update the raw price in the state
     const rawPrice = parseInt(event.target.value.replace(/[^0-9.]/g, ""));
+    setPrice(rawPrice)
     handlePrice("price", rawPrice);
     setFormatedPrice(rawPrice)
     // Format for display
   };
+
+
+  const handleSelect = (e)=>{
+       setFix(e.target.value)
+  }
   
   const handleZeros = ()=>{
     if(formatedPrice){
       setFormatedPrice(formatedPrice === "" ? "" : `${parseFloat(formatedPrice).toFixed(2)}`);
+    }
+  }
+
+  const handleNext = async()=>{
+    if(price && fix){
+
+      const data = {
+      updates:[
+        {
+          id:updateAppointment?.id,
+          updateField:"price",
+          updateValue:price
+        },
+        {
+          id:updateAppointment?.id,
+          updateField:"fix_price",
+          updateValue:fix
+        },
+        {
+          id:updateAppointment?.id,
+          updateField:"process_step",
+          updateValue:2
+        }
+      ]
+    }
+      await axios.post(`${apiUrl}/artist/post_new`, data)
+      .then(res=>{
+        axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
+        .then(res=>{
+           setUpdateAppointment(res.data.data[0])
+           navigate(`/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`)
+        })
+        .catch(err=>{console.error(err)})
+      })
+      .catch(err=>{
+        console.error(err)
+      })
     }
   }
 
@@ -40,8 +88,8 @@ export default function PriceComponent({
       <select
         name="fix"
         className="p-2 md:w-2/4 w-full text-black font-semibold rounded-lg"
-        onChange={handleInputChange}
-        value={billingData.fix}
+        onChange={handleSelect}
+        value={fix}
       >
         <option value={""}>Select</option>
         <option value={"no"}>Hourly</option>
@@ -57,7 +105,7 @@ export default function PriceComponent({
               type="number"
               name="price"
               className="p-2 rounded-lg text-black flex-1"
-              disabled={billingData.fix === ""}
+              disabled={fix === ""}
               value={formatedPrice}
               onChange={handleInputChangeInternal}
               onBlur={handleZeros}
