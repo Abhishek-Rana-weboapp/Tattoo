@@ -141,9 +141,11 @@ const IDVerificationComponent = () => {
       setAlert(!alert)
     }else{
       const data = {
-        id: appointmentID,
-        updateField : "id_url",
-        updateValue : imageUrl
+        updates : [{
+          id: appointmentID,
+          updateField : "id_url",
+          updateValue : imageUrl
+        }]
       }
       await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
         if(res.status === 201){
@@ -184,9 +186,11 @@ const IDVerificationComponent = () => {
     setAlert(!alert)
   }else{
     const data = {
-      id: appointmentID,
-      updateField : "shop_location",
-      updateValue : shopLocation
+      updates : [{
+        id: appointmentID,
+        updateField : "shop_location",
+        updateValue : shopLocation
+      }]
     }
     await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
@@ -204,9 +208,11 @@ const IDVerificationComponent = () => {
     setAlert(!alert)
   }else{
     const data = {
-      id: appointmentID,
-      updateField : "frontDeskEmployee",
-      updateValue : frontDesk
+      updates : [{
+        id: appointmentID,
+        updateField : "frontDeskEmployee",
+        updateValue : frontDesk
+      }]
     }
     await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){

@@ -26,6 +26,7 @@ function DoctorContactForm() {
     setAlertMessage,
   } = React.useContext(UserContext);
 
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (name === "useDoctorRecommendation" && checked) {

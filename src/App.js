@@ -4,7 +4,6 @@ import { useTranslation, initReactI18next } from 'react-i18next';
 import i18n from 'i18next';
 import UserContextProvider from './context/UserContextProvider';
 import RoutesComponent from './routes/RoutesComponent';
-import AlertModal from './component/modal/AlertModal';
 import "./App.css"
 
 
@@ -29,11 +28,8 @@ function App() {
 useEffect(()=>{
   if(sessionStorage.getItem("lang")){
     const language = sessionStorage.getItem("lang")
-    console.log(language)
-    i18n.changeLanguage(sessionStorage.getItem("lang"))
+    i18n.changeLanguage(language)
   }
-
-  console.log("App started")
 },[])
 
 

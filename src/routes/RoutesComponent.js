@@ -192,7 +192,8 @@ export default function RoutesComponent() {
 
 
       <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
-      <Route exact path="/billing" element={<BillingComponent/>}/>
+      <Route exact path="/billing/" element={<BillingComponent/>}/>
+      <Route exact path="/billing/:id/:step" element={<BillingComponent/>}/>
       <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
       <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
       <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>

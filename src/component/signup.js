@@ -22,6 +22,7 @@ function SignUp() {
   const [adminUsername, setadminUsername] = useState("");
 
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
+  const [phoneNumber, setPhoneNumber] = useState()
 
   useEffect(()=>{
     sessionStorage.clear()
@@ -36,6 +37,7 @@ function SignUp() {
       password: password,
       lang: selectedLanguage,
       usertype: "user",
+      phone_number:phoneNumber,
       dateofbirth: dateOfBirth,
     };
 
@@ -214,6 +216,19 @@ function SignUp() {
                   onClick={() => setShowPassword(!showPassword)}
                 />
               )}
+            </div>
+
+            <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
+             
+              <input
+                type="number"
+                className="flex-1 focus:outline-none bg-white p-1"
+                id="phoneNumber"
+                placeholder="Enter Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+              {/* <input className='flex-1' placeholder='Email'/> */}
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">

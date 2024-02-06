@@ -30,8 +30,6 @@ function EmergencyContactForm() {
       const data = await response.json();
 
       if (data?.data?.length > 0) {
-
-        //console.log("have medical history :",data.data[data.data.length-1])    
         setdata(JSON.parse(data?.emergencycontectnumber))
         setShowPopup_(true);
       }
@@ -55,6 +53,8 @@ function EmergencyContactForm() {
       setShowPopup_(false)
     }
   }
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
