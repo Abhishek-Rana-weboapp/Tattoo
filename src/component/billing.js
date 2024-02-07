@@ -12,6 +12,7 @@ import UploadAfterImage from "./sub-Components/billing/UploadAfterImage";
 import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
 import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
 import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
+import LoaderModal from "./modal/LoaderModal";
 
 const BillingComponent = () => {
   let { id, step } = useParams();
@@ -25,28 +26,33 @@ const BillingComponent = () => {
   } = useContext(UserContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [appointments, setAppointments] = useState();
+  const [loading , setLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState();
   const [bill, setBill] = useState({});
   const [resultantMinutes, setResultantMinutes] = useState();
-  const artistLogged = sessionStorage.getItem("fullname");
 
   const selectedAppointment = JSON.parse(
     sessionStorage.getItem("selectedAppointment")
   );
 
   const fetchAppointment = async () => {
+    setLoading(true)
     axios
       .get(`${apiUrl}/artist/appointment_list_id?id=${id}`)
       .then((res) => {
-        console.log(res)
         sessionStorage.setItem(
           "selectedAppointment",
           JSON.stringify(res.data.data[0])
         );
+        setLoading(false)
         setUpdateAppointment(res.data.data[0])
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false)
+        setAlertMessage(t('Something went wrong'));
+        setAlert(!alert)
+        return
+      });
   };
 
   useEffect(() => {
@@ -63,30 +69,7 @@ const BillingComponent = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (updateAppointment) {
-      setBillingData((prev) => ({
-        ...prev,
-        bill_by: artistLogged,
-        username: updateAppointment?.username,
-        id: updateAppointment?.id,
-      }));
-    }
-  }, [updateAppointment]);
 
-  const [billingData, setBillingData] = useState({
-    username: "",
-    id: "",
-    price: 0,
-    fix: "",
-    before_image: "",
-    after_image: "",
-    start_time: "",
-    end_time: "",
-    break_time: "",
-    bill_by: "",
-    video_url: "",
-  });
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -131,96 +114,9 @@ const BillingComponent = () => {
       window.removeEventListener("popstate", handlePopstate);
       window.removeEventListener("beforeunload", handleBeforeReload);
     };
-  }, [currentStep, billingData.end_time]);
+  }, [currentStep, updateAppointment?.end_time]);
 
-  const [uploadedImages, setUploadedImages] = useState({
-    before_image: null,
-    after_image: null,
-  });
-
-  const [finalPrice, setFinalPrice] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBillingData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handlePrice = (name, value) => {
-    setBillingData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleUpdateSkin = async (option, explanation, field) => {
-    let data;
-    if (option) {
-      if (option === "good") {
-        data = {
-          updates: [
-            {
-              id: updateAppointment?.id,
-              updateField: field,
-              updateValue: option,
-            },
-          ],
-        };
-      }
-      if (option === "bad") {
-        if (explanation) {
-          data = {
-            updates: [
-              {
-                id: updateAppointment?.id,
-                updateField: field,
-                updateValue: explanation,
-              },
-            ],
-          };
-        } else {
-          setAlert(!alert);
-          setAlertMessage(t("Please enter the explanation"));
-        }
-      }
-      if (data) {
-        await axios
-          .post(`${apiUrl}/artist/post_new`, data)
-          .then((res) => {
-            axios
-              .get(
-                `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
-              )
-              .then((response) => {
-                if (response.status === 200) {
-                  setUpdateAppointment(response.data.data[0]);
-                  if (response?.data.data[0]?.typeofservice === "tattoo") {
-                    setCurrentStep(3);
-                  } else {
-                    setCurrentStep(4);
-                  }
-                }
-              });
-          })
-          .catch((err) => console.log(err));
-      }
-    } else {
-      setAlertMessage("Please Enter the skin explanation");
-      setAlert(!alert);
-    }
-  };
-
-  const fetchBill = async () => {
-    await axios
-      .get(`${apiUrl}/artist/billing_list_id?id=${bill.id}`)
-      .then((res) => {
-        setBill(res.data.data[0]);
-        setCurrentStep(7);
-      });
-  };
-
+  
 
   const handlePrev = () => {
     switch (currentStep) {
@@ -266,20 +162,22 @@ const BillingComponent = () => {
     }
   }, [updateAppointment]);
 
+  if(loading){
+    return <LoaderModal/>
+  }
+
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
       {currentStep === 1 && (
         <PriceComponent
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
-          handlePrice={handlePrice}
           handlePrev={handlePrev}
         />
       )}
 
       {currentStep === 2 && (
         <SkinCondition
-          onClick={handleUpdateSkin}
           handlePrev={handlePrev}
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}

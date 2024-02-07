@@ -4,8 +4,15 @@ import UserContext from "../../context/UserContext";
 import { apiUrl } from "../../url";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoaderModal from "../modal/LoaderModal";
 
-const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePrev }) => {
+const Timer = ({
+  updateAppointment,
+  setUpdateAppointment,
+  bill,
+  setBill,
+  handlePrev,
+}) => {
   const navigate = useNavigate();
   const [seconds, setSeconds] = useState(0);
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -18,6 +25,7 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
   const artistName = sessionStorage.getItem("fullname");
   const [tabFocused, setTabFocused] = useState(true);
   const intervalIdRef = useRef();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -95,7 +103,6 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
     }
   }, [startTime]);
 
-
   useEffect(() => {
     if (updateAppointment?.break_time === null) {
       updateBreakTime();
@@ -112,14 +119,16 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
     const startTime = new Date(time);
     const hours = startTime.getHours();
     const minutes = startTime.getMinutes();
+    const seconds = startTime.getSeconds();
     const ampm = hours >= 12 ? "PM" : "AM";
-    return `${String(hours % 12).padStart(2, "0")}:${String(minutes).padStart(
+    return `${String(hours % 24).padStart(2, "0")}:${String(minutes).padStart(
       2,
       "0"
-    )} ${ampm}`;
+    )}:${String(seconds).padStart(2, "0")} ${ampm}`;
   };
 
   const updateBreakTime = async () => {
+    setLoading(true);
     const data = {
       updates: [
         {
@@ -129,16 +138,30 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
         },
       ],
     };
-    await axios.post(`${apiUrl}/artist/post_new`, data).then((res) => {
-      axios
-        .get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
-        .then((res) => {
-          setUpdateAppointment(res.data.data[0]);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    });
+    await axios
+      .post(`${apiUrl}/artist/post_new`, data)
+      .then((res) => {
+        axios
+          .get(
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+          )
+          .then((res) => {
+            setUpdateAppointment(res.data.data[0]);
+            setLoading(false);
+          })
+          .catch((err) => {
+            setLoading(false);
+            setAlert(!alert);
+            setAlertMessage(t("Something went wrong"));
+            return;
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        setAlert(!alert);
+        setAlertMessage(t("Something went wrong"));
+        return;
+      });
   };
 
   useEffect(() => {
@@ -147,7 +170,7 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
         setSelectedBreakTime(0);
         setAlertMessage("The Break Time cannot exceed total time");
         setAlert(!alert);
-      }else{
+      } else {
         updateBreakTime();
       }
       const totalSeconds = seconds - selectedBreakTime * 60;
@@ -198,6 +221,7 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
   const handleTime = async (key) => {
     const now = new Date();
     if (key === "start_time") {
+      setSeconds(0);
       setStartTime(formatCurrentTime(now));
       setIsRunning(true);
     }
@@ -212,6 +236,7 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
+      second: "2-digit",
       hour12: true,
     };
     const formattedDateTime = now.toLocaleString(undefined, options);
@@ -245,6 +270,7 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
 
   const handleBillingSubmit = async () => {
     if (updateAppointment?.start_time && updateAppointment?.end_time) {
+      setLoading(true);
       const data = {
         appointment_id: updateAppointment?.id,
       };
@@ -275,21 +301,30 @@ const Timer = ({ updateAppointment, setUpdateAppointment, bill, setBill,handlePr
                 )
                 .then((res) => {
                   setUpdateAppointment(res.data.data[0]);
+                  setLoading(false);
                   navigate(
                     `/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`
                   );
                 })
                 .catch((err) => {
-                  console.error(err);
+                  setLoading(false);
+                  setAlert(!alert);
+                  setAlertMessage(t("Something went wrong"));
                 });
             })
             .catch((err) => {
-              console.error(err);
+              setLoading(false);
+              setAlert(!alert);
+              setAlertMessage(t("Something went wrong"));
             });
         })
         .catch((err) => console.error(err));
     }
   };
+
+  if (loading) {
+    return <LoaderModal />;
+  }
 
   return (
     <div className="flex flex-col items-center gap-2">

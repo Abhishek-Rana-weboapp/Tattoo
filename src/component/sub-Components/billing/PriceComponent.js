@@ -1,21 +1,26 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { apiUrl } from "../../../url";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../../../context/UserContext";
+import { useTranslation } from "react-i18next";
+import LoaderModal from "../../modal/LoaderModal";
 
 export default function PriceComponent({
   updateAppointment,
   setUpdateAppointment,
-  handlePrice,
   handlePrev,
 }) 
 {
 
   const navigate = useNavigate()
+  const {alert,setAlert, setAlertMessage} = useContext(UserContext)
+  const {t} = useTranslation()
 
   const [formatedPrice, setFormatedPrice] = useState()
   const [price, setPrice] = useState(updateAppointment.price ||  "")
   const [fix, setFix] = useState(updateAppointment.fix_price || "")
+  const [loading, setLoading] = useState(false)
   
   useEffect(()=>{
      if(updateAppointment.price){
@@ -28,7 +33,6 @@ export default function PriceComponent({
     // Update the raw price in the state
     const rawPrice = parseInt(event.target.value.replace(/[^0-9.]/g, ""));
     setPrice(rawPrice)
-    handlePrice("price", rawPrice);
     setFormatedPrice(rawPrice)
     // Format for display
   };
@@ -46,7 +50,7 @@ export default function PriceComponent({
 
   const handleNext = async()=>{
     if(price && fix){
-
+      setLoading(true)
       const data = {
       updates:[
         {
@@ -71,14 +75,25 @@ export default function PriceComponent({
         axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
         .then(res=>{
            setUpdateAppointment(res.data.data[0])
+           setLoading(false)
            navigate(`/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`)
         })
-        .catch(err=>{console.error(err)})
+        .catch(err=>{
+          setLoading(false)
+          setAlertMessage(t("Something went wrong"))
+          setAlert(!alert)
+        })
       })
       .catch(err=>{
-        console.error(err)
+        setLoading(false)
+        setAlertMessage(t("Something went wrong"))
+        setAlert(!alert)
       })
     }
+  }
+
+  if(loading){
+    return <LoaderModal/>
   }
 
 
