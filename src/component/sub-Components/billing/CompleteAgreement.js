@@ -5,30 +5,27 @@ import UserContext from "../../../context/UserContext";
 import { apiUrl } from "../../../url";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import LoaderModal from "../../modal/LoaderModal";
 
 export default function CompleteAgreement({
   updateAppointment,
   setUpdateAppointment,
-  handlePrev
+  handlePrev,
 }) {
   const { t } = useTranslation();
-  const [imgUrl, setImgUrl] = useState()
+  const [imgUrl, setImgUrl] = useState();
   const signatureRef = useRef();
   const navigate = useNavigate();
-  const {
-    setAlert,
-    setAlertMessage,
-    alert,
-  } = useContext(UserContext);
+  const { setAlert, setAlertMessage, alert } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(()=>{
-    if(updateAppointment){
-      if(updateAppointment.Sign_completion){
-        setImgUrl(updateAppointment.Sign_completion)
+  useEffect(() => {
+    if (updateAppointment) {
+      if (updateAppointment.Sign_completion) {
+        setImgUrl(updateAppointment.Sign_completion);
       }
     }
-  },[updateAppointment])
-
+  }, [updateAppointment]);
 
   const handleSave = async () => {
     if (signatureRef?.current?.isEmpty()) {
@@ -36,43 +33,54 @@ export default function CompleteAgreement({
       setAlert(!alert);
     } else {
       const dataUrl = signatureRef?.current?.toDataURL();
-      setImgUrl(dataUrl)
+      setImgUrl(dataUrl);
     }
   };
 
   const handleClear = () => {
     signatureRef?.current?.clear();
-    setImgUrl()
+    setImgUrl();
   };
 
-  const handleNext = async()=>{
-    if(imgUrl){
+  const handleNext = async () => {
+    if (imgUrl) {
+      setLoading(true);
       const data = {
-        updates : [{
-          id: updateAppointment?.id,
-          updateField: "Sign_completion",
-          updateValue: imgUrl,
-        },
-      ]
-    };
-    await axios
-    .post(`${apiUrl}/artist/post_new`, data)
-    .then((res) => {
-      if (res.status === 201) {
-        setAlertMessage(t("Signature Uploaded"));
-        setAlert(!alert);
-        navigate("/artist-dashboard", { replace: true });
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-  }else{
-    setAlert(!alert)
-    setAlertMessage(t( "Please save the Signature first"))
+        updates: [
+          {
+            id: updateAppointment?.id,
+            updateField: "Sign_completion",
+            updateValue: imgUrl,
+          },
+        ],
+      };
+      await axios
+        .post(`${apiUrl}/artist/post_new`, data)
+        .then((res) => {
+          if (res.status === 201) {
+            setLoading(false);
+            setAlertMessage(t("Signature Uploaded"));
+            setAlert(!alert);
+            navigate("/artist-dashboard", { replace: true });
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          setAlert(!alert);
+          setAlertMessage(t("Something went wrong"));
+          return;
+        });
+    } else {
+      setAlert(!alert);
+      setAlertMessage(t("Please save the Signature first"));
+      return;
+    }
+  };
+
+  if(loading){
+    return <LoaderModal/>
   }
-  }
-  
+
   return (
     <div className="flex md:w-2/4 w-full flex-col gap-3 items-center overflow-hidden p-2">
       <h3 className="text-white font-bold text-center">
@@ -105,9 +113,7 @@ export default function CompleteAgreement({
             ref={signatureRef}
           />
         </div>
-        {
-          imgUrl && <img src={imgUrl} className="w-50 h-50"></img>
-        }
+        {imgUrl && <img src={imgUrl} className="w-50 h-50"></img>}
         <div className="flex justify-center gap-2">
           <button
             type="button"
@@ -119,7 +125,7 @@ export default function CompleteAgreement({
               border: "none",
               cursor: "pointer",
               marginRight: "10px",
-              fontWeight:600
+              fontWeight: 600,
             }}
             onClick={handleClear}
           >
@@ -134,7 +140,7 @@ export default function CompleteAgreement({
               borderRadius: "4px",
               border: "none",
               cursor: "pointer",
-              fontWeight:600
+              fontWeight: 600,
             }}
             onClick={handleSave}
           >
@@ -142,22 +148,22 @@ export default function CompleteAgreement({
           </button>
         </div>
       </div>
-        <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-4">
         <button
-        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-        onClick={handlePrev}
-        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+          className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+          onClick={handlePrev}
+          // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
         >
-        Prev
-      </button>
+          Prev
+        </button>
         <button
-        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-        onClick={handleNext}
-        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+          className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+          onClick={handleNext}
+          // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
         >
-        Sign
-      </button>
-        </div>
+          Sign
+        </button>
+      </div>
     </div>
   );
 }

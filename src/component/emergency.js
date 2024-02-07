@@ -7,6 +7,7 @@ import Modal from './modal/Modal';
 import { useTranslation } from 'react-i18next';
 import AlertModal from './modal/AlertModal';
 import {states} from '../data/states';
+import LoaderModal from './modal/LoaderModal';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
@@ -14,6 +15,8 @@ function EmergencyContactForm() {
   const navigate = useNavigate();
   const { emerformData, setemerFormData, setIsVisible,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
   const [data, setdata] = useState()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [showPopup_, setShowPopup_] = useState(false);
   const Yes=t("Yes")
   const No=t('No')
@@ -25,6 +28,7 @@ function EmergencyContactForm() {
 
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
+    setLoading(true)
     try {
       const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
       const data = await response.json();
@@ -32,9 +36,13 @@ function EmergencyContactForm() {
       if (data?.data?.length > 0) {
         setdata(JSON.parse(data?.emergencycontectnumber))
         setShowPopup_(true);
+        setLoading(false)
       }
     } catch (error) {
-      console.error('Error fetching previous medical history:', error);
+      setLoading(false)
+      setAlert(!alert)
+      setAlertMessage(t("Something went wrong"))
+      return
     }
   }
 
@@ -50,6 +58,7 @@ function EmergencyContactForm() {
       navigate('/doctor-info')
     }
     if(value === "Yes" || "Sí"){
+      setemerFormData(data)
       setShowPopup_(false)
     }
   }
@@ -57,7 +66,6 @@ function EmergencyContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // Check if any of the form fields are empty
     if (!emerformData.name || !emerformData.phone || !emerformData.city || !emerformData.state) {
     setAlert(!alert)
@@ -70,6 +78,10 @@ function EmergencyContactForm() {
 
   const handlePrev = ()=>{
     navigate(-1)
+  }
+
+  if(loading){
+    return <LoaderModal/>
   }
 
   return (

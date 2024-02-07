@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { IoMdClose } from "react-icons/io";
 import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../loader/Loader";
 
 export default function UploadBeforeImage({ handlePrev, updateAppointment, setUpdateAppointment }) {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -14,6 +15,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
   const { t } = useTranslation();
   const beforeRef = useRef(null);
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   useEffect(()=>{
       if(updateAppointment?.before_image){
@@ -28,7 +30,8 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
       const response = await axios.post(`${apiUrl}/upload`, formData);
       return response.data.profile_url;
     } catch (err) {
-      console.error("File Upload Failed", err.message);
+      setAlertMessage(t('File Upload Failed'))
+      setAlert(!alert)
       return null;
     }
   };
@@ -47,9 +50,13 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     setImageStatus("UPLOADING");
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
     const urls = await Promise.all(uploadPromises);
+    console.log(urls)
+    const filteredUrls = urls.filter(url=>url !== null)
     setImageStatus("IDLE");
-    setUploadedUrls((prev) => [...prev, ...urls]);
+    setUploadedUrls((prev) => [...prev, ...filteredUrls]);
   };
+
+  console.log(uploadedUrls)
 
     const handleDeleteImage = (index) => {
       setUploadedUrls(
@@ -61,6 +68,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
 
       const handleNext = async()=>{
         if(uploadedUrls){
+          setLoading(true)
           const encodeUrlString = encodeUrls(uploadedUrls)
           const data = {
             updates: [
@@ -85,27 +93,33 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
               )
               .then((res) => {
                 setUpdateAppointment(res.data.data[0]);
+                setLoading(false)
                 navigate(`/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`);
                 })
                 .catch((err) => {
-                  console.error(err);
+                  setAlertMessage(t('Something went wrong'))
+                  setAlert(!alert)
+                  setLoading(false)
+                  return
                 });
               })
               .catch((err) => {
-                console.error(err);
+                setLoading(false)
+                setAlertMessage(t('Something went wrong'))
+                setAlert(!alert)
+                return
               });
             }
       }
 
   return (
-    <div className="flex flex-col gap-2 items-center overflow-hidden">
+    <div className="flex flex-col gap-2 w-full h-full items-center overflow-hidden">
       {/* Image upload for before */}
       <h3>Please Provide Before Image:</h3>
-      {uploadedUrls.length !== 0 && (
-        <div className="flex md:flex-row flex-col gap-2 overflow-y-auto overflow-x-hidden md:w-full  md:justify-center items-center">
-          {uploadedUrls.map((url, index) => {
+      {uploadedUrls.length !== 0 && (<div className="flex md:grid md:grid-cols-3 md:grid-rows-3 flex-col gap-2 overflow-y-auto overflow-x-hidden md:w-2/4  md:justify-center items-center md:items-start h-full">
+            {uploadedUrls.map((url, index) => {
             return (
-              <div className="relative md:w-1/3 w-2/3 h-60">
+              <div className="relative md:w-full w-2/3 md:h-full h-60">
                 <img
                   key={url}
                   src={url}
@@ -118,9 +132,10 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
                 />
               </div>
             );
-          })}
+          })
+        }
         </div>
-      )}
+          )}
       <input
         type="file"
         accept=".jpg, .jpeg, .png, .pdf" // Specify allowed file types
@@ -134,7 +149,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
         onClick={handleBeforeButton}
         disabled={imageStatus === "UPLOADING"}
       >
-        {imageStatus === "UPLOADING" ? "..." : "Upload Before Image"}
+        {imageStatus === "UPLOADING" ? <Loader/> : "Upload Before Image"}
       </button>
       <div className="flex gap-5 items-center">
         <button

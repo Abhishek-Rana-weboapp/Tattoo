@@ -26,9 +26,11 @@ function App() {
   const { t } = useTranslation();
 
 useEffect(()=>{
-  if(sessionStorage.getItem("lang")){
-    const language = sessionStorage.getItem("lang")
-    i18n.changeLanguage(language)
+  const storedLang = sessionStorage.getItem("lang")
+  if(storedLang){
+    i18n.changeLanguage(storedLang)
+  }else{
+    i18n.changeLanguage("en")
   }
 },[])
 

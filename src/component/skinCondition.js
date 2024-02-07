@@ -44,9 +44,7 @@ function SkinCondition({
           )
           .then((res) => {
             setUpdateAppointment(res.data.data[0]);
-            navigate(
-              `/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`
-              );
+            navigate(`/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`);
             })
             .catch((err) => {
               console.error(err);

@@ -68,6 +68,16 @@ function MedicalForm() {
       navigate("/emergency-contact");
     }
     if (value === "Yes") {
+      setFormData({
+        page1: data?.tattooedBefore,
+        page2: data?.pregnantOrNursing,
+        page3: data?.hemophiliac,
+        page4: data?.medicalCondition,
+        page5: data?.communicableDiseases,
+        page6: data?.alcohol,
+        page7: data?.allergies,
+        page8: data?.heartCondition,
+      });
       setShowPopup_(!showPopup_);
     }
   };

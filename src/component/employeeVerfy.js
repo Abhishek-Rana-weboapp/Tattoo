@@ -230,7 +230,7 @@ const IDVerificationComponent = () => {
  }
 
  const shopLocationOption = [
-  "Hialeah, Fl"
+  "Hialeah, FL"
  ]
 
   return (

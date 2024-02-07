@@ -287,10 +287,7 @@ function ConsentForm() {
                   "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
                 )}
               </p>
-              <div className="flex justify-between w-full">
-                <button className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300">
-                  Cancel
-                </button>
+              <div className="flex justify-end w-full">
                 <button
                   className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
                   onClick={handleAdopt}

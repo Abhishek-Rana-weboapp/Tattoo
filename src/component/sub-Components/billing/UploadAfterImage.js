@@ -6,6 +6,8 @@ import UserContext from "../../../context/UserContext";
 import { useTranslation } from "react-i18next";
 import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../loader/Loader";
+import LoaderModal from "../../modal/LoaderModal";
 
 export default function UploadAfterImage({
   updateAppointment,
@@ -19,6 +21,7 @@ export default function UploadAfterImage({
   const [imageStatus, setImageStatus] = useState("IDLE");
   const [uploadedVideoUrl, setUploadedVideoUrl] = useState([]);
   const [videoStatus, setVideoStatus] = useState("IDLE");
+  const [loading, setLoading] = useState(false)
 
 
   useEffect(()=>{
@@ -94,13 +97,14 @@ export default function UploadAfterImage({
     );
   };
 
-  const handleDeleteVideo = () => {
-    setUploadedVideoUrl();
+  const handleDeleteVideo = (index) => {
+    setUploadedVideoUrl(uploadedVideoUrl.filter((vid, vidIndex)=>vidIndex !== index))
   };
 
   const handleNext = async () => {
     let data;
     if (uploadedUrls.length > 0 || uploadedVideoUrl.length > 0) {
+      setLoading(true)
       if (uploadedUrls.length > 0 && uploadedVideoUrl.length === 0) {
         const encodedAfterImage = encodeUrls(uploadedUrls);
         data = {
@@ -166,20 +170,34 @@ export default function UploadAfterImage({
             )
             .then((response) => {
               setUpdateAppointment(response.data.data[0]);
+              setLoading(false)
               navigate(
                 `/billing/${updateAppointment?.id}/${response.data.data[0].process_step}`
                 );
               })
-              .catch((err) =>
-              console.log("Error in getting the appointment list by ID : ", err)
+              .catch((err) =>{
+                setLoading(false)
+                setAlert(!alert);
+            setAlertMessage(t("Something went wrong"));
+            return;
+              }
               );
-            });
+            }).catch(err=>{
+              setLoading(false)
+              setAlert(!alert);
+            setAlertMessage(t("Something went wrong"));
+            return;
+            })
     } else {
       setAlert(!alert);
       setAlertMessage(t("Please upload a image or video"));
       return;
     }
   };
+
+  if(loading){
+    return <LoaderModal/>
+  }
 
   return (
     <>
@@ -218,7 +236,7 @@ export default function UploadAfterImage({
             onClick={handleAfterButton}
             disabled={imageStatus === "UPLOADING"}
           >
-            {imageStatus === "UPLOADING" ? "..." : "After Image"}
+            {imageStatus === "UPLOADING" ? <Loader/> : "After Image"}
           </button>
         </div>
 
@@ -234,7 +252,7 @@ export default function UploadAfterImage({
                     </video>
                     <IoMdClose
                       className="img-del-icon"
-                      onClick={handleDeleteVideo}
+                      onClick={()=>handleDeleteVideo(index)}
                     />
                   </div>
                 );
@@ -254,7 +272,7 @@ export default function UploadAfterImage({
             onClick={handleAfterVideoButton}
             disabled={videoStatus === "UPLOADING"}
           >
-            {videoStatus === "UPLOADING" ? "..." : "Upload Video"}
+            {videoStatus === "UPLOADING" ? <Loader/> : "Upload Video"}
           </button>
         </>
       </div>

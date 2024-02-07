@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import HistoryVerifyModal from "../modal/HistoryVerifyModal";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function ArtistDashboard() {
   const [appointments, setAppointments] = useState();
@@ -16,6 +17,7 @@ export default function ArtistDashboard() {
     setUpdateAppointment,
   } = useContext(UserContext);
   const [selectedClient, setSelectedClient] = useState();
+  const {t} = useTranslation()
   // const [selectedArtist, setSelectedArtist] = useState([]);
   const [selectedMedicalHistory, setSelectedMedicalHistory] = useState();
   const [selectedYes, setSelectedYes] = useState([]);
@@ -24,24 +26,32 @@ export default function ArtistDashboard() {
   const navigate = useNavigate();
   const [selectedAppointment, setSelectedAppointment] = useState();
   const selectedArtist = sessionStorage.getItem("fullname")
+  const [loading , setLoading] = useState(false)
 
   const fetchAppointments = async () => {
+    setLoading(true)
     await axios
       .get(`${apiUrl}/artist/appointment_list`)
-      .then((res) =>
+      .then((res) =>{
         setAppointments(
           res?.data?.data.filter((a) => {
             const appDate = new Date(a.Date)
             const todayDate = new Date();
             todayDate.setHours(0, 0, 0, 0);
             return (
-              // (a.Date.slice(0, 8) === new Date().toLocaleDateString("en-us") && a.Sign_completion === null)
               (appDate.toLocaleDateString() === todayDate.toLocaleDateString() && a.Sign_completion === null)
-            );
-          })
-        )
+              );
+            })
+            )
+            setLoading(false)
+          }
       )
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setLoading(false)
+        setAlertMessage(t("Error while fetching"))
+        setAlert(!alert)
+        return
+      });
   };
 
   const fetchMedicalHistory = async () => {
