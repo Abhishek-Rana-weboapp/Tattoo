@@ -60,7 +60,7 @@ function LegDashboard() {
         if(selected){
          if(partButtons.find(item=>item.name === selected)){
            setUser({ ...user, bodyPart : selected});
-           navigate('/medical-form'); 
+           navigate('/description'); 
          }
          if(contentButtons.find(item=>item.name===selected)){
            setUser({ ...user, legInside : selected});

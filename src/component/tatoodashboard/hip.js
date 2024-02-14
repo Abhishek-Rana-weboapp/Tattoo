@@ -34,7 +34,7 @@ function Hip() {
       const handleNext = ()=>{
         if(selected){
           setUser({ ...user, bodyPart : selected });
-          navigate('/medical-form'); 
+          navigate('/description'); 
         }else{
           setAlert(!alert)
           setAlertMessage(t("Please select an option"))

@@ -58,7 +58,7 @@ console.log(selected)
           navigate("/under-chest")
         }
         if(buttons.find(b=>b.name === selected)){
-          navigate("/medical-form")  
+          navigate("/description")  
         }
       }
       else{

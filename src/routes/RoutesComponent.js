@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import React, { useContext, } from 'react'
+import {  Route, Routes,  } from 'react-router-dom'
 import Login from '../component/login';
 import SignUp from '../component/signup';
 import ForgetPassword from '../component/forgetPassword';
@@ -68,7 +68,6 @@ import PriceServices from '../component/priceServices';
 import TattooComponent from '../component/serviceSelection';
 import SkinCondition from '../component/skinCondition';
 import AppointmentList from '../component/AppointmentList';
-import CalculateBilling from '../component/billing';
 import SignaturePad from '../component/signature';
 import SignaturePad_see from '../component/signature_see';
 import JewelleryPiercing from '../component/piercingdashboard/jweleryPiercing';
@@ -78,22 +77,16 @@ import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
 import ArtistDashboard from '../component/dashboard/ArtistDashboard';
 import BillingComponent from '../component/billing';
-import AdminRoutes from './AdminRoutes';
 import SuperAdminDashboard from '../component/dashboard/SuperAdminDashboard';
 import AdminInvite from '../component/dashboard/AdminInvite';
+import BriefDescription from '../component/tatoodashboard/BriefDescription';
+import GaurdianInfo from '../component/GaurdianInfo';
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible , alert , setAlert} = useContext(UserContext)
-  const navigate = useNavigate()
+  const {isVisible, alert } = useContext(UserContext)
 
-  const isLoggedIn = ()=>{
-     const token = sessionStorage.getitem("token")
-     if(token){
-      return true ;
-     }else return false
-  }
-
+  
   // const Route = ({element , path})=>{
   //   return isLoggedIn() ? <Route exact path={path} element={element}/> : <Navigate to={"/"}/>
   // }
@@ -117,6 +110,7 @@ export default function RoutesComponent() {
       <Route exact path="/admin" element={<SuperAdminDashboard/>} />
       <Route element={<PrivateRoutes/>} >
 
+      <Route exact path="/gaurdian-info" element={<GaurdianInfo />} />
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/tattoo" element={<TattooDashboard />} />
       <Route exact path="/head" element={<HeadTattoo />} />
@@ -155,6 +149,8 @@ export default function RoutesComponent() {
       <Route exact path="/foot" element={<Foot />} />
       <Route exact path="/foot-dashboard" element={<FootDashboard />} />
       <Route exact path="/temple" element={<FaceTemple />} />
+      <Route exact path="/description" element={<BriefDescription/>} />
+      
       
       <Route exact path="/piercing" element={<Piercing />} />
 

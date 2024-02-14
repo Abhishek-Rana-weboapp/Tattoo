@@ -62,6 +62,7 @@ export default function CompleteAgreement({
             setAlertMessage(t("Signature Uploaded"));
             setAlert(!alert);
             navigate("/artist-dashboard", { replace: true });
+            return
           }
         })
         .catch((err) => {

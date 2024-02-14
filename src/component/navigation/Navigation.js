@@ -9,8 +9,8 @@ export default function Navigation({next , prev}) {
 
   return (
     <div className=" w-full md:w-3/6 flex justify-between">
-    <NavigationButton onClick={prev}><GrFormNextLink className='rotate-180' />{t("Back")}</NavigationButton>
-    <NavigationButton onClick={next}>{t("Next")}<GrFormNextLink /></NavigationButton>
+    <NavigationButton onClick={prev}>{t("Back")}</NavigationButton>
+    <NavigationButton onClick={next}>{t("Next")}</NavigationButton>
    </div>
   )
 }

@@ -5,6 +5,7 @@ import ProgressBar from "./ProgressBar";
 import Modal from "./modal/Modal";
 import { useTranslation } from "react-i18next";
 import { states } from "../data/states";
+import axios from "axios";
 
 
 function DoctorContactForm() {
@@ -52,23 +53,23 @@ function DoctorContactForm() {
   const fetchData = async () => {
     const username = sessionStorage.getItem("username");
     setLoading(true)
-    try {
-      const response = await fetch(
-        `${apiUrl}/artist/username_appointment_list?username=${username}`
-      );
-      const data = await response.json();
-
-      if (data.data.length > 0) {
-        setData(JSON.parse(data.doctor_information));
-        setLoading(false)
-        setShowPopup_(true);
-      }
-    } catch (error) {
+    await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
+       .then(res=>{
+        console.log(res)
+         if (res?.data?.data.length > 0) {
+          if(res.data.doctor_information){
+            setData(JSON.parse(res.data.doctor_information))
+            setShowPopup_(true);
+          }
+          }
+          setLoading(false)
+        })
+    .catch (error=> {
       setLoading(false)
       setAlert(!alert)
-      setAlertMessage(t("Error fetching previous medical history"))
+      setAlertMessage(t("Error fetching previous doctor info"))
       return
-    }
+    })
   };
 
   useEffect(() => {
@@ -87,6 +88,8 @@ function DoctorContactForm() {
       setShowPopup_(false);
     }
   };
+
+  console.log(drformData)
 
   const handleSubmit = (e) => {
     e.preventDefault();

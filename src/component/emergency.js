@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import AlertModal from './modal/AlertModal';
 import {states} from '../data/states';
 import LoaderModal from './modal/LoaderModal';
+import axios from 'axios';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
@@ -29,21 +30,22 @@ function EmergencyContactForm() {
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
     setLoading(true)
-    try {
-      const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
-      const data = await response.json();
-
-      if (data?.data?.length > 0) {
-        setdata(JSON.parse(data?.emergencycontectnumber))
-        setShowPopup_(true);
-        setLoading(false)
-      }
-    } catch (error) {
+       await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
+       .then(res=>{
+        if(res?.data?.data?.length > 0){
+           if(res.data.emergencycontectnumber){
+             setdata(JSON.parse(res.data.emergencycontectnumber))
+             setShowPopup_(true);
+            }
+          }
+          setLoading(false)
+        })
+    .catch (error=> {
       setLoading(false)
       setAlert(!alert)
       setAlertMessage(t("Something went wrong"))
       return
-    }
+    })
   }
 
   useEffect(() => {
@@ -63,6 +65,8 @@ function EmergencyContactForm() {
     }
   }
 
+
+  console.log(emerformData)
 
   const handleSubmit = (e) => {
     e.preventDefault();

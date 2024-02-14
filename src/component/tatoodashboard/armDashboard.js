@@ -56,7 +56,7 @@ function ArmDashboard() {
        if(selected){
         if(partButtons.find(item=>item.name === selected)){
           setUser({ ...user, bodyPart : selected});
-          navigate('/medical-form'); 
+          navigate('/description'); 
         }
         if(armButtons.find(item=>item.name===selected)){
           setUser({ ...user, armInside : selected});

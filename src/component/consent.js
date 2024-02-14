@@ -7,12 +7,25 @@ import ConsentFormLayout from "./Layout/FormLayout";
 import { useTranslation } from "react-i18next";
 import SignatureModal from "./modal/SignatureModal";
 import html2canvas from "html2canvas";
-import SignatureCanvas from "react-signature-canvas"
+
+import ClientInitialsModal from "./modal/ClientInitialsModal";
+import GaurdianInitialsModal from "./modal/GaurdianInitialsModal";
 
 function ConsentForm() {
   const { t } = useTranslation();
   var progressValue = 5;
   const [progressValue_, setprogressValue_] = useState(1);
+  const [fullName, setFullName] = useState(
+    `${sessionStorage.getItem("firstname")} ${sessionStorage.getItem(
+      "lastname"
+    )}`
+  );
+  const [drawnSignature, setDrawnSignature] = useState();
+  const [drawnGaurdianSignature, setDrawnGaurdianSignature] = useState();
+  const [activeTab, setActiveTab] = useState(1);
+  const [gaurdianActiveTab, setGaurdianActiveTab] = useState(1);
+  const storedGaurdianInitials = sessionStorage.getItem("gaurdianInitials");
+
 
   const navigate = useNavigate();
   const {
@@ -21,30 +34,25 @@ function ConsentForm() {
     alert,
     setAlert,
     setAlertMessage,
-    harmlessagreement,
-    setharmlessagreement,
-    checked,
-    setChecked,
-    signature,
     setSignature,
+    setGaurdianSignature,
+    gaurdianInitials,
+    setGaurdianInitials,
   } = React.useContext(UserContext);
   const inputRef = useRef();
-  const [fullName, setFullName] = useState(
-    `${sessionStorage.getItem("firstname")} ${sessionStorage.getItem(
-      "lastname"
-    )}`
-  );
+
+  // const [signatureRef, setSignatureRef] = useState();
+  const [cursiveSignatureImage, setCursiveSignatureImage] = useState("");
+  const [cursiveGaurdianSignatureImage, setCursiveGaurdianSignatureImage] =
+    useState("");
   const [storedInitials, setStoredInitials] = useState(
     sessionStorage.getItem("initials")
   );
-  const [initialsModal, setInitiallsModal] = useState(true);
-  const [isChanged, setIsChanged] = useState();
-  const [signatureModal, setSignatureModal] = useState(false);
-  // const [signatureRef, setSignatureRef] = useState();
-  const [activeTab , setActiveTab] = useState(1)
-  const [drawnSignature, setDrawnSignature] = useState()
-  const [cursiveSignatureImage, setCursiveSignatureImage] = useState('');
-  const signatureRef = useRef()
+  const [clientInitialsModalOpen, setClientInitialsModalOpen] = useState(true);
+  const [gaurdianInitialsModalOpen, setGaurdianInitialsModalOpen] =
+    useState(false);
+
+  const minor = sessionStorage.getItem("minor");
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 13;
@@ -64,28 +72,12 @@ function ConsentForm() {
     "I swear, affirm, and agree that all the above information is true and correct and that I understand it.",
   ];
 
-  
-
   useEffect(() => {
     inputRef?.current?.focus();
   }, [currentPage]);
 
-  const handleInitialsChange = (page, initialsValue) => {
-    setInitials({ ...initials, [page]: storedInitials });
-  };
-
-  const handleSignatureSave = ()=>{
-      if(signatureRef?.current?.isEmpty()){
-        setAlertMessage(t("Please add your signature"))
-        setAlert(!alert)
-      }else{
-        const dataUrl = signatureRef?.current?.toDataURL();
-        setDrawnSignature(dataUrl)
-      }
-    };
-  
   const handleCheckbox = (page, e) => {
-    setChecked({ ...checked, [page]: e.target.checked });
+    // setChecked({ ...checked, [page]: e.target.checked });
     if (e.target.checked === true) {
       setInitials({ ...initials, [page]: storedInitials });
     } else {
@@ -93,20 +85,35 @@ function ConsentForm() {
     }
   };
 
-  useEffect(()=>{
-    const handleCursive = async()=>{
+  const handleGaurdianCheckbox = (page, e)=>{
+    if (e.target.checked === true) {
+      setGaurdianInitials({ ...initials, [page]: storedGaurdianInitials });
+    } else {
+      setGaurdianInitials({ ...initials, [page]: "" });
+    }
+  }
+
+  useEffect(() => {
+    const handleCursive = async () => {
       const cursiveSignatureImage = await captureCursiveSignature();
       setCursiveSignatureImage(cursiveSignatureImage);
-    }
-    handleCursive()
-  },[])
+    };
+    handleCursive();
+  }, []);
 
   const nextPage = () => {
     if (currentPage < totalPages && currentPage !== 13) {
       // Check if the initials for the current page have been filled
-      if (!initials[currentPage]) {
-        setAlert(!alert);
-        setAlertMessage(t("Please provide your initials"));
+      if (minor === "true") {
+        if(!initials[currentPage] || !gaurdianInitials[currentPage]){
+          setAlert(!alert);
+          setAlertMessage(t("Please provide your initials"));
+          return
+        }else{
+          setprogressValue_(progressValue_ + 1);
+          setCurrentPage(currentPage + 1);
+          return
+        }
       } else {
         setprogressValue_(progressValue_ + 1);
         setCurrentPage(currentPage + 1);
@@ -123,182 +130,105 @@ function ConsentForm() {
     }
     if (currentPage === 1) navigate(-1);
   };
-  
-  const handleAdopt = async() => {
-    if(activeTab === 1){
-      if(cursiveSignatureImage){
-        setSignature(cursiveSignatureImage)
-        setInitiallsModal(!initialsModal);
-        setharmlessagreement({ ...harmlessagreement, name: fullName });
+
+
+  const handleAdopt = () => {
+    if (activeTab === 1) {
+      if (cursiveSignatureImage) {
+        setSignature(cursiveSignatureImage);
+        if (minor === "true") {
+          setClientInitialsModalOpen(false);
+          setGaurdianInitialsModalOpen(true);
+          return;
+        } else {
+          setClientInitialsModalOpen(false);
+          return;
+        }
       }
     }
-    if(activeTab === 2){
-      if(drawnSignature){
-        setSignature(drawnSignature)
-        setharmlessagreement({ ...harmlessagreement, name: fullName });
-        setInitiallsModal(!initialsModal);
+    if (activeTab === 2) {
+      if (drawnSignature) {
+        setSignature(drawnSignature);
+        if (minor) {
+          setClientInitialsModalOpen(false);
+          setGaurdianInitialsModalOpen(true);
+          return;
+        } else {
+          setClientInitialsModalOpen(false);
+          return;
+        }
       }
     }
   };
 
-  const handleClear = ()=>{
-    signatureRef?.current?.clear();
-  }
+  const handleGaurdianAdopt = () => {
+    if (gaurdianActiveTab === 1) {
+      if (cursiveGaurdianSignatureImage) {
+        setGaurdianSignature(cursiveGaurdianSignatureImage);
+        setGaurdianInitialsModalOpen(false);
+        return
+      }
+    }
+    if (gaurdianActiveTab === 2) {
+      if (drawnSignature) {
+        setGaurdianSignature(drawnSignature);
+        setGaurdianInitialsModalOpen(false);
+        if (minor) {
+          return;
+        } else {
+          setClientInitialsModalOpen(false);
+          return;
+        }
+      }
+    }
+  };
 
-  
   const captureCursiveSignature = async () => {
     // Use html2canvas to capture the cursive signature as an image
-    const cursiveSignatureCanvas = await html2canvas(document.getElementById('cursiveSignature'), {
-      scale: 3, // Increase the scale for higher resolution
-      logging: false, // Disable logging to console
-      useCORS: true, // Enable cross-origin resource sharing
-      allowTaint: true, // Allow tainting of the canvas (useful if the content includes images from other domains)
-      backgroundColor: null, // Set background color to null to capture transparency
-    });
+    const cursiveSignatureCanvas = await html2canvas(
+      document.getElementById("cursiveSignature"),
+      {
+        scale: 3, // Increase the scale for higher resolution
+        logging: false, // Disable logging to console
+        useCORS: true, // Enable cross-origin resource sharing
+        allowTaint: true, // Allow tainting of the canvas (useful if the content includes images from other domains)
+        backgroundColor: null, // Set background color to null to capture transparency
+      }
+    );
     // Convert the canvas to a base64-encoded image
     return cursiveSignatureCanvas.toDataURL();
   };
 
   return (
     <>
-        {signatureModal && (
-          <div>
-          {/* <SignatureModal
-            setSignatureRef={setSignatureRef}
-            handleSave={handleSignatureSave}
-            handleClear={handleClear}
-            showPopup={signatureModal}
-            setShowPopup={setSignatureModal}
-          /> */}
-      </div>
-        )}
       {
         //Modal for confirming initials and signature
-        initialsModal && (
-          <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-            <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
-              <h1>Adopt Your Initials and Signature</h1>
-              <label className="font-bold">
-                Confirm Your Name and Initials
-              </label>
-              <div className="flex items-center gap-2 w-3/4">
-                <div className="flex flex-col text-start w-3/4">
-                  <label className="font-bold">
-                    Full Name<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="p-1 border-gray-400 border-1 rounded-lg font-bold"
-                    value={fullName}
-                  ></input>
-                </div>
-                <div className="flex flex-col text-start w-1/4">
-                  <label className="font-bold">
-                    Initials<span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
-                    value={storedInitials}
-                  ></input> 
-                </div>
-              </div>
-              <div>
-                <div className="flex gap-2">
-                  <button className={`bg-none font-semibold text-black hover:bg-gray-300 ${activeTab === 1 && "bg-gray-300"} p-2 rounded-lg`} onClick={()=>setActiveTab(1)}>Written</button>
-                  <button className={`bg-none font-semibold text-black hover:bg-gray-300 ${activeTab === 2 && "bg-gray-300"} p-2 rounded-lg`} onClick={()=>setActiveTab(2)}>Draw</button>
-                </div>
-                <div>
-                  {
-                    activeTab === 1 && 
-                 <div className="border-1 rounded-lg border-gray-500 w-full"> 
-                    <img src={cursiveSignatureImage} className="w-full h-40"></img>
-                    </div>
-                  }
-                </div>
-              </div>
-                { activeTab === 2 &&
-                <div className="flex flex-col items-center">
-                  <SignatureCanvas
-                penColor="black"
-                canvasProps={{
-                  width: 400,
-                  height:200,
-                  className: "sigCanvas",
-                  style: {
-                    border: "1px solid #000",
-                    backgroundColor: "#9ca3af",
-                    borderRadius: "10px",
-                  },
-                }}
-                ref={signatureRef}
-              />
-
-              {/* Buttons to handle the save and clear methods */}
-              <div
-                style={{
-                  marginTop: "10px",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <button
-                  type="button"
-                  style={{
-                    background: "#e74c3c",
-                    color: "white",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginRight: "10px",
-                  }}
-                  onClick={handleClear}
-                >
-                  {t("Clear")}
-                </button>
-                <button
-                  type="button"
-                  style={{
-                    background: "#2ecc71",
-                    color: "white",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                  onClick={handleSignatureSave}
-                >
-                  {t("Save")}
-                </button>
-              </div>
-                 {/* <button className="bg-yellow-400 font-bold text-black py-2 rounded-lg px-4" onClick={()=>setSignatureModal(!signatureModal)}>Add Signature</button> */}
-                    {drawnSignature && <div className="border-1 rounded-lg border-gray-500 w-1/4 flex justify-center"> 
-                    <img src={drawnSignature} className="w-full h-20"></img>
-                    </div>
-                  }
-                  </div>
-                }
-                {activeTab === 1 && <div id="cursiveSignature">
-                  <p className="selector" style={{ fontFamily: 'Blacksword', fontSize: '18px'} }>{fullName}</p>
-                </div>}
-              <p className=" text-xs">
-                {t(
-                  "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
-                )}
-              </p>
-              <div className="flex justify-end w-full">
-                <button
-                  className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
-                  onClick={handleAdopt}
-                >
-                  Adopt and Initial
-                </button>
-              </div>
-            </div>
-          </div>
+        clientInitialsModalOpen && (
+          <ClientInitialsModal
+            cursiveSignatureImage={cursiveSignatureImage}
+            setCursiveSignatureImage={setCursiveSignatureImage}
+            handleAdopt={handleAdopt}
+            storedInitials={storedInitials}
+            activeTab={activeTab}
+            fullName={fullName}
+            setActiveTab={setActiveTab}
+            drawnSignature={drawnSignature}
+            setDrawnSignature={setDrawnSignature}
+          />
         )
       }
+      {gaurdianInitialsModalOpen && (
+        <GaurdianInitialsModal
+          setGaurdianActiveTab={setGaurdianActiveTab}
+          gaurdianActiveTab={gaurdianActiveTab}
+          gaurdianInitials={storedGaurdianInitials}
+          cursiveGaurdianSignatureImage={cursiveGaurdianSignatureImage}
+          setCursiveGaurdianSignatureImage={setCursiveGaurdianSignatureImage}
+          handleGaurdianAdopt={handleGaurdianAdopt}
+          drawnGaurdianSignature ={drawnGaurdianSignature}
+          setDrawnGaurdianSignature = {setDrawnGaurdianSignature}
+        />
+      )}
       <ConsentFormLayout
         progressValue={progressValue}
         progressValue_={progressValue_}
@@ -310,12 +240,14 @@ function ConsentForm() {
             {t(statements[currentPage - 1])}
           </p>
         </div>
+
+        {/* Clients Section */}
         <div className="flex md:flex-col justify-center gap-2">
           <div className="flex gap-2 items-center justify-center">
             <input
               type="checkbox"
               className=" w-6 h-6"
-              checked={checked[currentPage]}
+              checked={initials[currentPage]}
               onChange={(e) => handleCheckbox(currentPage, e)}
             ></input>
             <label className=" text-white">
@@ -330,12 +262,41 @@ function ConsentForm() {
               ref={inputRef}
               type="text"
               value={initials[currentPage]}
-              // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-              disabled
+              readOnly
               className="bg-gray-700 text-white p-2 rounded-md font-bold Blacksword"
             />
           </div>
         </div>
+
+
+        {/* gaurdians section */}
+        {minor === "true" && <div className="flex md:flex-col justify-center gap-2">
+          <div className="flex gap-2 items-center justify-center">
+            <input
+              type="checkbox"
+              className=" w-6 h-6"
+              checked={gaurdianInitials[currentPage]}
+              onChange={(e) => handleGaurdianCheckbox(currentPage, e)}
+            ></input>
+            <label className=" text-white">
+              {t("Select to add Gaurdian's initials")}
+            </label>
+          </div>
+          <div className="flex flex-col md:flex-row items-center justify-center">
+            <label className=" text-white md:block hidden">
+              {t("Initials")}:{" "}
+            </label>
+            <input
+              ref={inputRef}
+              type="text"
+              value={gaurdianInitials[currentPage]}
+              readOnly
+              className="bg-gray-700 text-white p-2 rounded-md font-bold Blacksword"
+            />
+          </div>
+        </div>}
+
+
         <div className="w-full h-10 ">
           <ProgressBar progress={progressValue_} count={13} />
         </div>
@@ -344,7 +305,7 @@ function ConsentForm() {
             className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
             onClick={prevPage}
           >
-            {t("Previous")}
+            {t("Prev")}
           </button>
           <button
             className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

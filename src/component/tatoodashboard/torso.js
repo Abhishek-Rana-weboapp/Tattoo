@@ -42,7 +42,7 @@ function Torso() {
   const handleNext = ()=>{
    if(selected){
     setUser({ ...user, bodyPart : selected});
-    navigate("/medical-form");
+    navigate("/description");
    }else{
     setAlert(!alert)
     setAlertMessage("Please select a part")
