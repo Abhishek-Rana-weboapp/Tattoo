@@ -202,7 +202,7 @@ export default function UploadAfterImage({
   return (
     <>
       <div className="flex flex-col gap-4 items-center overflow-hidden">
-        <h3>After Image</h3>
+        <h3>{t("After Image")}</h3>
         <div className="flex flex-col gap-2 items-center overflow-hidden">
           {/* Images preview */}
           <div className="md:flex grid grid-cols-2 gap-2 overflow-auto">
@@ -236,7 +236,7 @@ export default function UploadAfterImage({
             onClick={handleAfterButton}
             disabled={imageStatus === "UPLOADING"}
           >
-            {imageStatus === "UPLOADING" ? <Loader/> : "After Image"}
+            {imageStatus === "UPLOADING" ? <Loader/> : (t("After Image"))}
           </button>
         </div>
 
@@ -272,7 +272,7 @@ export default function UploadAfterImage({
             onClick={handleAfterVideoButton}
             disabled={videoStatus === "UPLOADING"}
           >
-            {videoStatus === "UPLOADING" ? <Loader/> : "Upload Video"}
+            {videoStatus === "UPLOADING" ? <Loader/> : t("Upload Video")}
           </button>
         </>
       </div>
@@ -282,7 +282,7 @@ export default function UploadAfterImage({
         onClick={handlePrev}
         // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
       >
-        Prev
+        {t("Prev")}
       </button>
 
       <button
@@ -290,7 +290,7 @@ export default function UploadAfterImage({
         onClick={handleNext}
         disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
         >
-        Save
+        {t("Save")}
       </button>
         </div>
     </>

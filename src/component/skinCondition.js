@@ -3,6 +3,7 @@ import UserContext from "../context/UserContext";
 import { apiUrl } from "../url";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function SkinCondition({
   handlePrev,
@@ -13,7 +14,7 @@ function SkinCondition({
   const [condition, setCondition] = useState(updateAppointment?.skin_conditions === "good" ? "good" :updateAppointment?.skin_conditions === "bad" ? "bad" : "");
   const [explanation, setExplanation] = useState(updateAppointment?.skin_conditions !== "good" ? updateAppointment?.skin_conditions : "");
   const { setIsVisible } = useContext(UserContext);
-
+  const {t} = useTranslation()
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -58,7 +59,7 @@ function SkinCondition({
   return (
     <div className="flex flex-col gap-2 items-center w-full ">
       <div className="w-full flex flex-col gap-3 items-center">
-        <h3>Please Select Skin Condition</h3>
+        <h3>{t("Please Select Skin Condition")}</h3>
         <select
           className="p-2 rounded-lg md:w-2/4 w-full text-black font-semibold"
           value={condition}
@@ -70,7 +71,7 @@ function SkinCondition({
         </select>
         {condition === "bad" && (
           <>
-            <h5 className="text-white">Explain the skin condition :</h5>
+            <h5 className="text-white">{t("Explain the skin condition :")}</h5>
             <textarea
               className="w-full h-28 md:w-2/4 rounded-xl p-2 text-black"
               value={explanation}
@@ -83,13 +84,13 @@ function SkinCondition({
             className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
             onClick={handlePrev}
           >
-            Prev
+            {t("Prev")}
           </button>
           <button
             className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
             onClick={handleUpdateSkin}
           >
-            Update Skin Condition
+            {t("Update Skin Condition")}
           </button>
         </div>
       </div>

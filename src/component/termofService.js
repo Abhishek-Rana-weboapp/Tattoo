@@ -63,7 +63,7 @@ function TermsOfService() {
   const nextPage = () => {
     if (!initials[currentPage]) {
       setAlert(!alert);
-      setAlertMessage("Please provide your initials");
+      setAlertMessage(t("Please provide your initials"));
     } else {
       if (currentPage < totalPages) {
         setProgressValue_(progressValue_ + 1);

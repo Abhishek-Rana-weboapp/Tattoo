@@ -115,7 +115,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
   return (
     <div className="flex flex-col gap-2 w-full h-full items-center overflow-hidden">
       {/* Image upload for before */}
-      <h3>Please Provide Before Image:</h3>
+      <h3>{t("Please Provide Before Image:")}</h3>
       {uploadedUrls.length !== 0 && (<div className="flex md:grid md:grid-cols-3 md:grid-rows-3 flex-col gap-2 overflow-y-auto overflow-x-hidden md:w-2/4  md:justify-center items-center md:items-start h-full">
             {uploadedUrls.map((url, index) => {
             return (
@@ -149,20 +149,20 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
         onClick={handleBeforeButton}
         disabled={imageStatus === "UPLOADING"}
       >
-        {imageStatus === "UPLOADING" ? <Loader/> : "Upload Before Image"}
+        {imageStatus === "UPLOADING" ? <Loader/> : t("Upload Before Image")}
       </button>
       <div className="flex gap-5 items-center">
         <button
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
           onClick={handlePrev}
         >
-          Prev
+          {t("Prev")}
         </button>
         <button
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
           onClick={() => handleNext(uploadedUrls)}
         >
-          Next
+          {t("Next")}
         </button>
       </div>
     </div>

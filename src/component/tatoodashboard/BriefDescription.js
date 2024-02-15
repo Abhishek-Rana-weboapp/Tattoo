@@ -38,8 +38,8 @@ const BriefDescription = () => {
   return (
     <div className='flex flex-col justify-between items-center h-full md:w-4/6  w-full'>
       <div className='flex flex-col items-center gap-3 '>
-      <label className='font-bold text-md md:text-5xl text-white uppercase'>Tattoo Description</label>
-      <label className='font-bold text-xl  md:text-4xl text-white  uppercase text-center '>Enter a Brief Description of your tattoo</label>
+      <label className='font-bold text-md md:text-5xl text-white uppercase'>{t("Tattoo Description")}</label>
+      <label className='font-bold text-xl  md:text-4xl text-white  uppercase text-center '>{t("Enter a Brief Description of your tattoo")}</label>
       <textarea ref={inputRef} value={description} onChange={handleChange} className='w-2/3 p-2 rounded-lg h-40'></textarea>
       </div>
       <Navigation next={handleNext} prev={handlePrev} />

@@ -25,12 +25,12 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
       <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
-        <h1>Adopt Your Initials and Signature</h1>
-        <label className="font-bold">Confirm Your Name and Initials</label>
+        <h1>{t("Adopt Your Initials and Signature")}</h1>
+        <label className="font-bold">{t("Confirm Your Name and Initials")}</label>
         <div className="flex items-center gap-2 w-3/4">
           <div className="flex flex-col text-start w-3/4">
             <label className="font-bold">
-              Full Name<span className="text-red-500">*</span>
+              {t("Full Name")}<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -40,7 +40,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
           </div>
           <div className="flex flex-col text-start w-1/4">
             <label className="font-bold">
-              Initials<span className="text-red-500">*</span>
+              {t("Initials")}<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -57,7 +57,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
               } p-2 rounded-lg`}
               onClick={() => setActiveTab(1)}
             >
-              Written
+              {t("Written")}
             </button>
             <button
               className={`bg-none font-semibold text-black hover:bg-gray-300 ${
@@ -65,7 +65,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
               } p-2 rounded-lg`}
               onClick={() => setActiveTab(2)}
             >
-              Draw
+              {t("Draw")}
             </button>
           </div>
           <div>
@@ -159,7 +159,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
             className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
             onClick={handleAdopt}
           >
-            Adopt and Initial
+            {t("Adopt and Initial")}
           </button>
         </div>
       </div>

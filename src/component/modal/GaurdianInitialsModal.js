@@ -68,12 +68,12 @@ const GaurdianInitialsModal = ({
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
       <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
-        <h1>Gaurdian's Initials and Signature</h1>
-        <label className="font-bold">Confirm Your Name and Initials</label>
+        <h1>{t("Gaurdian's Initials and Signature")}</h1>
+        <label className="font-bold">{t("Confirm Your Name and Initials")}</label>
         <div className="flex items-center gap-2 w-3/4">
           <div className="flex flex-col text-start w-3/4">
             <label className="font-bold">
-              Gaurdian's Name<span className="text-red-500">*</span>
+              {t("Gaurdian's Name")}<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -86,7 +86,7 @@ const GaurdianInitialsModal = ({
           </div>
           <div className="flex flex-col text-start w-1/4">
             <label className="font-bold">
-              Initials<span className="text-red-500">*</span>
+              {t("Initials")}<span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -104,7 +104,7 @@ const GaurdianInitialsModal = ({
               } p-2 rounded-lg`}
               onClick={() => setGaurdianActiveTab(1)}
             >
-              Written
+              {t("Written")}
             </button>
             <button
               className={`bg-none font-semibold text-black hover:bg-gray-300 ${
@@ -112,7 +112,7 @@ const GaurdianInitialsModal = ({
               } p-2 rounded-lg`}
               onClick={() => setGaurdianActiveTab(2)}
             >
-              Draw
+              {t("Draw")}
             </button>
           </div>
           <div>
@@ -209,7 +209,7 @@ const GaurdianInitialsModal = ({
             className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
             onClick={handleGaurdianAdopt}
           >
-            Adopt and Initial
+            {t("Adopt and Initial")}
           </button>
         </div>
       </div>

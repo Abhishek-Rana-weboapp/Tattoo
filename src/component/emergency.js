@@ -24,7 +24,8 @@ function EmergencyContactForm() {
   const options = ["Yes","No"];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setemerFormData({ ...emerformData, [name]: value });
+    setemerFormData({ ...emerformData, [name]: value === "Select City"?"":value}
+    );
   };
 
   const fetchData = async () => {
@@ -107,7 +108,7 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">Emergency Contact Information</label>
+      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">{t("Emergency Contact Information")}</label>
       <form className=" p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
 
       <div className='flex flex-col gap-3 flex-1 items-center'>
