@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import AlertModal from './modal/AlertModal';
 import {states} from '../data/states';
 import LoaderModal from './modal/LoaderModal';
+import axios from 'axios';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
@@ -23,27 +24,29 @@ function EmergencyContactForm() {
   const options = ["Yes","No"];
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setemerFormData({ ...emerformData, [name]: value });
+    setemerFormData({ ...emerformData, [name]: value === "Select City"?"":value}
+    );
   };
 
   const fetchData = async () => {
     const username = sessionStorage.getItem('username');
     setLoading(true)
-    try {
-      const response = await fetch(`${apiUrl}/artist/username_appointment_list?username=${username}`);
-      const data = await response.json();
-
-      if (data?.data?.length > 0) {
-        setdata(JSON.parse(data?.emergencycontectnumber))
-        setShowPopup_(true);
-        setLoading(false)
-      }
-    } catch (error) {
+       await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
+       .then(res=>{
+        if(res?.data?.data?.length > 0){
+           if(res.data.emergencycontectnumber){
+             setdata(JSON.parse(res.data.emergencycontectnumber))
+             setShowPopup_(true);
+            }
+          }
+          setLoading(false)
+        })
+    .catch (error=> {
       setLoading(false)
       setAlert(!alert)
       setAlertMessage(t("Something went wrong"))
       return
-    }
+    })
   }
 
   useEffect(() => {
@@ -63,6 +66,8 @@ function EmergencyContactForm() {
     }
   }
 
+
+  console.log(emerformData)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -103,7 +108,7 @@ function EmergencyContactForm() {
           </button>
         </Modal>
       )}
-      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">Emergency Contact Information</label>
+      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">{t("Emergency Contact Information")}</label>
       <form className=" p-6 rounded-md flex flex-col shadow-md flex-1 w-full md:w-4/5 lg:w-2/3 xl:w-1/2 text-black" onSubmit={handleSubmit}>
 
       <div className='flex flex-col gap-3 flex-1 items-center'>

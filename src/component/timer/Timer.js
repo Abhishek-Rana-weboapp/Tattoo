@@ -333,13 +333,13 @@ const Timer = ({
           {t("time calculation")}
         </label>
         <p className="text-xl text-yellow-400 font-bold text-center">
-          Start Time: {startTime ? startTime : ""}
+          {t("Start Time:")} {startTime ? startTime : ""}
         </p>
         <p className="text-xl text-yellow-400 font-bold text-center">
-          End Time: {endTime.toString()}
+          {t("End Time:")} {endTime.toString()}
         </p>
         <div className="flex flex-col items-center">
-          <label>Timer Calculated</label>
+          <label>{t("Timer Calculated")}</label>
           <span
             className={`${
               endTime
@@ -360,7 +360,7 @@ const Timer = ({
         </div>
         {endTime && (
           <div className="flex flex-col gap-2 items-center">
-            <label>Break-time</label>
+            <label>{t("Break-time")}</label>
             <select
               className="p-2 text-black font-bold text-center text-xl w-full rounded-lg"
               value={selectedBreakTime}
@@ -373,7 +373,7 @@ const Timer = ({
               ))}
             </select>
             <div className="flex flex-col gap-2 items-center w-full">
-              <label>{`Total Time :`}</label>
+              <label>{t(`Total Time :`)}</label>
               <span className="w-full bg-yellow-400 text-2xl text-black font-bold flex justify-center p-2 rounded-lg">
                 {" "}
                 {totalTime ? totalTime : "00:00"}
@@ -388,7 +388,7 @@ const Timer = ({
             className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
             onClick={() => handleTime("start_time")}
           >
-            Start
+            {t("Start")}
           </button>
         )}
         {isRunning && !updateAppointment.end_time && (
@@ -397,7 +397,7 @@ const Timer = ({
             name="end_time"
             onClick={() => handleTime("end_time")}
           >
-            End
+            {t("End")}
           </button>
         )}
         {updateAppointment.end_time && updateAppointment.start_time && (
@@ -406,13 +406,13 @@ const Timer = ({
               className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
               onClick={handlePrev}
             >
-              Prev
+              {t("Prev")}
             </button>
             <button
               className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
               onClick={handleBillingSubmit}
             >
-              Next
+              {t("Next")}
             </button>
           </div>
         )}

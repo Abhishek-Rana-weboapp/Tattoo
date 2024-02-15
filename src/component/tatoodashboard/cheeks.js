@@ -31,7 +31,7 @@ function Cheeks() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, bodyPart : selected});
-    navigate("/medical-form")
+    navigate("/description")
   }else{
     setAlertMessage("Please select a location for the cheek.")
   }

@@ -94,7 +94,7 @@ const BillingComponent = () => {
     };
 
     const handleBeforeReload = (event) => {
-      if (currentStep === 4 && !updateAppointment.end_time) {
+      if (currentStep === 4 && !updateAppointment?.end_time) {
         const message =
           "You have unsaved data. Reloading will discard your changes. Are you sure?";
         const isConfirmed = window.confirm(message);

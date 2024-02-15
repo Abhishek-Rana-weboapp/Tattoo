@@ -54,8 +54,28 @@ const UserContextProvider = ({ children }) => {
     initials: "",
     signatureurl: "",
     agreed: false,
+    gaurdianInitials : "",
+    gaurdianSignature:"",
+    gaurdianAgreed :false,
+    gaurdianName : ""
   });
   const [initials, setInitials] = useState({
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
+    7: "",
+    8: "",
+    9: "",
+    10: "",
+    11: "",
+    12: "",
+    13: "",
+  });
+
+  const [gaurdianInitials, setGaurdianInitials] = useState({
     1: "",
     2: "",
     3: "",
@@ -76,6 +96,7 @@ const UserContextProvider = ({ children }) => {
   const [alertMessage, setAlertMessage] = useState();
   const [updateAppointment, setUpdateAppointment] = useState();
   const [signature, setSignature] = useState();
+  const [gaurdianSignature, setGaurdianSignature] = useState()
   const [step, setStep] = useState(0)
 
   return (
@@ -107,6 +128,10 @@ const UserContextProvider = ({ children }) => {
         setInitials,
         harmlessagreement,
         setharmlessagreement,
+        gaurdianSignature, 
+        setGaurdianSignature,
+        gaurdianInitials, 
+        setGaurdianInitials
       }}
     >
       {children}

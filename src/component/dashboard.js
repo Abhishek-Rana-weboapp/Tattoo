@@ -71,14 +71,14 @@ function Dashboard() {
         name: '',
         phone: '',
         city: '',
-        state: '',
+        state: 'Florida',
       })
   
       setdrFormData({
         name: '',
         phone: '',
         city: '',
-        state: '',
+        state: 'Florida',
         useDoctorRecommendation: false,
       })
     }
@@ -133,7 +133,7 @@ console.log(initials)
 
   return (
     <div className="md:w-3/4 w-full h-full flex flex-col gap-3 justify-center items-center">
-      <h1 className="uppercase text-white font-bold">Select a service</h1>
+      <h1 className="uppercase text-white font-bold">{t("Select a service")}</h1>
       <div className="grid grid-cols-2 gap-5 w-full">
         {menu?.map((menu, index) => {
           return (

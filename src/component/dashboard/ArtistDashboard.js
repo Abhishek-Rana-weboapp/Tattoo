@@ -147,7 +147,7 @@ export default function ArtistDashboard() {
               }
             }
        else {
-        setAlertMessage("Please select a client");
+        setAlertMessage(t("Please select a client:"));
         setAlert(!alert);
       }
     }
@@ -168,13 +168,13 @@ export default function ArtistDashboard() {
         {/* <h1 className="text-center text-yellow-400 font-bold">Artist Dashboard</h1> */}
         {step === 0 && (
           <div className="flex flex-col justify-center gap-2 items-center">
-            <h2 className="text-white font-medium ">Select the Client </h2>
+            <h2 className="text-white font-medium ">{t("Select the Client")} </h2>
             <select
               className="p-2 rounded-lg md:w-2/4 w-full"
               value={selectedClient?.id}
               onChange={handleClientSelect}
             >
-              <option value={""}>Select the client </option>
+              <option value={""}>{t("Select the client")} </option>
               {appointments?.map((appointment) => {
                 return (
                   <option key={appointment?.id} value={appointment?.id}>
@@ -189,7 +189,7 @@ export default function ArtistDashboard() {
                 className="yellowButton rounded-xl py-2 px-5 font-bold"
                 onClick={handleNext}
               >
-                Next
+                {t("Next")}
               </button>
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function ArtistDashboard() {
         {step === 1 && (
           <>
             <div className="flex flex-col gap-4 items-center overflow-hidden">
-              <h1 className="font-bold text-white">Client's Medical History</h1>
+              <h1 className="font-bold text-white">{t("Client's Medical History")}</h1>
               <div className="flex flex-col gap-4 items-start overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
                 {Object.keys(medicalQuestions).map((med, index) => {
                   return (
@@ -265,7 +265,7 @@ export default function ArtistDashboard() {
                   onChange={(e) => setAcknowledgement(e.target.checked)}
                 />
                 <label className="font-bold text-white">
-                  I understand the Medical History of the client
+                  {t("I understand the Medical History of the client")}
                 </label>
               </div>
             </div>
@@ -274,13 +274,13 @@ export default function ArtistDashboard() {
                 className="yellowButton rounded-xl py-2 px-5 font-bold"
                 onClick={handlePrev}
               >
-                Back
+                {t("Back")}
               </button>
               <button
                 className="yellowButton rounded-xl py-2 px-5 font-bold"
                 onClick={handleNext}
               >
-                Next
+                {t("Next")}
               </button>
             </div>
           </>

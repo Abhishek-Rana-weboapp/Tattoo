@@ -5,6 +5,7 @@ import Title_logo from "../assets/Title_logo.png";
 import i18n from "i18next";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import UserContext from "../context/UserContext";
+import axios from "axios";
 
 function SignUp() {
   const progress = 5;
@@ -40,7 +41,6 @@ function SignUp() {
       phone_number:phoneNumber,
       dateofbirth: dateOfBirth,
     };
-
     if (
       user.firstname &&
       user.lastname &&
@@ -49,69 +49,103 @@ function SignUp() {
       user.dateofbirth &&
       user.usertype
     ) {
-      const config = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      };
-      const url = `${apiUrl}/signup`;
-      try {
-        const response = await fetch(url, config);
 
-        if (!response.ok) {
-          alert("Email  alredy taken, pls use diffrent email");
-          throw new Error(
-            `Sign-up request failed with status ${response.status} (${response.statusText})`
-          );
-        }
-
-        const responseData = await response.json();
-        if (responseData.userData.usertype === "admin") {
-          console.log("select lang======", responseData.userData.lang);
-          if (responseData.userData.lang == "eng") {
-            i18n.changeLanguage("en");
-          } else {
+      await axios.post(`${apiUrl}/signup`, user)
+      .then(res=>{
+        if(res.status === 201){
+          if(res.data.userData.lang === "es"){
             i18n.changeLanguage("es");
           }
-
-          sessionStorage.setItem("responseData", JSON.stringify(responseData));
+          sessionStorage.setItem("responseData", JSON.stringify(res.data));
           sessionStorage.setItem('username', email);
-          sessionStorage.setItem('minor', responseData.userData.minor)
-          sessionStorage.setItem('token', responseData.token);
-          sessionStorage.setItem('lang',responseData.userData.lang)
-          sessionStorage.setItem('userType',responseData.userData.usertype)
-          sessionStorage.setItem('firstname',responseData.userData.firstname)
-          sessionStorage.setItem('lastname',responseData.userData.lastname)
-          sessionStorage.setItem('fullname',`${responseData.userData.firstname} ${responseData.userData.lastname}`)
-          sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
-
-          sessionStorage.setItem("progress_bar", progress);
-          navigate("/AppointmentList");
-        } else {
-          if (responseData.userData.lang == "eng") {
-            i18n.changeLanguage("en");
-          } else {
-            i18n.changeLanguage("es");
+          sessionStorage.setItem('minor', res.data.userData.minor)
+          sessionStorage.setItem('token', res.data.token);
+          sessionStorage.setItem('lang',res.data.userData.lang)
+          sessionStorage.setItem('userType',res.data.userData.usertype)
+          sessionStorage.setItem('firstname',res.data.userData.firstname)
+          sessionStorage.setItem('lastname',res.data.userData.lastname)
+          sessionStorage.setItem('fullname',`${res.data.userData.firstname} ${res.data.userData.lastname}`)
+          sessionStorage.setItem("initials" ,`${res?.data?.userData?.firstname?.slice(0,1).toUpperCase()}${res?.data?.userData?.lastname?.slice(0,1).toUpperCase()}`)
+           console.log(res.data.userData.minor)
+          if(res.data.userData.minor === "true"){
+            navigate("/gaurdian-info")
+            return
+          }if(res.data.userData.minor === "false"){
+            navigate("/dashboard")
+            return
           }
-          sessionStorage.setItem("responseData", JSON.stringify(responseData));
-          sessionStorage.setItem('username', email);
-          sessionStorage.setItem('minor', responseData.userData.minor)
-          sessionStorage.setItem('token', responseData.token);
-          sessionStorage.setItem('lang',responseData.userData.lang)
-          sessionStorage.setItem('userType',responseData.userData.usertype)
-          sessionStorage.setItem('firstname',responseData.userData.firstname)
-          sessionStorage.setItem('lastname',responseData.userData.lastname)
-          sessionStorage.setItem('fullname',`${responseData?.userData.firstname} ${responseData.userData.lastname}`)
-        sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
-
-          sessionStorage.setItem("progress_bar", progress);
-          navigate("/dashboard");
         }
-      } catch (error) {
-        console.error("Sign-up Error:", error);
-      }
+      })
+      // const config = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(user),
+      // };
+      // const url = `${apiUrl}/signup`;
+      // try {
+      //   const response = await fetch(url, config);
+
+      //   if (!response.ok) {
+      //     alert("Email  alredy taken, pls use diffrent email");
+      //     throw new Error(
+      //       `Sign-up request failed with status ${response.status} (${response.statusText})`
+      //     );
+      //   }
+
+      //   const responseData = await response.json();
+      //   console.log(responseData)
+      //   if (responseData.userData.usertype === "admin") {
+      //     if (responseData.userData.lang == "eng") {
+      //       i18n.changeLanguage("en");
+      //     } else {
+      //       i18n.changeLanguage("es");
+      //     }
+      //     sessionStorage.setItem("responseData", JSON.stringify(responseData));
+      //     sessionStorage.setItem('username', email);
+      //     sessionStorage.setItem('minor', responseData.userData.minor)
+      //     sessionStorage.setItem('token', responseData.token);
+      //     sessionStorage.setItem('lang',responseData.userData.lang)
+      //     sessionStorage.setItem('userType',responseData.userData.usertype)
+      //     sessionStorage.setItem('firstname',responseData.userData.firstname)
+      //     sessionStorage.setItem('lastname',responseData.userData.lastname)
+      //     sessionStorage.setItem('fullname',`${responseData.userData.firstname} ${responseData.userData.lastname}`)
+      //     sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
+
+      //     sessionStorage.setItem("progress_bar", progress);
+      //     navigate("/AppointmentList");
+      //   } else {
+      //     if (responseData.userData.lang == "eng") {
+      //       i18n.changeLanguage("en");
+      //     } else {
+      //       i18n.changeLanguage("es");
+      //     }
+      //     sessionStorage.setItem("responseData", JSON.stringify(responseData));
+      //     sessionStorage.setItem('username', email);
+      //     sessionStorage.setItem('userId', responseData.userData.id);
+      //     sessionStorage.setItem('minor', responseData.userData.minor)
+      //     sessionStorage.setItem('token', responseData.token);
+      //     sessionStorage.setItem('lang',responseData.userData.lang)
+      //     sessionStorage.setItem('userType',responseData.userData.usertype)
+      //     sessionStorage.setItem('firstname',responseData.userData.firstname)
+      //     sessionStorage.setItem('lastname',responseData.userData.lastname)
+      //     sessionStorage.setItem('fullname',`${responseData?.userData.firstname} ${responseData.userData.lastname}`)
+      //     sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
+
+      //     sessionStorage.setItem("progress_bar", progress);
+      //     console.log(responseData.userData.minor)
+      //     if(responseData.userData.minor){
+      //       navigate("/gaurdian-info")
+      //       return
+      //     }else{
+      //       navigate("/dashboard");
+      //       return
+      //     }
+      //   }
+      // } catch (error) {
+      //   console.error("Sign-up Error:", error);
+      // }
     } else {
       setAlertMessage("Please Enter all details");
       setAlert(!alert);

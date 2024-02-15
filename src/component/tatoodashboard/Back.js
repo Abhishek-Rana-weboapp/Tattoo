@@ -57,16 +57,15 @@ function Back() {
     },
   ]
 
-  console.log(selected)
 
   const handleNext = ()=>{
    if(selected && selected !== "other"){
       setUser({...user , bodyPart : selected})
-      navigate("/medical-form")
+      navigate("/description")
    }if(selected && selected === "other"){
     if(otherFieldValue){
       setUser({...user , bodyPart : otherFieldValue})
-      navigate("/medical-form")
+      navigate("/description")
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

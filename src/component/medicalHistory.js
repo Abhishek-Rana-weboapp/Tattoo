@@ -33,9 +33,10 @@ function MedicalForm() {
       const data = await response.json();
 
       if (data.data.length > 0) {
-        //console.log("have medical history :",data.data[data.data.length-1])
-        setdata(data.medicalhistory);
-        setShowPopup_(true);
+        if(data.medicalhistory){
+          setdata(data.medicalhistory);
+          setShowPopup_(true);
+        }
       }
     } catch (error) {
       console.error("Error fetching previous medical history:", error);
@@ -211,7 +212,7 @@ function MedicalForm() {
         <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
           <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">{t("Q1")}</span>{t("HaveYouEverBeenTattooedBefore?")}
+            <span className="underline">{t("Q1")}</span>{t("Have You Ever Been Tattooed Before?")}
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -323,7 +324,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t("Previous")}
+              {t("Prev")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -394,7 +395,7 @@ function MedicalForm() {
                 className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
                 onClick={prevPage}
               >
-                {t('Previous')}
+                {t('Prev')}
               </button>
               <button
                 className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -463,7 +464,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t('Previous')}
+              {t('Prev')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -534,7 +535,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t('Previous')}
+              {t('Prev')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -604,7 +605,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t('Previous')}
+              {t('Prev')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -673,7 +674,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t('Previous')}
+              {t('Prev')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -741,7 +742,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t('Previous')}
+              {t('Prev')}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

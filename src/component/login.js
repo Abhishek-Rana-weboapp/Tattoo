@@ -67,11 +67,8 @@ function Login() {
       if (responseData.message==='Login successful.')
       {
 
-        if(responseData?.user?.lang=="eng"){
-          i18n.changeLanguage('en');
-          }
-          else{
-            i18n.changeLanguage('es');
+        if(responseData?.user?.lang=="es"){
+          i18n.changeLanguage('es');
           }
           if(!responseData.hasOwnProperty("user")){
             sessionStorage.setItem("token",responseData.token )
@@ -80,6 +77,7 @@ function Login() {
         if(responseData?.user?.usertype==="admin")
         {
           sessionStorage.setItem('username', email);
+          // sessionStorage.setItem('userId', responseData.user.id);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
           sessionStorage.setItem('lang',responseData.user.lang)
@@ -94,15 +92,23 @@ function Login() {
        if(responseData?.user?.usertype === "user")
         {
         sessionStorage.setItem('username', email);
+        sessionStorage.setItem('userId', responseData.user.id);
         sessionStorage.setItem('minor', responseData.user.minor)
         sessionStorage.setItem('token', responseData.token);
         sessionStorage.setItem('lang',responseData.user.lang)
         sessionStorage.setItem('userType',responseData.user.usertype)
         sessionStorage.setItem('firstname',responseData.user.firstname)
-          sessionStorage.setItem('lastname',responseData.user.lastname)
+        sessionStorage.setItem('lastname',responseData.user.lastname)
         sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
         sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
-        navigate("/dashboard");
+        if(responseData.user.minor === "true"){
+          if(responseData.user.gaurdian_info){
+            sessionStorage.setItem('gaurdianInfo', responseData.user.gaurdian_info)
+          }
+          navigate("/gaurdian-info")
+        }else{
+          navigate("/dashboard");
+        }
         }
       }
       else{

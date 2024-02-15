@@ -75,14 +75,14 @@ export default function ShowBill({
 
   return (
     <div className="flex flex-col gap-2 items-center">
-      <h3 className="font-bold text-white">Bill</h3>
-      <label className="text-xl font-semibold">Price calculation</label>
+      <h3 className="font-bold text-white">{t("Bill")}</h3>
+      <label className="text-xl font-semibold">{t("Price calculation")}</label>
       <div className="flex gap-2 ">
-        <label>Bill by : </label>
+        <label>{t("Bill by :")}</label>
         <label>{updateAppointment?.bill_by}</label>
       </div>
       <div className="flex gap-2 ">
-        <label>Total Time : </label>
+        <label>{t("Total Time :")} </label>
         <label>
           {resultantMinutes
             ? `${String(Math.floor(resultantMinutes / 3600)).padStart(
@@ -95,7 +95,7 @@ export default function ShowBill({
         </label>
       </div>
       <div className="flex gap-2 ">
-        <label>Break Time : </label>
+        <label>{t("Break-time")}</label>
         <label>
           {String(Math.floor(updateAppointment?.break_time / 60)).padStart(
             2,
@@ -109,7 +109,7 @@ export default function ShowBill({
         </label>
       </div>
       <div className="flex gap-2 ">
-        <label>Total Work Time : </label>
+        <label>{t("Total Work Time :")}</label>
         <label>{`${String(Math.floor(totalWorkingTime / 3600)).padStart(
           2,
           "0"
@@ -121,7 +121,7 @@ export default function ShowBill({
 
       <div className="flex gap-2 ">
         <label className="text-xl font-bold text-yellow-400">
-          Total Price :{" "}
+          {t("Total Price :")}{" "}
         </label>
         <label className="text-xl font-bold">
           ${parseInt(updateAppointment?.final_price)}
