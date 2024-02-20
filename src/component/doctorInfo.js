@@ -6,6 +6,7 @@ import Modal from "./modal/Modal";
 import { useTranslation } from "react-i18next";
 import { states } from "../data/states";
 import axios from "axios";
+import LoaderModal from "./modal/LoaderModal";
 
 
 function DoctorContactForm() {
@@ -77,19 +78,17 @@ function DoctorContactForm() {
     fetchData();
   }, []);
 
-  const handleUpdatedata = (e) => {
-    const value = e.target.value;
-    if (value === "No") {
+  
+    const handleNo = ()=> {
       setdrFormData(data);
       navigate("/consent");
     }
-    if (value === "Yes" || "Sí") {
+
+   const handleYes = ()=> {
       setdrFormData(data)
       setShowPopup_(false);
     }
-  };
 
-  console.log(drformData)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -108,6 +107,10 @@ function DoctorContactForm() {
     navigate(-1);
   };
 
+  if(loading){
+    return <LoaderModal/>
+  }
+
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
       {showPopup_ && (
@@ -115,30 +118,21 @@ function DoctorContactForm() {
           <p className="text-3xl font-bold mb-4 text-black">
             {t("Do you want to update your Doctor's contact?")}
           </p>
-          <div className="flex flex-col md:flex-row gap-2 items-center">
-            <label className="text-xl font-bold text-black">
-              {t("Select an option:")}
-            </label>
-            <select
-              className="bg-black p-2 rounded-lg"
-              onChange={handleUpdatedata}
-            >
-              <option value="">{t("Select")}...</option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
+          <div className="flex  gap-5 items-center">
           <button
-            className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-8 rounded-3xl font-bold mt-4"
-            onClick={() => {
-              setShowPopup_(false);
-            }}
+            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+            onClick={handleYes}
           >
-            {t("Close Popup")}
+            {t("Yes")}
           </button>
+          <button
+            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+            onClick={handleNo}
+          >
+            {t("No")}
+          </button>
+           
+          </div>
         </Modal>
       )}
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">

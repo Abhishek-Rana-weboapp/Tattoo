@@ -54,20 +54,17 @@ function EmergencyContactForm() {
     fetchData()
   }, [])
 
-  const handleUpdatedata = (e) => {
-  const value = e.target.value
-    if (value === 'No') {
-      setemerFormData(data)
-      navigate('/doctor-info')
-    }
-    if(value === "Yes" || "Sí"){
-      setemerFormData(data)
+  const handleYes = ()=>{
+    setemerFormData(data)
       setShowPopup_(false)
-    }
+  }
+
+  const handleNo = ()=>{
+    setemerFormData(data)
+    navigate('/doctor-info')
   }
 
 
-  console.log(emerformData)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,17 +92,14 @@ function EmergencyContactForm() {
       {showPopup_ && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">{t("Do you want to update your emergency contact")}?</p>
-          <div className="flex gap-2">
-            <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
-            <select className="bg-black p-2 rounded-lg" onChange={handleUpdatedata}>
-              <option value="">{t("Select")}...</option>
-              <option value={Yes}>{t("Yes")}</option>
-              <option value={No}>{t("No")}</option>
-            </select>
-          </div>
-          <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold text-black" onClick={() => setShowPopup_(false)}>
-          {t("Close Popup")}
+          <div className="flex gap-5">
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold text-black" onClick={handleYes}>
+          {t("Yes")}
           </button>
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold text-black" onClick={handleNo}>
+          {t("No")}
+          </button>
+          </div>
         </Modal>
       )}
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">{t("Emergency Contact Information")}</label>
@@ -172,9 +166,12 @@ function EmergencyContactForm() {
             >
             {t("Prev")}
           </button>
-        <button className=" bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100%  py-2 px-8 rounded-3xl font-bold mt-4" type="submit">
-          {t("Submit")}
-        </button>
+          <button
+            className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
+            >
+            {t("Submit")}
+          </button>
+        
         </div>
       </form>
       <div className="w-full h-10">

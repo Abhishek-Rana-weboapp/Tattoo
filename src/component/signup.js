@@ -6,14 +6,14 @@ import i18n from "i18next";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 function SignUp() {
-  const progress = 5;
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
+  const {t} = useTranslation()
   const [showPassword, setShowPassword] = useState(false);
-  const [usertype, setusertype] = useState("admin");
   const [showPopup, setshowPopup] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -28,6 +28,8 @@ function SignUp() {
   useEffect(()=>{
     sessionStorage.clear()
   },[])
+
+  let passReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +51,11 @@ function SignUp() {
       user.dateofbirth &&
       user.usertype
     ) {
-
+      if(!passReg.test(password)){
+         setAlertMessage(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"))
+         setAlert(!alert)
+         return
+      }
       await axios.post(`${apiUrl}/signup`, user)
       .then(res=>{
         if(res.status === 201){
@@ -75,77 +81,11 @@ function SignUp() {
             return
           }
         }
+      }).catch((err)=>{
+          setAlertMessage(err.response.data.error);
+         setAlert(!alert);
+        return 
       })
-      // const config = {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(user),
-      // };
-      // const url = `${apiUrl}/signup`;
-      // try {
-      //   const response = await fetch(url, config);
-
-      //   if (!response.ok) {
-      //     alert("Email  alredy taken, pls use diffrent email");
-      //     throw new Error(
-      //       `Sign-up request failed with status ${response.status} (${response.statusText})`
-      //     );
-      //   }
-
-      //   const responseData = await response.json();
-      //   console.log(responseData)
-      //   if (responseData.userData.usertype === "admin") {
-      //     if (responseData.userData.lang == "eng") {
-      //       i18n.changeLanguage("en");
-      //     } else {
-      //       i18n.changeLanguage("es");
-      //     }
-      //     sessionStorage.setItem("responseData", JSON.stringify(responseData));
-      //     sessionStorage.setItem('username', email);
-      //     sessionStorage.setItem('minor', responseData.userData.minor)
-      //     sessionStorage.setItem('token', responseData.token);
-      //     sessionStorage.setItem('lang',responseData.userData.lang)
-      //     sessionStorage.setItem('userType',responseData.userData.usertype)
-      //     sessionStorage.setItem('firstname',responseData.userData.firstname)
-      //     sessionStorage.setItem('lastname',responseData.userData.lastname)
-      //     sessionStorage.setItem('fullname',`${responseData.userData.firstname} ${responseData.userData.lastname}`)
-      //     sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
-
-      //     sessionStorage.setItem("progress_bar", progress);
-      //     navigate("/AppointmentList");
-      //   } else {
-      //     if (responseData.userData.lang == "eng") {
-      //       i18n.changeLanguage("en");
-      //     } else {
-      //       i18n.changeLanguage("es");
-      //     }
-      //     sessionStorage.setItem("responseData", JSON.stringify(responseData));
-      //     sessionStorage.setItem('username', email);
-      //     sessionStorage.setItem('userId', responseData.userData.id);
-      //     sessionStorage.setItem('minor', responseData.userData.minor)
-      //     sessionStorage.setItem('token', responseData.token);
-      //     sessionStorage.setItem('lang',responseData.userData.lang)
-      //     sessionStorage.setItem('userType',responseData.userData.usertype)
-      //     sessionStorage.setItem('firstname',responseData.userData.firstname)
-      //     sessionStorage.setItem('lastname',responseData.userData.lastname)
-      //     sessionStorage.setItem('fullname',`${responseData?.userData.firstname} ${responseData.userData.lastname}`)
-      //     sessionStorage.setItem("initials" ,`${responseData?.userData?.firstname?.slice(0,1).toUpperCase()}${responseData?.userData?.lastname?.slice(0,1).toUpperCase()}`)
-
-      //     sessionStorage.setItem("progress_bar", progress);
-      //     console.log(responseData.userData.minor)
-      //     if(responseData.userData.minor){
-      //       navigate("/gaurdian-info")
-      //       return
-      //     }else{
-      //       navigate("/dashboard");
-      //       return
-      //     }
-      //   }
-      // } catch (error) {
-      //   console.error("Sign-up Error:", error);
-      // }
     } else {
       setAlertMessage("Please Enter all details");
       setAlert(!alert);
@@ -296,12 +236,12 @@ function SignUp() {
                   " no-underline w-max text-white hover:text-yellow-500"
                 }
               >
-                Already have an account? Log in
+                Already have an account? Log In
               </NavLink>
             </div>
           </div>
           <button className="yellowButton py-2 px-8 rounded-3xl font-bold ">
-            Signup
+            Sign Up
           </button>
         </form>
       </div>
