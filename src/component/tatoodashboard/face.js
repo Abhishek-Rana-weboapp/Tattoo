@@ -51,6 +51,10 @@ function FaceDashboard() {
   const handleNext = ()=>{
   if(selected){
     setUser({ ...user, faceLocation : selected });
+    if(selected === "nose"){
+      navigate("/description")
+      return
+    }
     navigate(`/${selected}`); 
   }else{
     setAlert(!alert)

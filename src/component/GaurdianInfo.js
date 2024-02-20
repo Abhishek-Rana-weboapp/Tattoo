@@ -32,7 +32,6 @@ const GaurdianInfo = () => {
         }
     },[])
 
-    console.log(gaurdianInfo)
 
     const handleInput = (e)=>{
         const field = e.target.name
@@ -48,6 +47,21 @@ const GaurdianInfo = () => {
 
     if (isEmptyField) {
         setAlertMessage('Please fill in all fields');
+        setAlert(!alert)
+        return;
+    }
+
+    const today = new Date();
+    const dob = new Date(gaurdianInfo.dateOfBirth);
+    let age = today.getFullYear() - dob.getFullYear();
+    const monthDiff = today.getMonth() - dob.getMonth();
+
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+    }
+
+    if(age < 18){
+      setAlertMessage(t("Gaurdian's Age should be above 18"));
         setAlert(!alert)
         return;
     }
@@ -91,8 +105,8 @@ const GaurdianInfo = () => {
     <div className='flex flex-col items-center gap-4 w-full'>
      <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center ">Gaurdian's Info</label>
       <form className='flex flex-col gap-4 md:w-1/3 w-full p-2' onSubmit={handleSubmit}>
-        <input name='firstName' value={gaurdianInfo.firstName} className='p-2 rounded-lg w-full' type='text' placeholder='Firstname' onChange={handleInput}></input>
-        <input name='lastName' value={gaurdianInfo.lastName} className='p-2 rounded-lg w-full' type='text' placeholder='Lastname' onChange={handleInput}></input>
+        <input name='firstName' value={gaurdianInfo.firstName} className='p-2 rounded-lg w-full' type='text' placeholder='First Name' onChange={handleInput}></input>
+        <input name='lastName' value={gaurdianInfo.lastName} className='p-2 rounded-lg w-full' type='text' placeholder='Last Name' onChange={handleInput}></input>
         <input name='dateOfBirth' value={gaurdianInfo.dateOfBirth} className='p-2 rounded-lg w-full' type='date' placeholder='D.O.B' onChange={handleInput}></input>
         <input name='email' value={gaurdianInfo.email} className='p-2 rounded-lg w-full' type='email' placeholder='Email' onChange={handleInput}></input>
         <input name='phoneNumber' value={gaurdianInfo.phoneNumber} className='p-2 rounded-lg w-full' type='text' placeholder='Phone Number' onChange={handleInput}></input>

@@ -6,6 +6,7 @@ import Title from "../assets/Title.png";
 import { useTranslation } from "react-i18next";
 import UserContext from "../context/UserContext";
 import SignatureModal from "./modal/SignatureModal";
+import axios from "axios";
 
 const ConsentFormGuard = () => {
   const { t } = useTranslation();
@@ -76,72 +77,39 @@ const ConsentFormGuard = () => {
 
   const token = sessionStorage.getItem("token")
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setShowPopup(false);
-
-  //   // You can now use the signatureImage state to submit the signature to your API
-  //   if (signatureImage) {
-  //     console.log("Submitting Signature:", signatureImage, signature_type);
-
-  //     if (signature_type === "techSignature") {
-  //       setFormData((prevFormData) => ({
-  //         ...prevFormData,
-  //         techSignature: signatureImage,
-  //       }));
-  //     } else if (signature_type === "clientSignature") {
-  //       setFormData((prevFormData) => ({
-  //         ...prevFormData,
-  //         clientSignature: signatureImage,
-  //       }));
-  //     }
-  //     setSignatureImage(null);
-  //     // Add your API submission logic here
-  //   } else {
-  //     console.log("Please save a signature before submitting.");
-  //   }
-  // };
-
-  console.log(formData)
-
   const handelapi = async (event) => {
     event.preventDefault();
 
     const appointment_detail = JSON.parse(
       sessionStorage.getItem("appointment_detail")
     );
-
-    console.log(appointment_detail)
-    try {
-      const response = await fetch(`${apiUrl}artist/post_new`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // "Authorization":`Bearer ${token}`
-        },
-        // body: JSON.stringify({
-        //   id: appointment_detail?.id,
-        //   username:appointment_detail?.username,
-        //   consent_guard: formData,
-        // }),
-        body:JSON.stringify({
-          id:appointment_detail?.id,
-          updateField : "consent_guard",
-          updateValue: formData,
-        })
-      });
-
-      if (response.status === 201) {
-        setAlert(!alert);
-        setAlertMessage(t("Appointment booked"));
-        navigate("/");
-      } else {
-        setAlert(!alert);
-        setAlertMessage(t("All fields are required, please refill the form."));
-      }
-    } catch (error) {
-      console.error("Error:", error);
+    const data = {
+      updates:[
+        {
+          id: appointment_detail?.id,
+          updateField:"consent_guard",
+          updateValue:JSON.stringify(formData)
+        }
+      ]
     }
+
+    await axios.post(`${apiUrl}artist/post_new`, data)
+    .then(res=>{
+      if (res.status === 201) {
+            setAlert(!alert);
+            setAlertMessage(t("Appointment booked"));
+            navigate("/");
+            return
+          } else {
+            setAlert(!alert);
+            setAlertMessage(t("All fields are required, please refill the form."));
+            return
+          }
+    })
+    .catch (error=> {
+      setAlert(!alert);
+      setAlertMessage(t("Something went wrong"));
+    })
   };
 
   return (
@@ -161,7 +129,7 @@ const ConsentFormGuard = () => {
         <h1 className="text-3xl font-bold mb-4 text-white uppercase underline">
           {t("Consent Form")}
         </h1>
-        <form className=" p-3 flex flex-col gap-2 rounded-md shadow-md w-4/5 backdrop-blur bg-opacity-50 overflow-hidden">
+        <form className=" p-3 flex flex-col gap-2 rounded-md shadow-md md:w-4/5 w-full backdrop-blur bg-opacity-50 overflow-hidden">
           <div className="flex flex-col gap-4 overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
             <section className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">

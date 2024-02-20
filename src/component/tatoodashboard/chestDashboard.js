@@ -27,23 +27,22 @@ function ChestDeshboard() {
         name:"full chest"
       },
       {
-        name:"left chest"
+        name:"left side"
       },
       {
-        name:"right chest"
+        name:"right side"
       },
       {
-        name:"center chest"
-      },
-      {
-        name:"collar chest"
-      },
-      
+        name:"center"
+      }, 
     ]
 
     const insideButtons = [
       {
-        name:"Nipple"
+        name:"collarbone"
+      },
+      {
+        name:"nipple"
       },
       {
         name:"under-chest"

@@ -47,7 +47,7 @@ function PiercingDashboard() {
       name: "facial-piercing",
     },
     {
-      name: "jewellery-piercing",
+      name: "jewelry-swap",
     },
     {
       name: "nose-piercing",

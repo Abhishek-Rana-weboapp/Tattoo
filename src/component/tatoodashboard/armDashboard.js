@@ -14,7 +14,6 @@ function ArmDashboard() {
 
     useEffect(()=>{
      if(user.bodyPart) setSelected(user.bodyPart)
-     if(user.armInside) setSelected(user.armInside)
     },[])
 
 
@@ -24,20 +23,20 @@ function ArmDashboard() {
 
     const partButtons = [
       {
-        name:"full sleeve"
-      },
-      {
-        name:"half sleeve"
-      },
-      {
         name:"shoulder"
       },
       {
         name:"armpit"
-      }
+      },
+      {
+        name:"full sleeve"
+      },
     ]
 
     const armButtons = [
+      {
+        name:"half sleeve"
+      },
       {
         name:"upper arm",
       },
@@ -58,8 +57,8 @@ function ArmDashboard() {
           setUser({ ...user, bodyPart : selected});
           navigate('/description'); 
         }
-        if(armButtons.find(item=>item.name===selected)){
-          setUser({ ...user, armInside : selected});
+        if(armButtons.find(item=>item.name === selected)){
+          setUser({ ...user, bodyPart : selected});
           navigate('/arm-inside',{state:{name: selected}}); 
         }
        }

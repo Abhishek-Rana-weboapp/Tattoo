@@ -52,7 +52,7 @@ function TattooDashboard() {
       name: "hip"
     },
     {
-      name: "glute"
+      name: "glutes"
     },
     {
       name: "leg",
