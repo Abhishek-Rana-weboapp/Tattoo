@@ -211,8 +211,9 @@ function MedicalForm() {
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
         <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
-          <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">{t("Q1")}</span>{t("Have You Ever Been Tattooed Before?")}
+          <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-2">
+            <span className="underline">Q1:</span>
+            <span>{t("Have You Ever Been Tattooed Before?")}</span>
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -263,8 +264,9 @@ function MedicalForm() {
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
-          <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">{t("Q2")}:</span>{t("Are you Pregnant or Nursing?")}
+          <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-2">
+            <span className="underline">Q2:</span>
+            <span>{t("Are you Pregnant or Nursing?")}</span>
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -344,8 +346,9 @@ function MedicalForm() {
           <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
-            <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-              <span className="underline">Q3 :</span>{t("Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}
+            <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-2">
+              <span className="underline">Q3:</span>
+              <span>{t("Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?")}</span>
             </label>
             <div className="flex flex-col items-center gap-4">
               <div className="w-20 justify-start flex gap-2 items-center">
@@ -413,8 +416,9 @@ function MedicalForm() {
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
           <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
 
-          <label className="uppercase text-white md:text-2xl text-md md:font-bold">
-            <span className="underline">Q4:</span>{t("Do you have any medical or skin conditions?")}
+          <label className="uppercase text-white md:text-2xl flex gap-2 text-md md:font-bold">
+            <span className="underline">Q4:</span>
+            <span>{t("Do you have any medical or skin conditions? Example: (keloids or hypertrophic scarring, psoriasis)?")}</span>
           </label>
           <div className="flex flex-col items-center gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">
@@ -484,7 +488,7 @@ function MedicalForm() {
           <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-1">
             <span className="underline">Q5:</span> 
             <span>
-              {t("Do you have any communicable diseases?")}
+              {t("Do you have any communicable diseases? Example: (H.I.V., A.I.D.S., HEPATITIS)")}
             </span>
           </label>
           <div className="flex flex-col items-center gap-4">
@@ -624,7 +628,7 @@ function MedicalForm() {
 
           <label className="uppercase text-white flex gap-2 md:text-2xl text-lg md:font-bold">
             <span className="underline">Q7:</span>
-            <span>{t("Do you have any allergies?")}</span>
+            <span className="font-bold">{t("Do you have any allergies? Example: (to metals, latex gloves, soaps and medications)")}</span>
           </label>
           <div className="flex flex-col items-center  gap-4">
             <div className="w-20 justify-start flex gap-2 items-center">

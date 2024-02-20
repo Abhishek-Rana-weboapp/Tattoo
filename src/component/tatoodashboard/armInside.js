@@ -21,6 +21,15 @@ function ArmInside() {
   const handlepartLocation = (bodyPart) => {
     setSelected(bodyPart)
   };
+  
+  const halfButtons = [
+    {
+      name:"upper"
+    },
+    {
+      name:"lower"
+    },
+  ]
   const upperButtons = [
     {
       name: "Inner",
@@ -59,7 +68,7 @@ function ArmInside() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, bodyPart:selected });
+      setUser({ ...user, armInside:selected });
       navigate('/description');
     }else{
       setAlert(!alert)
@@ -73,6 +82,23 @@ function ArmInside() {
 
   return (
     <>
+    {state.name === "half sleeve" && (
+        <>
+          <GridLayout title={"half sleeve" }>
+            {halfButtons.map((button, index) => {
+              return (
+                <CustomButton
+                  key={index}
+                  onClick={handlepartLocation}
+                  selected={selected}
+                >
+                  {button.name}
+                </CustomButton>
+              );
+            })}
+          </GridLayout>
+        </>
+      )}
       {state.name === "upper arm" && (
         <>
           <GridLayout title={"upper arm" }>
@@ -130,105 +156,4 @@ function ArmInside() {
 }
 export default ArmInside;
 
-{
-  /* <div className='outer container' style={{
-  border: '1px solid #d8d6d6'
 
-}}>
-<div className='container h-100' style={{
-  backgroundColor: '#f5f5f5',
-
-  alignItems: 'center',
-  minHeight: '100vh',
-  width:'100%',
-  border: '3px solid black',
-
-
-}}>
-  <h1> Arm</h1>
-  <div className='outer-container' style={{
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center',
-      gap:'30px',
-      marginTop:'55px'
-  }}>
-
-<div>
-{state.name === 'upper-arm' && (
-  <>
-   <div className='inner-item' onClick={()=>handlepartLocation('Inner')}>
-   <h5>Inner</h5>
-   
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Outer')}>
-
-   <h5>Outer</h5>
- 
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Front')}>
-     <h5>Front</h5>
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Back')}>
-     <h5>Back</h5>
- </div>    
- </>   
-)}
-{state.name === 'elbow' && (
-  <>
-   <div className='inner-item' onClick={()=>handlepartLocation('Inner')}>
-   <h5>Inner</h5>
-   
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Outer')}>
-
-   <h5>Outer</h5>
- 
- </div>
- </>
-)}
-
-
-{state.name === 'forearm' && (
-  <>
-   <div className='inner-item' onClick={()=>handlepartLocation('Inner')}>
-   <h5>Inner</h5>
-   
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Outer')}>
-
-   <h5>Outer</h5>
- 
- </div>
-        <div className='inner-item' onClick={()=>handlepartLocation('Side')}>
-        <h5>Side</h5>
-    </div>  
-    </>
-)}
-
-
-{state.name === 'wrist' && (
-<>
-   <div className='inner-item' onClick={()=>handlepartLocation('Inner')}>
-   <h5>Inner</h5>
-   
- </div>
- <div className='inner-item' onClick={()=>handlepartLocation('Outer')}>
-
-   <h5>Outer</h5>
- 
- </div>
-        <div className='inner-item' onClick={()=>handlepartLocation('Side')}>
-        <h5>Side</h5>
-    </div>  
-    </>
-)}
-
-
-</div>
-
-</div>
-</div>
-</div> */
-}

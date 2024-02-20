@@ -171,11 +171,11 @@ function Login() {
           </div>
           <div className='flex gap-2 justify-between'>
             <div className='flex gap-2 text-white items-center'>
-              <input type='checkbox' className='w-4 h-4' ref={rememberMeRef} />
-              <label>Remember me?</label>
+              {/* <input type='checkbox' className='w-4 h-4' ref={rememberMeRef} /> */}
+              {/* <label>Remember Me?</label> */}
             </div>
             <div className='flex gap-2'>
-        <NavLink to="/signup" className={" no-underline w-max text-white"}>Signup  </NavLink>
+        <NavLink to="/signup" className={" no-underline w-max text-white"}>Sign Up</NavLink>
         <span className='text-white'>|</span>
         <NavLink to="/forget_password"  className={" no-underline w-max text-white"}>Forgot Password?</NavLink>
             </div>

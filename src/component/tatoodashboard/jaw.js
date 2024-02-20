@@ -22,10 +22,13 @@ const handlePartLocation = (bodyPart) => {
 
   const buttons = [
     {
-      name:"upper"
+      name:"left"
     },
     {
-      name:"lower"
+      name:"right"
+    },
+    {
+      name:"chin"
     }
   ]
 

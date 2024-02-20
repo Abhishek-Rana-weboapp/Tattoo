@@ -31,7 +31,7 @@ function Nose() {
   const handleNext = ()=>{
       if(selected){
         setUser({ ...user, bodyPart : selected });
-        navigate("/description")
+        navigate("/medical-form")
       }else{
         setAlertMessage("Please select which ear.")
       }

@@ -44,7 +44,6 @@ const UserContextProvider = ({ children }) => {
 
   const [drformData, setdrFormData] = useState({
     name: "",
-    name: "",
     city: "",
     state: "Florida",
     useDoctorRecommendation: false,
@@ -59,37 +58,10 @@ const UserContextProvider = ({ children }) => {
     gaurdianAgreed :false,
     gaurdianName : ""
   });
-  const [initials, setInitials] = useState({
-    1: "",
-    2: "",
-    3: "",
-    4: "",
-    5: "",
-    6: "",
-    7: "",
-    8: "",
-    9: "",
-    10: "",
-    11: "",
-    12: "",
-    13: "",
-  });
+  
+  const [initials, setInitials] = useState({});
 
-  const [gaurdianInitials, setGaurdianInitials] = useState({
-    1: "",
-    2: "",
-    3: "",
-    4: "",
-    5: "",
-    6: "",
-    7: "",
-    8: "",
-    9: "",
-    10: "",
-    11: "",
-    12: "",
-    13: "",
-  });
+  const [gaurdianInitials, setGaurdianInitials] = useState({});
   const [checked, setChecked] = useState({});
   const [isVisible, setIsVisible] = useState(false);
   const [alert, setAlert] = useState(false);

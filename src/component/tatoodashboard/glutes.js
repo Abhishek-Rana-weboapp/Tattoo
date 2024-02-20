@@ -24,10 +24,10 @@ function Glute() {
 
       const buttons = [
         {
-          name: "left glute"
+          name: "left"
         },
         {
-          name: "right glute"
+          name: "right"
         }
       ]
 
@@ -47,7 +47,7 @@ function Glute() {
 
     return (
      <>
-     <GridLayout title={"glute"}>
+     <GridLayout title={"glutes"}>
      {
           buttons.map((button, index)=>{
             return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>

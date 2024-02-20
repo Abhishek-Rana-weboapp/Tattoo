@@ -50,7 +50,7 @@ function OralPiercing() {
       name:"Dimples"
     },
     {
-      name:"Ahley"
+      name:"Ashley"
     },
     {
       name:"Angel Bites"

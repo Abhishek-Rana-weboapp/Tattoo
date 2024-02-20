@@ -143,21 +143,21 @@ function HoldHarmlessAgreement() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 items-center justify-between p-2 md:p-8 text-white  md:w-4/6 overflow-hidden">
+    <div className="w-full h-full flex flex-col gap-2 items-center justify-between p-4 md:p-8 text-white  md:w-4/6 overflow-hidden">
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
         {t("Hold Harmless Agreement")}
       </label>
       <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
         <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-thumb-rounded scrollbar-track -rounded">
           <p className="text-center outline-1 outline-white">
-            {t("I, Name:")} {harmlessagreement?.name}{" "}
+            {t("I,")} {harmlessagreement?.name}{" "}
             {t(
               " hereby acknowledge and agree that as a patron and customer of Fame Tattoos, Inc., its premises, facility, services, and products, involves risks of injury to persons or property, including but not limited to those described below, and patron/customer assumes full responsibility for such risks. In consideration of being a patron/customer of Fame Tattoos, Inc., for any purpose including, but not limited to, tattoo services, piercing services, tattoo removal services, tooth gems, observation, use of shop equipment, services, or participation in any way, patron/customer agrees to the following: Patron/Customer hereby releases and holds Fame Tattoos, Inc., its directors, officers, employees, independent contractors, and agents harmless from all liability to any patron/customer, their children, personal representatives, assigns, heirs, and next of kin for any loss, damage, personal injury, deformity, death, and forever gives up any claims or demands therefore, on account of injury to patron/customer's person or property, including injury leading to disfigurement or death of patron/customer, whether caused by the active or passive negligence of Fame Tattoos, Inc., or otherwise, to the fullest extent permitted by law, while patron/customer is in, upon, or about the Fame Tattoos, Inc., premises using or not using their services, facility, or equipment."
             )}
           </p>
         </div>
 
-        <div className="flex flex-col  md:flex-row gap-2 justify-center">
+        <div className="flex flex-col  md:flex-row gap-2 justify-center px-2">
           <div className="flex gap-1 items-center justify-center">
             <label>{t("Name")}:</label>
             <input

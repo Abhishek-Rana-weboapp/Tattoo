@@ -183,7 +183,7 @@ function SignUp() {
   return (
     <div className="w-full h-full flex flex-col gap-4 justify-center items-center p-4">
       <img src={Title_logo} className="w-2/6 md:w-1/6"></img>
-      <h1 className="text-white font-bold uppercase">Signup</h1>
+      <h1 className="text-white font-bold">Sign Up</h1>
       <div className="col-md-6">
         <form
           onSubmit={handleFormSubmit}
@@ -197,7 +197,7 @@ function SignUp() {
                 type="text"
                 className="flex-1 focus:outline-none bg-white p-1"
                 id="firstname"
-                placeholder="FirstName"
+                placeholder="First Name"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -208,7 +208,7 @@ function SignUp() {
                 type="text"
                 className="flex-1 focus:outline-none bg-white p-1"
                 id="lastname"
-                placeholder="LastName"
+                placeholder="Last Name"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />

@@ -140,7 +140,7 @@ export default function RoutesComponent() {
       <Route exact path="/hand" element={<Hand />} />
       <Route exact path="/hand-inside" element={<HandInside />} />
       <Route exact path="/hip" element={<Hip />} />
-      <Route exact path="/glute" element={<Glute />} />
+      <Route exact path="/glutes" element={<Glute />} />
       <Route exact path="/pelvic" element={<Pelvic />} />
       <Route exact path="/leg" element={<Leg />} />
       <Route exact path="/nipple" element={<Nipple />} />
@@ -157,7 +157,7 @@ export default function RoutesComponent() {
       <Route exact path="/belly-piercing" element={<BellyPiercing />} />
       <Route exact path="/ear-piercing" element={<EarPiercing />} />
       <Route exact path="/facial-piercing" element={<FacialPiercing />} />
-      <Route exact path="/jewellery-piercing" element={<JewelleryPiercing />} />
+      <Route exact path="/jewelry-swap" element={<JewelleryPiercing />} />
       <Route exact path="/nipple-piercing" element={<NipplePiercing />} />
       <Route exact path="/nose-piercing" element={<NosePiercing />} />
       <Route exact path="/oral-piercing" element={<OralPiercing />} />

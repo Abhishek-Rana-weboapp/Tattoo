@@ -17,7 +17,7 @@ function ChestInside() {
     if(user.bodyPart) setSelected(user.bodyPart)
 },[])
 
-  const buttons = [
+  const collarboneButtons = [
     {
       name: "left"
     },
@@ -26,10 +26,34 @@ function ChestInside() {
     }
   ]
 
+  const nippleButtons = [
+    {
+      name: "left"
+    },
+    {
+      name: "right"
+    },
+    {
+      name:"both"
+    }
+  ]
+
+  const underButtons = [
+    {
+      name: "left"
+    },
+    {
+      name: "right"
+    },
+    {
+      name:"full"
+    }
+  ]
+
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, bodyPart:selected });
-  navigate('/description');
+      navigate('/description');
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))
@@ -46,8 +70,18 @@ function ChestInside() {
     return (
       <>
       <GridLayout title={"chest"}>
-      {
-           buttons.map((button, index)=>{
+       {user.chestLocation === "collarbone" &&
+           collarboneButtons.map((button, index)=>{
+             return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
+           })
+         }
+         {user.chestLocation === "nipple" &&
+           nippleButtons.map((button, index)=>{
+             return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
+           })
+         }
+          {user.chestLocation === "under-chest" &&
+           underButtons.map((button, index)=>{
              return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
            })
          }
@@ -61,47 +95,4 @@ function ChestInside() {
   
 export default ChestInside
 
-
-{/* <div className='outer container' style={{
-  border: '1px solid #d8d6d6'
-
-}}>
-<div className='container h-100' style={{
-  backgroundColor: '#f5f5f5',
-
-  alignItems: 'center',
-  minHeight: '100vh',
-  width:'100%',
-  border: '3px solid black',
-
-
-}}>
-  <h1> CHEST</h1>
-  <div className='outer-container' style={{
-      display:'flex',
-      justifyContent:'center',
-      flexDirection:'column',
-      alignItems:'center',
-      gap:'30px',
-      marginTop:'55px'
-  }}>
-
-  
-  <div className='inner-item' onClick={()=>handlepartLocation('left')}>
-    <h5>Left</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('right')}>
-
-    <h5>Right</h5>
-  
-  </div>
- 
-  </div>
-
-
-
-</div>
-
-</div> */}
 

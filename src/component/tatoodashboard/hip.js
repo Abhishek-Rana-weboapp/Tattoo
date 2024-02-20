@@ -24,10 +24,10 @@ function Hip() {
 
       const buttons = [
         {
-          name: "left hip"
+          name: "left"
         },
         {
-          name: "right hip"
+          name: "right"
         }
       ]
 

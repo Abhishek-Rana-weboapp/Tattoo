@@ -76,7 +76,7 @@ function ForgetPassword() {
               Reset Password
             </button>
 
-            <Link to="/login" className="text-right">
+            <Link to="/" className="text-right">
               Remember your password? Log in
             </Link>
           </div>
