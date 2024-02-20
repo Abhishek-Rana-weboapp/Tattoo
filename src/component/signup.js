@@ -6,11 +6,13 @@ import i18n from "i18next";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 function SignUp() {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
+  const {t} = useTranslation()
   const [showPassword, setShowPassword] = useState(false);
   const [showPopup, setshowPopup] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -26,6 +28,8 @@ function SignUp() {
   useEffect(()=>{
     sessionStorage.clear()
   },[])
+
+  let passReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -47,7 +51,11 @@ function SignUp() {
       user.dateofbirth &&
       user.usertype
     ) {
-
+      if(!passReg.test(password)){
+         setAlertMessage(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"))
+         setAlert(!alert)
+         return
+      }
       await axios.post(`${apiUrl}/signup`, user)
       .then(res=>{
         if(res.status === 201){

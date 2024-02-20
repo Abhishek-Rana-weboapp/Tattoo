@@ -99,12 +99,6 @@ function EmergencyContactForm() {
           <button className="yellowButton py-2 px-8 rounded-3xl font-bold text-black" onClick={handleNo}>
           {t("No")}
           </button>
-            {/* <label className="text-xl font-bold text-black">{t("Select an option:")}</label>
-            <select className="bg-black p-2 rounded-lg" onChange={handleUpdatedata}>
-              <option value="">{t("Select")}...</option>
-              <option value={Yes}>{t("Yes")}</option>
-              <option value={No}>{t("No")}</option>
-            </select> */}
           </div>
         </Modal>
       )}
