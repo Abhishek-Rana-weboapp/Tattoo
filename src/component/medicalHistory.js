@@ -53,35 +53,34 @@ function MedicalForm() {
     fetchData();
   }, []);
 
-  const handleUpdatedata = (value) => {
-    setShowPopup_(false)
-    if (value === "No") {
-      setFormData({
-        page1: data?.tattooedBefore,
-        page2: data?.pregnantOrNursing,
-        page3: data?.hemophiliac,
-        page4: data?.medicalCondition,
-        page5: data?.communicableDiseases,
-        page6: data?.alcohol,
-        page7: data?.allergies,
-        page8: data?.heartCondition,
-      });
-      navigate("/emergency-contact");
-    }
-    if (value === "Yes") {
-      setFormData({
-        page1: data?.tattooedBefore,
-        page2: data?.pregnantOrNursing,
-        page3: data?.hemophiliac,
-        page4: data?.medicalCondition,
-        page5: data?.communicableDiseases,
-        page6: data?.alcohol,
-        page7: data?.allergies,
-        page8: data?.heartCondition,
-      });
-      setShowPopup_(!showPopup_);
-    }
-  };
+
+  const handleYes = ()=>{
+    setFormData({
+      page1: data?.tattooedBefore,
+      page2: data?.pregnantOrNursing,
+      page3: data?.hemophiliac,
+      page4: data?.medicalCondition,
+      page5: data?.communicableDiseases,
+      page6: data?.alcohol,
+      page7: data?.allergies,
+      page8: data?.heartCondition,
+    });
+    setShowPopup_(!showPopup_);
+  }
+
+  const handleNo = ()=>{
+    setFormData({
+      page1: data?.tattooedBefore,
+      page2: data?.pregnantOrNursing,
+      page3: data?.hemophiliac,
+      page4: data?.medicalCondition,
+      page5: data?.communicableDiseases,
+      page6: data?.alcohol,
+      page7: data?.allergies,
+      page8: data?.heartCondition,
+    });
+    navigate("/emergency-contact");
+  }
 
   useEffect(() => {
     if (
@@ -195,7 +194,6 @@ function MedicalForm() {
     setCurrentPage(currentPage - 1);
   };
 
-  console.log(user);
 
   return (
     <>
@@ -764,7 +762,20 @@ function MedicalForm() {
 
           {/* // Dropdown menu */}
           <div className="flex gap-1 items-center">
-            <label className="text-xl font-bold">{t("Select an option:")}</label>
+          <button
+            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+            onClick={handleYes}
+          >
+            {t("Yes")}
+          </button>
+
+          <button
+            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+            onClick={handleNo}
+          >
+            {t("No")}
+          </button>
+            {/* <label className="text-xl font-bold">{t("Select an option:")}</label>
             <select
               className="rounded p-2 border-1 bg-black text-white"
               onChange={(e) => handleUpdatedata(e.target.value)}
@@ -775,17 +786,10 @@ function MedicalForm() {
                   {option}
                 </option>
               ))}
-            </select>
+            </select> */}
           </div>
 
-          <button
-            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-            onClick={() => {
-              setShowPopup_(false);
-            }}
-          >
-            {t("Close Popup")}
-          </button>
+          
         </Modal>
       )}
     </>

@@ -223,7 +223,6 @@ function TermsOfService() {
     }
   };
 
-  console.log(pageContents)
   // Return the JSX structure
   return (
     <ConsentFormLayout title="Terms of Service">
