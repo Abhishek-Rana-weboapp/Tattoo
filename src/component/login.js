@@ -74,6 +74,7 @@ function Login() {
           sessionStorage.setItem('lastname',responseData.user.lastname)
           sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
           sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
+
           navigate("/artist-dashboard");
         }
        if(responseData?.user?.usertype === "user")

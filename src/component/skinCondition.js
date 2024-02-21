@@ -84,8 +84,8 @@ function SkinCondition({
           onChange={(e) => setCondition(e.target.value)}
         >
           <option value={""}>Select</option>
-          <option value={"good"}>Good</option>
-          <option value={"bad"}>Bad</option>
+          <option value={"good"}>{t("Good")}</option>
+          <option value={"bad"}>{t("Bad")}</option>
         </select>
         {condition === "bad" && (
           <>
