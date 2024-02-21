@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import { apiUrl } from '../../url';
+import Loader from '../loader/Loader';
 
 export default function VerifyUpload({handleSubmit}) {
   const fileInputRef = useRef(null);
@@ -9,6 +10,8 @@ export default function VerifyUpload({handleSubmit}) {
     const [idPhoto, setIdPhoto] = useState(null);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [imagePrev , setImagePrev] = useState()
+  const [loading, setLoading] = useState(false)
+
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -17,6 +20,7 @@ export default function VerifyUpload({handleSubmit}) {
 
 
     const uploadIdPhoto = (file) => {
+      setLoading(true)
         const formData = new FormData();
         formData.append('profile', file);
     
@@ -30,13 +34,16 @@ export default function VerifyUpload({handleSubmit}) {
               const url =  URL.createObjectURL(file)
               setIdPhoto(data.profile_url);
               setImagePrev(url)
+              setLoading(false)
               setIsSubmitDisabled(false); // Enable the submit button
             } else {
               console.error('Failed to upload ID photo.');
+              setLoading(false)
             }
           })
           .catch((error) => {
             console.error('Error:', error);
+            setLoading(false)
           });
       };
 
@@ -68,8 +75,9 @@ export default function VerifyUpload({handleSubmit}) {
       <button
         className="flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 hover:cursor-pointer p-2 font-semibold hover:scale-105 ease-in-out duration-300"
         onClick={handleButton}
+        disabled={loading}
       >
-        {t("Upload ID Photo")}
+        {(loading) ? <Loader/> : t("Upload ID Photo")}
       </button>
 
 

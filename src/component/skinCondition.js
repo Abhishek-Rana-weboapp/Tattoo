@@ -20,21 +20,39 @@ function SkinCondition({
   }, []);
 
   const handleUpdateSkin = async () => {
+    let data
     if(condition){
-      const data = {
-        updates: [
-          {
-            id: updateAppointment?.id,
-            updateField: "skin_conditions",
-            updateValue: condition === "good" ? condition : explanation,
-          },
-          {
-            id: updateAppointment?.id,
-            updateField: "process_step",
-            updateValue: 3,
-          },
-        ],
-      };
+      if(updateAppointment.typeofservice === "tattoo"){
+        data = {
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: "skin_conditions",
+              updateValue: condition === "good" ? condition : explanation,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "process_step",
+              updateValue: 3,
+            },
+          ],
+        };
+      }else{
+        data = {
+          updates: [
+            {
+              id: updateAppointment?.id,
+              updateField: "skin_conditions",
+              updateValue: condition === "good" ? condition : explanation,
+            },
+            {
+              id: updateAppointment?.id,
+              updateField: "process_step",
+              updateValue: 4,
+            },
+          ],
+        };
+      }
       await axios
       .post(`${apiUrl}/artist/post_new`, data)
       .then((res) => {
