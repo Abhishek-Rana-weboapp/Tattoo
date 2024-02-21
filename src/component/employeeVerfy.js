@@ -9,15 +9,15 @@ import VerifyPin from './sub-Components/VerifyPin';
 import axios from 'axios';
 import CustomAlertModal from './modal/CustomAlertModal';
 import { states } from '../data/states';
+import LoaderModal from './modal/LoaderModal';
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { user, formData, emerformData, drformData, setIsVisible,harmlessagreement,initials, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
+  const {setIsVisible, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
   const fileInputRef = useRef(null);
-  const [promptOpen , setPromptopen] = useState(true)
   const [step , setStep] = useState(0)
   const [pin , setPin] = useState()
   const [spanMessage,setSpanMessage] = useState()
@@ -29,37 +29,11 @@ const IDVerificationComponent = () => {
     setIsVisible(true)
   },[])
   
-  
-  const [idPhoto, setIdPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const appointmentID = sessionStorage.getItem("appointmentID")
 
-  const handlePhotoUpload = (e) => {
-    const file = e.target.files[0];
-    uploadIdPhoto(file);
-  };
 
-  const uploadIdPhoto = (file) => {
-    const formData = new FormData();
-    formData.append('profile', file);
-
-    fetch(`${apiUrl}/upload`, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.profile_url) {
-          setIdPhoto(data.profile_url);
-          setIsSubmitDisabled(false); // Enable the submit button
-        } else {
-          console.error('Failed to upload ID photo.');
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
 
   const handlePinSubmit = ()=>{
     if(!pin){
@@ -75,110 +49,30 @@ const IDVerificationComponent = () => {
     }
   
 
-
-  // const handleSubmit = async () => {
-  //   const username = sessionStorage.getItem('username');
-  //   const minor = sessionStorage.getItem('minor');
-  //   const toothgem_url=sessionStorage.getItem('toothgem_url')
-
-  //   if (!isSubmitDisabled) {
-  //     try {
-  //       const response = await fetch(`${apiUrl}/appointment/post?update=true`, {
-  //         method: 'POST',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //         body: JSON.stringify({
-  //           username: username,
-  //           minor: minor,
-  //           typeofservice: user.selectedTattooType,
-  //           bodyloacation: JSON.stringify(user),
-  //           medicalhistory: {
-  //             "tattooed before": formData?.page1,
-  //             "Pregnant or Nursing": formData?.page2,
-  //             "hemophiliac": formData?.page3,
-  //             "medical condition": formData?.page4,
-  //             "communicable diseases": formData?.page5,
-  //             "alcohol": formData?.page6,
-  //             "allergies": formData?.page7,
-  //             "heart condition": formData?.page8,
-  //           },
-  //           emergencycontectnumber: JSON.stringify(emerformData),
-  //           doctor_information: JSON.stringify(drformData),
-  //           WaiverRelease_url: JSON.stringify(initials),
-  //           HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
-  //           id_url: idPhoto,
-  //           ArtistPiercerNames: null,
-  //         }),
-  //       });
-
-  //       const responseData = await response.json();
-
-  //       if (response.status === 201) {
-  //         setAlert(!alert)
-  //         setAlertMessage("Appointment booked");
-  //         if (minor === "true") {
-  //           sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
-  //           navigate('/consent-guard');
-  //         } else {
-  //           progressValue=100
-  //           //sessionStorage.setItem("appointment_detail", JSON.stringify(responseData.userData));
-  //           navigate('/');
-  //         }
-  //       } else {
-  //         setAlertMessage(t('Please fill in all the required fields.'));
-  //         setAlert(!alert)
-  //       }
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   }
-  // };
-
-  const handleVerifyID = async(imageUrl)=>{
-    if(!imageUrl){
-      setAlertMessage(t("Please upload an ID"))
-      setAlert(!alert)
-    }else{
-      const data = {
-        updates : [{
-          id: appointmentID,
-          updateField : "id_url",
-          updateValue : imageUrl
-        }]
-      }
-      await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
-        if(res.status === 201){
-          setStep(2)
-        }
-      }).catch((err)=>{
-        console.error(err.message)
-      })
+  
+    
+    const handleButton = ()=>{
+      fileInputRef?.current?.click()
     }
-  }
-
-  const handleButton = ()=>{
-    fileInputRef?.current?.click()
- }
-
- const employeeNames = [
- "Adonay Llerena",
-"Barbie Gonzalez",
-"Cheppy Sotelo",
-"Daniel Proano",
-"Eduanis Rama",
-"Ernie Jorge",
-"Frank Gonzalez",
-"Gil Benjamin",
-"Jill Llerena",
-"Jose Gonzalez",
-"Keyla Valdes",
-"Konstantin Alexeyev",
-"Omar Gonzalez",
-"Omar Fame Gonzalez",
-"Osnely Garcia",
-"Yosmany Dorta"
- ]
+    
+    const employeeNames = [
+      "Adonay Llerena",
+      "Barbie Gonzalez",
+      "Cheppy Sotelo",
+      "Daniel Proano",
+      "Eduanis Rama",
+      "Ernie Jorge",
+      "Frank Gonzalez",
+      "Gil Benjamin",
+      "Jill Llerena",
+      "Jose Gonzalez",
+      "Keyla Valdes",
+      "Konstantin Alexeyev",
+      "Omar Gonzalez",
+      "Omar Fame Gonzalez",
+      "Osnely Garcia",
+      "Yosmany Dorta"
+    ]
 
  const handleShopLocation = async()=>{
   if(!shopLocation){
@@ -233,6 +127,10 @@ const IDVerificationComponent = () => {
   "Hialeah, FL"
  ]
 
+ if(loading){
+  return <LoaderModal/>
+ }
+
   return (
     <>
     {
@@ -242,7 +140,7 @@ const IDVerificationComponent = () => {
       step === 0 && <VerifyPin handleSubmit={handlePinSubmit} pin={pin}  setPin={setPin} spanMessage={spanMessage} />
     }
     {
-      step === 1 &&  <VerifyUpload handleSubmit = {handleVerifyID}/>
+      step === 1 &&  <VerifyUpload step={step} setStep={setStep}/>
     }
      {
       step === 2 &&  <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>

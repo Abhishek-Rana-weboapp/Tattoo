@@ -364,5 +364,8 @@
   "time calculation":"cálculo de tiempo",
   "Start":"Comenzar",
   "Bill":"Factura",
-  "Price calculation":"Cálculo de precios"
+  "Price calculation":"Cálculo de precios",
+  "Please acknowledge you understand the medical history":"Por favor, confirma que entiendes el historial médico.",
+  "Please upload both ID's":"Por favor, carga ambas identificaciones.",
+  "Please upload Gaurdian's ID photo before submitting.":"Por favor, carga la foto del documento de identidad del tutor antes de enviar."
 }

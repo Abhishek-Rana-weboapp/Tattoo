@@ -13,6 +13,7 @@ import {
   tattooTerms,
   toothGemTerms,
 } from "../data/TermOfServiceQuestions";
+import LoaderModal from "./modal/LoaderModal";
 // Define the component
 function TermsOfService() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ function TermsOfService() {
   const [storedGaurdianInitials, setStoredGaurdianInitials] = useState(
     sessionStorage.getItem("gaurdianInitials")
   );
+  const [loading, setLoading] = useState(false)
   const minor = sessionStorage.getItem("minor");
 
   const {
@@ -49,11 +51,6 @@ function TermsOfService() {
   const pmuRules = pmuTerms;
   const tattooRemovalRules = tattooRemovalTerms;
   const toothGemRules = toothGemTerms;
-  console.log(tattooRules)
-  console.log(piercingRules)
-  console.log(pmuRules)
-  console.log(tattooRemovalRules)
-  console.log(toothGemRules)
   const [pageContents, setpageContents] = useState([]);
 
   useEffect(() => {
@@ -95,7 +92,6 @@ function TermsOfService() {
         setCurrentPage(currentPage + 1);
       } else if (currentPage === 3) {
         handleSubmit();
-        // navigate('/verify');
       }
     }
   };
@@ -112,6 +108,7 @@ function TermsOfService() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true)
     const username = sessionStorage.getItem("username");
     const minor = sessionStorage.getItem("minor");
     const toothgem_url = sessionStorage.getItem("toothgem_url");
@@ -124,16 +121,7 @@ function TermsOfService() {
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
         bodyloacation: JSON.stringify(user),
-        medicalhistory: {
-          "tattooed before": formData?.page1,
-          "Pregnant or Nursing": formData?.page2,
-          hemophiliac: formData?.page3,
-          "medical condition": formData?.page4,
-          "communicable diseases": formData?.page5,
-          alcohol: formData?.page6,
-          allergies: formData?.page7,
-          "heart condition": formData?.page8,
-        },
+        medicalhistory: formData,
         Consent_form: "agreed",
         gaurdian_initials: storedGaurdianInitials,
         guardian_signature: gaurdianSignature,
@@ -180,15 +168,21 @@ function TermsOfService() {
             "appointment_detail",
             JSON.stringify(responseData.userData)
           );
-          navigate("/consent-guard");
-        } else {
+          setLoading(false)
           navigate("/verify");
+          return
+        } else {
+          setLoading(false)
+          navigate("/verify");
+          return
         }
       } else {
+        setLoading(false)
         setAlertMessage(t("Please fill in all the required fields"));
         setAlert(!alert);
       }
     } catch (error) {
+      setLoading(false)
       console.error("Error:", error);
     }
   };
@@ -213,6 +207,10 @@ function TermsOfService() {
       setGaurdianInitials((prev) => ({ ...prev, [currentPage]: "" }));
     }
   };
+
+  if(loading){
+    return <LoaderModal/>
+  }
 
   // Return the JSX structure
   return (
@@ -292,7 +290,7 @@ function TermsOfService() {
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
           onClick={prevPage}
         >
-          {t("Previous")}
+          {t("Prev")}
         </button>
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

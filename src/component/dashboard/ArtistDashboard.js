@@ -4,6 +4,7 @@ import UserContext from "../../context/UserContext";
 import HistoryVerifyModal from "../modal/HistoryVerifyModal";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import LoaderModal from "../modal/LoaderModal";
 
 export default function ArtistDashboard() {
   const [appointments, setAppointments] = useState();
@@ -54,32 +55,21 @@ export default function ArtistDashboard() {
       });
   };
 
-  const fetchMedicalHistory = async () => {
-    await axios
-      .get(
-        `${apiUrl}/artist/username_appointment_list?username=${selectedClient?.username}`
-      )
-      .then((res) => {
-        setSelectedMedicalHistory(res?.data?.medicalhistory);
-        setSelectedAppointment(res?.data?.data[res.data.data.length - 1]);
-      })
-      .catch((err) => console.log(err));
-  };
+
 
   useEffect(() => {
     fetchAppointments();
     setIsVisible(true);
   }, []);
 
+  
   useEffect(() => {
     if (selectedClient && selectedArtist) {
-      fetchMedicalHistory();
-    }
-    if (selectedMedicalHistory) {
-      const yesAnswers = Object.keys(selectedMedicalHistory).filter((key) => {
-        return selectedMedicalHistory[key].yes === true;
+      const MedicalData = JSON.parse(selectedClient.medicalhistory) || {};
+      setSelectedMedicalHistory(MedicalData)
+      const yesAnswers = Object.keys(MedicalData).filter((key) => {
+        return MedicalData[key].yes === true;
       });
-      console.log(yesAnswers)
       setSelectedYes(yesAnswers);
     }
   }, [selectedClient, selectedArtist]);
@@ -95,16 +85,16 @@ export default function ArtistDashboard() {
   }, [selectedMedicalHistory]);
 
   const medicalQuestions = {
-    tattooedBefore: "Have You Ever Been Tattooed Before?",
-    pregnantOrNursing: "Are you Pregnant or Nursing?",
-    hemophiliac:
+    page1: "Have You Ever Been Tattooed Before?",
+    page2: "Are you Pregnant or Nursing?",
+    page3:
       "Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?",
-    medicalCondition: "Do you have any medical or skin conditions?",
-    communicableDiseases: "Do you have any communicable diseases?",
-    alcohol:
+      page4: "Do you have any medical or skin conditions?",
+      page5: "Do you have any communicable diseases?",
+      page6:
       "Are you under the influence of alcohol or drugs, prescribed or otherwise?",
-    allergies: "Do you have any allergies?",
-    heartCondition: "Do you have a heart condition, epilepsy, or diabetes?",
+      page7: "Do you have any allergies?",
+      page8: "Do you have a heart condition, epilepsy, or diabetes?",
   };
 
   //   Function to handle the client select dropdown
@@ -140,15 +130,27 @@ export default function ArtistDashboard() {
                     axios.get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
                     .then(response=>{
                       navigate(`/billing/${selectedClient?.id}/${selectedClient?.process_step}`)
+                      return
                     })
                     .catch(err=>console.error(err))
+                    return
                   })
                   .catch(err=>console.error(err))
+                  return
               }
             }
        else {
         setAlertMessage(t("Please select a client:"));
         setAlert(!alert);
+        return
+      }
+    }if(step === 1){
+      if(acknowledgement){
+        navigate(`/billing/${selectedClient?.id}/${selectedClient?.process_step}`)
+      }else{
+        setAlertMessage(t("Please acknowledge you understand the medical history"));
+        setAlert(!alert);
+        return
       }
     }
   };
@@ -157,10 +159,14 @@ export default function ArtistDashboard() {
     if (step === 1) {
       setStep(0);
     }
-    if (step === 2) {
-      setStep(1);
+    if(step === 0){
+      navigate(-1)
     }
   };
+
+  if(loading){
+    return <LoaderModal/>
+  }
 
   return (
     <div className="w-full h-full p-2 flex justify-center overflow-hidden">
@@ -195,38 +201,6 @@ export default function ArtistDashboard() {
           </div>
         )}
 
-        {/* {step === 1 && (
-          <div className="flex flex-col justify-center gap-2 items-center">
-            <h2 className="text-white font-medium">Select Your Name</h2>
-            <select
-              className="p-2 rounded-lg w-full md:w-2/4"
-              onChange={handleArtistSelect}
-            >
-              <option value={""}>Select your Name</option>
-              {employeeNames?.map((employee, index) => {
-                return (
-                  <option key={index} value={employee}>
-                    {employee}
-                  </option>
-                );
-              })}
-            </select>
-            <div className="flex justify-center gap-4">
-              <button
-                className="yellowButton rounded-xl py-2 px-5 font-bold"
-                onClick={handlePrev}
-              >
-                Back
-              </button>
-              <button
-                className="yellowButton rounded-xl py-2 px-5 font-bold"
-                onClick={handleNext}
-              >
-                Next
-              </button>
-            </div>
-          </div>
-        )} */}
 
         {step === 1 && (
           <>
@@ -241,7 +215,19 @@ export default function ArtistDashboard() {
                         {medicalQuestions[med]}
                       </div>
                       <div className="w-full text-start pl-10">
-                        {selectedMedicalHistory[med]?.yes === true
+                        {selectedMedicalHistory.type === "common" && selectedMedicalHistory[med]?.yes === true
+                          ? med === "page1"
+                            ? "Yes"
+                            : med === "page2"
+                            ? `yes, ${
+                                selectedMedicalHistory[med]?.nursing === true
+                                  ? "nursing"
+                                  : "pregnant"
+                              }`
+                            : `yes , ${selectedMedicalHistory[med]?.explanation}`
+                          : "No"}
+
+                        {selectedMedicalHistory.type === "tooth-gems" && (selectedMedicalHistory[med]?.yes === true
                           ? med === "tattooedBefore"
                             ? "Yes"
                             : med === "pregnantOrNursing"
@@ -251,7 +237,7 @@ export default function ArtistDashboard() {
                                   : "pregnant"
                               }`
                             : `yes , ${selectedMedicalHistory[med]?.explanation}`
-                          : "No"}
+                          : "No")}
                       </div>
                     </div>
                   );

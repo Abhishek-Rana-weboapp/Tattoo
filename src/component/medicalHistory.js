@@ -51,6 +51,9 @@ function MedicalForm() {
           }if(prevMedicalData.type === "tooth-gems" && user.selectedTattooType !== "tooth-gems"){
             setLoading(false)
           }
+          if(prevMedicalData.type === "common" && user.selectedTattooType === "tooth-gems"){
+            setLoading(false)
+          }
         }
       }else{
         setLoading(false)
