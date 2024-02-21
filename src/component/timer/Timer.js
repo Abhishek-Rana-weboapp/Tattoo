@@ -9,7 +9,6 @@ import LoaderModal from "../modal/LoaderModal";
 const Timer = ({
   updateAppointment,
   setUpdateAppointment,
-  bill,
   setBill,
   handlePrev,
 }) => {

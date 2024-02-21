@@ -13,28 +13,18 @@ import i18n from 'i18next';
 
 function Login() {
   const { t } = useTranslation();
-  const progress=5;
   const [showPassword, setShowPassword] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const {isVisible, setIsVisible, setInitials} = useContext(UserContext)
+  const { setIsVisible} = useContext(UserContext)
 
-  const rememberMeRef = useRef()
 
   useEffect(()=>{
      setIsVisible(false)
-     const storedEmail = localStorage.getItem("email")
-     const storedPassword = localStorage.getItem("password")
-
      sessionStorage.clear()
-
-     if(storedEmail && storedPassword){
-      setEmail(storedEmail)
-      setPassword(storedPassword)
-     }
    },[])
 
 
@@ -46,7 +36,6 @@ function Login() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
     const user = {
       username: email,
       password: password,
@@ -77,7 +66,6 @@ function Login() {
         if(responseData?.user?.usertype==="admin")
         {
           sessionStorage.setItem('username', email);
-          // sessionStorage.setItem('userId', responseData.user.id);
           sessionStorage.setItem('minor', responseData.user.minor)
           sessionStorage.setItem('token', responseData.token);
           sessionStorage.setItem('lang',responseData.user.lang)
@@ -86,7 +74,6 @@ function Login() {
           sessionStorage.setItem('lastname',responseData.user.lastname)
           sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
           sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
-          handleRememberMe()
           navigate("/artist-dashboard");
         }
        if(responseData?.user?.usertype === "user")
@@ -114,24 +101,12 @@ function Login() {
       else{
         setResponseMessage('Invalid credentials');
       }
-
-      console.log('Response:', responseData);
     } catch (error) {
       console.error('Error:', error);
     }
   
     }
     
-    // Function to handle the remember me functionality
-
-    const handleRememberMe = ()=>{
-      if(rememberMeRef.current.checked){
-        localStorage.setItem("email" , email)
-        localStorage.setItem("password" , password)
-      }else{
-        localStorage.setItem("email", ""); localStorage.setItem("password", "")
-      }
-    }
 
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>
