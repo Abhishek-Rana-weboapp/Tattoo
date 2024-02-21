@@ -86,7 +86,7 @@ function Login() {
           sessionStorage.setItem('lastname',responseData.user.lastname)
           sessionStorage.setItem('fullname',`${responseData.user.firstname} ${responseData.user.lastname}`)
           sessionStorage.setItem("initials" ,`${responseData?.user?.firstname?.slice(0,1).toUpperCase()}${responseData?.user?.lastname?.slice(0,1).toUpperCase()}`)
-          handleRememberMe()
+          //handleRememberMe()
           navigate("/artist-dashboard");
         }
        if(responseData?.user?.usertype === "user")
@@ -124,14 +124,14 @@ function Login() {
     
     // Function to handle the remember me functionality
 
-    const handleRememberMe = ()=>{
-      if(rememberMeRef.current.checked){
-        localStorage.setItem("email" , email)
-        localStorage.setItem("password" , password)
-      }else{
-        localStorage.setItem("email", ""); localStorage.setItem("password", "")
-      }
-    }
+    // const handleRememberMe = ()=>{
+    //   if(rememberMeRef.current.checked){
+    //     localStorage.setItem("email" , email)
+    //     localStorage.setItem("password" , password)
+    //   }else{
+    //     localStorage.setItem("email", ""); localStorage.setItem("password", "")
+    //   }
+    // }
 
   return (
     <div className='w-full h-full flex flex-col gap-4 justify-center items-center'>

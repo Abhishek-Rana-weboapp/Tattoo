@@ -133,13 +133,13 @@ export default function ShowBill({
           className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
           onClick={handlePrev}
         >
-          Prev
+          {t("Prev")}
         </button>
         <button
           className="text-black yellowButton rounded-xl py-2 px-4 font-bold"
           onClick={handleNext}
         >
-          Next
+          {t("Next")}
         </button>
       </div>
     </div>

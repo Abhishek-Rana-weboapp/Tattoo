@@ -124,7 +124,7 @@ export default function PriceComponent({
               value={formatedPrice}
               onChange={handleInputChangeInternal}
               onBlur={handleZeros}
-              placeholder="Price"
+              placeholder={t("Price")}
             />
           </span>
         </div>
