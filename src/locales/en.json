@@ -341,5 +341,8 @@
   "time calculation":"time calculation",
   "Start":"Start",
   "Bill":"Bill",
-  "Price calculation":"Price calculation"
+  "Price calculation":"Price calculation",
+  "Please acknowledge you understand the medical history":"Please acknowledge you understand the medical history",
+  "Please upload both ID's":"Please upload both ID's",
+  "Please upload Gaurdian's ID photo before submitting.":"Please upload Gaurdian's ID photo before submitting."
 }
