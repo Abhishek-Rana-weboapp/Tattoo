@@ -58,28 +58,16 @@ const HairLossPatternSelection = () => {
 
 
   return (
-    // <div>
-    //   <h1>Which image most closely resembles your hair loss pattern?</h1>
-    //   <div className="image-container">
+   
     <>
     <SixGridLayout title={"smp"} heading={t("Which image most closely resembles your hair loss pattern?")}>
 
         {images.map((image, index) => (
           <SmpCard key={index} image={image} onClick={handlePatternSelection} selected={selected}/>
-          // <div key={index} className="image-item" style={{
-            //   border:image==selectedPattern?"1px solid blue":""
-            // }}> 
-            //   <img src={image} alt={`Hair Loss Pattern ${index + 1}`} onClick={() => handlePatternSelection(image)} />
-            //   <p>Select</p>
-            // </div>
             ))}
             </SixGridLayout>
             <Navigation next={handleNext}  prev={handlePrev} />
             </>
-    //     <ProgressBar progress={progressValue} />
-    //   </div>
-    //   <button className='smp-btn' onClick={()=>navigate('/medical-form')}>Submit</button>
-    // </div>
   );
 };
 

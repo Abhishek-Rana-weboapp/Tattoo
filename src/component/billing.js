@@ -186,13 +186,12 @@ const BillingComponent = () => {
 
       {currentStep === 3 && (
         <>
-          {updateAppointment?.typeofservice === "tattoo" && (
             <UploadBeforeImage
               handlePrev={handlePrev}
               updateAppointment={updateAppointment}
               setUpdateAppointment={setUpdateAppointment}
             />
-          )}
+          
         </>
       )}
 
