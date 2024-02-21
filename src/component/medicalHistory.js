@@ -52,6 +52,8 @@ function MedicalForm() {
             setLoading(false)
           }
         }
+      }else{
+        setLoading(false)
       }
     } catch (error) {
       setLoading(false)
