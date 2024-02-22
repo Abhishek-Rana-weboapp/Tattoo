@@ -14,14 +14,12 @@ export default function ArtistList() {
   const [email, setEmail] = useState("");
   const inputRef = useRef();
   const token = sessionStorage.getItem("token");
-//   const [artists, setArtists] = useState();
 
   const fetchArtists = async () => {
     await axios
       .get(`${apiUrl}/artist/getAllArtists`)
       .then((res) => {
         console.log(res);
-        // setArtists(res.data);
       })
       .catch((err) => console.log(err));
   };

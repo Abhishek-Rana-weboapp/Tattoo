@@ -1,5 +1,5 @@
-import React, { useContext, } from 'react'
-import {  Route, Routes,  } from 'react-router-dom'
+import React, { useContext, useEffect, } from 'react'
+import {  Route, Routes, useLocation,  } from 'react-router-dom'
 import Login from '../component/login';
 import SignUp from '../component/signup';
 import ForgetPassword from '../component/forgetPassword';
@@ -84,14 +84,56 @@ import GaurdianInfo from '../component/GaurdianInfo';
 
 export default function RoutesComponent() {
 
-  const {isVisible, alert } = useContext(UserContext)
-
+  const {isVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
+  const location = useLocation()
+  console.log("user===", user)
+  console.log("medicalHistory===", formData)
+  console.log("emerformData===", emerformData)
+  console.log("drformData===", drformData)
   
-  // const Route = ({element , path})=>{
-  //   return isLoggedIn() ? <Route exact path={path} element={element}/> : <Navigate to={"/"}/>
-  // }
+  useEffect(()=>{
+    const storedUser = JSON.parse(sessionStorage.getItem("user"))
+    const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
+    const storedemerformData = sessionStorage.getItem("emerformData")
+    const storeddrformData = sessionStorage.getItem("medicalHistory")
+    if(storedUser){
+      setUser(storedUser)
+    }
+    if(storedMedicalHistory){
+      setFormData(JSON.parse(storedMedicalHistory))
+    }
+    if(storedemerformData){
+      setemerFormData(JSON.parse(storedemerformData))
+    }
+    if(storeddrformData){
+      setdrFormData(JSON.parse(storeddrformData))
+    }
+  const handleBeforeUnload = (event) => {
+    // Cancel the event (prevents the browser from closing immediately)
+    sessionStorage.setItem('user', JSON.stringify(user));
+    if(Object.keys(formData).length > 0){
+      sessionStorage.setItem("medicalHistory", JSON.stringify(formData))
+    }
+    sessionStorage.setItem("emerformData", JSON.stringify(emerformData))
+    sessionStorage.setItem("drformData", JSON.stringify(drformData))
+    event.preventDefault();
+    // Chrome requires returnValue to be set
+    event.returnValue = '';
 
+    // Your logic here (e.g., showing a confirmation dialog)
+    const message = 'Are you sure you want to leave?';
+    event.returnValue = message; // For Chrome
+    return message; // For other browsers
+  };
 
+  // Add the event listener when the component mounts
+  window.addEventListener('beforeunload', handleBeforeUnload);
+
+  // Remove the event listener when the component unmounts
+  return () => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+  };
+ },[location])
 
   return (
     <>
