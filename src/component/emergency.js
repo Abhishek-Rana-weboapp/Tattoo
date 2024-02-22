@@ -34,8 +34,8 @@ function EmergencyContactForm() {
        await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
        .then(res=>{
         if(res?.data?.data?.length > 0){
-           if(res.data.emergencycontectnumber){
-             setdata(JSON.parse(res.data.emergencycontectnumber))
+           if(res.data.data[res.data.data.length-1].emergencycontactnumber){
+             setdata(JSON.parse(res.data.data[res.data.data.length-1].emergencycontactnumber))
              setShowPopup_(true);
             }
           }

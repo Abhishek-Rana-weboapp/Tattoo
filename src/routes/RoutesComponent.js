@@ -86,10 +86,6 @@ export default function RoutesComponent() {
 
   const {isVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
-  console.log("user===", user)
-  console.log("medicalHistory===", formData)
-  console.log("emerformData===", emerformData)
-  console.log("drformData===", drformData)
   
   useEffect(()=>{
     const storedUser = JSON.parse(sessionStorage.getItem("user"))

@@ -29,8 +29,7 @@ function App() {
       i18n.changeLanguage("en");
     }
   }, []);
-
-  console.log(JSON.parse("{\"selectedTattooType\":\"tattoo\",\"tattooLocation\":\"pelvic\",\"headLocation\":null,\"faceLocation\":null,\"scalpLocation\":null,\"earLocation\":null,\"chestLocation\":null,\"armLocation\":null,\"armInside\":null,\"handLocation\":null,\"legLocation\":null,\"legInside\":null,\"footLocation\":null,\"piercingLocation\":null,\"images\":[],\"bodyPart\":\"full\",\"hairLoss\":[]}"))
+  
 
   return (
     <UserContextProvider>

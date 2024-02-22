@@ -75,23 +75,6 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
 
       const handleNext = async()=>{
         let data
-        // if(uploadedUrls){
-        //   setLoading(true)
-        //   const encodeUrlString = encodeUrls(uploadedUrls)
-        //   const data = {
-        //     updates: [
-        //       {
-        //         id: updateAppointment?.id,
-        //         updateField: "before_image",
-        //         updateValue:encodeUrlString,
-        //       },
-        //       {
-        //         id: updateAppointment?.id,
-        //         updateField: "process_step",
-        //         updateValue: 4,
-        //       },
-        //     ],
-        //   };
         if (uploadedUrls.length > 0 || uploadedVideoUrl.length > 0) {
           setLoading(true)
           if (uploadedUrls.length > 0 && uploadedVideoUrl.length === 0) {
@@ -215,20 +198,22 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     <div className="flex flex-col gap-2 w-full h-full items-center overflow-hidden">
       {/* Image upload for before */}
       <h3>{t("Please Provide Before Image:")}</h3>
-      {uploadedUrls.length !== 0 && (<div className="flex md:grid md:grid-cols-3 md:grid-rows-3 flex-col gap-2 overflow-y-auto overflow-x-hidden md:w-2/4  md:justify-center items-center md:items-start h-full">
+      <div className="flex flex-col gap-2 items-center overflow-hidden">
+
+      {uploadedUrls.length !== 0 && (<div className="md:flex grid grid-cols-2 gap-2 overflow-auto">
             {uploadedUrls.map((url, index) => {
-            return (
-              <div className="relative md:w-full w-2/3 md:h-full h-60">
+              return (
+                <div className="relative">
                 <img
                   key={url}
                   src={url}
                   alt="Before"
-                  className={`rounded-lg w-full h-full`}
-                />
+                  className="w-40 h-40 rounded-lg"
+                  />
                 <IoMdClose
                   className="img-del-icon"
                   onClick={() => handleDeleteImage(index)}
-                />
+                  />
               </div>
             );
           })
@@ -242,17 +227,21 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
         multiple
         style={{ display: "none" }} // Hide the input element
         onChange={handleUploadBeforeImage}
-      />
+        />
       <button
         className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
         onClick={handleBeforeButton}
         disabled={imageStatus === "UPLOADING"}
-      >
+        >
         {imageStatus === "UPLOADING" ? <Loader/> : t("Upload Before Image")}
       </button>
+        </div>
+
+        <div className="flex flex-col gap-2 items-center overflow-hidden">
+
 
       {uploadedVideoUrl && (
-            <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
+        <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
               {uploadedVideoUrl.map((url, index) => {
                 return (
                   <div className="relative">
@@ -262,7 +251,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
                     <IoMdClose
                       className="img-del-icon"
                       onClick={()=>handleDeleteVideo(index)}
-                    />
+                      />
                   </div>
                 );
               })}
@@ -276,20 +265,21 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
             multiple
             style={{ display: "none" }} // Hide the input element
             onChange={handleBeforeVideo}
-          />
+            />
           <button
             className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
             onClick={handleBeforeVideoButton}
             disabled={videoStatus === "UPLOADING"}
-          >
+            >
             {videoStatus === "UPLOADING" ? <Loader/> : t("Upload Video")}
           </button>
+        </div>
 
       <div className="flex gap-5 items-center">
         <button
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
           onClick={handlePrev}
-        >
+          >
           {t("Prev")}
         </button>
         <button
