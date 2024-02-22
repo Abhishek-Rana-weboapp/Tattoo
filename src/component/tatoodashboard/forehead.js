@@ -49,7 +49,6 @@ function FaceDashboard() {
     <GridLayout title={"forehead"}> 
 
           {buttons.map((button, index) => {
-            console.log(button);
             return (
               <div className="flex justify-center items-center w-full">
                 <CustomButton onClick={handlepartLocation} selected={selected}>

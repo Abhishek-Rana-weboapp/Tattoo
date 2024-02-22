@@ -113,7 +113,7 @@ function ConsentForm() {
   },[statements])
 
   const nextPage = () => {
-    if (currentPage < totalPages && currentPage !== statements.length) {
+    if (currentPage < totalPages && currentPage !== statements.length){
       // Check if the initials for the current page have been filled
       if (minor === "true") {
         if (!initials[currentPage] || !gaurdianInitials[currentPage]) {
@@ -135,7 +135,22 @@ function ConsentForm() {
         setCurrentPage(currentPage + 1);
       }
     } else if (currentPage === statements.length) {
-      navigate("/harmless-agreement");
+      if (minor === "true") {
+        if (!initials[currentPage] || !gaurdianInitials[currentPage]) {
+          setAlert(!alert);
+          setAlertMessage(t("Please provide your initials"));
+          return;
+        } else {
+          navigate("/harmless-agreement");
+        }
+      } else {
+        if(!initials[currentPage]){
+          setAlert(!alert);
+          setAlertMessage(t("Please provide your initials"));
+          return;
+        }
+        navigate("/harmless-agreement");
+      }
     }
   };
 

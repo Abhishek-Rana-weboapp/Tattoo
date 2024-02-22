@@ -6,10 +6,10 @@ import { useTranslation } from 'react-i18next'
 
 const BriefDescription = () => {
   const navigate = useNavigate()
-  const {setIsVisible, alert , setUser ,setAlert, setAlertMessage} = useContext(UserContext)
-  const [description, setDescription] = useState("")
+  const {setIsVisible, alert , setUser ,setAlert, setAlertMessage,description, setDescription} = useContext(UserContext)
   const {t} = useTranslation()
   const inputRef = useRef()
+
   useEffect(()=>{
     setIsVisible(true)
     inputRef.current.focus()

@@ -47,16 +47,8 @@ function Dashboard() {
         bodyPart : null,
         hairLoss:[]
       })
-      setFormData({
-        page1: { yes: false, no: false },
-        page2: { yes: false, no: false, pregnant: false, nursing: false },
-        page3: { yes: false, no: false, explanation: '' },
-        page4: { yes: false, no: false, explanation: '' },
-        page5: { yes: false, no: false, explanation: '' },
-        page6: { yes: false, no: false, explanation: '' },
-        page7: { yes: false, no: false, explanation: '' },
-        page8: { yes: false, no: false, explanation: '' },
-      })
+      
+      setFormData({})
 
 
       setharmlessagreement({

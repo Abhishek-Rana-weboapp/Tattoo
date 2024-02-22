@@ -61,6 +61,7 @@ const UserContextProvider = ({ children }) => {
   const [signature, setSignature] = useState();
   const [gaurdianSignature, setGaurdianSignature] = useState()
   const [step, setStep] = useState(0)
+  const [description, setDescription] = useState("")
 
   return (
     <UserContext.Provider
@@ -94,7 +95,9 @@ const UserContextProvider = ({ children }) => {
         gaurdianSignature, 
         setGaurdianSignature,
         gaurdianInitials, 
-        setGaurdianInitials
+        setGaurdianInitials,
+        description, 
+        setDescription
       }}
     >
       {children}

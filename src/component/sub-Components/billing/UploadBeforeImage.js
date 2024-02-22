@@ -7,13 +7,17 @@ import { IoMdClose } from "react-icons/io";
 import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
+import LoaderModal from "../../modal/LoaderModal";
 
 export default function UploadBeforeImage({ handlePrev, updateAppointment, setUpdateAppointment }) {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const [uploadedUrls, setUploadedUrls] = useState([]);
   const [imageStatus, setImageStatus] = useState("IDLE");
+  const [videoStatus, setVideoStatus] = useState("IDLE");
+  const [uploadedVideoUrl, setUploadedVideoUrl] = useState([])
   const { t } = useTranslation();
   const beforeRef = useRef(null);
+  const videoRef = useRef(null)
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
 
@@ -21,6 +25,10 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
       if(updateAppointment?.before_image){
         setUploadedUrls(decodeUrls(updateAppointment.before_image))
       }
+
+        if(updateAppointment.video_url){
+          setUploadedVideoUrl(decodeUrls(updateAppointment.before_video))
+        }
   },[])
 
   const uploadFile = async (file) => {
@@ -50,7 +58,6 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     setImageStatus("UPLOADING");
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
     const urls = await Promise.all(uploadPromises);
-    console.log(urls)
     const filteredUrls = urls.filter(url=>url !== null)
     setImageStatus("IDLE");
     setUploadedUrls((prev) => [...prev, ...filteredUrls]);
@@ -67,23 +74,83 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     };
 
       const handleNext = async()=>{
-        if(uploadedUrls){
+        let data
+        // if(uploadedUrls){
+        //   setLoading(true)
+        //   const encodeUrlString = encodeUrls(uploadedUrls)
+        //   const data = {
+        //     updates: [
+        //       {
+        //         id: updateAppointment?.id,
+        //         updateField: "before_image",
+        //         updateValue:encodeUrlString,
+        //       },
+        //       {
+        //         id: updateAppointment?.id,
+        //         updateField: "process_step",
+        //         updateValue: 4,
+        //       },
+        //     ],
+        //   };
+        if (uploadedUrls.length > 0 || uploadedVideoUrl.length > 0) {
           setLoading(true)
-          const encodeUrlString = encodeUrls(uploadedUrls)
-          const data = {
-            updates: [
-              {
-                id: updateAppointment?.id,
-                updateField: "before_image",
-                updateValue:encodeUrlString,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "process_step",
-                updateValue: 4,
-              },
-            ],
-          };
+          if (uploadedUrls.length > 0 && uploadedVideoUrl.length === 0) {
+            const encodedBeforeImage = encodeUrls(uploadedUrls);
+            data = {
+              updates: [
+                {
+                  id: updateAppointment?.id,
+                  updateField: "before_image",
+                  updateValue: encodedBeforeImage,
+                },
+                {
+                  id: updateAppointment?.id,
+                  updateField: "process_step",
+                  updateValue: 4,
+                },
+              ],
+            };
+          }
+          if (uploadedUrls.length === 0 && uploadedVideoUrl.length > 0) {
+            const encodedBeforeVideo = encodeUrls(uploadedVideoUrl);
+            data = {
+              updates: [
+                {
+                  id: updateAppointment?.id,
+                  updateField: "before_video",
+                  updateValue: encodedBeforeVideo,
+                },
+                {
+                  id: updateAppointment?.id,
+                  updateField: "process_step",
+                  updateValue: 4,
+                },
+              ],
+            };
+          }
+           if (uploadedUrls.length > 0 && uploadedVideoUrl.length > 0) {
+            const encodedAfterImage = encodeUrls(uploadedUrls);
+            const encodedAfterVideo = encodeUrls(uploadedVideoUrl);
+            data = {
+              updates: [
+                {
+                  id: updateAppointment?.id,
+                  updateField: "before_image",
+                  updateValue: encodedAfterImage,
+                },
+                {
+                  id: updateAppointment?.id,
+                  updateField: "before_video",
+                  updateValue: encodedAfterVideo,
+                },
+                {
+                  id: updateAppointment?.id,
+                  updateField: "process_step",
+                  updateValue: 4,
+                },
+              ],
+            };
+          }
           await axios
           .post(`${apiUrl}/artist/post_new`, data)
           .then((res) => {
@@ -109,7 +176,39 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
                 setAlert(!alert)
                 return
               });
+            }else {
+              setAlert(!alert);
+              setAlertMessage(t("Please upload a image or video"));
+              return;
             }
+      }
+
+      const handleBeforeVideoButton = () => {
+        videoRef?.current?.click();
+      };
+
+      const handleBeforeVideo = async (e) => {
+        const selectedFiles = e.target.files;
+        if (selectedFiles.length === 0) {
+          setAlertMessage(t("Please upload a video"));
+          setAlert(!alert);
+          return;
+        } else {
+          setVideoStatus("UPLOADING");
+          const uploadPromises = Array.from(selectedFiles).map(uploadFile);
+          const urls = await Promise.all(uploadPromises);
+          const filteredUrls = urls.filter((url) => url !== null);
+          setVideoStatus("IDLE");
+          setUploadedVideoUrl((prev) => [...prev, ...filteredUrls]);
+        }
+      };
+
+      const handleDeleteVideo = (index) => {
+        setUploadedVideoUrl(uploadedVideoUrl.filter((vid, vidIndex)=>vidIndex !== index))
+      };
+
+      if(loading){
+        return <LoaderModal/>
       }
 
   return (
@@ -151,6 +250,41 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
       >
         {imageStatus === "UPLOADING" ? <Loader/> : t("Upload Before Image")}
       </button>
+
+      {uploadedVideoUrl && (
+            <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
+              {uploadedVideoUrl.map((url, index) => {
+                return (
+                  <div className="relative">
+                    <video controls width="320" height="240">
+                      <source src={url} type="video/mp4"></source>
+                    </video>
+                    <IoMdClose
+                      className="img-del-icon"
+                      onClick={()=>handleDeleteVideo(index)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+      <input
+            type="file"
+            accept=".mp4, .webm, .ogg" // Specify allowed file types
+            ref={videoRef}
+            multiple
+            style={{ display: "none" }} // Hide the input element
+            onChange={handleBeforeVideo}
+          />
+          <button
+            className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+            onClick={handleBeforeVideoButton}
+            disabled={videoStatus === "UPLOADING"}
+          >
+            {videoStatus === "UPLOADING" ? <Loader/> : t("Upload Video")}
+          </button>
+
       <div className="flex gap-5 items-center">
         <button
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
