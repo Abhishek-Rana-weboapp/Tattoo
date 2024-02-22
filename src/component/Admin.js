@@ -164,7 +164,7 @@ function AdminDashboard() {
       <td style={cellStyle}>{user.ArtistPiercerNames.ArtistPiercerNames}</td>
       <td style={cellStyle}>{user.minor}</td>
       <td style={cellStyle}>{user.typeofservice}</td>
-      <td style={cellStyle}>{user.bodyloacation}</td>
+      <td style={cellStyle}>{user.body_location}</td>
       <td style={cellStyle}>{simplifyMedicalHistory(user.medicalhistory)}</td>
 
       <td style={cellStyle}>

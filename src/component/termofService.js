@@ -45,6 +45,7 @@ function TermsOfService() {
     drformData,
     harmlessagreement,
     gaurdianSignature,
+    description
   } = useContext(UserContext);
   const tattooRules = tattooTerms;
   const piercingRules = piercingTerms;
@@ -131,6 +132,7 @@ function TermsOfService() {
         WaiverRelease_url: JSON.stringify(initials),
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
+        brief_description : description,
         ArtistPiercerNames: null,
       });
     } else {
@@ -147,6 +149,7 @@ function TermsOfService() {
         WaiverRelease_url: JSON.stringify(initials),
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
+        brief_description:description,
         ArtistPiercerNames: null,
       });
     }
