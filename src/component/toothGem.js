@@ -9,16 +9,21 @@ import Gem from '../assets/Gem.png';
 
 const ToothGems = () => {
   const { t } = useTranslation();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, setIsVisible,selectedTeeth, 
+    setSelectedTeeth } = React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [selectedTeeth, setSelectedTeeth] = useState([]);
+ 
   const canvasRef = useRef(null);
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     redrawCanvas();
   }, [selectedTeeth]);
+
+  useEffect(()=>{
+    setIsVisible(true)
+  },[])
 
   const handleUndo = () => {
     const updatedSelectedTeeth = [...selectedTeeth];
@@ -86,7 +91,7 @@ const ToothGems = () => {
       const data = await response.json();
 
       if (response.ok) {
-        user.Image = data.profile_url;
+        setUser(prev=>({...prev, images : data.profile_url}))
         navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);
@@ -111,7 +116,9 @@ const ToothGems = () => {
         const newImage = new Image();
         newImage.src = Gem;
         newImage.onload = () => {
-          context.drawImage(newImage, x - 30, y - 30, 60, 60); // Adjust the size as needed
+          const gemSize = isMobile ? 30 : 60;
+          context.drawImage(newImage, x - gemSize / 2, y - gemSize / 2, gemSize, gemSize);
+          // context.drawImage(newImage, x - 30, y - 30, 60, 60); // Adjust the size as needed
         };
       });
     };
