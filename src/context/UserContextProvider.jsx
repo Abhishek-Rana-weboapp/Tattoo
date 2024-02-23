@@ -33,6 +33,8 @@ const UserContextProvider = ({ children }) => {
     state: "Florida",
   });
 
+  const [selectedTeeth, setSelectedTeeth] = useState([]);
+
   const [drformData, setdrFormData] = useState({
     name: "",
     city: "",
@@ -97,7 +99,9 @@ const UserContextProvider = ({ children }) => {
         gaurdianInitials, 
         setGaurdianInitials,
         description, 
-        setDescription
+        setDescription,
+        selectedTeeth, 
+        setSelectedTeeth
       }}
     >
       {children}

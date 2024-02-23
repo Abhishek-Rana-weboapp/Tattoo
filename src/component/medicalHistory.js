@@ -18,6 +18,7 @@ function MedicalForm() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup_, setShowPopup_] = useState(false);
   const [loading, setLoading] = useState(false)
+  console.log(user)
 
   const yes=t("YES")
   const No=t('No')
@@ -274,7 +275,6 @@ function MedicalForm() {
       progressValue_count_={8}
     >
    
-
       {user.selectedTattooType !== "tooth-gems" && currentPage === 1 && (
         <div className="flex flex-col items-center gap-4 w-full h-full flex-1">
         <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">

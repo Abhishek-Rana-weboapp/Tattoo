@@ -117,7 +117,7 @@ export default function UploadAfterImage({
             {
               id: updateAppointment?.id,
               updateField: "process_step",
-              updateValue: 7,
+              updateValue: 8,
             },
           ],
         };
@@ -134,7 +134,7 @@ export default function UploadAfterImage({
             {
               id: updateAppointment?.id,
               updateField: "process_step",
-              updateValue: 7,
+              updateValue: 8,
             },
           ],
         };
@@ -157,7 +157,7 @@ export default function UploadAfterImage({
             {
               id: updateAppointment?.id,
               updateField: "process_step",
-              updateValue: 7,
+              updateValue: 8,
             },
           ],
         };

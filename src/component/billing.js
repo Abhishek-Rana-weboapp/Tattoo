@@ -13,6 +13,7 @@ import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
 import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
 import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
 import LoaderModal from "./modal/LoaderModal";
+import Complications from "./dashboard/Complications";
 
 const BillingComponent = () => {
   let { id, step } = useParams();
@@ -151,6 +152,10 @@ const BillingComponent = () => {
         case 7:
           navigate(`/billing/${updateAppointment?.id}/6`)
           break;
+
+          case 8:
+          navigate(`/billing/${updateAppointment?.id}/7`)
+          break;
     }
   };
 
@@ -217,7 +222,16 @@ const BillingComponent = () => {
           handlePrev={handlePrev}
         />
       )}
-      {currentStep === 6 && (
+      {
+        currentStep === 6 && (
+          <Complications 
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+          handlePrev={handlePrev} 
+          />
+        )
+      }
+      {currentStep === 7 && (
         <UploadAfterImage
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
@@ -225,7 +239,7 @@ const BillingComponent = () => {
         />
       )}
 
-      {currentStep === 7 && (
+      {currentStep === 8 && (
         <CompleteAgreement
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}

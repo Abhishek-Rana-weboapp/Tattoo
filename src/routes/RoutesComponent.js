@@ -81,6 +81,7 @@ import SuperAdminDashboard from '../component/dashboard/SuperAdminDashboard';
 import AdminInvite from '../component/dashboard/AdminInvite';
 import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
+import Complications from '../component/dashboard/Complications';
 
 export default function RoutesComponent() {
 
@@ -149,6 +150,7 @@ export default function RoutesComponent() {
       <Route element={<PrivateRoutes/>} >
 
       <Route exact path="/gaurdian-info" element={<GaurdianInfo />} />
+      <Route exact path="/complication" element={<Complications />} />
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/tattoo" element={<TattooDashboard />} />
       <Route exact path="/head" element={<HeadTattoo />} />
