@@ -60,16 +60,14 @@ function ConsentForm() {
   const [currentPage, setCurrentPage] = useState(1);
   const [statements, setStatements] = useState([]);
 
-
   useEffect(() => {
     inputRef?.current?.focus();
-    if(minor === "false" && currentPage > Object.keys(initials).length){
-      setInitials({...initials, [currentPage] : ""})
-    }else if(currentPage > Object.keys(initials).length){
-      setInitials({...initials , [currentPage] : ""})
-      setGaurdianInitials({...gaurdianInitials , [currentPage] : ""})
+    if (minor === "false" && currentPage > Object.keys(initials).length) {
+      setInitials({ ...initials, [currentPage]: "" });
+    } else if (currentPage > Object.keys(initials).length) {
+      setInitials({ ...initials, [currentPage]: "" });
+      setGaurdianInitials({ ...gaurdianInitials, [currentPage]: "" });
     }
-
   }, [currentPage]);
 
   const handleCheckbox = (page, e) => {
@@ -83,7 +81,10 @@ function ConsentForm() {
 
   const handleGaurdianCheckbox = (page, e) => {
     if (e.target.checked === true) {
-      setGaurdianInitials({ ...gaurdianInitials, [page]: storedGaurdianInitials });
+      setGaurdianInitials({
+        ...gaurdianInitials,
+        [page]: storedGaurdianInitials,
+      });
     } else {
       setGaurdianInitials({ ...gaurdianInitials, [page]: "" });
     }
@@ -95,25 +96,27 @@ function ConsentForm() {
       setCursiveSignatureImage(cursiveSignatureImage);
     };
     handleCursive();
-    if (user.selectedTattooType) {
-      user.selectedTattooType === "removal"
+    user.selectedTattooType
+      ? user.selectedTattooType === "removal"
         ? setStatements(importQuestions.tattooRemovalQuestions)
         : user.selectedTattooType === "piercing"
         ? setStatements(importQuestions.piercingQuestions)
         : user.selectedTattooType === "tooth-gems"
         ? setStatements(importQuestions.toothGemQuestions)
-        : setStatements(importQuestions.tattooQuestions);
-    }
+        : setStatements(importQuestions.tattooQuestions)
+      : setStatements(importQuestions.tattooQuestions);
   }, []);
 
-  useEffect(()=>{
-     if(statements?.length > 0){
-      setTotalPages(statements?.length)
-     }
-  },[statements])
+  console.log(user);
+
+  useEffect(() => {
+    if (statements?.length > 0) {
+      setTotalPages(statements?.length);
+    }
+  }, [statements]);
 
   const nextPage = () => {
-    if (currentPage < totalPages && currentPage !== statements.length){
+    if (currentPage < totalPages && currentPage !== statements.length) {
       // Check if the initials for the current page have been filled
       if (minor === "true") {
         if (!initials[currentPage] || !gaurdianInitials[currentPage]) {
@@ -126,7 +129,7 @@ function ConsentForm() {
           return;
         }
       } else {
-        if(!initials[currentPage]){
+        if (!initials[currentPage]) {
           setAlert(!alert);
           setAlertMessage(t("Please provide your initials"));
           return;
@@ -144,7 +147,7 @@ function ConsentForm() {
           navigate("/harmless-agreement");
         }
       } else {
-        if(!initials[currentPage]){
+        if (!initials[currentPage]) {
           setAlert(!alert);
           setAlertMessage(t("Please provide your initials"));
           return;

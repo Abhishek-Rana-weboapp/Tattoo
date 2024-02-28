@@ -5,6 +5,7 @@ import Loader from '../loader/Loader';
 import LoaderModal from '../modal/LoaderModal';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
+import { IoMdClose } from 'react-icons/io';
 
 export default function VerifyUpload({step, setStep}) {
   const fileInputRef = useRef(null);
@@ -156,6 +157,14 @@ export default function VerifyUpload({step, setStep}) {
       }
     }
 
+    const handleClientDelete = ()=>{
+         setImagePrev(null);
+    }
+
+    const handleGaurdianDelete = ()=>{
+         setGaurdianImagePrev(null)
+    }
+
     if(loading){
       return <LoaderModal/>
     }
@@ -165,12 +174,15 @@ export default function VerifyUpload({step, setStep}) {
     <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
       {imagePrev && (
+        <div className='relative w-1/4'>
         <img
           src={imagePrev}
-          width={'50%'}
+          width={'100%'}
           style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
           alt="ID Photo"
-        />)
+        />
+        <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleClientDelete}/>
+        </div>)
       }
 
       <input
@@ -197,12 +209,16 @@ export default function VerifyUpload({step, setStep}) {
 
      
      {gaurdianImagePrev && (
+      <div className='relative w-1/4'>
        <img
        src={gaurdianImagePrev}
        width={'50%'}
        style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
        alt="ID Photo"
-       />)
+       />
+       <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
+       </div>
+       )
       }
 
       <input

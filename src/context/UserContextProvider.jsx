@@ -5,6 +5,10 @@ import UserContext from "./UserContext";
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({
     selectedTattooType: null,
+    level1:null,
+    level2:null,
+    level3:null,
+    level4:null,
     tattooLocation: null,
     headLocation: null,
     faceLocation: null,
@@ -22,6 +26,7 @@ const UserContextProvider = ({ children }) => {
     bodyPart: null,
     hairLoss: [],
   });
+  
   const [formData, setFormData] = useState({});
 
   const [selectedPattern, setSelectedPattern] = useState(null);

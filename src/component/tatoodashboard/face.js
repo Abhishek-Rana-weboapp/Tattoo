@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-import Title from "../../assets/Title.png"
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
 import { useTranslation } from 'react-i18next';
 function FaceDashboard() {
   const { t } = useTranslation();
-  const progressValue = 40;
     const navigate = useNavigate();
     const { user, setUser, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
@@ -52,6 +50,9 @@ function FaceDashboard() {
   if(selected){
     setUser({ ...user, faceLocation : selected });
     if(selected === "nose"){
+      if(user.bodyPart !== null){
+        setUser({...user, bodyPart:null})
+      }
       navigate("/description")
       return
     }
@@ -93,75 +94,3 @@ function FaceDashboard() {
   
 export default FaceDashboard
 
-{/* <div className='outer container' style={{
-        border: '1px solid #d8d6d6'
-      
-      }}>
-      <div className='container h-100' style={{
-        backgroundColor: '#f5f5f5',
-      
-        alignItems: 'center',
-        minHeight: '100vh',
-        width:'100%',
-        border: '3px solid black',
-  
-  
-      }}>
-        <h1> FACE</h1>
-        <div className='big-container'>
-  
-        <div className='outer-item'>
-        <div className='inner-item' onClick={()=>handlefaceLocation('forehead')}>
-          <h5>Forehead</h5>
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlefaceLocation('face-temple')}>
-  
-          <h5>Temple</h5>
-        
-        </div>
-        </div>
-      <div className='outer-item'>
-      <div className='inner-item' onClick={()=>handlefaceLocation('eyebrow')}>
-  
-          <h5>Eyebrow</h5>
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlefaceLocation('eyelid')}>
-  
-          <h5>Eyelid</h5>
-          
-        </div>
-      </div>
-      <div className='outer-item'>
-      <div className='inner-item' onClick={()=>handlefaceLocation('nose')}>
-  
-         <h5>Nose</h5> 
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlefaceLocation('cheeks')}>
-  
-         <h5>Cheeks</h5>
-          
-        </div>
-      </div>
-
-      <div className='outer-item'>
-      <div className='inner-item' onClick={()=>handlefaceLocation('lip')}>
-  
-         <h5>Lip</h5> 
-          
-        </div>
-        <div className='inner-item' onClick={()=>handlefaceLocation('jaw')}>
-  
-         <h5>Jaw</h5>
-          
-        </div>
-      </div>
-
-
-
-      </div>
-      <ProgressBar progress={progressValue} />
-      </div>
-  </div> */}
