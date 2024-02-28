@@ -4,6 +4,7 @@ import UserContext from '../../context/UserContext';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
+import { useTranslation } from 'react-i18next';
 
 
 function ArmDashboard() {
@@ -11,6 +12,7 @@ function ArmDashboard() {
     const navigate = useNavigate();
     const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
+    const {t} = useTranslation
 
     useEffect(()=>{
      if(user.level3) setSelected(user.level3)
@@ -69,6 +71,10 @@ function ArmDashboard() {
             }
           navigate('/arm-inside',{state:{name: selected}}); 
         }
+       }else{
+        setAlertMessage(t("Please select an option"))
+        setAlert(!alert)
+        return
        }
     }
 

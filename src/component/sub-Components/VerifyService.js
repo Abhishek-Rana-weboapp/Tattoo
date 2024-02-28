@@ -60,9 +60,9 @@ const VerifyService = ({step, setStep}) => {
        </div>
 
        {/*Description Section */}
-      <div>
+      {placement.selectedTattooType === "tattoo" &&<div>
         <h4>{`Description: ${appointment ? appointment.brief_description : ""}`}</h4>
-      </div>
+      </div>}
           </> 
       }
 
@@ -71,8 +71,14 @@ const VerifyService = ({step, setStep}) => {
             <h4>{`Placement :`} </h4>
             <img className='md:w-2/6 h-96 rounded-lg' src={placement.level1}></img>
         </>
+      }
 
-}
+      {
+        placement?.selectedTattooType === "smp" && <>
+            <h4>{`Placement :`} </h4>
+            <img className='md:w-1/6 h-64 rounded-lg' src={placement.level1}></img>
+        </>
+      }
 
 </div>
       <div className='md:w-1/2 flex justify-between w-full'>

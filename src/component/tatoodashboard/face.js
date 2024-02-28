@@ -48,15 +48,18 @@ function FaceDashboard() {
 
   const handleNext = ()=>{
   if(selected){
-    setUser({ ...user, level3 : selected });
+    if(user.level3 !== selected){
+    setUser({ ...user, level3 : selected, level4:null });
+    }else{
+      setUser({ ...user, level3 : selected });
+    }
     if(selected === "nose"){
-      if(user.bodyPart !== null){
-        setUser({...user, bodyPart:null})
-      }
       navigate("/description")
       return
+    }else{
+      navigate(`/${selected}`); 
+      return
     }
-    navigate(`/${selected}`); 
   }else{
     setAlert(!alert)
     setAlertMessage(t("Please select a face location"))
