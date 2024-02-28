@@ -11,7 +11,7 @@ function Torso() {
   const [selected , setSelected] = useState()
 
   useEffect(()=>{
-    if(user.bodyPart) setSelected(user.bodyPart)
+    if(user.level2) setSelected(user.level2)
   },[])
 
   const handlePartLocation = (bodyPart) => {
@@ -41,7 +41,11 @@ function Torso() {
 
   const handleNext = ()=>{
    if(selected){
-    setUser({ ...user, bodyPart : selected});
+    if(user.level2 !== selected){
+      setUser({ ...user, level2 : selected, level3:null, level4:null});
+    }else{
+      setUser({ ...user, level2 : selected});
+    }
     navigate("/description");
    }else{
     setAlert(!alert)
@@ -69,61 +73,3 @@ function Torso() {
 
 export default Torso;
 
-{
-  /* <div className='outer container' style={{
-  border: '1px solid #d8d6d6'
-
-}}>
-<div className='container h-100' style={{
-  backgroundColor: '#f5f5f5',
-
-  alignItems: 'center',
-  minHeight: '100vh',
-  width:'100%',
-  border: '3px solid black',
-
-
-}}>
-  <h1> TORSO</h1>
-  <div className='big-container'>
-
-  <div className='outer-item'>
-  <div className='inner-item' onClick={()=>handlepartLocation('Full Torso')}>
-    <h5>Full Torso</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('Left Ribs')}>
-
-    <h5>Left Ribs</h5>
-  
-  </div>
-  </div>
-<div className='outer-item'>
-<div className='inner-item' onClick={()=>handlepartLocation('Right Ribs')}>
-
-    <h5>Right Ribs</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('Stomach')}>
-
-    <h5>Stomach</h5>
-  
-  </div>
-</div>
-<div className='outer-item'>
-<div className='inner-item' onClick={()=>handlepartLocation('Belly Button')}>
-
-    <h5>Belly Button</h5>
-    
-  </div>
-  <div className='inner-item' onClick={()=>handlepartLocation('Tummy Tuck')}>
-
-    <h5>Tummy Tuck </h5>
-  
-  </div>
-</div>     
-
-</div>
-</div>
-</div> */
-}

@@ -16,7 +16,7 @@ function HeadTattoo() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-       if(user.headLocation) setSelected(user.headLocation)
+       if(user.level2) setSelected(user.level2)
     },[])
 
     const handleheadLocation = (headLocation) =>{
@@ -37,7 +37,11 @@ function HeadTattoo() {
 
     const handleNext = ()=>{
       if(selected){
-        setUser({ ...user, selected });
+        if(user.level2 !== selected) {
+          setUser({ ...user, level2 : selected, level3:null, level4:null });
+        }else{
+          setUser({ ...user, level2 : selected});
+        }
         navigate(`/${selected}`); 
       }else{
         setAlertMessage(t("Please Select an head location"))

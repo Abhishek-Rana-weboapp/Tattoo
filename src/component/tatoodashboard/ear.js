@@ -12,7 +12,7 @@ function Ear() {
   const [selected, setSelected] = useState();
   
     useEffect(() => {
-      if (user.earLocation) setSelected(user.earLocation);
+      if (user.level3) setSelected(user.level3);
     }, []);
 
   const handleEarLocation = (earLocation) => {
@@ -30,7 +30,7 @@ function Ear() {
 
   const handleNext = () => {
     if (selected) {
-      setUser({ ...user, earLocation: selected });
+      setUser({ ...user, level3: selected });
       navigate("/ear-dashboard");
     } else {
       setAlertMessage("Please select a face location");

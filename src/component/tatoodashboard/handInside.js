@@ -15,7 +15,7 @@ function HandInside() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level3) setSelected(user.level3)
     },[])
 
     console.log(user)
@@ -40,7 +40,7 @@ function HandInside() {
     
     const handleNext = ()=>{
         if(selected){
-          setUser({ ...user, bodyPart : selected });
+          setUser({ ...user, level3 : selected });
           navigate('/description')
         }else{
           setAlertMessage(t("Please select an option"))

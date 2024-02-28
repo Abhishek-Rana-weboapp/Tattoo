@@ -26,12 +26,12 @@ function Back() {
 
   useEffect(()=>{
     if(user?.bodyPart){
-      if(buttons.find(item=>item?.name !== user?.bodyPart)){
+      if(buttons.find(item=>item?.name !== user?.level2)){
         setSelected("other")
-        setOtherFieldValue(user.bodyPart)
+        setOtherFieldValue(user.level2)
       }
-      if(buttons.find(item=>item.name === user?.bodyPart)){
-        setSelected(user?.bodyPart)
+      if(buttons.find(item=>item.name === user?.level2)){
+        setSelected(user?.level2)
       }
     }
   },[])
@@ -59,17 +59,35 @@ function Back() {
 
 
   const handleNext = ()=>{
-   if(selected && selected !== "other"){
-      setUser({...user , bodyPart : selected})
-      navigate("/description")
-   }if(selected && selected === "other"){
-    if(otherFieldValue){
-      setUser({...user , bodyPart : otherFieldValue})
-      navigate("/description")
-    }else{
-      setAlert(!alert)
-      setAlertMessage(t("Please select an option"))
-    }
+    if(selected){
+      if(user.level2 !== selected){
+        if(selected !== "other"){
+        setUser({...user , level2 : selected, level3 : null, level4:null})
+        navigate("/description")
+      }if(selected === "other"){
+        if(otherFieldValue){
+          setUser({...user , level2 : otherFieldValue, level3 : null, level4:null})
+          navigate("/description")
+        }else{
+          setAlert(!alert)
+          setAlertMessage(t("Please select an option"))
+        }
+      }
+      }else{
+        if(selected !== "other"){
+          setUser({...user , level2 : selected})
+          navigate("/description")
+        }if(selected === "other"){
+          if(otherFieldValue){
+            setUser({...user , level2 : otherFieldValue})
+            navigate("/description")
+          }else{
+            setAlert(!alert)
+            setAlertMessage(t("Please select an option"))
+          }
+        }
+      }
+          
   }if(!selected){
     setAlert(!alert)
     setAlertMessage(t("Please select an option"))

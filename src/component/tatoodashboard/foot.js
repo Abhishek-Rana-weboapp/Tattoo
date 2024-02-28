@@ -15,7 +15,7 @@ function Foot() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.footLocation) setSelected(user.footLocation)
+      if(user.level2) setSelected(user.level2)
   },[])
 
     const handlefootLocation = (footLocation) => {
@@ -33,7 +33,11 @@ function Foot() {
 
     const handleNext = ()=>{
       if(selected){
-        setUser({ ...user, footLocation:selected });
+        if(user.level2 !== selected){
+        setUser({ ...user, level2:selected, level3:null, level4:null });
+        }else{
+          setUser({ ...user, level2:selected });
+        }
     navigate('/foot-dashboard');
       }else{
         setAlert(!alert)

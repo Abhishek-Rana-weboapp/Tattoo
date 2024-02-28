@@ -12,7 +12,7 @@ function Jaw() {
   const [selected, setSelected] = useState()
 
   useEffect(()=>{
-    if(user.bodyPart) setSelected(user.bodyPart)
+    if(user.level4) setSelected(user.level4)
   },[])
 
 const handlePartLocation = (bodyPart) => {
@@ -34,7 +34,7 @@ const handlePartLocation = (bodyPart) => {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, bodyPart : selected});
+      setUser({ ...user, level4 : selected});
     navigate("/description")
   }else{
     setAlertMessage("Please select a jaw.")

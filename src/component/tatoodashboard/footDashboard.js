@@ -13,7 +13,7 @@ function FootDashboard() {
     const [selected , setSelected] = useState()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level3) setSelected(user.level3)
     },[])
   
     const handlePartLocation = (bodyPart) => {
@@ -34,7 +34,11 @@ function FootDashboard() {
   
     const handleNext = ()=>{
         if(selected){
-          setUser({ ...user, bodyPart : selected });
+          if(user.level3 !== selected){
+            setUser({ ...user, level3:selected, level4:null });
+            }else{
+              setUser({ ...user, level3:selected });
+            }
           navigate("/description")
         }else{
           setAlertMessage("Please select which ear.")

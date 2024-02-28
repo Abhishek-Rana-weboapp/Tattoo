@@ -14,8 +14,8 @@ function TattooDashboard() {
   const {t} = useTranslation()
 
   useEffect(()=>{
-    if(user.tattooLocation){
-      setSelected(user.tattooLocation)
+    if(user.level1){
+      setSelected(user.level1)
     }
     if(user.bodyPart){
       setUser(prev=>({
@@ -70,7 +70,11 @@ function TattooDashboard() {
   
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, tattooLocation : selected});
+      if(user.level1 !== selected){
+      setUser({ ...user, level1 : selected, level2:null, level3:null, level4:null});
+      }else{
+        setUser({ ...user, level1 : selected});
+      }
       navigate(`/${selected}`)
     }
     else{

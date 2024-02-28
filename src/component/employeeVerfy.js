@@ -10,6 +10,8 @@ import axios from 'axios';
 import CustomAlertModal from './modal/CustomAlertModal';
 import { states } from '../data/states';
 import LoaderModal from './modal/LoaderModal';
+import VerifyService from './sub-Components/VerifyService';
+
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
@@ -88,7 +90,7 @@ const IDVerificationComponent = () => {
     }
     await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
-        setStep(3)
+        setStep(4)
       }
     }).catch((err)=>{
       console.error(err.message)
@@ -140,27 +142,40 @@ const IDVerificationComponent = () => {
       step === 0 && <VerifyPin handleSubmit={handlePinSubmit} pin={pin}  setPin={setPin} spanMessage={spanMessage} />
     }
     {
-      step === 1 &&  <VerifyUpload step={step} setStep={setStep}/>
+      step === 1 && <VerifyService step={step} setStep={setStep}/>
+    }
+    {
+      step === 2 &&  <VerifyUpload step={step} setStep={setStep}/>
     }
      {
-      step === 2 &&  <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
+      step === 3 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
+        <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
         <h2 className='text-white font-bold'>Select Shop Location</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
         {shopLocationOption.map((state, index)=>{
           return <option key={state} value={state}>{state}</option>
         })}
         </select>
-        <button className='yellowButton py-2 px-5 rounded-xl font-bold text-black' onClick={handleShopLocation}>Submit</button>
+        </div>
+        <div className='w-full md:w-1/2 flex justify-between'>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(2)}>{t("Prev")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleShopLocation}>{t("Submit")}</button>
+        </div>
       </div>
     }
      {
-      step === 3 &&  <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
+      step === 4 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
+        <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
          <h2 className='text-white font-bold'>Select Employee Name</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={frontDesk} onChange={(e)=>setFrontDesk(e.target.value)}>
           <option value={""}>Select Employee Name</option>
           {employeeNames.map((employee, index)=><option className='capitalize' value={employee}>{employee}</option>)}
         </select>
-        <button className='yellowButton py-2 px-5 rounded-xl font-bold text-black' onClick={handleFrontDesk}>Submit</button>
+        </div>
+        <div className='w-full md:w-1/2 flex justify-between'>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(3)}>{t("Prev")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleFrontDesk}>{t("Submit")}</button>
+        </div>
       </div>
     }
     </>

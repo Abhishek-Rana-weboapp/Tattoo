@@ -5,6 +5,7 @@ import Loader from '../loader/Loader';
 import LoaderModal from '../modal/LoaderModal';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
+import { IoMdClose } from 'react-icons/io';
 
 export default function VerifyUpload({step, setStep}) {
   const fileInputRef = useRef(null);
@@ -146,7 +147,7 @@ export default function VerifyUpload({step, setStep}) {
         await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
           if(res.status === 201){
             setLoading(false)
-            setStep(2)
+            setStep(3)
             return
           }
         }).catch((err)=>{
@@ -156,21 +157,38 @@ export default function VerifyUpload({step, setStep}) {
       }
     }
 
+    const handleClientDelete = ()=>{
+         setImagePrev(null);
+    }
+
+    const handleGaurdianDelete = ()=>{
+         setGaurdianImagePrev(null)
+    }
+
+    const handlePrev = ()=>{
+      setStep(1)
+    }
+
     if(loading){
       return <LoaderModal/>
     }
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white">
+    <div className="w-full h-full flex flex-col justify-between items-center overflow-auto bg-black p-8 text-white">
+      <div className='w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white'>
+
     <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
       {imagePrev && (
+        <div className='relative w-1/4'>
         <img
           src={imagePrev}
-          width={'50%'}
+          width={'100%'}
           style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
           alt="ID Photo"
-        />)
+          />
+        <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleClientDelete}/>
+        </div>)
       }
 
       <input
@@ -180,12 +198,12 @@ export default function VerifyUpload({step, setStep}) {
         ref={fileInputRef}
         style={{ display: "none" }} // Hide the input element
         onChange={handlePhotoUpload}
-      />
+        />
       <button
         className="flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 hover:cursor-pointer p-2 font-semibold hover:scale-105 ease-in-out duration-300"
         onClick={handleButton}
         disabled={clientLoading}
-      >
+        >
         {(clientLoading) ? <Loader/> : t("Upload ID Photo")}
       </button>
 
@@ -197,12 +215,16 @@ export default function VerifyUpload({step, setStep}) {
 
      
      {gaurdianImagePrev && (
+       <div className='relative w-1/4'>
        <img
        src={gaurdianImagePrev}
        width={'50%'}
        style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
        alt="ID Photo"
-       />)
+       />
+       <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
+       </div>
+       )
       }
 
       <input
@@ -226,15 +248,25 @@ export default function VerifyUpload({step, setStep}) {
 
       </>
     }
+  </div>
+
+<div className='w-full md:w-1/2 flex justify-between'>
+<button
+      onClick={handlePrev}
+      className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
+      >
+      {t("Prev")}
+      </button>
 
       <button
       onClick={handleVerifyID}
       disabled={minor === "false" ? !idPhoto  : !idPhoto && !gaurdianIDPhoto}
-      className="flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 p-2 hover:cursor-pointer font-semibold hover:scale-105 ease-in-out duration-300"
+      className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
       >
       {t("Submit")}
       </button>
     
+        </div>
     </div>
   )
 }

@@ -87,6 +87,8 @@ export default function RoutesComponent() {
 
   const {isVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
+
+  console.log(user)
   
   useEffect(()=>{
     const storedUser = JSON.parse(sessionStorage.getItem("user"))
@@ -106,7 +108,6 @@ export default function RoutesComponent() {
       setdrFormData(JSON.parse(storeddrformData))
     }
   const handleBeforeUnload = (event) => {
-    // Cancel the event (prevents the browser from closing immediately)
     sessionStorage.setItem('user', JSON.stringify(user));
     if(Object.keys(formData).length > 0){
       sessionStorage.setItem("medicalHistory", JSON.stringify(formData))

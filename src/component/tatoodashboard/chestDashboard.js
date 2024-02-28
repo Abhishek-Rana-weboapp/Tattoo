@@ -15,7 +15,7 @@ function ChestDeshboard() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-    if(user.chestLocation)  setSelected(user.chestLocation)
+    if(user.level2)  setSelected(user.level2)
     },[])
 
     const handleChestLocation = (chestLocation) => {
@@ -49,10 +49,14 @@ function ChestDeshboard() {
       }
     ]
 
-console.log(selected)
     const handleNext = ()=>{
       if(selected){
-        setUser({...user , chestLocation : selected})
+        if(user.level2 !== selected){
+          setUser({...user , level2 : selected, level3:null, level4:null})
+        }else{
+          setUser({...user , level2 : selected})
+
+        }
         if(insideButtons.find(b=>b.name === selected)){
           navigate("/under-chest")
         }

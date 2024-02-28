@@ -1,20 +1,18 @@
 import React ,{useEffect, useState} from 'react'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../../context/UserContext';
-import Title from "../../assets/Title.png"
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
 
 
 function Scalp() {
-  const progressValue = 40;
     const navigate = useNavigate();
-    const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+    const { user, setUser, setAlertMessage } = React.useContext(UserContext);
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level3) setSelected(user.level3)
    },[])
 
     const handlepartLocation = (bodyPart) => {
@@ -41,8 +39,8 @@ function Scalp() {
 
     const handleNext = ()=>{
       if(selected){
-        setUser({ ...user, bodyPart : selected });
-        navigate(`/description`); 
+        setUser({ ...user, level3 : selected });
+        navigate(`/description`);    
       }else{
         setAlertMessage("Please select a face location")
       }

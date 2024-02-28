@@ -15,7 +15,7 @@ function Hip() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level2) setSelected(user.level2)
   },[])
 
     const handlepartLocation = (bodyPart) => {
@@ -33,7 +33,11 @@ function Hip() {
 
       const handleNext = ()=>{
         if(selected){
-          setUser({ ...user, bodyPart : selected });
+          if(user.level2 !== selected){
+            setUser({ ...user, level2 : selected, level3:null , level4:null });
+          }else{
+            setUser({ ...user, level2 : selected });
+          }
           navigate('/description'); 
         }else{
           setAlert(!alert)

@@ -17,7 +17,7 @@ function LegInside({}) {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (user.legLocation) setSelected(user.legLocation);
+    if (user.level4) setSelected(user.level4);
   }, []);
 
   const handlepartLocation = (bodyPart) => {
@@ -77,7 +77,7 @@ function LegInside({}) {
 
   const handleNext = () => {
     if (selected) {
-      setUser({ ...user, legInside: selected });
+      setUser({ ...user, level4: selected });
       navigate("/description");
     } else {
       setAlert(!alert);
@@ -90,8 +90,8 @@ function LegInside({}) {
   };
   return (
     <>
-      <GridLayout title={user.bodyPart}>
-        {user.bodyPart === "ankle" &&
+      <GridLayout title={user.level3}>
+        {user.level3 === "ankle" &&
           ankleButtons.map((button, index) => {
             return (
               <CustomButton
@@ -104,7 +104,7 @@ function LegInside({}) {
             );
           })}
 
-        {user.bodyPart === "half sleeve" &&
+        {user.level3 === "half sleeve" &&
           halfButton.map((button, index) => {
             return (
               <CustomButton
@@ -116,7 +116,7 @@ function LegInside({}) {
               </CustomButton>
             );
           })}
-        {user.bodyPart === "knee" &&
+        {user.level3 === "knee" &&
           kneeButtons.map((button, index) => {
             return (
               <CustomButton
@@ -128,7 +128,7 @@ function LegInside({}) {
               </CustomButton>
             );
           })}
-        {user.bodyPart === "thigh" &&
+        {user.level3 === "thigh" &&
           thighButton.map((button, index) => {
             return (
               <CustomButton
@@ -140,7 +140,7 @@ function LegInside({}) {
               </CustomButton>
             );
           })}
-        {user.bodyPart === "lower leg" &&
+        {user.level3 === "lower leg" &&
           thighButton.map((button, index) => {
             return (
               <CustomButton
