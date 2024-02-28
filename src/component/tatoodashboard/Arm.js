@@ -16,7 +16,7 @@ function Arm() {
     const {t} =useTranslation()
 
     useEffect(()=>{
-        if(user.armLocation) setSelected(user.armLocation)
+        if(user.level2) setSelected(user.level2)
     },[])
 
     const handleArmLocation = (armLocation) => {
@@ -34,7 +34,11 @@ function Arm() {
 
     const handleNext = ()=>{
       if(selected){
-        setUser({ ...user, armLocation : selected });
+        if(user.level2 !== selected){
+          setUser({ ...user, level2 : selected, level3:null, level4:null });
+        }else{
+          setUser({...user, level2 : selected})  
+        }
         navigate('/arm-dashboard'); 
       }else{
         setAlert(!alert)

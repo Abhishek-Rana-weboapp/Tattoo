@@ -13,7 +13,7 @@ function ArmDashboard() {
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
-     if(user.bodyPart) setSelected(user.bodyPart)
+     if(user.level3) setSelected(user.level3)
     },[])
 
 
@@ -54,11 +54,19 @@ function ArmDashboard() {
     const handleNext = ()=>{
        if(selected){
         if(partButtons.find(item=>item.name === selected)){
-          setUser({ ...user, bodyPart : selected});
+          if(user.level3 !== selected){
+          setUser({ ...user, level3 : selected, level4:null});
+          }else{
+            setUser({ ...user, level3 : selected});
+          }
           navigate('/description'); 
         }
         if(armButtons.find(item=>item.name === selected)){
-          setUser({ ...user, bodyPart : selected});
+          if(user.level3 !== selected){
+            setUser({ ...user, level3 : selected, level4:null});
+            }else{
+              setUser({ ...user, level3 : selected});
+            }
           navigate('/arm-inside',{state:{name: selected}}); 
         }
        }

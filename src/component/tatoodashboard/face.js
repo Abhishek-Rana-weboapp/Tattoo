@@ -12,7 +12,7 @@ function FaceDashboard() {
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
-      if(user.faceLocation) setSelected(user.faceLocation)
+      if(user.level3) setSelected(user.level3)
    },[])
 
     const handlefaceLocation = (faceLocation) => {
@@ -48,7 +48,7 @@ function FaceDashboard() {
 
   const handleNext = ()=>{
   if(selected){
-    setUser({ ...user, faceLocation : selected });
+    setUser({ ...user, level3 : selected });
     if(selected === "nose"){
       if(user.bodyPart !== null){
         setUser({...user, bodyPart:null})

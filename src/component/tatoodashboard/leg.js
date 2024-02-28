@@ -15,7 +15,7 @@ function Leg() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.legLocation) setSelected(user.legLocation)
+      if(user.level2) setSelected(user.level2)
   },[])
 
 
@@ -30,8 +30,12 @@ function Leg() {
 
       const handleNext = ()=>{
         if(selected){
-          setUser({ ...user, legLocation:selected });
-      navigate('/leg-dashboard');
+          if(user.level2 !== selected){
+            setUser({ ...user, level2 : selected, level3:null , level4:null });
+          }else{
+            setUser({ ...user, level2 : selected });
+          }
+       navigate('/leg-dashboard');
         }else{
           setAlert(!alert)
           setAlertMessage(t("Please select an option"))

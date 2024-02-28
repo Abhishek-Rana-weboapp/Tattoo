@@ -15,7 +15,7 @@ function EarDashboard() {
     const {t} = useTranslation()
 
     useEffect(() => {
-      if (user.bodyPart) setSelected(user.bodyPart);
+      if (user.level4) setSelected(user.level4);
     }, []);
   
   const handlePartLocation = (bodyPart) => {
@@ -36,7 +36,7 @@ function EarDashboard() {
 
     const handleNext = () => {
       if (selected) {
-        setUser({ ...user, bodyPart: selected });
+        setUser({ ...user, level4: selected });
         navigate("/description");
       } else {
         setAlert(!alert)
