@@ -121,9 +121,20 @@ export default function VerifyUpload({step, setStep}) {
               updateValue : idPhoto
             }]
           }
+          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+            if(res.status === 201){
+              setLoading(false)
+              setStep(3)
+              return
+            }
+          }).catch((err)=>{
+            console.error(err.message)
+            setLoading(false)
+          })
         }
-      }else{
-        if(idPhoto && gaurdianIDPhoto){
+      }
+      if(minor==="true"){
+        if(idPhoto!==null && gaurdianIDPhoto!==null){
           data = {
             updates : [
               {
@@ -138,24 +149,24 @@ export default function VerifyUpload({step, setStep}) {
             }
           ]
           }
+          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+            if(res.status === 201){
+              setLoading(false)
+              setStep(3)
+              return
+            }
+          }).catch((err)=>{
+            console.error(err.message)
+            setLoading(false)
+          })
         }else{
           setAlertMessage(t("Please upload both ID's"))
+          setLoading(false)
           setAlert(!alert)
           return
         }
-      }if(data){
-        await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
-          if(res.status === 201){
-            setLoading(false)
-            setStep(3)
-            return
-          }
-        }).catch((err)=>{
-          console.error(err.message)
-          setLoading(false)
-        })
       }
-    }
+      }
 
     const handleClientDelete = ()=>{
          setImagePrev(null);
