@@ -32,7 +32,7 @@ function PermanentMakeup() {
 
   const handleNext = () => {
     if (selected) {
-      setUser({ ...user, bodyPart: selected });
+      setUser({ ...user,level1: selected });
       navigate("/medical-form");
     }else{
       setAlert(!alert)

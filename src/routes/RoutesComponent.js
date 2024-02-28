@@ -91,13 +91,13 @@ export default function RoutesComponent() {
   console.log(user)
   
   useEffect(()=>{
-    const storedUser = JSON.parse(sessionStorage.getItem("user"))
+    //const storedUser = JSON.parse(sessionStorage.getItem("user"))
     const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
     const storedemerformData = sessionStorage.getItem("emerformData")
     const storeddrformData = sessionStorage.getItem("medicalHistory")
-    if(storedUser){
-      setUser(storedUser)
-    }
+    // if(storedUser){
+    //   setUser(storedUser)
+    // }
     if(storedMedicalHistory){
       setFormData(JSON.parse(storedMedicalHistory))
     }

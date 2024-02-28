@@ -66,10 +66,10 @@ function PiercingDashboard() {
 
   const handleNext = ()=>{
      if(selected){
-      setUser({ ...user, piercingLocation: selected });
+      setUser({ ...user, level1: selected });
       navigate(`/${selected}`);
      }if(partSelected){
-      setUser({ ...user, bodyPart : partSelected});
+      setUser({ ...user, level1: partSelected});
       navigate("/medical-form");
      }if(!selected && !partSelected){
       setAlert(!alert)

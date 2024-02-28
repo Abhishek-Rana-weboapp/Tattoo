@@ -101,7 +101,7 @@ function OralPiercing() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, bodyPart : selected});
+      setUser({ ...user, level2: selected});
     navigate('/medical-form'); 
     }else{
       setAlert(!alert)
