@@ -12,7 +12,7 @@ function Scalp() {
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level3) setSelected(user.level3)
    },[])
 
     const handlepartLocation = (bodyPart) => {
@@ -39,7 +39,7 @@ function Scalp() {
 
     const handleNext = ()=>{
       if(selected){
-        setUser({ ...user, bodyPart : selected, earLocation:null, faceLocation:null });
+        setUser({ ...user, level3 : selected });
         navigate(`/description`);    
       }else{
         setAlertMessage("Please select a face location")

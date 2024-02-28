@@ -15,7 +15,7 @@ function ArmInside() {
   const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.bodyPart) setSelected(user.bodyPart)
+      if(user.level4) setSelected(user.level4)
   },[])
 
   const handlepartLocation = (bodyPart) => {
@@ -68,7 +68,7 @@ function ArmInside() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, armInside:selected });
+      setUser({ ...user, level4:selected });
       navigate('/description');
     }else{
       setAlert(!alert)

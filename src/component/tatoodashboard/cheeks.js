@@ -16,7 +16,7 @@ function Cheeks() {
   }
 
   useEffect(()=>{
-    if(user.bodyPart) setSelected(user.bodyPart)
+    if(user.level4) setSelected(user.level4)
   },[])
 
   const buttons = [
@@ -30,7 +30,7 @@ function Cheeks() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, bodyPart : selected});
+      setUser({ ...user, level4 : selected});
     navigate("/description")
   }else{
     setAlertMessage("Please select a location for the cheek.")

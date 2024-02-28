@@ -14,7 +14,7 @@ function ChestInside() {
   const {t} = useTranslation()
 
   useEffect(()=>{
-    if(user.bodyPart) setSelected(user.bodyPart)
+    if(user.level3) setSelected(user.level3)
 },[])
 
   const collarboneButtons = [
@@ -52,7 +52,7 @@ function ChestInside() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user, bodyPart:selected });
+      setUser({ ...user, level3:selected });
       navigate('/description');
     }else{
       setAlert(!alert)
@@ -70,17 +70,17 @@ function ChestInside() {
     return (
       <>
       <GridLayout title={"chest"}>
-       {user.chestLocation === "collarbone" &&
+       {user.level2 === "collarbone" &&
            collarboneButtons.map((button, index)=>{
              return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
            })
          }
-         {user.chestLocation === "nipple" &&
+         {user.level2 === "nipple" &&
            nippleButtons.map((button, index)=>{
              return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
            })
          }
-          {user.chestLocation === "under-chest" &&
+          {user.level2 === "under-chest" &&
            underButtons.map((button, index)=>{
              return <CustomButton onClick={handlepartLocation} selected={selected} key={index}>{button.name}</CustomButton>
            })

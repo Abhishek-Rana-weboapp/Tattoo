@@ -15,10 +15,20 @@ import tooth_gold from "../assets/tooth_gold.png";
 import removal_gold from "../assets/removal_gold.png";
 import piercings_gold from "../assets/piercings_gold.png";
 import tattoo_gold from "../assets/tattoo_gold.png";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 function Dashboard() {
   const { t } = useTranslation();
-  const { user, setUser, setIsVisible,setFormData , setemerFormData , setdrFormData, setInitials, setharmlessagreement ,setGaurdianInitials } = React.useContext(UserContext);
+  const {
+    user,
+    setUser,
+    setIsVisible,
+    setFormData,
+    setemerFormData,
+    setdrFormData,
+    setInitials,
+    setharmlessagreement,
+    setGaurdianInitials,
+  } = React.useContext(UserContext);
   const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
@@ -26,58 +36,44 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    setIsVisible(true)
-    if(user?.selectedTattooType !== null){
+    setIsVisible(true);
+    if (user?.selectedTattooType !== null) {
       setUser({
-        selectedTattooType: null, 
-        tattooLocation: null, 
-        headLocation: null,
-        faceLocation : null,
-        scalpLocation : null,
-        earLocation : null,
-        chestLocation : null,
-        armLocation:null,
-        armInside:null,
-        handLocation:null,
-        legLocation:null,
-        legInside:null,
-        footLocation:null,
-        piercingLocation:null,
-        images: [], 
-        bodyPart : null,
-        hairLoss:[]
-      })
-      
-      setFormData({})
+        selectedTattooType: null,
+        level1: null,
+        level2: null,
+        level3: null,
+        level4: null,
+      });
 
+      setFormData({});
 
       setharmlessagreement({
-        name: '',
-        initials:'',
-        signatureurl:'',
-        agreed:false
-      })
-  
-      setemerFormData({
-        name: '',
-        phone: '',
-        city: '',
-        state: 'Florida',
-      })
-  
-      setdrFormData({
-        name: '',
-        phone: '',
-        city: '',
-        state: 'Florida',
-        useDoctorRecommendation: false,
-      })
+        name: "",
+        initials: "",
+        signatureurl: "",
+        agreed: false,
+      });
 
-      setInitials({})
-      setGaurdianInitials({})
+      setemerFormData({
+        name: "",
+        phone: "",
+        city: "",
+        state: "Florida",
+      });
+
+      setdrFormData({
+        name: "",
+        phone: "",
+        city: "",
+        state: "Florida",
+        useDoctorRecommendation: false,
+      });
+
+      setInitials({});
+      setGaurdianInitials({});
     }
   }, []);
-
 
   const menu = [
     {
@@ -126,7 +122,9 @@ function Dashboard() {
 
   return (
     <div className="md:w-3/4 w-full h-full flex flex-col gap-3 justify-center items-center">
-      <h1 className="uppercase text-white font-bold">{t("Select a service")}</h1>
+      <h1 className="uppercase text-white font-bold">
+        {t("Select a service")}
+      </h1>
       <div className="grid grid-cols-2 gap-5 w-full">
         {menu?.map((menu, index) => {
           return (

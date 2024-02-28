@@ -91,7 +91,7 @@ const ToothGems = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setUser(prev=>({...prev, images : data.profile_url}))
+        setUser(prev=>({...prev, level1 : data.profile_url}))
         navigate('/medical-form');
       } else {
         console.error('Failed to upload image. Server returned:', response.status);

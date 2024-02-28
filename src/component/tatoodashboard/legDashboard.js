@@ -13,8 +13,7 @@ function LegDashboard() {
     const [selected, setSelected] = useState()
 
     useEffect(()=>{
-     if(user.bodyPart) setSelected(user.bodyPart)
-     if(user.legInside) setSelected(user.legInside)
+     if(user.level3) setSelected(user.level3)
     },[])
 
     const handlepartLocation = (bodyPart) => {
@@ -59,11 +58,19 @@ function LegDashboard() {
       const handleNext = ()=>{
         if(selected){
          if(partButtons.find(item=>item.name === selected)){
-           setUser({ ...user, bodyPart : selected});
+          if(user.level3 !== selected){
+            setUser({ ...user, level3 : selected, level4:null });
+          }else{
+            setUser({ ...user, level3 : selected });
+          }
            navigate('/description'); 
          }
          if(contentButtons.find(item=>item.name===selected)){
-           setUser({ ...user, bodyPart : selected});
+          if(user.level3 !== selected){
+            setUser({ ...user, level3 : selected, level4:null });
+          }else{
+            setUser({ ...user, level3 : selected });
+          }
            navigate('/leginside',{state:{full: selected}}); 
          }
         }

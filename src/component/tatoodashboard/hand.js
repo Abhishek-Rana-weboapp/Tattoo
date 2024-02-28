@@ -15,7 +15,7 @@ function Hand() {
     const {t} = useTranslation()
 
     useEffect(()=>{
-      if(user.handLocation) setSelected(user.handLocation)
+      if(user.level2) setSelected(user.level2)
     },[])
   
     const buttons = [
@@ -29,7 +29,11 @@ function Hand() {
   
     const handleNext = ()=>{
         if(selected){
-          setUser({ ...user, handLocation : selected });
+          if(user.level2 !== selected){
+            setUser({ ...user, level2 : selected, level3:null , level4:null });
+          }else{
+            setUser({ ...user, level2 : selected });
+          }
           navigate('/hand-inside')
         }else{
           setAlert(!alert)

@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { apiUrl } from '../../url'
 
-const VerifyService = () => {
+const VerifyService = ({step, setStep}) => {
     const appointmentId = sessionStorage.getItem("appointmentID") || null
     const [appointment, setAppointment] = useState()
     const [placement, setPlacement] = useState()
@@ -21,67 +21,63 @@ const VerifyService = () => {
         }
     },[])
 
-    const locations = {
-       "tattooLocation" : {
-           "head" :{
 
-           },
-           "chest" :{
 
-           },
-           "torso" :{
+    const handleNext = ()=>{
+       setStep(2)
+    }
 
-           },
-           "back" :{
-
-           },
-           "arm" :{
-
-           },
-           "hand" :{
-
-           },
-           "hip" :{
-
-           },
-           "glutes" :{
-
-           },
-           "leg" :{
-
-           },
-           "foot" :{
-
-           },
-           "neck" :{
-
-           },
-           "pelvic" :{
-
-           },
-       }
-
+    const handlePrev = ()=>{
+       setStep(0)
     }
 
   
-
-
-  
   return (
-    <div className='text-white flex flex-col items-center'>
+    <div className='text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between'>
+      <div className='text-white flex flex-col gap-4 items-center  w-full h-full'>
+
       <h2 className='font-bold'>Appointment Details</h2>
 
-      {/* Service Section */}
-      <h4 className='capitalize font-semibold'>{`Service : ${placement? placement?.selectedTattooType : ""}`}</h4>
+     {/* Service Section */}
+      <h4 className='capitalize font-bold flex gap-2'>{`Service : `} <h4>{placement? placement?.selectedTattooType : ""}</h4> </h4>
 
+     {(placement?.selectedTattooType === "tattoo" || placement?.selectedTattooType === "piercing"  || placement?.selectedTattooType === "permanent-makeup") && <>
        {/* Placement section cjanging based on the service*/}
-       <div className='flex flex-col'>
-          <h4>{`Placement`} </h4>
+       <div className='flex gap-2'>
+          <h4 className="font-bold">Placement : </h4>
+          <div className='flex flex-col'>
+          {
+            placement && (
+              <>
+              {placement.level1 !== null && <h4>{placement.level1}</h4>}
+              {placement.level2 !== null && <h4>{placement.level2}</h4>}
+              {placement.level3 !== null && <h4>{placement.level3}</h4>}
+              {placement.level4 !== null && <h4>{placement.level4}</h4>}
+              </>
+            )
+          }
+          </div>
        </div>
 
        {/*Description Section */}
       <div>
         <h4>{`Description: ${appointment ? appointment.brief_description : ""}`}</h4>
+      </div>
+          </> 
+      }
+
+      {
+        placement?.selectedTattooType === "tooth-gems" && <>
+            <h4>{`Placement :`} </h4>
+            <img className='md:w-2/6 h-96 rounded-lg' src={placement.level1}></img>
+        </>
+
+}
+
+</div>
+      <div className='md:w-1/2 flex justify-between w-full'>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handlePrev}>Back</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleNext}>Next</button>
       </div>
     </div>
   )
