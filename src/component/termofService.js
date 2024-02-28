@@ -72,6 +72,9 @@ function TermsOfService() {
         case "tooth-gems":
           setpageContents(toothGemRules);
           break;
+          case "smp":
+            setpageContents(pmuRules);
+            break;
         default:
           console.log("No Tattoo Type Selected");
       }

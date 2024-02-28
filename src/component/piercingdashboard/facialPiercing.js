@@ -15,7 +15,7 @@ function FacialPiercing() {
   const {t} = useTranslation()
 
   useEffect(()=>{
- if(user.bodyPart) setSelected(user.bodyPart)
+ if(user.level2) setSelected(user.level2)
   },[])
 
   const handlepartLocation = (bodyPart) => {
@@ -36,7 +36,11 @@ function FacialPiercing() {
 
   const handleNext = ()=>{
     if(selected){
-      setUser({ ...user,  level2: selected });
+      if(user.level2 !== selected){
+        setUser({ ...user, level2: selected, level3:null, level4:null});
+        }else{
+          setUser({ ...user, level2: selected});
+        }
     navigate('/medical-form'); 
     }else{
       setAlert(!alert)
