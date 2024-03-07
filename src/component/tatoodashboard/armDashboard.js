@@ -61,7 +61,7 @@ function ArmDashboard() {
           }else{
             setUser({ ...user, level3 : selected});
           }
-          navigate('/description'); 
+          navigate('/count'); 
         }
         if(armButtons.find(item=>item.name === selected)){
           if(user.level3 !== selected){

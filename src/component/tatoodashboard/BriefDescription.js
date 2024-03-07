@@ -43,8 +43,6 @@ const BriefDescription = () => {
       <textarea ref={inputRef} value={description} onChange={handleChange} className='w-2/3 p-2 rounded-lg h-40'></textarea>
       </div>
       <Navigation next={handleNext} prev={handlePrev} />
-
-
     </div>
   )
 }

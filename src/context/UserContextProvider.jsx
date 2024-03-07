@@ -41,6 +41,8 @@ const UserContextProvider = ({ children }) => {
     gaurdianName : ""
   });
   
+  const [count, setCount] = useState(1)
+
   const [initials, setInitials] = useState({});
 
   const [gaurdianInitials, setGaurdianInitials] = useState({});
@@ -90,7 +92,9 @@ const UserContextProvider = ({ children }) => {
         description, 
         setDescription,
         selectedTeeth, 
-        setSelectedTeeth
+        setSelectedTeeth,
+        count, 
+        setCount
       }}
     >
       {children}

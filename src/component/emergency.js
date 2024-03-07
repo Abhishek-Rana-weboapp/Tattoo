@@ -123,7 +123,7 @@ function EmergencyContactForm() {
           <input
            className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
 
-           type="text"
+           type="number"
            name="phone"
            value={emerformData?.phone}
            onChange={handleInputChange}

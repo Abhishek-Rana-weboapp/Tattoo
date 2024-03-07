@@ -63,11 +63,11 @@ function Back() {
       if(user.level2 !== selected){
         if(selected !== "other"){
         setUser({...user , level2 : selected, level3 : null, level4:null})
-        navigate("/description")
+        navigate("/count")
       }if(selected === "other"){
         if(otherFieldValue){
           setUser({...user , level2 : otherFieldValue, level3 : null, level4:null})
-          navigate("/description")
+          navigate("/count")
         }else{
           setAlert(!alert)
           setAlertMessage(t("Please select an option"))
@@ -76,11 +76,11 @@ function Back() {
       }else{
         if(selected !== "other"){
           setUser({...user , level2 : selected})
-          navigate("/description")
+          navigate("/count")
         }if(selected === "other"){
           if(otherFieldValue){
             setUser({...user , level2 : otherFieldValue})
-            navigate("/description")
+            navigate("/count")
           }else{
             setAlert(!alert)
             setAlertMessage(t("Please select an option"))

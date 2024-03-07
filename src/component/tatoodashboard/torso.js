@@ -46,7 +46,7 @@ function Torso() {
     }else{
       setUser({ ...user, level2 : selected});
     }
-    navigate("/description");
+    navigate("/count");
    }else{
     setAlert(!alert)
     setAlertMessage("Please select a part")
