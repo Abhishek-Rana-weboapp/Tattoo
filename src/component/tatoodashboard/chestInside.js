@@ -53,7 +53,7 @@ function ChestInside() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, level3:selected });
-      navigate('/description');
+      navigate("/count");
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

@@ -58,7 +58,7 @@ function NosePiercing() {
         }else{
           setUser({ ...user, level2: selected});
         }
-    navigate('/medical-form'); 
+    navigate('/count'); 
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

@@ -26,7 +26,7 @@ function FaceTemple() {
   const handleNext = ()=>{
       if(selected){
         setUser({ ...user, level4 : selected });
-        navigate("/description")
+        navigate("/count")
       }else{
         setAlertMessage("Please select which ear.")
       }

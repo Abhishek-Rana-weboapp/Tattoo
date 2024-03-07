@@ -31,7 +31,7 @@ function Cheeks() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, level4 : selected});
-    navigate("/description")
+    navigate("/count")
   }else{
     setAlertMessage("Please select a location for the cheek.")
   }

@@ -81,6 +81,7 @@ const IDVerificationComponent = () => {
     setAlertMessage(t("Please select shop location"))
     setAlert(!alert)
   }else{
+    setLoading(true)
     const data = {
       updates : [{
         id: appointmentID,
@@ -91,9 +92,11 @@ const IDVerificationComponent = () => {
     await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
       if(res.status === 201){
         setStep(4)
+        setLoading(false)
       }
     }).catch((err)=>{
       console.error(err.message)
+      setLoading(false)
     })
   }
  }

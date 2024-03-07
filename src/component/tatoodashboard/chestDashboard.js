@@ -61,7 +61,7 @@ function ChestDeshboard() {
           navigate("/under-chest")
         }
         if(buttons.find(b=>b.name === selected)){
-          navigate("/description")  
+          navigate("/count")  
         }
       }
       else{

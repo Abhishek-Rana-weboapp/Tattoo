@@ -56,7 +56,6 @@ function DoctorContactForm() {
     setLoading(true)
     await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
        .then(res=>{
-        console.log(res)
          if (res?.data?.data.length > 0) {
           if(res.data.doctor_information){
             setData(JSON.parse(res.data.doctor_information))

@@ -2,9 +2,6 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
-import SignatureCanvas from "react-signature-canvas";
-import { data } from "autoprefixer";
-import SignatureModal from "./modal/SignatureModal";
 
 function HoldHarmlessAgreement() {
   const { harmlessagreement, setharmlessagreement } =
@@ -18,7 +15,6 @@ function HoldHarmlessAgreement() {
     setAlert,
     setAlertMessage,
     signature,
-    setSignature,
     gaurdianSignature
   } = useContext(UserContext);
   const [signatureRef, setSignatureRef] = useState();
@@ -38,7 +34,6 @@ function HoldHarmlessAgreement() {
     inputRef?.current?.focus();
   }, []);
 
-  console.log(harmlessagreement)
 
   
   const handleAgreementToggle = (e) => {
@@ -67,7 +62,7 @@ function HoldHarmlessAgreement() {
       setharmlessagreement((prev) => ({
         ...prev,
         gaurdianInitials: storedGaurdianInitials,
-        gaurdianName: `${gaurdianInfo?.firstName}${gaurdianInfo?.lastName}`,
+        gaurdianName: `${gaurdianInfo?.firstName} ${gaurdianInfo?.lastName}`,
         gaurdianSignature: gaurdianSignature,
       }));
     } else {
@@ -103,28 +98,6 @@ function HoldHarmlessAgreement() {
             return;
     }
     }
-    // if (
-    //   minor === "false" && !harmlessagreement?.name||
-    //   !harmlessagreement?.initials ||
-    //   !harmlessagreement?.agreed ||
-    //   !harmlessagreement?.signatureurl
-    // ) {
-    //   setAlert(!alert);
-    //   setAlertMessage("Please fill in all the required fields.");
-    //   return;
-    // }
-    // if (
-    //   minor === "true" && !harmlessagreement?.name ||
-    //   !harmlessagreement?.initials ||
-    //   !harmlessagreement?.agreed ||
-    //   !harmlessagreement?.signatureurl ||
-    //   !harmlessagreement?.gaurdianInitials ||
-    //   !harmlessagreement?.gaurdianSignature
-    // ) {
-    //   setAlert(!alert);
-    //   setAlertMessage("Please fill in all the required fields.");
-    //   return;
-    // }
     navigate("/term");
     return
   };
@@ -150,7 +123,8 @@ function HoldHarmlessAgreement() {
       <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
         <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-thumb-rounded scrollbar-track -rounded">
           <p className="text-center outline-1 outline-white">
-            {t("I,")} {harmlessagreement?.name}{" "}
+            {t("I,")} <span className="font-bold">{harmlessagreement?.name}{" "}</span>
+            {minor === "true" && t(`and I, the guardian `)}{minor === "true" && <span className="font-bold"> {harmlessagreement?.gaurdianName}</span> }
             {t(
               " hereby acknowledge and agree that as a patron and customer of Fame Tattoos, Inc., its premises, facility, services, and products, involves risks of injury to persons or property, including but not limited to those described below, and patron/customer assumes full responsibility for such risks. In consideration of being a patron/customer of Fame Tattoos, Inc., for any purpose including, but not limited to, tattoo services, piercing services, tattoo removal services, tooth gems, observation, use of shop equipment, services, or participation in any way, patron/customer agrees to the following: Patron/Customer hereby releases and holds Fame Tattoos, Inc., its directors, officers, employees, independent contractors, and agents harmless from all liability to any patron/customer, their children, personal representatives, assigns, heirs, and next of kin for any loss, damage, personal injury, deformity, death, and forever gives up any claims or demands therefore, on account of injury to patron/customer's person or property, including injury leading to disfigurement or death of patron/customer, whether caused by the active or passive negligence of Fame Tattoos, Inc., or otherwise, to the fullest extent permitted by law, while patron/customer is in, upon, or about the Fame Tattoos, Inc., premises using or not using their services, facility, or equipment."
             )}

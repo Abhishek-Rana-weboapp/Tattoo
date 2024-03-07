@@ -41,11 +41,9 @@ import Foot from '../component/tatoodashboard/foot';
 import FootDashboard from '../component/tatoodashboard/footDashboard'
 
 import Piercing from '../component/piercingdashboard/piercingDashboard'
-import BellyPiercing from '../component/piercingdashboard/bellyPiercing'
 import EarPiercing from '../component/piercingdashboard/earPiercing'
 import FacialPiercing from '../component/piercingdashboard/facialPiercing'
 // import JweleryPiercing from '../component/piercingdashboard/facialPiercing'
-import NipplePiercing from '../component/piercingdashboard/nipplePiercing'
 import NosePiercing from '../component/piercingdashboard/nosePiercing'
 import OralPiercing from '../component/piercingdashboard/oralPiercing'
 import SurfacePiercing from '../component/piercingdashboard/surfacePiercing'
@@ -82,6 +80,7 @@ import AdminInvite from '../component/dashboard/AdminInvite';
 import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
 import Complications from '../component/dashboard/Complications';
+import TattooCount from '../component/TattooCount';
 
 export default function RoutesComponent() {
 
@@ -154,6 +153,7 @@ export default function RoutesComponent() {
       <Route exact path="/complication" element={<Complications />} />
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/tattoo" element={<TattooDashboard />} />
+      <Route exact path='/count' element={<TattooCount/>}/>
       <Route exact path="/head" element={<HeadTattoo />} />
       <Route exact path="/face" element={<FaceDashboard />} />
       <Route exact path="/forehead" element={<Forehead />} />
@@ -194,12 +194,9 @@ export default function RoutesComponent() {
       
       
       <Route exact path="/piercing" element={<Piercing />} />
-
-      <Route exact path="/belly-piercing" element={<BellyPiercing />} />
       <Route exact path="/ear-piercing" element={<EarPiercing />} />
       <Route exact path="/facial-piercing" element={<FacialPiercing />} />
       <Route exact path="/jewelry-swap" element={<JewelleryPiercing />} />
-      <Route exact path="/nipple-piercing" element={<NipplePiercing />} />
       <Route exact path="/nose-piercing" element={<NosePiercing />} />
       <Route exact path="/oral-piercing" element={<OralPiercing />} />
       <Route exact path="/surface-piercing" element={<SurfacePiercing />} />

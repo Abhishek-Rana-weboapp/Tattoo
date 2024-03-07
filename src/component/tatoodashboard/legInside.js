@@ -78,7 +78,7 @@ function LegInside({}) {
   const handleNext = () => {
     if (selected) {
       setUser({ ...user, level4: selected });
-      navigate("/description");
+      navigate("/count");
     } else {
       setAlert(!alert);
       setAlertMessage(t("Please select an option"));

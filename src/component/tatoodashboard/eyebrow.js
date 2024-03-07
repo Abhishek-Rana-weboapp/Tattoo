@@ -33,7 +33,7 @@ function Eyebrow() {
   const handleNext = () => {
     if (selected) {
       setUser({ ...user, level4: selected });
-      navigate("/description");
+      navigate("/count");
     } else {
       setAlertMessage("Please select a face location");
     }

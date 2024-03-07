@@ -63,7 +63,7 @@ function LegDashboard() {
           }else{
             setUser({ ...user, level3 : selected });
           }
-           navigate('/description'); 
+           navigate("/count"); 
          }
          if(contentButtons.find(item=>item.name===selected)){
           if(user.level3 !== selected){

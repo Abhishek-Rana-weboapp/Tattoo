@@ -41,7 +41,7 @@ function HandInside() {
     const handleNext = ()=>{
         if(selected){
           setUser({ ...user, level3 : selected });
-          navigate('/description')
+          navigate("/count")
         }else{
           setAlertMessage(t("Please select an option"))
           setAlert(!alert)

@@ -71,7 +71,7 @@ function PiercingDashboard() {
         } else {
           setUser({ ...user, level1: selected });
         }
-        navigate("/medical-form");
+        navigate("/count");
         return;
       }
       if (buttons.find((item) => item.name === selected))

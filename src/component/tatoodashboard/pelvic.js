@@ -50,7 +50,7 @@ function Pelvic() {
             }else{
               setUser({ ...user, level2:selected });
             }
-          navigate('/description'); 
+          navigate("/count"); 
         }else{
           setAlert(!alert)
           setAlertMessage(t("Please select an option"))
