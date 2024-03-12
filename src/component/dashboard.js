@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Tattoo from "../assets/tattoo.png";
 import microblading from "../assets/microblading.png";
 import piercings from "../assets/piercings.png";
@@ -34,6 +34,16 @@ function Dashboard() {
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
   };
+
+
+  const [activeSrc, setActiveSrc] = useState({
+    tattoo: require("../assets/tattoo_gold.png"),
+    piercing: require("../assets/piercings_gold.png"),
+    toothGems: require("../assets/tooth_gold.png"),
+    permanentMakeup: require("../assets/microblading_active.png"),
+    smp: require("../assets/smp_gold.png"),
+    removal: require("../assets/removal_gold.png"),
+  });
 
   useEffect(() => {
     sessionStorage.removeItem("user")
@@ -82,42 +92,42 @@ function Dashboard() {
       type: "tattoo",
       link: "/tattoo",
       src: Tattoo,
-      activesrc: tattoo_gold,
+      activesrc:activeSrc.tattoo,
     },
     {
       name: t("PIERCING"),
       type: "piercing",
       link: "/piercing",
       src: piercings,
-      activesrc: piercings_gold,
+      activesrc:activeSrc.piercing,
     },
     {
       name: t("TOOTH GEMS"),
       type: "tooth-gems",
       link: "/tooth-gems",
       src: tooth,
-      activesrc: tooth_gold,
+      activesrc: activeSrc.toothGems,
     },
     {
       name: t("PERMANENT-MAKEUP"),
       type: "permanent-makeup",
       link: "/permanent-makeup",
       src: microblading,
-      activesrc: microblading_active,
+      activesrc: activeSrc.permanentMakeup,
     },
     {
       name: t("SMP"),
       type: "smp",
       link: "/smp",
       src: smp,
-      activesrc: smp_gold,
+      activesrc: activeSrc.smp,
     },
     {
       name: t("REMOVAL"),
       type: "removal",
       link: "/tattoo",
       src: removal,
-      activesrc: removal_gold,
+      activesrc: activeSrc.removal,
     },
   ];
 
