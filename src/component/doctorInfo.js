@@ -28,6 +28,7 @@ function DoctorContactForm() {
     setAlert,
     setAlertMessage,
   } = React.useContext(UserContext);
+  const username = sessionStorage.getItem("username");
 
 
   const handleInputChange = (e) => {
@@ -52,7 +53,6 @@ function DoctorContactForm() {
   };
 
   const fetchData = async () => {
-    const username = sessionStorage.getItem("username");
     setLoading(true)
     await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
        .then(res=>{
@@ -73,18 +73,45 @@ function DoctorContactForm() {
   };
 
   useEffect(() => {
+
+    const fetchMedicalHistory = async()=>{
+      try{
+        setLoading(true)
+        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+        const filterResponse = response.data.doctor_information
+        let finalResult = {};
+        try {
+          finalResult = JSON.parse(filterResponse)
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          finalResult = {};
+        }
+        if(Object.keys(finalResult).length  === 0){
+          setLoading(false)
+          return
+        }
+        setdrFormData(finalResult)
+        setLoading(false)
+        setShowPopup_(true)
+        return 
+      }catch(err){
+        console.log(err)
+      setLoading(false)
+      setAlert(!alert)
+      setAlertMessage(t("Something went wrong"))
+      return
+      }
+  }
     setIsVisible(true);
-    fetchData();
+    fetchMedicalHistory();
   }, []);
 
   
     const handleNo = ()=> {
-      setdrFormData(data);
       navigate("/consent");
     }
 
    const handleYes = ()=> {
-      setdrFormData(data)
       setShowPopup_(false);
     }
 
@@ -102,7 +129,8 @@ function DoctorContactForm() {
   navigate("/consent");
   };
 
-  const handlePrev = () => {
+  const handlePrev = (e) => {
+    e.preventDefault()
     navigate(-1);
   };
 
@@ -234,13 +262,13 @@ function DoctorContactForm() {
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4 text-black"
             onClick={handlePrev}
           >
-            Prev
+            {t("Back")}
           </button>
           <button
             className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold mt-4 text-black"
             type="submit"
           >
-            Submit
+            {t("Submit")}
           </button>
         </div>
       </form>

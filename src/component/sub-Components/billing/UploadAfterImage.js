@@ -282,7 +282,7 @@ export default function UploadAfterImage({
         onClick={handlePrev}
         // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
       >
-        {t("Prev")}
+        {t("Back")}
       </button>
 
       <button

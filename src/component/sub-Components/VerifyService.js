@@ -43,7 +43,7 @@ const VerifyService = ({ step, setStep }) => {
 
         {(placement?.selectedTattooType === "tattoo" ||
           placement?.selectedTattooType === "piercing" ||
-          placement?.selectedTattooType === "permanent-makeup") && (
+          placement?.selectedTattooType === "permanent-makeup"|| placement?.selectedTattooType === "removal") && (
           <>
             {/* Placement section cjanging based on the service*/}
             <div className="flex gap-2">

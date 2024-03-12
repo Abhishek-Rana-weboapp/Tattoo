@@ -102,7 +102,7 @@ function SkinCondition({
             className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
             onClick={handlePrev}
           >
-            {t("Prev")}
+            {t("Back")}
           </button>
           <button
             className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
