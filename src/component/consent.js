@@ -182,7 +182,7 @@ function ConsentForm() {
     if (activeTab === 2) {
       if (drawnSignature) {
         setSignature(drawnSignature);
-        if (minor) {
+        if (minor === "true") {
           setClientInitialsModalOpen(false);
           setGaurdianInitialsModalOpen(true);
           return;
