@@ -14,57 +14,78 @@ function EmergencyContactForm() {
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const { emerformData, setemerFormData, setIsVisible,alert , setAlert, setAlertMessage } = React.useContext(UserContext);
-  const [data, setdata] = useState()
+  const { emerformData, setemerFormData, setIsVisible,alert, setAlert, setAlertMessage } = React.useContext(UserContext);
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [showPopup_, setShowPopup_] = useState(false);
-  const Yes=t("Yes")
-  const No=t('No')
-  const options = ["Yes","No"];
+    const username = sessionStorage.getItem('username');
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setemerFormData({ ...emerformData, [name]: value === "Select City"?"":value}
     );
   };
 
-  const fetchData = async () => {
-    const username = sessionStorage.getItem('username');
-    setLoading(true)
-       await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
-       .then(res=>{
-        if(res?.data?.data?.length > 0){
-           if(res.data.data[res.data.data.length-1].emergencycontactnumber){
-             setdata(JSON.parse(res.data.data[res.data.data.length-1].emergencycontactnumber))
-             setShowPopup_(true);
-            }
-          }
+  
+  useEffect(() => {
+    // const fetchData = async () => {
+    //   setLoading(true)
+    //   const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+    //      .then(res=>{
+    //       if(res?.data?.data?.length > 0){
+    //          if(res.data.data[res.data.data.length-1].emergencycontactnumber){
+    //            setdata(JSON.parse(res.data.data[res.data.data.length-1].emergencycontactnumber))
+    //            setShowPopup_(true);
+    //           }
+    //         }
+    //         setLoading(false)
+    //       })
+    //   .catch (error=> {
+    //     setLoading(false)
+    //     setAlert(!alert)
+    //     setAlertMessage(t("Something went wrong"))
+    //     return
+    //   })
+    // }
+
+    const fetchMedicalHistory = async()=>{
+      try{
+        setLoading(true)
+        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+        const filterResponse = response.data.emergencycontactnumber
+        let finalResult = {};
+        try {
+          finalResult = JSON.parse(filterResponse)
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+          finalResult = {};
+        }
+        if(Object.keys(finalResult).length  === 0){
           setLoading(false)
-        })
-    .catch (error=> {
+          return
+        }
+        setemerFormData(finalResult)
+        setLoading(false)
+        setShowPopup_(true)
+        return 
+      }catch(err){
+        console.log(err)
       setLoading(false)
       setAlert(!alert)
       setAlertMessage(t("Something went wrong"))
       return
-    })
+      }
   }
-
-  useEffect(() => {
     setIsVisible(true)
-    fetchData()
+    fetchMedicalHistory()
   }, [])
 
   const handleYes = ()=>{
-    setemerFormData(data)
       setShowPopup_(false)
   }
 
   const handleNo = ()=>{
-    setemerFormData(data)
     navigate('/doctor-info')
   }
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -78,7 +99,8 @@ function EmergencyContactForm() {
     }
   };
 
-  const handlePrev = ()=>{
+  const handlePrev = (e)=>{
+    e.preventDefault()
     navigate(-1)
   }
 
@@ -164,7 +186,7 @@ function EmergencyContactForm() {
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"
             onClick={handlePrev}
             >
-            {t("Prev")}
+            {t("Back")}
           </button>
           <button
             className="yellowButton py-2 px-8 rounded-3xl font-bold mt-4"

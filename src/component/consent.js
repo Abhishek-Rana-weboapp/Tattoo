@@ -332,7 +332,7 @@ function ConsentForm() {
             className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
             onClick={prevPage}
           >
-            {t("Prev")}
+            {t("Back")}
           </button>
           <button
             className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"

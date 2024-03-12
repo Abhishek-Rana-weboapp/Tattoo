@@ -370,5 +370,8 @@
   "Please upload Gaurdian's ID photo before submitting.":"Por favor, carga la foto del documento de identidad del tutor antes de enviar.",
   "How many tattoos are you getting today? 1-10":"¿Cuántos tatuajes te vas a hacer hoy? 1-10",
   "Tattoo Count":"Tatuajes totales",
-  "Please select the number of tattoos you are getting":"Por favor, selecciona el número de tatuajes que te vas a hacer."
+  "Please select the number of tattoos you are getting":"Por favor, selecciona el número de tatuajes que te vas a hacer.",
+  "How many piercings are you getting today? 1-10":"¿Cuántos piercings te vas a hacer hoy? De 1 a 10.",
+  "Placement":"Ubicación",
+  "Service":"Servicio"
 }

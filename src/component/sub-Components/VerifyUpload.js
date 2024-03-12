@@ -266,7 +266,7 @@ export default function VerifyUpload({step, setStep}) {
       onClick={handlePrev}
       className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
       >
-      {t("Prev")}
+      {t("Back")}
       </button>
 
       <button

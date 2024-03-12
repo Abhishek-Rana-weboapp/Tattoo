@@ -36,6 +36,7 @@ function Dashboard() {
   };
 
   useEffect(() => {
+    sessionStorage.removeItem("user")
     setIsVisible(true);
     if (user?.selectedTattooType !== null) {
       setUser({

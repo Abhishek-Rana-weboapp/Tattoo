@@ -314,7 +314,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={() => navigate(-1)}
             >
-              {t("Prev")}
+              {t("Back")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -394,7 +394,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={prevPage}
             >
-              {t("Prev")}
+              {t("Back")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -1208,7 +1208,7 @@ function MedicalForm() {
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={() => navigate(-1)}
             >
-              {t("Prev")}
+              {t("Back")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -1219,7 +1219,6 @@ function MedicalForm() {
           </div>
         </div>
       )}
-
 
 
 {user.selectedTattooType === "tooth-gems" && currentPage === 7 && (
@@ -1254,14 +1253,14 @@ function MedicalForm() {
               <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
             </div>
           </div>
-                    </div>
+          </div>
           <ProgressBar progress={progressValue_} />
           <div className=" w-full flex justify-between">
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
               onClick={() => navigate(-1)}
             >
-              {t("Prev")}
+              {t("Back")}
             </button>
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
@@ -1272,9 +1271,6 @@ function MedicalForm() {
           </div>
         </div>
       )}
-
-
-
     
     </MedicalFormLayout>
       {showPopup_ && (
@@ -1296,8 +1292,6 @@ function MedicalForm() {
             {t("No")}
           </button>
           </div>
-
-          
         </Modal>
       )}
     </>

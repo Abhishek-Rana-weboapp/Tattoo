@@ -225,7 +225,7 @@ function HoldHarmlessAgreement() {
             className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
             onClick={() => navigate(-1)}
           >
-            {t("Prev")}
+            {t("Back")}
           </button>
           <button
             type="submit"

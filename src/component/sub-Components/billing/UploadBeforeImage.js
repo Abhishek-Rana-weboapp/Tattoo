@@ -280,7 +280,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"
           onClick={handlePrev}
           >
-          {t("Prev")}
+          {t("Back")}
         </button>
         <button
           className="yellowButton py-2 text-black px-4 font-bold rounded-lg"

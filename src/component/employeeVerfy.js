@@ -161,7 +161,7 @@ const IDVerificationComponent = () => {
         </select>
         </div>
         <div className='w-full md:w-1/2 flex justify-between'>
-        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(2)}>{t("Prev")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(2)}>{t("Back")}</button>
         <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleShopLocation}>{t("Submit")}</button>
         </div>
       </div>
@@ -176,7 +176,7 @@ const IDVerificationComponent = () => {
         </select>
         </div>
         <div className='w-full md:w-1/2 flex justify-between'>
-        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(3)}>{t("Prev")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(3)}>{t("Back")}</button>
         <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleFrontDesk}>{t("Submit")}</button>
         </div>
       </div>

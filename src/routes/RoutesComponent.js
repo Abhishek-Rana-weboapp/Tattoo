@@ -81,6 +81,8 @@ import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
 import Complications from '../component/dashboard/Complications';
 import TattooCount from '../component/TattooCount';
+import YesNoComponent from '../component/medicalComponents/YesNoComponent';
+import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory';
 
 export default function RoutesComponent() {
 
@@ -90,13 +92,13 @@ export default function RoutesComponent() {
   console.log(user)
   
   useEffect(()=>{
-    //const storedUser = JSON.parse(sessionStorage.getItem("user"))
+    const storedUser = JSON.parse(sessionStorage.getItem("user"))
     const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
     const storedemerformData = sessionStorage.getItem("emerformData")
     const storeddrformData = sessionStorage.getItem("medicalHistory")
-    // if(storedUser){
-    //   setUser(storedUser)
-    // }
+    if(storedUser){
+      setUser(storedUser)
+    }
     if(storedMedicalHistory){
       setFormData(JSON.parse(storedMedicalHistory))
     }
@@ -148,7 +150,8 @@ export default function RoutesComponent() {
       <Route exact path="/invite_artist" element={<AdminInvite/>} />
       <Route exact path="/admin" element={<SuperAdminDashboard/>} />
       <Route element={<PrivateRoutes/>} >
-
+      
+      <Route exact path="/test" element={<YesNoComponent />} />
       <Route exact path="/gaurdian-info" element={<GaurdianInfo />} />
       <Route exact path="/complication" element={<Complications />} />
       <Route exact path="/dashboard" element={<Dashboard />} />
@@ -206,7 +209,7 @@ export default function RoutesComponent() {
       <Route exact path="/tooth-gems" element={<ToothGem />} />
       <Route exact path="/permanent-makeup" element={<PermanentMakeup />} />
       <Route exact path="/smp" element={<HairLossPatternSelection />} />
-      <Route exact path="/medical-form" element={<MedicalForm />} />
+      <Route exact path="/medical-form" element={<NewMedicalHistory />} />
       <Route exact path="/emergency-contact" element={<EmergencyContactForm />} />
       <Route exact path="/doctor-info" element={<DoctorContactForm />} />
       <Route exact path="/consent" element={<ConsentForm />} />
