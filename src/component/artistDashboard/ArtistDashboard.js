@@ -5,12 +5,13 @@ import HistoryVerifyModal from "../modal/HistoryVerifyModal";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import LoaderModal from "../modal/LoaderModal";
+import { medicalQuestions } from "../../data/MedicalQuestions";
+import VerifyMedicalHistory from "./VerifyMedicalHistory";
 
 export default function ArtistDashboard() {
   const [appointments, setAppointments] = useState();
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const {
-    isVisible,
     setIsVisible,
     alert,
     setAlert,
@@ -19,60 +20,61 @@ export default function ArtistDashboard() {
   } = useContext(UserContext);
   const [selectedClient, setSelectedClient] = useState();
   const {t} = useTranslation()
+
   // const [selectedArtist, setSelectedArtist] = useState([]);
   const [selectedMedicalHistory, setSelectedMedicalHistory] = useState();
   const [selectedYes, setSelectedYes] = useState([]);
   const [acknowledgement, setAcknowledgement] = useState(false);
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
-  const [selectedAppointment, setSelectedAppointment] = useState();
   const selectedArtist = sessionStorage.getItem("fullname")
   const [loading , setLoading] = useState(false)
-
-  const fetchAppointments = async () => {
-    setLoading(true)
-    await axios
-      .get(`${apiUrl}/artist/appointment_list`)
-      .then((res) =>{
-        setAppointments(
-          res?.data?.data.filter((a) => {
-            const appDate = new Date(a.Date)
-            const todayDate = new Date();
-            todayDate.setHours(0, 0, 0, 0);
-            return (
-              (appDate.toLocaleDateString() === todayDate.toLocaleDateString() && a.Sign_completion === null)
-              );
-            })
-            )
-            setLoading(false)
-          }
-      )
-      .catch((err) => {
-        setLoading(false)
-        setAlertMessage(t("Error while fetching"))
-        setAlert(!alert)
-        return
-      });
-  };
-
+  const [questions, setQuestions] = useState({})
 
 
   useEffect(() => {
-    fetchAppointments();
-    setIsVisible(true);
-  }, []);
+    const fetchAppointments = async () => {
+      setLoading(true)
+      await axios
+        .get(`${apiUrl}/artist/appointment_list`)
+        .then((res) =>{
+          setAppointments(
+            res?.data?.data.filter((a) => {
+              const appDate = new Date(a.Date)
+              const todayDate = new Date();
+              todayDate.setHours(0, 0, 0, 0);
+              return (
+                (appDate.toLocaleDateString() === todayDate.toLocaleDateString() && a.Sign_completion === null)
+                );
+              })
+              )
+              setLoading(false)
+            }
+            )
+            .catch((err) => {
+              setLoading(false)
+              setAlertMessage(t("Error while fetching"))
+              setAlert(!alert)
+              return
+            });
+          };
+          fetchAppointments();
+          setIsVisible(true);
+        }, []);
 
   
   useEffect(() => {
     if (selectedClient && selectedArtist) {
       const MedicalData = JSON.parse(selectedClient.medicalhistory) || {};
       setSelectedMedicalHistory(MedicalData)
+      setQuestions(medicalQuestions[selectedClient.typeofservice])
       const yesAnswers = Object.keys(MedicalData).filter((key) => {
-        return MedicalData[key].yes === true;
+        return MedicalData[key].ans === "yes";
       });
       setSelectedYes(yesAnswers);
     }
   }, [selectedClient, selectedArtist]);
+
 
   useEffect(() => {
     if (selectedMedicalHistory) {
@@ -84,19 +86,6 @@ export default function ArtistDashboard() {
     }
   }, [selectedMedicalHistory]);
 
-  const medicalQuestions = {
-    page1: "Have You Ever Been Tattooed Before?",
-    page2: "Are you Pregnant or Nursing?",
-    page3:
-      "Are you a hemophiliac or on any medications that may cause bleeding or hinder blood clotting?",
-      page4: "Do you have any medical or skin conditions?",
-      page5: "Do you have any communicable diseases?",
-      page6:
-      "Are you under the influence of alcohol or drugs, prescribed or otherwise?",
-      page7: "Do you have any allergies?",
-      page8: "Do you have a heart condition, epilepsy, or diabetes?",
-  };
-
   //   Function to handle the client select dropdown
 
   const handleClientSelect = (e) => {
@@ -106,6 +95,7 @@ export default function ArtistDashboard() {
     setSelectedClient(selectedAppointment);
     setUpdateAppointment(selectedAppointment);
   };
+
 
 
 
@@ -207,41 +197,11 @@ export default function ArtistDashboard() {
             <div className="flex flex-col gap-4 items-center overflow-hidden">
               <h1 className="font-bold text-white">{t("Client's Medical History")}</h1>
               <div className="flex flex-col gap-4 items-start overflow-x-hidden overflow-y-scroll scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded p-2">
-                {Object.keys(medicalQuestions).map((med, index) => {
-                  return (
-                    <div className="flex flex-col gap-1 text-white w-full ">
-                      <div className="font-bold flex justify-start gap-1">
-                        <div className="md:w-10 ">{`Q${index + 1}: `}</div>
-                        {medicalQuestions[med]}
-                      </div>
-                      <div className="w-full text-start pl-10">
-                        {selectedMedicalHistory.type === "common" && selectedMedicalHistory[med]?.yes === true
-                          ? med === "page1"
-                            ? "Yes"
-                            : med === "page2"
-                            ? `yes, ${
-                                selectedMedicalHistory[med]?.nursing === true
-                                  ? "nursing"
-                                  : "pregnant"
-                              }`
-                            : `yes , ${selectedMedicalHistory[med]?.explanation}`
-                          : "No"}
-
-                        {selectedMedicalHistory.type === "tooth-gems" && (selectedMedicalHistory[med]?.yes === true
-                          ? med === "tattooedBefore"
-                            ? "Yes"
-                            : med === "pregnantOrNursing"
-                            ? `yes, ${
-                                selectedMedicalHistory[med]?.nursing === true
-                                  ? "nursing"
-                                  : "pregnant"
-                              }`
-                            : `yes , ${selectedMedicalHistory[med]?.explanation}`
-                          : "No")}
-                      </div>
-                    </div>
-                  );
-                })}
+                {
+                  questions.length !== 0 && questions.map(question => {
+                    return <VerifyMedicalHistory question={question} questionType={question.type} ans={selectedMedicalHistory[question.id]} />
+                  })
+                }
               </div>
               <div className="flex gap-2 w-full items-center justify-center">
                 <input

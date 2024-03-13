@@ -13,7 +13,7 @@ import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
 import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
 import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
 import LoaderModal from "./modal/LoaderModal";
-import Complications from "./dashboard/Complications";
+import Complications from "./artistDashboard/Complications";
 
 const BillingComponent = () => {
   let { id, step } = useParams();
@@ -224,7 +224,7 @@ const BillingComponent = () => {
       )}
       {
         currentStep === 6 && (
-          <Complications 
+          <Complications
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
           handlePrev={handlePrev} 
