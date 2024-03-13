@@ -35,7 +35,7 @@ const VerifyService = ({ step, setStep }) => {
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between">
       <div className="text-white flex flex-col gap-4 items-center  w-full h-full">
-        <h2 className="font-bold">Appointment Details</h2>
+        <h2 className="font-bold">{t("Appointment Details")}</h2>
 
         {/* Service Section */}
         <h4 className="capitalize font-bold flex gap-2">
@@ -49,7 +49,7 @@ const VerifyService = ({ step, setStep }) => {
           <>
             {/* Placement section cjanging based on the service*/}
             <div className="flex gap-2">
-              <h4 className="font-bold">Placement : </h4>
+              <h4 className="font-bold">{t("Placement")} : </h4>
               <div className="flex flex-col">
                 {placement && (
                   <>
@@ -98,13 +98,13 @@ const VerifyService = ({ step, setStep }) => {
           className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
           onClick={handlePrev}
         >
-          Back
+          {t("Back")}
         </button>
         <button
           className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
           onClick={handleNext}
         >
-          Next
+          {t("Next")}
         </button>
       </div>
     </div>

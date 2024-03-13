@@ -28,6 +28,8 @@ function Dashboard() {
     setInitials,
     setharmlessagreement,
     setGaurdianInitials,
+    setCount,
+    setDescription
   } = React.useContext(UserContext);
   const userObject = user || {};
 
@@ -48,6 +50,7 @@ function Dashboard() {
       });
 
       setFormData({});
+      setCount(1)
 
       setharmlessagreement({
         name: "",
@@ -62,6 +65,7 @@ function Dashboard() {
         city: "",
         state: "Florida",
       });
+      setDescription("")
 
       setdrFormData({
         name: "",
