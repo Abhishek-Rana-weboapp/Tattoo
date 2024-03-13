@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { apiUrl } from "../../url";
+import { useTranslation } from "react-i18next";
 
 const VerifyService = ({ step, setStep }) => {
   const appointmentId = sessionStorage.getItem("appointmentID") || null;
   const [appointment, setAppointment] = useState();
   const [placement, setPlacement] = useState();
+  const {t} = useTranslation()
 
   useEffect(() => {
     const fetchAppointment = async () => {
@@ -37,7 +39,7 @@ const VerifyService = ({ step, setStep }) => {
 
         {/* Service Section */}
         <h4 className="capitalize font-bold flex gap-2">
-          {`Service : `}{" "}
+          {t("Service")} :{" "}
           <h4>{placement ? placement?.selectedTattooType : ""}</h4>{" "}
         </h4>
 
@@ -73,7 +75,7 @@ const VerifyService = ({ step, setStep }) => {
 
         {placement?.selectedTattooType === "tooth-gems" && (
           <>
-            <h4>{`Placement :`} </h4>
+            <h4>{t("Placement")} : </h4>
             <img
               className="md:w-2/6 h-96 rounded-lg"
               src={placement.level1}

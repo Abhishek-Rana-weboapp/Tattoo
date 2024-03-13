@@ -73,13 +73,13 @@ import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
 import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
-import ArtistDashboard from '../component/dashboard/ArtistDashboard';
+import ArtistDashboard from '../component/artistDashboard/ArtistDashboard';
 import BillingComponent from '../component/billing';
-import SuperAdminDashboard from '../component/dashboard/SuperAdminDashboard';
-import AdminInvite from '../component/dashboard/AdminInvite';
+import SuperAdminDashboard from '../component/artistDashboard/SuperAdminDashboard';
+import AdminInvite from '../component/artistDashboard/AdminInvite';
 import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
-import Complications from '../component/dashboard/Complications';
+import Complications from '../component/artistDashboard/Complications';
 import TattooCount from '../component/TattooCount';
 import YesNoComponent from '../component/medicalComponents/YesNoComponent';
 import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory';
