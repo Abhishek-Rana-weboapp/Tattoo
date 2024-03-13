@@ -153,7 +153,7 @@ const IDVerificationComponent = () => {
      {
       step === 3 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
-        <h2 className='text-white font-bold'>Select Shop Location</h2>
+        <h2 className='text-white font-bold'>{t("Select Shop Location")}</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
         {shopLocationOption.map((state, index)=>{
           return <option key={state} value={state}>{state}</option>
@@ -169,7 +169,7 @@ const IDVerificationComponent = () => {
      {
       step === 4 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
-         <h2 className='text-white font-bold'>Select Employee Name</h2>
+         <h2 className='text-white font-bold'>{t("Select Employee Name")}</h2>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={frontDesk} onChange={(e)=>setFrontDesk(e.target.value)}>
           <option value={""}>Select Employee Name</option>
           {employeeNames.map((employee, index)=><option className='capitalize' value={employee}>{employee}</option>)}
