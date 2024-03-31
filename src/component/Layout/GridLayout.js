@@ -1,12 +1,8 @@
-import React, { useContext, useEffect} from "react";
-import UserContext from "../../context/UserContext";
+import React from "react";
 import { useTranslation } from 'react-i18next';
 export default function GridLayout({children , title, onChange,selected, otherFieldValue }) {
   const { t } = useTranslation();
-  const {setIsVisible } = useContext(UserContext)
-  useEffect(()=>{
-     setIsVisible(true)
-  },[])
+
   return (
     <div className="w-full h-full flex flex-col  gap-4 items-center">
       <label className='font-bold text-md md:text-5xl text-white uppercase'>{t(title)}</label>

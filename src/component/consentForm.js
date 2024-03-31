@@ -13,7 +13,7 @@ const ConsentFormGuard = () => {
   var progressValue = 100;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [showPopup, setShowPopup] = useState(false);
-  const { setIsVisible, alert, setAlert, setAlertMessage } =
+  const { alert, setAlert, setAlertMessage } =
     useContext(UserContext);
 
   const [signature_type, setsignature_type] = useState(null);
@@ -41,9 +41,6 @@ const ConsentFormGuard = () => {
     clientSignatureDate: "",
   });
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;

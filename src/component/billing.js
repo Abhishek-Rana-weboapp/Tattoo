@@ -18,7 +18,6 @@ import Complications from "./artistDashboard/Complications";
 const BillingComponent = () => {
   let { id, step } = useParams();
   const {
-    setIsVisible,
     setAlert,
     setAlertMessage,
     alert,
@@ -62,7 +61,6 @@ const BillingComponent = () => {
   }, [step, id]);
 
   useEffect(() => {
-    setIsVisible(true);
     if (selectedAppointment) {
       setUpdateAppointment(selectedAppointment);
     } else {

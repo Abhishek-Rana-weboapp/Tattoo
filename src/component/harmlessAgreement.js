@@ -10,14 +10,12 @@ function HoldHarmlessAgreement() {
   const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const {
-    setIsVisible,
     alert,
     setAlert,
     setAlertMessage,
     signature,
     gaurdianSignature
   } = useContext(UserContext);
-  const [signatureRef, setSignatureRef] = useState();
   const inputRef = useRef();
   const storedGaurdianInitials = sessionStorage.getItem("gaurdianInitials")
   const gaurdianInfo =  JSON.parse(sessionStorage.getItem("gaurdianInfo")) || {} ;
@@ -30,7 +28,6 @@ function HoldHarmlessAgreement() {
 
 
   useEffect(() => {
-    setIsVisible(true);
     inputRef?.current?.focus();
   }, []);
 

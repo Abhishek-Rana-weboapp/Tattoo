@@ -18,8 +18,7 @@ const IDVerificationComponent = () => {
   var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const {setIsVisible, alert , setAlert , setAlertMessage } = React.useContext(UserContext);
-  const fileInputRef = useRef(null);
+  const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
   const [step , setStep] = useState(0)
   const [pin , setPin] = useState()
   const [spanMessage,setSpanMessage] = useState()
@@ -28,11 +27,10 @@ const IDVerificationComponent = () => {
   const [finalAlert , setFinalAlert] = useState(false)
 
   useEffect(()=>{
-    setIsVisible(true)
+    
   },[])
   
   const [loading, setLoading] = useState(false);
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const appointmentID = sessionStorage.getItem("appointmentID")
 
 
@@ -49,13 +47,7 @@ const IDVerificationComponent = () => {
       }
     }
     }
-  
 
-  
-    
-    const handleButton = ()=>{
-      fileInputRef?.current?.click()
-    }
     
     const employeeNames = [
       "Adonay Llerena",

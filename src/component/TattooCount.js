@@ -6,12 +6,8 @@ import Navigation from './navigation/Navigation'
 
 const TattooCount = () => {
   const navigate = useNavigate()
-  const {setIsVisible, alert ,user,setAlert, setAlertMessage,description, count, setCount} = useContext(UserContext)
+  const {alert ,user,setAlert, setAlertMessage, count, setCount} = useContext(UserContext)
   const {t} = useTranslation()
-
-  useEffect(()=>{
-    setIsVisible(true)
- },[])
 
 
  const handleChange = (e)=>{
