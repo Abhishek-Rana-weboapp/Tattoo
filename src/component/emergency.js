@@ -9,6 +9,7 @@ import AlertModal from './modal/AlertModal';
 import {states} from '../data/states';
 import LoaderModal from './modal/LoaderModal';
 import axios from 'axios';
+import { AUTHHEADERS } from '../commonFunctions/Headers';
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
@@ -27,30 +28,11 @@ function EmergencyContactForm() {
 
   
   useEffect(() => {
-    // const fetchData = async () => {
-    //   setLoading(true)
-    //   const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
-    //      .then(res=>{
-    //       if(res?.data?.data?.length > 0){
-    //          if(res.data.data[res.data.data.length-1].emergencycontactnumber){
-    //            setdata(JSON.parse(res.data.data[res.data.data.length-1].emergencycontactnumber))
-    //            setShowPopup_(true);
-    //           }
-    //         }
-    //         setLoading(false)
-    //       })
-    //   .catch (error=> {
-    //     setLoading(false)
-    //     setAlert(!alert)
-    //     setAlertMessage(t("Something went wrong"))
-    //     return
-    //   })
-    // }
 
     const fetchMedicalHistory = async()=>{
       try{
         setLoading(true)
-        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers:AUTHHEADERS()})
         const filterResponse = response.data.emergencycontactnumber
         let finalResult = {};
         try {

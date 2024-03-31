@@ -254,14 +254,14 @@ function TermsOfService() {
                 {t("Select to add your initials")}
               </label>
             </div>
-            <div className="flex md:flex-row flex-col gap-2 justify-center items-center">
+            <div className="flex gap-2 justify-center items-center">
               <label className="text-white">{t("Initials")}:</label>
               <input
                 type="text"
                 value={initials[currentPage] || ""}
                 disabled
                 // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                className="bg-gray-700 text-white p-2 rounded-md Blacksword"
+                className="bg-gray-700 text-white p-2 rounded-md w-2/4 md:w-1/4 Blacksword"
               />
             </div>
           </div>

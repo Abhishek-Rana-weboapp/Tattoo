@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { states } from "../data/states";
 import axios from "axios";
 import LoaderModal from "./modal/LoaderModal";
+import { AUTHHEADERS } from "../commonFunctions/Headers";
 
 
 function DoctorContactForm() {
@@ -52,32 +53,13 @@ function DoctorContactForm() {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true)
-    await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
-       .then(res=>{
-         if (res?.data?.data.length > 0) {
-          if(res.data.doctor_information){
-            setData(JSON.parse(res.data.doctor_information))
-            setShowPopup_(true);
-          }
-          }
-          setLoading(false)
-        })
-    .catch (error=> {
-      setLoading(false)
-      setAlert(!alert)
-      setAlertMessage(t("Error fetching previous doctor info"))
-      return
-    })
-  };
 
   useEffect(() => {
 
     const fetchMedicalHistory = async()=>{
       try{
         setLoading(true)
-        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
         const filterResponse = response.data.doctor_information
         let finalResult = {};
         try {

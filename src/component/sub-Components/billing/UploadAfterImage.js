@@ -8,6 +8,7 @@ import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
 import LoaderModal from "../../modal/LoaderModal";
+import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 
 export default function UploadAfterImage({
   updateAppointment,
@@ -41,7 +42,7 @@ export default function UploadAfterImage({
     const formData = new FormData();
     formData.append("profile", file);
     try {
-      const response = await axios.post(`${apiUrl}/upload`, formData);
+      const response = await axios.post(`${apiUrl}/upload`, formData, {headers:AUTHHEADERS()});
       return response.data.profile_url;
     } catch (err) {
       console.error("File Upload Failed", err.message);
@@ -162,7 +163,7 @@ export default function UploadAfterImage({
           ],
         };
       }
-        await axios.post(`${apiUrl}/artist/post_new`, data).
+        await axios.post(`${apiUrl}/artist/post_new`, data, {headers : AUTHHEADERS()}).
         then((res) => {
           axios
           .get(

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import LoaderModal from "../modal/LoaderModal";
 import { medicalQuestions } from "../../data/MedicalQuestions";
 import VerifyMedicalHistory from "./VerifyMedicalHistory";
+import { AUTHHEADERS } from "../../commonFunctions/Headers";
 
 export default function ArtistDashboard() {
   const [appointments, setAppointments] = useState();
@@ -115,7 +116,7 @@ export default function ArtistDashboard() {
                     }
                   ]
                 }
-                  await axios.post(`${apiUrl}/artist/post_new`, data)
+                  await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
                   .then(res=>{
                     axios.get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
                     .then(response=>{

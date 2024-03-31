@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../../../context/UserContext";
 import { useTranslation } from "react-i18next";
 import LoaderModal from "../../modal/LoaderModal";
+import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 
 export default function PriceComponent({
   updateAppointment,
@@ -70,7 +71,7 @@ export default function PriceComponent({
         }
       ]
     }
-      await axios.post(`${apiUrl}/artist/post_new`, data)
+      await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then(res=>{
         axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
         .then(res=>{

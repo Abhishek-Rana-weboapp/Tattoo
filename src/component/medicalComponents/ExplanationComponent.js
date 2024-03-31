@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
 
@@ -6,12 +6,14 @@ const ExplanationComponent = ({question, type,inputType, next, prev, subState, s
     const [input, setInput] = useState("")
     const {t} = useTranslation()
     const {setAlert, alert, setAlertMessage, setFormData, formData} = useContext(UserContext)
+    const inputRef = useRef(null)
 
 
     useEffect(()=>{
       if(formData[question?.id]){
        setInput(formData[question?.id].ans)
       }
+      inputRef?.current?.focus()
    },[question])
 
     const handleInput = (e)=>{
@@ -64,16 +66,17 @@ const ExplanationComponent = ({question, type,inputType, next, prev, subState, s
          {inputType === "number" ? <input
            type="number"
            inputMode='numeric'
-           className="w-96 md:w-2/3 p-2 rounded-lg"
+           className="w-full md:w-2/3 p-2 rounded-lg"
            value={input}
-
            onChange={handleNumberInput}
+           ref={inputRef}
          />:
          <textarea
            type="text"
            className="w-full md:w-2/3 h-32 rounded-lg"
            value={input}
            onChange={handleInput}
+           ref={inputRef}
          />
         }
      </div> :
@@ -84,12 +87,14 @@ const ExplanationComponent = ({question, type,inputType, next, prev, subState, s
        className="w-full md:w-2/3 p-2 rounded-lg"
        value={subState[question.id]?.ans}
        onChange={handleSubState}
+       ref={inputRef}
      />:
      <textarea
        type="text"
        className="w-full md:w-2/3 h-32 p-2 rounded-lg"
        value={subState[question.id]?.ans}
        onChange={handleSubState}
+       ref={inputRef}
      />
     }
    </div>

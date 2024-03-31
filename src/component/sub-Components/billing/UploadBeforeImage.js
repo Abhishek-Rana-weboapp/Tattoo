@@ -8,6 +8,7 @@ import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../loader/Loader";
 import LoaderModal from "../../modal/LoaderModal";
+import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 
 export default function UploadBeforeImage({ handlePrev, updateAppointment, setUpdateAppointment }) {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -35,7 +36,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     const formData = new FormData();
     formData.append("profile", file);
     try {
-      const response = await axios.post(`${apiUrl}/upload`, formData);
+      const response = await axios.post(`${apiUrl}/upload`, formData, {headers:AUTHHEADERS()});
       return response.data.profile_url;
     } catch (err) {
       setAlertMessage(t('File Upload Failed'))

@@ -11,6 +11,7 @@ import axios from "axios";
 import { apiUrl } from "../../url";
 import Modal from "../modal/Modal";
 import { useTranslation } from "react-i18next";
+import { AUTHHEADERS } from "../../commonFunctions/Headers";
 
 const NewMedicalHistory = () => {
   const [current, setCurrent] = useState(1);
@@ -28,9 +29,9 @@ const NewMedicalHistory = () => {
     }
       const fetchMedicalHistory = async()=>{
         try{
-          const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+          const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
           const service = user?.selectedTattooType
-          const filterResponse = response.data.medical_history[service]
+          const filterResponse = response.data.medical_history[service] 
           let finalResult = {};
         try {
             finalResult = filterResponse ? JSON.parse(filterResponse) : {};
@@ -92,7 +93,7 @@ const NewMedicalHistory = () => {
       style={{ height: "100dvh" }}
     >
       <h1 className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
-        Medical history
+        {t("Medical history")}
       </h1>
       <div className="w-full backdrop-blur bg-opacity-50 h-full rounded-md flex flex-col overflow-hidden">
         {questions.length > 0 && questions[current - 1]?.type === "YN" && (

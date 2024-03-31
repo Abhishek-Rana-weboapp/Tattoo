@@ -131,24 +131,22 @@ function HoldHarmlessAgreement() {
           </p>
         </div>
 
-        <div className="flex flex-col  md:flex-row gap-2 justify-center px-2">
-          <div className="flex gap-1 items-center justify-center">
+        <div className="flex flex-col  md:flex-row gap-2 justify-center px-1">
+          <div className="flex gap-1 items-center justify-start">
             <label>{t("Name")}:</label>
             <input
               ref={inputRef}
               className="bg-gray-700 text-white rounded-md p-2"
               type="text"
               value={harmlessagreement?.name}
-              // onChange={handleNameChange}
             />
           </div>
-          <div className="flex gap-1 items-center justify-center">
+          <div className="flex gap-1 items-center justify-start">
             <label>{t("Initials")}:</label>
             <input
-              className="bg-gray-700 text-white  rounded-md p-2 Blacksword"
+              className="bg-gray-700 text-white rounded-md p-2 Blacksword w-2/6"
               type="text"
               value={harmlessagreement?.initials}
-              // onChange={handleInitialsChange}
             />
           </div>
           <div className="flex gap-1 items-center justify-center">
@@ -183,16 +181,14 @@ function HoldHarmlessAgreement() {
               className="bg-gray-700 text-white rounded-md p-2"
               type="text"
               value={harmlessagreement?.gaurdianName}
-              // onChange={handleNameChange}
             />
           </div>
           <div className="flex gap-1 items-center justify-center">
             <label>{t("Initials")}:</label>
             <input
-              className="bg-gray-700 text-white  rounded-md p-2 Blacksword"
+              className="bg-gray-700 text-white rounded-md p-2 Blacksword"
               type="text"
               value={harmlessagreement?.gaurdianInitials}
-              // onChange={handleInitialsChange}
             />
           </div>
           <div className="flex gap-1 items-center justify-center">

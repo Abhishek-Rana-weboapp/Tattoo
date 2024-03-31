@@ -11,6 +11,7 @@ import CustomAlertModal from './modal/CustomAlertModal';
 import { states } from '../data/states';
 import LoaderModal from './modal/LoaderModal';
 import VerifyService from './sub-Components/VerifyService';
+import { AUTHHEADERS } from '../commonFunctions/Headers';
 
 
 const IDVerificationComponent = () => {
@@ -89,7 +90,7 @@ const IDVerificationComponent = () => {
         updateValue : shopLocation
       }]
     }
-    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
         setStep(4)
         setLoading(false)
@@ -113,7 +114,7 @@ const IDVerificationComponent = () => {
         updateValue : frontDesk
       }]
     }
-    await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+    await axios.post(`${apiUrl}/artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
         setFinalAlert(!finalAlert)
       }
@@ -153,7 +154,7 @@ const IDVerificationComponent = () => {
      {
       step === 3 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
-        <h2 className='text-white font-bold'>{t("Select Shop Location")}</h2>
+        <label className='text-white font-bold md:text-3xl text-lg'>{t("Select Shop Location")}</label>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
         {shopLocationOption.map((state, index)=>{
           return <option key={state} value={state}>{state}</option>
@@ -169,7 +170,7 @@ const IDVerificationComponent = () => {
      {
       step === 4 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
-         <h2 className='text-white font-bold'>{t("Select Employee Name")}</h2>
+         <label className='text-white font-bold md:text-3xl text-lg'>{t("Select Employee Name")}</label>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={frontDesk} onChange={(e)=>setFrontDesk(e.target.value)}>
           <option value={""}>Select Employee Name</option>
           {employeeNames.map((employee, index)=><option className='capitalize' value={employee}>{employee}</option>)}

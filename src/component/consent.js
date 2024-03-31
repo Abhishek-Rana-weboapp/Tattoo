@@ -275,7 +275,7 @@ function ConsentForm() {
         </div>
 
         {/* Clients Section */}
-        <div className="flex md:flex-col  justify-center gap-2 ">
+        <div className="flex flex-col items-center  gap-2 ">
           <div className="flex gap-2 items-center justify-center">
             <input
               type="checkbox"
@@ -287,15 +287,19 @@ function ConsentForm() {
               {t("Select to add your initials")}
             </label>
           </div>
-          <div className="flex flex-col w-1/4 md:w-full md:flex-row items-center justify-center">
+
+          <div className="flex gap-2 justify-center items-center">
+          <label className="text-white">
+            {t("Initials")}:
+            </label>
             <input
               ref={inputRef}
               type="text"
               value={initials[currentPage]}
               readOnly
-              className="bg-gray-700 w-full text-white p-2 rounded-md font-bold Blacksword"
-            />
-          </div>
+              className="bg-gray-700 w-1/4 md:w-full text-white p-2 rounded-md font-bold Blacksword"
+              />
+              </div>
         </div>
 
         {/* gaurdians section */}

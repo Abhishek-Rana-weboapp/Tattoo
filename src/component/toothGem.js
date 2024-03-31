@@ -6,6 +6,7 @@ import UserContext from '../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import ToothGem from '../assets/tooth-gen.png';
 import Gem from '../assets/Gem.png';
+import { AUTHHEADERS } from '../commonFunctions/Headers';
 
 const ToothGems = () => {
   const { t } = useTranslation();
@@ -70,9 +71,6 @@ const ToothGems = () => {
   };
   
   
-  
-  
-  
 
 
   const handleImageUpload = async () => {
@@ -86,6 +84,7 @@ const ToothGems = () => {
       const response = await fetch(`${apiUrl}/upload`, {
         method: 'POST',
         body: formData,
+        headers : AUTHHEADERS()
       });
 
       const data = await response.json();
