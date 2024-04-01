@@ -13,11 +13,8 @@ function SkinCondition({
   const navigate = useNavigate()
   const [condition, setCondition] = useState(updateAppointment?.skin_conditions === "good" ? "good" :updateAppointment?.skin_conditions === "bad" ? "bad" : "");
   const [explanation, setExplanation] = useState(updateAppointment?.skin_conditions !== "good" ? updateAppointment?.skin_conditions : "");
-  const { setIsVisible } = useContext(UserContext);
   const {t} = useTranslation()
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+ 
 
   const handleUpdateSkin = async () => {
     let data

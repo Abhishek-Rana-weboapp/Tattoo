@@ -16,14 +16,13 @@ import { AUTHHEADERS } from "../../commonFunctions/Headers";
 const NewMedicalHistory = () => {
   const [current, setCurrent] = useState(1);
   const navigate = useNavigate();
-  const {setIsVisible, formData, user , setFormData, setAlert, alert, setAlertMessage} = useContext(UserContext);
+  const { user , setFormData, setAlert, alert, setAlertMessage} = useContext(UserContext);
   const [questions, setQuestions] = useState([]);
   const username = sessionStorage.getItem("username")
   const [showPopup_, setShowPopup_] = useState(false);
   const {t} = useTranslation()
   
   useEffect(() => {
-    setIsVisible(true);
     if(user.selectedTattooType !== ""){
       setQuestions(medicalQuestions[user.selectedTattooType] || [])
     }

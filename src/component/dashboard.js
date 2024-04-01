@@ -31,7 +31,6 @@ function Dashboard() {
     setCount,
     setDescription
   } = React.useContext(UserContext);
-  const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
@@ -39,7 +38,6 @@ function Dashboard() {
 
   useEffect(() => {
     sessionStorage.removeItem("user")
-    setIsVisible(true);
     if (user?.selectedTattooType !== null) {
       setUser({
         selectedTattooType: null,

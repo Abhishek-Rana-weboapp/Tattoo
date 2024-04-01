@@ -13,7 +13,6 @@ export default function ArtistDashboard() {
   const [appointments, setAppointments] = useState();
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const {
-    setIsVisible,
     alert,
     setAlert,
     setAlertMessage,
@@ -60,7 +59,7 @@ export default function ArtistDashboard() {
             });
           };
           fetchAppointments();
-          setIsVisible(true);
+          ;
         }, []);
 
   
