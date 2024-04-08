@@ -54,7 +54,9 @@ const UserContextProvider = ({ children }) => {
   const [signature, setSignature] = useState();
   const [gaurdianSignature, setGaurdianSignature] = useState()
   const [step, setStep] = useState(0)
-  const [description, setDescription] = useState("")
+  const [description, setDescription] = useState({})
+  const [currentSelection, setCurrentSelection] = useState(1)
+  const [finalUser, setFinalUser] = useState({})
 
   return (
     <UserContext.Provider
@@ -94,7 +96,11 @@ const UserContextProvider = ({ children }) => {
         selectedTeeth, 
         setSelectedTeeth,
         count, 
-        setCount
+        setCount,
+        currentSelection, 
+        setCurrentSelection,
+        finalUser, 
+        setFinalUser
       }}
     >
       {children}

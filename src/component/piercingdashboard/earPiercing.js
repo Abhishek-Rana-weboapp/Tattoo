@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 function EarPiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, finalUser,count,  setFinalUser, currentSelection, setCurrentSelection } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
 
@@ -23,52 +23,49 @@ function EarPiercing() {
 
   const buttons = [
     {
-      name: "Regular Earlobe",
+      name: "Regular Earlobe 20g",
     },
     {
-      name: "Upper Earlobe",
+      name: "Upper Earlobe 20g",
     },
     {
-      name: "helix",
+      name: "Industrial 16g",
     },
     {
-      name: "Industrial",
+      name: "Tragus 16g",
     },
     {
-      name: "Tragus",
+      name: "Rook 16g",
     },
     {
-      name: "Rook",
+      name: "Conch 16g",
     },
     {
-      name: "Conch",
+      name: "Daith 16g",
     },
     {
-      name: "Daith",
+      name: "Snug 16g",
     },
     {
-      name: "Snug",
+      name: "Forward Helix 16g",
     },
     {
-      name: "Forward Helix",
+      name: "Helix 16g",
     },
     {
-      name: "Helix",
+      name: "Anti Helix 16g",
     },
     {
-      name: "Anti Helix",
+      name: "Anti Tragus 16g",
     },
     {
-      name: "Anti Tragus",
+      name: "Auricle 16g",
     },
     {
-      name: "Auricle",
+      name: "External Auditory Meatus 16g",
     },
     {
-      name: "External Auditory Meatus",
-    },
-    {
-      name: "Transverse Lobe",
+      name: "Transverse Lobe 16g",
     }
   ];
 
@@ -76,10 +73,22 @@ function EarPiercing() {
     if(selected){
       if(user.level2 !== selected){
         setUser({ ...user, level2: selected, level3:null, level4:null});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
+        }
         }else{
           setUser({ ...user, level2: selected});
+          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+          if(currentSelection < count){
+            setCurrentSelection(currentSelection + 1)
+          }
         }
-    navigate('/count'); 
+      if(count > 1 && currentSelection < count){
+          navigate("/piercing")
+      }else{
+          navigate("/medical-form")
+      }
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

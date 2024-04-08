@@ -69,7 +69,7 @@ function ArmInside() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, level4:selected });
-      navigate('/count');
+      navigate('/description');
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

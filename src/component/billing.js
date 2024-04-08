@@ -14,6 +14,7 @@ import { decodeUrls, encodeUrls } from "../commonFunctions/Encoders";
 import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
 import LoaderModal from "./modal/LoaderModal";
 import Complications from "./artistDashboard/Complications";
+import { AUTHHEADERS } from "../commonFunctions/Headers";
 
 const BillingComponent = () => {
   let { id, step } = useParams();
@@ -38,7 +39,7 @@ const BillingComponent = () => {
   const fetchAppointment = async () => {
     setLoading(true)
     axios
-      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`)
+      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {headers:AUTHHEADERS()})
       .then((res) => {
         sessionStorage.setItem(
           "selectedAppointment",

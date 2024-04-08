@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 function PermanentMakeup() {
   const progressValue = 20;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage,setFinalUser } = React.useContext(UserContext);
   const [selected, setSelected] = useState();
   const {t} = useTranslation()
 
@@ -33,6 +33,7 @@ function PermanentMakeup() {
   const handleNext = () => {
     if (selected) {
       setUser({ ...user,level1: selected });
+      setFinalUser({...user,level1:selected , level2 : null, level3 : null, level4 : null})
       navigate("/medical-form");
     }else{
       setAlert(!alert)

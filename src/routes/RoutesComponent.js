@@ -51,7 +51,6 @@ import VaginalPiercing from '../component/piercingdashboard/vaginalPiercing';
 import ToothGem from '../component/toothGem';
 import PermanentMakeup from '../component/permanentMakeup';
 import HairLossPatternSelection from '../component/smp'
-import MedicalForm from '../component/medicalHistory';
 import EmergencyContactForm from '../component/emergency';
 import DoctorContactForm from '../component/doctorInfo';
 import ConsentForm from '../component/consent';
@@ -81,16 +80,19 @@ import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
 import Complications from '../component/artistDashboard/Complications';
 import TattooCount from '../component/TattooCount';
-import YesNoComponent from '../component/medicalComponents/YesNoComponent';
 import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory';
 import CustomerInfo from '../component/CustomerInfo';
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
+  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData, count,currentSelection,finalUser } = useContext(UserContext)
   const location = useLocation()
 
   useEffect(()=>{
+    console.log("count===" ,count)
+    console.log("currentSelection===",currentSelection)
+    console.log("user===",user)
+    console.log("finalUser===",finalUser)
     if(location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/forget_password" ){
       setIsVisible(false)
     }else{
@@ -157,7 +159,7 @@ export default function RoutesComponent() {
       
 
       
-      <Route exact path="/test" element={<CustomerInfo />} />
+      <Route exact path="/detailedinfo" element={<CustomerInfo />} />
       <Route exact path="/gaurdian-info" element={<GaurdianInfo />} />
       <Route exact path="/complication" element={<Complications />} />
       <Route exact path="/dashboard" element={<Dashboard />} />

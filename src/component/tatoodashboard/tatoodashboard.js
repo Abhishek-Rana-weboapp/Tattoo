@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 function TattooDashboard() {
   const navigate = useNavigate();
-  const { user, setUser , alert , setAlert , setAlertMessage} = React.useContext(UserContext);
+  const { user, setUser , alert , setAlert , setAlertMessage,currentSelection} = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
 
@@ -34,6 +34,9 @@ function TattooDashboard() {
       name: "head",
     },
     {
+      name: "neck",
+    },
+    {
       name: "chest",
     },
     {
@@ -55,16 +58,13 @@ function TattooDashboard() {
       name: "glutes"
     },
     {
+      name: "pelvic",
+    },
+    {
       name: "leg",
     },
     {
       name: "foot",
-    },
-    {
-      name: "neck",
-    },
-    {
-      name: "pelvic",
     },
   ];
   
@@ -89,7 +89,7 @@ function TattooDashboard() {
 
   return (
     <>
-    <GridLayout title={"Tattoo"}>
+    <GridLayout title={"Tattoo"} subTitle={`Please Select location for tattoo ${currentSelection}`}>
         { buttons.map((button, index) => {
           return (
               <CustomButton

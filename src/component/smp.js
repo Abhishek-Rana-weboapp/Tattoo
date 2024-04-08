@@ -29,7 +29,7 @@ const HairLossPatternSelection = () => {
   const progressValue = 30;
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { selectedPattern, setSelectedPattern , alert, setAlert, setAlertMessage,user,setUser } = React.useContext(UserContext);
+  const { selectedPattern, setSelectedPattern , alert, setAlert, setAlertMessage,user,setUser,setFinalUser } = React.useContext(UserContext);
   const [selected, setSelected] = useState()
 
   const images = [
@@ -45,6 +45,7 @@ const HairLossPatternSelection = () => {
     if(selected){
       setSelectedPattern(selected);
       setUser({...user,level1:selected})
+      setFinalUser({...user,level1:selected , level2 : null, level3 : null, level4 : null})
       navigate("/medical-form")
     }else{
       setAlert(!alert)

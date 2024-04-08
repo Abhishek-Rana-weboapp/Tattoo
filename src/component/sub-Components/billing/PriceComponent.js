@@ -73,7 +73,7 @@ export default function PriceComponent({
     }
       await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then(res=>{
-        axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`)
+        axios.get(`${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()})
         .then(res=>{
            setUpdateAppointment(res.data.data[0])
            setLoading(false)

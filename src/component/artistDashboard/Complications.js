@@ -87,7 +87,7 @@ const Complications = ({updateAppointment,setUpdateAppointment,handlePrev}) => {
        .then((response) => {
            axios
            .get(
-               `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+               `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
                )
                .then((res) => {
                    setUpdateAppointment(res.data.data[0]);

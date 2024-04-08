@@ -23,6 +23,9 @@ function ChestInside() {
     },
     {
       name: "right"
+    },
+    {
+      name: "both"
     }
   ]
 
@@ -53,7 +56,7 @@ function ChestInside() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, level3:selected });
-      navigate("/count");
+      navigate("/description");
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))

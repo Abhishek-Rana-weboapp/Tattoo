@@ -31,6 +31,12 @@ export default function ArtistDashboard() {
   const [loading , setLoading] = useState(false)
   const [questions, setQuestions] = useState({})
 
+  const options = {
+    month: '2-digit',
+    day: '2-digit',
+    year: '2-digit',
+  }
+
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -44,7 +50,7 @@ export default function ArtistDashboard() {
               const todayDate = new Date();
               todayDate.setHours(0, 0, 0, 0);
               return (
-                (appDate.toLocaleDateString() === todayDate.toLocaleDateString() && a.Sign_completion === null)
+                (appDate.toLocaleDateString("en-US", options) === todayDate.toLocaleDateString("en-US", options) && a.Sign_completion === null)
                 );
               })
               )
@@ -117,7 +123,7 @@ export default function ArtistDashboard() {
                 }
                   await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
                   .then(res=>{
-                    axios.get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`)
+                    axios.get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`, {headers:AUTHHEADERS()})
                     .then(response=>{
                       navigate(`/billing/${selectedClient?.id}/${selectedClient?.process_step}`)
                       return

@@ -167,7 +167,7 @@ export default function UploadAfterImage({
         then((res) => {
           axios
           .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
             )
             .then((response) => {
               setUpdateAppointment(response.data.data[0]);

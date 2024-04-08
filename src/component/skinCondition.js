@@ -4,6 +4,7 @@ import { apiUrl } from "../url";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { AUTHHEADERS } from "../commonFunctions/Headers";
 
 function SkinCondition({
   handlePrev,
@@ -51,11 +52,11 @@ function SkinCondition({
         };
       }
       await axios
-      .post(`${apiUrl}/artist/post_new`, data)
+      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         axios
         .get(
-          `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+          `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
           )
           .then((res) => {
             setUpdateAppointment(res.data.data[0]);

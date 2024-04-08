@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 function SurfacePiercing() {
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, finalUser, setFinalUser,count, currentSelection, setCurrentSelection } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
 
@@ -23,46 +23,46 @@ function SurfacePiercing() {
 
   const buttons = [
     {
-      name:"Arm"
+      name:"Arm 16g"
     },
     {
-      name:"Back"
+      name:"Back 16g"
     },
     {
-      name:"Chest"
+      name:"Chest 16g"
     },
     {
-      name:"Face"
+      name:"Face 16g"
     },
     {
-      name:"Finger"
+      name:"Finger 16g"
     },
     {
-      name:"Foot"
+      name:"Foot 16g"
     },
     {
-      name:"Hand"
+      name:"Hand 16g"
     },
     {
-      name:"Hip"
+      name:"Hip 16g"
     },
     {
-      name:"Leg"
+      name:"Leg 16g"
     },
     {
-      name:"Neck"
+      name:"Neck 16g"
     },
     {
-      name:"Pelvic"
+      name:"Pelvic 16g"
     },
     {
-      name:"Ribs"
+      name:"Ribs 16g"
     },
     {
-      name:"Shoulder"
+      name:"Shoulder 16g"
     },
     {
-      name:"Stomach"
+      name:"Stomach 16g"
     }
   ]
 
@@ -70,10 +70,22 @@ function SurfacePiercing() {
     if(selected){
       if(user.level2 !== selected){
         setUser({ ...user, level2: selected, level3:null, level4:null});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
+        }
         }else{
           setUser({ ...user, level2: selected});
+          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+          if(currentSelection < count){
+            setCurrentSelection(currentSelection + 1)
+          }
         }
-    navigate('/count'); 
+      if(count > 1 && currentSelection < count){
+          navigate("/piercing")
+      }else{
+          navigate("/medical-form")
+      }
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))
@@ -105,76 +117,4 @@ function SurfacePiercing() {
 export default SurfacePiercing;
 
 
-{/* <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
-<div
-  className="container h-100"
-  style={{
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-    minHeight: '100vh',
-    width: '100%',
-    border: '3px solid black',
-  }}
->
-  <h1>Surface Piercing</h1>
-  <div className="big-container">
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Arm')}>
-        <h5>Arm</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Back')}>
-        <h5>Back</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Chest')}>
-        <h5>Chest</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Face')}>
-        <h5>Face</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Finger')}>
-        <h5>Finger</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Foot')}>
-        <h5>Foot </h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Hand')}>
-        <h5>Hand</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Hip')}>
-        <h5>Hip</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Leg')}>
-        <h5>Leg</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Neck')}>
-        <h5>Neck</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Pelvic')}>
-        <h5>Pelvic</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Ribs')}>
-        <h5>Ribs</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Shoulder')}>
-        <h5>Shoulder</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Stomach')}>
-        <h5>Stomach</h5>
-      </div>
-    </div>
-    
-  </div>
-</div>
-</div> */}
+

@@ -50,7 +50,6 @@ function DoctorContactForm() {
 
 
   useEffect(() => {
-
     const fetchMedicalHistory = async()=>{
       try{
         setLoading(true)

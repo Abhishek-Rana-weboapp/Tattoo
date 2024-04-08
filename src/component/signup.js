@@ -12,7 +12,7 @@ function SignUp() {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showPopup, setshowPopup] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -23,13 +23,14 @@ function SignUp() {
   const [adminUsername, setadminUsername] = useState("");
 
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
-  const [phoneNumber, setPhoneNumber] = useState()
+  const [phoneNumber, setPhoneNumber] = useState();
 
-  useEffect(()=>{
-    sessionStorage.clear()
-  },[])
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
 
-  let passReg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  let passReg =
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ function SignUp() {
       password: password,
       lang: selectedLanguage,
       usertype: "user",
-      phone_number:phoneNumber,
+      phone_number: phoneNumber,
       dateofbirth: dateOfBirth,
     };
     if (
@@ -51,41 +52,68 @@ function SignUp() {
       user.dateofbirth &&
       user.usertype
     ) {
-      if(!passReg.test(password)){
-         setAlertMessage(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"))
-         setAlert(!alert)
-         return
+      if (!passReg.test(password)) {
+        setAlertMessage(
+          t(
+            "Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"
+          )
+        );
+        setAlert(!alert);
+        return;
       }
-      await axios.post(`${apiUrl}/signup`, user)
-      .then(res=>{
-        if(res.status === 201){
-          if(res.data.userData.lang === "es"){
-            i18n.changeLanguage("es");
+      await axios
+        .post(`${apiUrl}/signup`, user)
+        .then((res) => {
+          if (res.status === 201) {
+            if (res.data.userData.lang === "es") {
+              i18n.changeLanguage("es");
+            }
+            sessionStorage.setItem("responseData", JSON.stringify(res.data));
+            sessionStorage.setItem("username", email);
+            sessionStorage.setItem("minor", res.data.userData.minor);
+            sessionStorage.setItem("token", res.data.token);
+            sessionStorage.setItem("lang", res.data.userData.lang);
+            sessionStorage.setItem("userType", res.data.userData.usertype);
+            sessionStorage.setItem("firstname", res.data.userData.firstname);
+            sessionStorage.setItem("lastname", res.data.userData.lastname);
+            sessionStorage.setItem(
+              "fullname",
+              `${res.data.userData.firstname} ${res.data.userData.lastname}`
+            );
+            sessionStorage.setItem(
+              "initials",
+              `${res?.data?.userData?.firstname
+                ?.slice(0, 1)
+                .toUpperCase()}${res?.data?.userData?.lastname
+                ?.slice(0, 1)
+                .toUpperCase()}`
+            );
+            sessionStorage.setItem(
+              "detailedInfo",
+              JSON.stringify({
+                address: res.data.userData.address,
+                city: res.data.userData.city,
+                state: res.data.userData.state,
+                zip: res.data.userData.zip,
+                race: res.data.userData.race,
+                gender: res.data.userData.gender,
+              })
+            );
+            if (res.data.userData.minor === "true") {
+              navigate("/detailedinfo");
+              return;
+            }
+            if (res.data.userData.minor === "false") {
+              navigate("/detailedinfo");
+              return;
+            }
           }
-          sessionStorage.setItem("responseData", JSON.stringify(res.data));
-          sessionStorage.setItem('username', email);
-          sessionStorage.setItem('minor', res.data.userData.minor)
-          sessionStorage.setItem('token', res.data.token);
-          sessionStorage.setItem('lang',res.data.userData.lang)
-          sessionStorage.setItem('userType',res.data.userData.usertype)
-          sessionStorage.setItem('firstname',res.data.userData.firstname)
-          sessionStorage.setItem('lastname',res.data.userData.lastname)
-          sessionStorage.setItem('fullname',`${res.data.userData.firstname} ${res.data.userData.lastname}`)
-          sessionStorage.setItem("initials" ,`${res?.data?.userData?.firstname?.slice(0,1).toUpperCase()}${res?.data?.userData?.lastname?.slice(0,1).toUpperCase()}`)
-           console.log(res.data.userData.minor)
-          if(res.data.userData.minor === "true"){
-            navigate("/gaurdian-info")
-            return
-          }if(res.data.userData.minor === "false"){
-            navigate("/dashboard")
-            return
-          }
-        }
-      }).catch((err)=>{
+        })
+        .catch((err) => {
           setAlertMessage(err.response.data.error);
-         setAlert(!alert);
-        return 
-      })
+          setAlert(!alert);
+          return;
+        });
     } else {
       setAlertMessage("Please Enter all details");
       setAlert(!alert);
@@ -131,33 +159,31 @@ function SignUp() {
         >
           <div className="flex flex-col itmes-center gap-3">
             <div className="flex md:flex-row flex-col gap-3">
-
-            <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
-              <input
-                type="text"
-                className="flex-1 focus:outline-none bg-white p-1"
-                id="firstname"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+              <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
+                <input
+                  type="text"
+                  className="flex-1 focus:outline-none bg-white p-1"
+                  id="firstname"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                 />
-              {/* <input className='flex-1' placeholder='Email'/> */}
-            </div>
-            <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
-              <input
-                type="text"
-                className="flex-1 focus:outline-none bg-white p-1"
-                id="lastname"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-              {/* <input className='flex-1' placeholder='Email'/> */}
-            </div>
+                {/* <input className='flex-1' placeholder='Email'/> */}
               </div>
+              <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
+                <input
+                  type="text"
+                  className="flex-1 focus:outline-none bg-white p-1"
+                  id="lastname"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+                {/* <input className='flex-1' placeholder='Email'/> */}
+              </div>
+            </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-             
               <input
                 type="email"
                 className="flex-1 focus:outline-none bg-white p-1"
@@ -193,7 +219,6 @@ function SignUp() {
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-             
               <input
                 type="number"
                 className="flex-1 focus:outline-none bg-white p-1"
@@ -206,7 +231,6 @@ function SignUp() {
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-             
               <input
                 type="date"
                 className="flex-1 focus:outline-none bg-white p-1"

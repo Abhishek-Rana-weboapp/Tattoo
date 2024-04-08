@@ -17,9 +17,20 @@ const TattooCount = () => {
 
  const handleNext = ()=>{
    if(count){
-    navigate("/description")
+    if(user.selectedTattooType === "tattoo"){
+      navigate("/tattoo")
+      return
+    }else if(user.selectedTattooType === "piercing"){
+      navigate("/piercing")
+      return
+    }
    }else{
-    setAlertMessage(t("Please select the number of tattoos you are getting"))
+    if(user.selectedTattooType === "tattoo"){
+      setAlertMessage(t("Please select the number of tattoos you are getting"))
+    }
+    else if(user.selectedTattooType === "piercing"){
+      setAlertMessage(t("Please select the number of piercings you are getting"))
+    }
     setAlert(!alert)
     return
    }

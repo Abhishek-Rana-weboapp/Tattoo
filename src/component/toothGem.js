@@ -10,7 +10,7 @@ import { AUTHHEADERS } from "../commonFunctions/Headers";
 
 const ToothGems = () => {
   const { t } = useTranslation();
-  const { setUser, selectedTeeth, setSelectedTeeth } =
+  const { setUser, selectedTeeth, setSelectedTeeth, setFinalUser,setAlert, alert, setAlertMessage } =
     React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
@@ -137,18 +137,20 @@ const ToothGems = () => {
 
     const formData = new FormData();
     formData.append("profile", imageBlob);
+ if(selectedTeeth.length > 0){
 
-    try {
-      const response = await fetch(`${apiUrl}/upload`, {
-        method: "POST",
-        body: formData,
-        headers : AUTHHEADERS()
+   try {
+     const response = await fetch(`${apiUrl}/upload`, {
+       method: "POST",
+       body: formData,
+       headers : AUTHHEADERS()
       });
-
+      
       const data = await response.json();
-
+      
       if (response.ok) {
         setUser((prev) => ({ ...prev, level1: data.profile_url }));
+        setFinalUser((prev) => ({ ...prev, level1: data.profile_url, level2:null, levl3:null , level4:null }));
         navigate("/medical-form");
       } else {
         console.error(
@@ -159,12 +161,16 @@ const ToothGems = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  }else{
+    setAlert(!alert)
+    setAlertMessage(t('Please select at least one tooth'))
+  }
   };
-
+  
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
-
+    
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const image = new Image();

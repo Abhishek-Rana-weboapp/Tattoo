@@ -6,22 +6,38 @@ import { useTranslation } from 'react-i18next'
 
 const BriefDescription = () => {
   const navigate = useNavigate()
-  const {alert ,setAlert, setAlertMessage,description, setDescription} = useContext(UserContext)
+  const {alert ,setAlert, setAlertMessage,description, setDescription, currentSelection, setCurrentSelection, count,finalUser, setFinalUser, user , setUser} = useContext(UserContext)
   const {t} = useTranslation()
   const inputRef = useRef()
+  const [desc, setDesc] = useState("")
 
   useEffect(()=>{
     inputRef.current.focus()
+    if(description[currentSelection]){
+      setDesc(description[currentSelection])
+    }
  },[])
 
 
  const handleChange = (e)=>{
-     setDescription(e.target.value)
+     setDesc(e.target.value)
  }
 
  const handleNext = ()=>{
-   if(description){
-    navigate("/medical-form")
+   if(desc){
+    if(count > 1 && currentSelection < count ){
+      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user.level1 , level2 : user.level2,level3 : user.level3,level4 : user.level4}}))
+      setUser(prev=>({...prev, level1 : null,level2 : null,level3 : null,level4 : null}))
+      setDescription(prev=>({...prev, [currentSelection] : desc}))
+      setCurrentSelection(currentSelection+1)
+      navigate("/tattoo")
+      return
+    }else{
+      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user.level1 , level2 : user.level2,level3 : user.level3,level4 : user.level4}}))
+      setDescription(prev=>({...prev, [currentSelection] : desc}))
+      navigate("/medical-form")
+      return
+    }
    }else{
     setAlertMessage(t("Please provide the description of your tattoo"))
     setAlert(!alert)
@@ -39,7 +55,7 @@ const BriefDescription = () => {
       <div className='flex flex-col items-center gap-3 '>
       <label className='font-bold text-md md:text-5xl text-white uppercase'>{t("Tattoo Description")}</label>
       <label className='font-bold text-xl  md:text-4xl text-white  uppercase text-center '>{t("Enter a Brief Description of your tattoo")}</label>
-      <textarea ref={inputRef} value={description} onChange={handleChange} className='w-2/3 p-2 rounded-lg h-40'></textarea>
+      <textarea ref={inputRef} value={desc} onChange={handleChange} className='w-2/3 p-2 rounded-lg h-40'></textarea>
       </div>
       <Navigation next={handleNext} prev={handlePrev} />
     </div>

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 function NosePiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, finalUser,count,  setFinalUser, currentSelection, setCurrentSelection } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
 
@@ -23,28 +23,28 @@ function NosePiercing() {
 
   const buttons = [
     {
-      name:"Nostril"
+      name:"Nostril 19g"
     },
     {
-      name:"Septum"
+      name:"Septum 16g"
     },
     {
-      name:"Austin Bar"
+      name:"Austin Bar 16g"
     },
     {
-      name:"Erl"
+      name:"Erl 16g"
     },
     {
-      name:"High Nostril"
+      name:"High Nostril 19g"
     },
     {
-      name:"Nostril Nasallang"
+      name:"Nostril Nasallang 16g"
     },
     {
-      name:"Rhino"
+      name:"Rhino 16g"
     },
     {
-      name:"Septril"
+      name:"Septril 16g"
     },
     {
       name:"Third Eye"
@@ -55,10 +55,22 @@ function NosePiercing() {
     if(selected){
       if(user.level2 !== selected){
         setUser({ ...user, level2: selected, level3:null, level4:null});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
+        }
         }else{
           setUser({ ...user, level2: selected});
+          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+          if(currentSelection < count){
+            setCurrentSelection(currentSelection + 1)
+          }
         }
-    navigate('/count'); 
+      if(count > 1 && currentSelection < count){
+          navigate("/piercing")
+      }else{
+          navigate("/medical-form")
+      }
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))
@@ -89,58 +101,3 @@ function NosePiercing() {
 export default NosePiercing;
 
 
-{/* <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
-      <div
-        className="container h-100"
-        style={{
-          backgroundColor: '#f5f5f5',
-          alignItems: 'center',
-          minHeight: '100vh',
-          width: '100%',
-          border: '3px solid black',
-        }}
-      >
-        <h1> Nose Piercing</h1>
-        <div className="big-container">
-          <div className="outer-item">
-            <div className="inner-item" onClick={()=>handlepartLocation('Nostril')}>
-              <h5>Nostril</h5>
-            </div>
-            <div className="inner-item" onClick={()=>handlepartLocation('Septum')}>
-              <h5>Septum</h5>
-            </div>
-          </div>
-          <div className="outer-item">
-            <div className="inner-item" onClick={()=>handlepartLocation('Austin Bar')}>
-              <h5>Austin Bar</h5>
-            </div>
-            <div className="inner-item" onClick={()=>handlepartLocation('Erl')}>
-              <h5>Erl</h5>
-            </div>
-          </div>
-          <div className="outer-item">
-            <div className="inner-item" onClick={()=>handlepartLocation('High Nostril')}>
-              <h5>High Nostril</h5>
-            </div>
-            <div className="inner-item" onClick={()=>handlepartLocation('Nostril Nasallang')}>
-              <h5>Nostril Nasallang </h5>
-            </div>
-          </div>
-          <div className="outer-item">
-            <div className="inner-item" onClick={()=>handlepartLocation('Rhino')}>
-              <h5>Rhino</h5>
-            </div>
-            <div className="inner-item" onClick={()=>handlepartLocation('Septril')}>
-              <h5>Septril </h5>
-            </div>
-          </div>        
-            <div className="outer-item">
-            <div className="inner-item" onClick={()=>handlepartLocation('Third Eye')}>
-              <h5>Third Eye</h5>
-            </div>
-      
-          </div>
-        </div>
-        <ProgressBar progress={progressValue} />
-      </div>
-    </div> */}

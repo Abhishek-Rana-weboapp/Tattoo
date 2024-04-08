@@ -6,6 +6,7 @@ import LoaderModal from '../modal/LoaderModal';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
 import { IoMdClose } from 'react-icons/io';
+import { AUTHHEADERS } from '../../commonFunctions/Headers';
 
 export default function VerifyUpload({step, setStep}) {
   const fileInputRef = useRef(null);
@@ -23,7 +24,7 @@ export default function VerifyUpload({step, setStep}) {
   const appointmentID = sessionStorage.getItem("appointmentID")
   const minor = sessionStorage.getItem("minor")
   const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
-
+ const token = sessionStorage.getItem("token")
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -47,6 +48,9 @@ export default function VerifyUpload({step, setStep}) {
     
         fetch(`${apiUrl}/upload`, {
           method: 'POST',
+          headers : {
+            "Authorization" : `Bearer ${token}`
+          },
           body: formData,
         })
           .then((response) => response.json())
@@ -74,6 +78,9 @@ export default function VerifyUpload({step, setStep}) {
       
           fetch(`${apiUrl}/upload`, {
             method: 'POST',
+            headers : {
+              "Authorization" : `Bearer ${token}`
+            },
             body: formData,
           })
             .then((response) => response.json())
@@ -121,7 +128,7 @@ export default function VerifyUpload({step, setStep}) {
               updateValue : idPhoto
             }]
           }
-          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+          await axios.post(`${apiUrl}/artist/post_new` ,data,{headers:AUTHHEADERS()}).then((res)=>{
             if(res.status === 201){
               setLoading(false)
               setStep(3)
@@ -149,7 +156,7 @@ export default function VerifyUpload({step, setStep}) {
             }
           ]
           }
-          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+          await axios.post(`${apiUrl}/artist/post_new` ,data, {headers:AUTHHEADERS()}).then((res)=>{
             if(res.status === 201){
               setLoading(false)
               setStep(3)
