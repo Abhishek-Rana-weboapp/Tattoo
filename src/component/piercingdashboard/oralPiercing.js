@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 function OralPiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, finalUser,count , setFinalUser, currentSelection, setCurrentSelection } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
 
@@ -23,90 +23,102 @@ function OralPiercing() {
 
   const buttons = [
     {
-      name:"Straight Bar Tongue"
+      name:"Straight Bar Tongue 14g"
     },
     {
-      name:"Snake Eye Tongue"
+      name:"Snake Eye Tongue 16g"
     },
     {
-      name:"Snake Bite Lip"
+      name:"Snake Bite Lip 16g"
     },
     {
-      name:"Tongue Web"
+      name:"Tongue Web 16g"
     },
     {
-      name:"Smiley"
+      name:"Smiley 16g"
     },
     {
-      name:"Monroe"
+      name:"Monroe 16g"
     },
     {
-      name:"Medusa"
+      name:"Medusa 16g"
     },
     {
-      name:"Madonna"
+      name:"Madonna 16g"
     },
     {
-      name:"Dimples"
+      name:"Dimples 14g"
     },
     {
-      name:"Ashley"
+      name:"Ashley 16g"
     },
     {
-      name:"Angel Bites"
+      name:"Angel Bites 16g"
     },
     {
-      name:"Canine Bites"
+      name:"Canine Bites 16g"
     },
     {
-      name:"Cyber Bites"
+      name:"Cyber Bites 16g"
     },
     {
-      name:"Dahlia"
+      name:"Dahlia 16g"
     },
     {
-      name:"Dolphin Bites"
+      name:"Dolphin Bites 16g"
     },
     {
-      name:"Frowney"
+      name:"Frowney 16g"
     },
     {
-      name:"Gum"
+      name:"Gum 16g"
     },
     {
-      name:"Horizontal Lip"
+      name:"Horizontal Lip 16g"
     },
     {
-      name:"Jestrum"
+      name:"Jestrum 16g"
     },
     {
-      name:"Multi Tongue"
+      name:"Multi Tongue 16g"
     },
     {
-      name:"Shark Bites"
+      name:"Shark Bites 16g"
     },
     {
-      name:"Spider Bites"
+      name:"Spider Bites 16g"
     },
     {
-      name:"Vampire"
+      name:"Vampire 16g"
     },
     {
-      name:"Venom"
+      name:"Venom 16g"
     },
     {
-      name:"Vertical Labret"
+      name:"Vertical Labret 16g"
     }
   ]
 
   const handleNext = ()=>{
     if(selected){
       if(user.level2 !== selected){
-      setUser({ ...user, level2: selected, level3:null, level4:null});
+        setUser({ ...user, level2: selected, level3:null, level4:null});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
+        }
+        }else{
+          setUser({ ...user, level2: selected});
+          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+          if(currentSelection < count){
+            setCurrentSelection(currentSelection + 1)
+          }
+        }
+      if(count > 1 && currentSelection < count){
+          navigate("/piercing")
       }else{
-        setUser({ ...user, level2: selected});
+          navigate("/medical-form")
       }
-    navigate('/count'); 
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))
@@ -140,124 +152,3 @@ function OralPiercing() {
 
 export default OralPiercing;
 
-
-{/* <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
-<div
-  className="container h-100"
-  style={{
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-    minHeight: '100vh',
-    width: '100%',
-    border: '3px solid black',
-  }}
->
-  <h1>Oral Area Piercing</h1>
-  <div className="big-container">
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Straight Bar Tongue')}>
-        <h5>Straight Bar Tongue</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Snake Eye Tongue')}>
-        <h5>Snake Eye Tongue</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Snake Bite Lip')}>
-        <h5>Snake Bite Lip</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Tongue Web')}>
-        <h5>Tongue Web</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Smiley')}>
-        <h5>Smiley</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Monroe')}>
-        <h5>Monroe </h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Medusa')}>
-        <h5>Medusa</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Madonna')}>
-        <h5>Madonna</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Dimples')}>
-        <h5>Dimples</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Ahley')}>
-        <h5>Ahley</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Angel Bites')}>
-        <h5>Angel Bites</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Canine Bites')}>
-        <h5>Canine Bites</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Cyber Bites')}>
-        <h5>Cyber Bites</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Dahlia')}>
-        <h5>Dahlia</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Dolphin Bites')}>
-        <h5>Dolphin Bites</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Frowney')}>
-        <h5>Frowney</h5>
-      </div>
-    </div>
-
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Gum')}>
-        <h5>Gum</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Horizontal Lip')}>
-        <h5>Horizontal Lip</h5>
-      </div>
-    </div>      
-      <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Jestrum')}>
-        <h5>Jestrum</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Multi Tongue')}>
-        <h5>Multi Tongue</h5>
-      </div>
-    </div>          
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Shark Bites')}>
-        <h5>Shark Bites</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Spider Bites')}>
-        <h5>Spider Bites</h5>
-      </div>
-    </div>          
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Vampire')}>
-        <h5>Vampire</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Venom')} >
-        <h5>Venom</h5>
-      </div>
-    </div>          
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Vertical Labret')}>
-        <h5>Vertical Labret</h5>
-      </div>
-
-    </div>
-  </div>
-  <ProgressBar progress={progressValue} />
-</div>
-</div> */}

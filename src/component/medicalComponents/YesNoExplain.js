@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
@@ -7,7 +7,8 @@ const YesNoExplain = ({question, next, prev,}) => {
     const [selected, setSelected] = useState("")
     const {alert, setAlert, setAlertMessage, formData, setFormData} = useContext(UserContext)
     const [explanation, setExplanation] = useState("")
-    const {t}= useTranslation()   
+    const {t}= useTranslation()
+    const inputRef = useRef()   
 
     useEffect(()=>{
       if(formData[question.id]){
@@ -26,6 +27,9 @@ const YesNoExplain = ({question, next, prev,}) => {
         return
        }
        setSelected(value)
+       if(e.target.value === "yes"){
+        inputRef?.current?.focus()
+       }
     }
 
     const handleNext = ()=>{
@@ -85,6 +89,7 @@ const YesNoExplain = ({question, next, prev,}) => {
             {t("PLEASE EXPLAIN")}
             </label>
             <textarea
+            ref={inputRef}
               type="text"
               className="w-full md:w-2/3 p-2 rounded-lg focus:outline-yellow-500"
               value={explanation}

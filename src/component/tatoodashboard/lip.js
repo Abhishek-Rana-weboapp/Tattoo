@@ -33,7 +33,7 @@ function Lip() {
   const handleNext = ()=>{
     if(selected){
       setUser({ ...user, level4 : selected});
-    navigate("/count")
+    navigate("/description")
   }else{
     setAlertMessage("Please select a lip.")
   }

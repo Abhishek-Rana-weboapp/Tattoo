@@ -6,6 +6,7 @@ import axios from 'axios'
 import { apiUrl } from '../../url'
 import { useNavigate } from 'react-router-dom'
 import LoaderModal from '../modal/LoaderModal'
+import { AUTHHEADERS } from '../../commonFunctions/Headers'
 
 const Complications = ({updateAppointment,setUpdateAppointment,handlePrev}) => {
     const {t} = useTranslation()
@@ -82,11 +83,11 @@ const Complications = ({updateAppointment,setUpdateAppointment,handlePrev}) => {
         }
       }
    if(data){
-       await axios.post(`${apiUrl}/artist/post_new`, data)
+       await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
        .then((response) => {
            axios
            .get(
-               `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+               `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
                )
                .then((res) => {
                    setUpdateAppointment(res.data.data[0]);

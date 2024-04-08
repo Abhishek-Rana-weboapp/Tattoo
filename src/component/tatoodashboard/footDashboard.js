@@ -39,7 +39,7 @@ function FootDashboard() {
             }else{
               setUser({ ...user, level3:selected });
             }
-          navigate("/count")
+          navigate("/description")
         }else{
           setAlertMessage("Please select which ear.")
         }

@@ -6,6 +6,7 @@ import LoaderModal from '../modal/LoaderModal';
 import UserContext from '../../context/UserContext';
 import axios from 'axios';
 import { IoMdClose } from 'react-icons/io';
+import { AUTHHEADERS } from '../../commonFunctions/Headers';
 
 export default function VerifyUpload({step, setStep}) {
   const fileInputRef = useRef(null);
@@ -23,7 +24,7 @@ export default function VerifyUpload({step, setStep}) {
   const appointmentID = sessionStorage.getItem("appointmentID")
   const minor = sessionStorage.getItem("minor")
   const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
-
+ const token = sessionStorage.getItem("token")
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -47,6 +48,9 @@ export default function VerifyUpload({step, setStep}) {
     
         fetch(`${apiUrl}/upload`, {
           method: 'POST',
+          headers : {
+            "Authorization" : `Bearer ${token}`
+          },
           body: formData,
         })
           .then((response) => response.json())
@@ -74,6 +78,9 @@ export default function VerifyUpload({step, setStep}) {
       
           fetch(`${apiUrl}/upload`, {
             method: 'POST',
+            headers : {
+              "Authorization" : `Bearer ${token}`
+            },
             body: formData,
           })
             .then((response) => response.json())
@@ -121,7 +128,7 @@ export default function VerifyUpload({step, setStep}) {
               updateValue : idPhoto
             }]
           }
-          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+          await axios.post(`${apiUrl}/artist/post_new` ,data,{headers:AUTHHEADERS()}).then((res)=>{
             if(res.status === 201){
               setLoading(false)
               setStep(3)
@@ -149,7 +156,7 @@ export default function VerifyUpload({step, setStep}) {
             }
           ]
           }
-          await axios.post(`${apiUrl}/artist/post_new` ,data).then((res)=>{
+          await axios.post(`${apiUrl}/artist/post_new` ,data, {headers:AUTHHEADERS()}).then((res)=>{
             if(res.status === 201){
               setLoading(false)
               setStep(3)
@@ -191,14 +198,13 @@ export default function VerifyUpload({step, setStep}) {
     <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
 
       {imagePrev && (
-        <div className='relative w-1/4'>
+        <div className='relative md:w-1/4 w-full'>
         <img
           src={imagePrev}
-          width={'100%'}
-          style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
+          className='w-full'
           alt="ID Photo"
           />
-        <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleClientDelete}/>
+        <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleClientDelete}/>
         </div>)
       }
 
@@ -226,14 +232,13 @@ export default function VerifyUpload({step, setStep}) {
 
      
      {gaurdianImagePrev && (
-       <div className='relative w-1/4'>
+       <div className='relative md:w-1/4 w-full'>
        <img
        src={gaurdianImagePrev}
-       width={'50%'}
-       style={{ maxWidth: '100%', maxHeight: '300px', margin: '20px auto', display: 'block' }}
+       className='w-full'
        alt="ID Photo"
        />
-       <IoMdClose className='absolute right-3 top-7 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
+       <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
        </div>
        )
       }

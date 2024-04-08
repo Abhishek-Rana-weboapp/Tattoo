@@ -6,12 +6,8 @@ import Navigation from './navigation/Navigation'
 
 const TattooCount = () => {
   const navigate = useNavigate()
-  const {setIsVisible, alert ,user,setAlert, setAlertMessage,description, count, setCount} = useContext(UserContext)
+  const {alert ,user,setAlert, setAlertMessage, count, setCount} = useContext(UserContext)
   const {t} = useTranslation()
-
-  useEffect(()=>{
-    setIsVisible(true)
- },[])
 
 
  const handleChange = (e)=>{
@@ -21,9 +17,20 @@ const TattooCount = () => {
 
  const handleNext = ()=>{
    if(count){
-    navigate("/description")
+    if(user.selectedTattooType === "tattoo"){
+      navigate("/tattoo")
+      return
+    }else if(user.selectedTattooType === "piercing"){
+      navigate("/piercing")
+      return
+    }
    }else{
-    setAlertMessage(t("Please select the number of tattoos you are getting"))
+    if(user.selectedTattooType === "tattoo"){
+      setAlertMessage(t("Please select the number of tattoos you are getting"))
+    }
+    else if(user.selectedTattooType === "piercing"){
+      setAlertMessage(t("Please select the number of piercings you are getting"))
+    }
     setAlert(!alert)
     return
    }

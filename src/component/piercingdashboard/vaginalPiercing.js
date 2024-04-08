@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 
 function VaginalPiercing() {
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, finalUser, setFinalUser,count, currentSelection, setCurrentSelection } = React.useContext(UserContext);
   const [selected , setSelected] = useState()
   const {t} = useTranslation()
   const [buttonHeight, setButtonHeight] = useState('auto');
@@ -26,34 +26,34 @@ function VaginalPiercing() {
 
   const buttons = [
     {
-      name:"Christina"
+      name:"Christina 16g"
     },
     {
-      name:"Vertical Hood"
+      name:"Vertical Hood 16g"
     },
     {
-      name:"Horizontal Hood"
+      name:"Horizontal Hood 16g"
     },
     {
-      name:"Inner Labia"
+      name:"Inner Labia 16g"
     },
     {
-      name:"Outer Labia"
+      name:"Outer Labia 16g"
     },
     {
-      name:"Fourchette"
+      name:"Fourchette 16g"
     },
     {
-      name:"Hymen"
+      name:"Hymen 16g"
     },
     {
-      name:"Isabella"
+      name:"Isabella 16g"
     },
     {
-      name:"Princess Albertina"
+      name:"Princess Albertina 16g"
     },
     {
-      name:"Triangle"
+      name:"Triangle 16g"
     }
   ]
 
@@ -61,10 +61,22 @@ function VaginalPiercing() {
     if(selected){
       if(user.level2 !== selected){
         setUser({ ...user, level2: selected, level3:null, level4:null});
-        }else{
-          setUser({ ...user, level2: selected});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
         }
-    navigate('/count'); 
+        }else{
+        setUser({ ...user, level2: selected});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+        if(currentSelection < count){
+          setCurrentSelection(currentSelection + 1)
+        }
+        if(count > 1 && currentSelection < count){
+          navigate("/piercing")
+        }else{
+          navigate("/medical-form")
+        }
+        }
     }else{
       setAlert(!alert)
       setAlertMessage(t("Please select an option"))
@@ -96,60 +108,3 @@ function VaginalPiercing() {
 export default VaginalPiercing;
 
 
-{/* <div className="outer container" style={{ border: '1px solid #d8d6d6' }}>
-<div
-  className="container h-100"
-  style={{
-    backgroundColor: '#f5f5f5',
-    alignItems: 'center',
-    minHeight: '100vh',
-    width: '100%',
-    border: '3px solid black',
-  }}
->
-  <h1>Vaginal Piercing</h1>
-  <div className="big-container">
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Christina')}>
-        <h5>Christina</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Vertical Hood')}>
-        <h5>Vertical Hood</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Horizontal Hood')}>
-        <h5>Horizontal Hood</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Inner Labia')}>
-        <h5>Inner Labia</h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Outer Labia')}>
-        <h5>Outer Labia</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Fourchette')}>
-        <h5>Fourchette </h5>
-      </div>
-    </div>
-    <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Hymen')}>
-        <h5>Hymen</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Isabella')}>
-        <h5>Isabella</h5>
-      </div>
-    </div>         
-     <div className="outer-item">
-      <div className="inner-item" onClick={()=>handlepartLocation('Princess Albertina')}>
-        <h5>Princess Albertina</h5>
-      </div>
-      <div className="inner-item" onClick={()=>handlepartLocation('Triangle')}>
-        <h5>Triangle</h5>
-      </div>
-    </div>         
-         
-  </div>
-</div>
-</div> */}

@@ -5,6 +5,7 @@ import { apiUrl } from "../../url";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoaderModal from "../modal/LoaderModal";
+import { AUTHHEADERS } from "../../commonFunctions/Headers";
 
 const Timer = ({
   updateAppointment,
@@ -65,7 +66,7 @@ const Timer = ({
 
   const fetchBill = async () => {
     await axios
-      .get(`${apiUrl}/artist/billing_list_id?id`)
+      .get(`${apiUrl}/artist/billing_list_id?id`, {headers: AUTHHEADERS()})
       .then((res) => {
         const getBill = res.data.data.filter(
           (bill) =>
@@ -138,11 +139,11 @@ const Timer = ({
       ],
     };
     await axios
-      .post(`${apiUrl}/artist/post_new`, data)
+      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         axios
           .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
           )
           .then((res) => {
             setUpdateAppointment(res.data.data[0]);
@@ -249,11 +250,11 @@ const Timer = ({
       ],
     };
     await axios
-      .post(`${apiUrl}/artist/post_new`, data)
+      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         axios
           .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
           )
           .then((res) => {
             setUpdateAppointment(res.data.data[0]);
@@ -274,7 +275,7 @@ const Timer = ({
         appointment_id: updateAppointment?.id,
       };
       await axios
-        .post(`${apiUrl}/artist/calculate-billing`, data)
+        .post(`${apiUrl}/artist/calculate-billing`, data, {headers:AUTHHEADERS()})
         .then((res) => {
           setBill(res.data.updatedBillingData);
           const data = {
@@ -296,7 +297,7 @@ const Timer = ({
             .then((res) => {
               axios
                 .get(
-                  `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+                  `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
                 )
                 .then((res) => {
                   setUpdateAppointment(res.data.data[0]);

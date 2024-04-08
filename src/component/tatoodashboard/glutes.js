@@ -28,6 +28,9 @@ function Glute() {
         },
         {
           name: "right"
+        },
+        {
+          name: "both"
         }
       ]
 
@@ -38,7 +41,7 @@ function Glute() {
           }else{
             setUser({ ...user, level2 : selected });
           }
-          navigate("/count"); 
+          navigate("/description"); 
         }else{
           setAlert(!alert)
           setAlertMessage(t("Please select an option"))

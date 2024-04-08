@@ -5,9 +5,7 @@ import piercings from "../assets/piercings.png";
 import removal from "../assets/removal.png";
 import smp from "../assets/smp.png";
 import tooth from "../assets/tooth.png";
-import { useNavigate, Link, useLocation } from "react-router-dom";
 import UserContext from "../context/UserContext";
-import Title from "../assets/Title.png";
 import DisplayCard from "./card/DisplayCard";
 import microblading_active from "../assets/microblading_active.png";
 import smp_gold from "../assets/smp_gold.png";
@@ -21,7 +19,6 @@ function Dashboard() {
   const {
     user,
     setUser,
-    setIsVisible,
     setFormData,
     setemerFormData,
     setdrFormData,
@@ -29,18 +26,20 @@ function Dashboard() {
     setharmlessagreement,
     setGaurdianInitials,
     setCount,
-    setDescription
+    setDescription,
+    finalUser,
+    setFinalUser,
+    setCurrentSelection
   } = React.useContext(UserContext);
-  const userObject = user || {};
 
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
+    setFinalUser({...finalUser, selectedTattooType : selectedType})
   };
 
   useEffect(() => {
     sessionStorage.removeItem("user")
-    setIsVisible(true);
-    if (user?.selectedTattooType !== null) {
+    if (user?.selectedTattooType !== null){
       setUser({
         selectedTattooType: null,
         level1: null,
@@ -49,7 +48,10 @@ function Dashboard() {
         level4: null,
       });
 
+      setFinalUser({})
+
       setFormData({});
+      setCurrentSelection(1)
       setCount(1)
 
       setharmlessagreement({
@@ -84,14 +86,14 @@ function Dashboard() {
     {
       name: t("TATTOO"),
       type: "tattoo",
-      link: "/tattoo",
+      link: "/count",
       src: Tattoo,
       activesrc: tattoo_gold,
     },
     {
       name: t("PIERCING"),
       type: "piercing",
-      link: "/piercing",
+      link: "/count",
       src: piercings,
       activesrc: piercings_gold,
     },

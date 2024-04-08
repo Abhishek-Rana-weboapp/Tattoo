@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { states } from "../data/states";
 import axios from "axios";
 import LoaderModal from "./modal/LoaderModal";
+import { AUTHHEADERS } from "../commonFunctions/Headers";
 
 
 function DoctorContactForm() {
@@ -14,16 +15,11 @@ function DoctorContactForm() {
   var progressValue = 70;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
-  const [data, setData] = useState();
   const [showPopup_, setShowPopup_] = useState(false);
   const [loading, setLoading] = useState(false)
-  const yes = t("Yes");
-  const No = t("No");
-  const options = [yes, No];
   const {
     drformData,
     setdrFormData,
-    setIsVisible,
     alert,
     setAlert,
     setAlertMessage,
@@ -52,32 +48,12 @@ function DoctorContactForm() {
     }
   };
 
-  const fetchData = async () => {
-    setLoading(true)
-    await axios.get(`${apiUrl}/artist/username_appointment_list?username=${username}`)
-       .then(res=>{
-         if (res?.data?.data.length > 0) {
-          if(res.data.doctor_information){
-            setData(JSON.parse(res.data.doctor_information))
-            setShowPopup_(true);
-          }
-          }
-          setLoading(false)
-        })
-    .catch (error=> {
-      setLoading(false)
-      setAlert(!alert)
-      setAlertMessage(t("Error fetching previous doctor info"))
-      return
-    })
-  };
 
   useEffect(() => {
-
     const fetchMedicalHistory = async()=>{
       try{
         setLoading(true)
-        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
         const filterResponse = response.data.doctor_information
         let finalResult = {};
         try {
@@ -102,7 +78,7 @@ function DoctorContactForm() {
       return
       }
   }
-    setIsVisible(true);
+    ;
     fetchMedicalHistory();
   }, []);
 
@@ -173,7 +149,7 @@ function DoctorContactForm() {
         <div className="flex flex-col items-center gap-4 flex-1">
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
-              {t("Name")}
+              {t("Name")} 
             </label>
 
             <input

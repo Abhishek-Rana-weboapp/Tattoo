@@ -11,30 +11,30 @@ import axios from "axios";
 import { apiUrl } from "../../url";
 import Modal from "../modal/Modal";
 import { useTranslation } from "react-i18next";
+import { AUTHHEADERS } from "../../commonFunctions/Headers";
 
 const NewMedicalHistory = () => {
   const [current, setCurrent] = useState(1);
   const navigate = useNavigate();
-  const {setIsVisible, formData, user , setFormData, setAlert, alert, setAlertMessage} = useContext(UserContext);
+  const { user , setFormData,formData, setAlert, alert, setAlertMessage, finalUser} = useContext(UserContext);
   const [questions, setQuestions] = useState([]);
   const username = sessionStorage.getItem("username")
   const [showPopup_, setShowPopup_] = useState(false);
   const {t} = useTranslation()
   
   useEffect(() => {
-    setIsVisible(true);
     if(user.selectedTattooType !== ""){
       setQuestions(medicalQuestions[user.selectedTattooType] || [])
     }
       const fetchMedicalHistory = async()=>{
         try{
-          const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`)
+          const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
           const service = user?.selectedTattooType
-          const filterResponse = response.data.medical_history[service]
+          const filterResponse = response.data.medical_history[service] 
           let finalResult = {};
         try {
             finalResult = filterResponse ? JSON.parse(filterResponse) : {};
-        } catch (error) {
+        } catch (error) { 
             console.error("Error parsing JSON:", error);
             finalResult = {};
         }
@@ -92,7 +92,7 @@ const NewMedicalHistory = () => {
       style={{ height: "100dvh" }}
     >
       <h1 className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
-        Medical history
+        {t("Medical history")}
       </h1>
       <div className="w-full backdrop-blur bg-opacity-50 h-full rounded-md flex flex-col overflow-hidden">
         {questions.length > 0 && questions[current - 1]?.type === "YN" && (

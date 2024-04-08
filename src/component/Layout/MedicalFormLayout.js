@@ -1,12 +1,7 @@
 // GeneralLayout.js
-import React, { useContext, useEffect } from 'react';
-import UserContext from '../../context/UserContext';
+import React from 'react';
 
 export default function MedicalFormLayout({ children, title, about }) {
-  const {setIsVisible } = useContext(UserContext)
-  useEffect(()=>{
-     setIsVisible(true)
-  },[])
 
   return (
     <div className="w-full sm:w-3/4  rounded-md p-4 md:w-2/3 lg:w-1/2 xl:w-1/2  flex flex-col gap-3 " style={{height:"100dvh"}}>

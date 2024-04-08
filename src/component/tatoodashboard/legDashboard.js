@@ -33,7 +33,7 @@ function LegDashboard() {
 
       const partButtons = [
         {
-          name: 'full'
+          name: 'full sleeve'
         }
       ]
 
@@ -63,7 +63,7 @@ function LegDashboard() {
           }else{
             setUser({ ...user, level3 : selected });
           }
-           navigate("/count"); 
+           navigate("/description"); 
          }
          if(contentButtons.find(item=>item.name===selected)){
           if(user.level3 !== selected){

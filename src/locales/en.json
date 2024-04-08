@@ -389,5 +389,6 @@
   "Appointment Details":"Appointment Details",
   "Please upload client ID photo before submitting.":"Please upload client ID photo before submitting.",
   "Select Shop Location":"Select Shop Location",
-  "Select Employee Name":"Select Employee Name"
+  "Select Employee Name":"Select Employee Name",
+  "Do you want to update your Info?" : "Do you want to update your Info?"
 }

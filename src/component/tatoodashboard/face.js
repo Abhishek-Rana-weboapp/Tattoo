@@ -54,7 +54,7 @@ function FaceDashboard() {
       setUser({ ...user, level3 : selected });
     }
     if(selected === "nose"){
-      navigate("/count")
+      navigate("/description")
       return
     }else{
       navigate(`/${selected}`); 

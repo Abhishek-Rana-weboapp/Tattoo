@@ -34,7 +34,8 @@ function TermsOfService() {
   );
   const [loading, setLoading] = useState(false)
   const minor = sessionStorage.getItem("minor");
-
+  const token = sessionStorage.getItem("token") || ""
+  
   const {
     user,
     alert,
@@ -46,7 +47,8 @@ function TermsOfService() {
     harmlessagreement,
     gaurdianSignature,
     description,
-    count
+    count,
+    finalUser
   } = useContext(UserContext);
   const tattooRules = tattooTerms;
   const piercingRules = piercingTerms;
@@ -54,7 +56,7 @@ function TermsOfService() {
   const tattooRemovalRules = tattooRemovalTerms;
   const toothGemRules = toothGemTerms;
   const [pageContents, setpageContents] = useState([]);
-
+  
   useEffect(() => {
     if (user.selectedTattooType) {
       switch (user.selectedTattooType) {
@@ -125,7 +127,7 @@ function TermsOfService() {
         typeofservice: user.selectedTattooType,
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
-        body_location: JSON.stringify(user),
+        body_location: JSON.stringify(finalUser),
         medicalhistory: formData,
         Consent_form: "agreed",
         gaurdian_initials: storedGaurdianInitials,
@@ -137,7 +139,7 @@ function TermsOfService() {
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
         count:count,
-        brief_description : description,
+        brief_description : JSON.stringify(description),
         ArtistPiercerNames: null,
       });
     } else {
@@ -147,7 +149,7 @@ function TermsOfService() {
         typeofservice: user.selectedTattooType,
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
-        body_location: JSON.stringify(user),
+        body_location: JSON.stringify(finalUser),
         medicalhistory: formData,
         emergencycontactnumber: JSON.stringify(emerformData),
         doctor_information: JSON.stringify(drformData),
@@ -155,7 +157,7 @@ function TermsOfService() {
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
         count:count,
-        brief_description:description,
+        brief_description:JSON.stringify(description),
         ArtistPiercerNames: null,
       });
     }
@@ -164,6 +166,7 @@ function TermsOfService() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization":`Bearer ${token}`
         },
         body: data,
       });
@@ -254,14 +257,14 @@ function TermsOfService() {
                 {t("Select to add your initials")}
               </label>
             </div>
-            <div className="flex md:flex-row flex-col gap-2 justify-center items-center">
+            <div className="flex gap-2 justify-center items-center">
               <label className="text-white">{t("Initials")}:</label>
               <input
                 type="text"
                 value={initials[currentPage] || ""}
                 disabled
                 // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                className="bg-gray-700 text-white p-2 rounded-md Blacksword"
+                className="bg-gray-700 text-white p-2 rounded-md w-2/4 md:w-1/4 Blacksword"
               />
             </div>
           </div>

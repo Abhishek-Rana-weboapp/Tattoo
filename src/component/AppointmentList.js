@@ -11,7 +11,6 @@ const AppointmentList = () => {
   const appointmentsPerPage = 10;
   const [tableHeaders, setTableHeaders] = useState()
   const [filteredHeaders, setFilteredHeaders] = useState()
-  const {setIsVisible} = useContext(UserContext)
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -27,7 +26,7 @@ const AppointmentList = () => {
     };
 
     fetchAppointments();
-    setIsVisible(true)
+    
   }, []);
 
   useEffect(()=>{

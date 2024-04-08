@@ -5,6 +5,7 @@ import { apiUrl } from "../../../url";
 import UserContext from "../../../context/UserContext";
 import { useTranslation } from "react-i18next";
 import LoaderModal from "../../modal/LoaderModal";
+import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 
 export default function ShowBill({
   resultantMinutes,
@@ -43,11 +44,11 @@ export default function ShowBill({
       ],
     };
     await axios
-      .post(`${apiUrl}/artist/post_new`, data)
+      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         axios
           .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`
+            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
           )
           .then((res) => {
             setUpdateAppointment(res.data.data[0]);
