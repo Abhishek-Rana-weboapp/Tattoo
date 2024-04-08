@@ -58,15 +58,9 @@ function PiercingDashboard() {
   ];
 
   const handleNext = () => {
-    console.log("1")
     if (selected) {
-    console.log("2")
-
       if (partButton.find((item) => item.name === selected)) {
-    console.log("3")
         if (user.level1 !== selected) {
-    console.log("4")
-
           setUser({
             ...user,
             level1: selected,
@@ -76,28 +70,19 @@ function PiercingDashboard() {
           });
           setFinalUser({...finalUser,[currentSelection] : {level1 : selected, level2 : null, level3:null, level4:null}})
           if(currentSelection < count){
-          console.log("5")
-
             setCurrentSelection(currentSelection+1)
           }
         } else {
-    console.log("6")
-
           setUser({ ...user, level1: selected });
           setFinalUser({...finalUser,[currentSelection] : {level1 : selected, level2 : null, level3:null, level4:null}})
           if(count < currentSelection){
-    console.log("7")
-
             setCurrentSelection(currentSelection+1)
           }
         }
         if(count  > 1 && currentSelection < count){
-    console.log("8")
-
           navigate("/piercing")
           return
         }else{
-          console.log("9")
           navigate("/medical-form");
           return
         }
@@ -127,7 +112,7 @@ function PiercingDashboard() {
   };
   return (
     <>
-      <GridLayout title={"piercing"}>
+      <GridLayout title={"piercing"} subTitle={`Please Select location for piercing ${currentSelection}`}>
         {partButton.map((button, index) => {
           return (
             <CustomButton

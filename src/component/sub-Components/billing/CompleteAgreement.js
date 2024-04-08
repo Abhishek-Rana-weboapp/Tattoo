@@ -114,7 +114,11 @@ export default function CompleteAgreement({
             ref={signatureRef}
           />
         </div>
-        {imgUrl && <img src={imgUrl} className="w-50 h-50"></img>}
+        {imgUrl &&
+        <div className="bg-white h-28 w-30">
+         <img src={imgUrl} className="w-full h-full z-10"></img>
+        </div>
+         }
         <div className="flex justify-center gap-2">
           <button
             type="button"
