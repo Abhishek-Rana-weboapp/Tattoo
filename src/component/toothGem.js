@@ -28,49 +28,12 @@ const ToothGems = () => {
     setSelectedTeeth(updatedSelectedTeeth);
   };
 
-  // const handleToothClick = (e) => {
-  //   const canvas = canvasRef.current;
-  //   const rect = canvas.getBoundingClientRect();
-  //   const x = e.clientX - rect.left - canvas.width * 0.005; // Shifted left by 0.5cm
-  //   const y = e.clientY - rect.top;
-
-  //   // Define the parameters for the tooth areas
-  //   const toothArea = {
-  //     centerX: canvas.width * 0.5 - canvas.width * 0.005 + canvas.width * 0.005, // Shifted left by 0.5cm
-  //     centerY: canvas.height * 0.55 + canvas.height * 0.005,                     // Shifted downward by 0.5cm
-  //     outerRadiusX: canvas.width * 0.2691 + canvas.width * 0.005,                 // Increased left side by 0.5cm
-  //     outerRadiusY: canvas.height * 0.2                                         // Outer radius of the ellipse on the y-axis
-  //   };
-
-  //   // Define the parameters for the restricted area (Tongue)
-  //   const tongueArea = {
-  //     centerX: toothArea.centerX + canvas.width * 0.005,                         // Increased left side by 0.5cm
-  //     centerY: toothArea.centerY - canvas.height * 0.01,                         // Shifted upward by 1cm
-  //     radiusX: toothArea.outerRadiusX * 0.5 + canvas.width * 0.015,             // Increased by 1cm from the left side
-  //     radiusY: toothArea.outerRadiusY * 0.5 - canvas.height * 0.01              // Reduced by 1cm from the upper side
-  //   };
-
-  //   // Check if the click is within any of the tooth areas and outside the restricted area (Tongue)
-  //   const isInsideUpperEllipse = ((x - toothArea.centerX) ** 2) / (toothArea.outerRadiusX ** 2) + ((y - toothArea.centerY) ** 2) / (toothArea.outerRadiusY ** 2) <= 1;
-  //   const isInsideTongueEllipse = ((x - tongueArea.centerX) ** 2) / (tongueArea.radiusX ** 2) + ((y - tongueArea.centerY) ** 2) / (tongueArea.radiusY ** 2) <= 1;
-
-  //   if (isInsideUpperEllipse && !isInsideTongueEllipse) {
-  //     // Check if the undo button is clicked (e.g., using a modifier key)
-  //     if (e.ctrlKey) {
-  //       handleUndo();
-  //     } else {
-  //       const selectedTooth = 'Upper Tooth';
-  //       setSelectedTeeth([...selectedTeeth, { coordinates: { x, y }, label: selectedTooth }]);
-  //     }
-  //   }
-  // };
-
   const handleToothClick = (e) => {
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left - canvas.width * 0.005;
     const y = e.clientY - rect.top;
-
+  
     // Define the parameters for the tooth areas
     const toothArea = {
       centerX: canvas.width * 0.5 - canvas.width * 0.005 + canvas.width * 0.005,
@@ -78,56 +41,102 @@ const ToothGems = () => {
       outerRadiusX: canvas.width * 0.2691 + canvas.width * 0.005,
       outerRadiusY: canvas.height * 0.2,
     };
-
-    // Define the parameters for the restricted area (Tongue)
-    const tongueArea = {
-      centerX: toothArea.centerX + canvas.width * 0.005,
-      centerY: toothArea.centerY - canvas.height * 0.01,
-      radiusX: toothArea.outerRadiusX * 0.5 + canvas.width * 0.015,
-      radiusY: toothArea.outerRadiusY * 0.5 - canvas.height * 0.01,
-    };
-
-    // Check if the click is within any of the tooth areas and outside the restricted area (Tongue)
-    const isInsideUpperEllipse =
+  
+    // Check if the click is within the defined curves
+    const isInsideDefinedCurves =
       (x - toothArea.centerX) ** 2 / toothArea.outerRadiusX ** 2 +
-        (y - toothArea.centerY) ** 2 / toothArea.outerRadiusY ** 2 <=
+      (y - toothArea.centerY) ** 2 / toothArea.outerRadiusY ** 2 <=
       1;
-    const isInsideTongueEllipse =
-      (x - tongueArea.centerX) ** 2 / tongueArea.radiusX ** 2 +
-        (y - tongueArea.centerY) ** 2 / tongueArea.radiusY ** 2 <=
-      1;
-
-    if (isInsideUpperEllipse && !isInsideTongueEllipse) {
-      // Check if the undo button is clicked (e.g., using a modifier key)
+  
+    if (isInsideDefinedCurves) {
       if (e.ctrlKey) {
         handleUndo();
       } else {
         const selectedTooth = "Upper Tooth";
-        // const selectedTooth = 'Upper Tooth';
-        const maxSize = 60;
-        const minSize = 20;
+        const maxSize = isMobile ? 30 : 70;
+        const minSize = isMobile ? 10 : 20;
         const centerX = toothArea.centerX;
         const sizeDelta = maxSize - minSize;
+  
+        // Calculate the size based on the distance from the center
+        const distanceFromCenter = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - toothArea.centerY, 2));
         const size = Math.max(
           minSize,
-          Math.min(
-            maxSize,
-            maxSize -
-              sizeDelta *
-                Math.sqrt(
-                  Math.pow(x - centerX, 2) / Math.pow(toothArea.outerRadiusX, 2)
-                )
-          )
+          maxSize - sizeDelta * (distanceFromCenter / toothArea.outerRadiusX)
         );
-
-        // const size = (x / toothArea.outerRadiusX) * 40 + 20; // Calculate the size based on the x-coordinate
+  
         setSelectedTeeth([
           ...selectedTeeth,
-          { coordinates: { x, y }, label: selectedTooth, size: size },
+          { coordinates: { x, y }, label: selectedTooth, size: Math.floor(size) },
         ]);
       }
     }
   };
+  
+  
+
+  // const handleToothClick = (e) => {
+  //   const canvas = canvasRef.current;
+  //   const rect = canvas.getBoundingClientRect();
+  //   const x = e.clientX - rect.left - canvas.width * 0.005;
+  //   const y = e.clientY - rect.top;
+
+  //   // Define the parameters for the tooth areas
+  //   const toothArea = {
+  //     centerX: canvas.width * 0.5 - canvas.width * 0.005 + canvas.width * 0.005,
+  //     centerY: canvas.height * 0.55 + canvas.height * 0.005,
+  //     outerRadiusX: canvas.width * 0.2691 + canvas.width * 0.005,
+  //     outerRadiusY: canvas.height * 0.2,
+  //   };
+
+  //   // Define the parameters for the restricted area (Tongue)
+  //   const tongueArea = {
+  //     centerX: toothArea.centerX + canvas.width * 0.005,
+  //     centerY: toothArea.centerY - canvas.height * 0.01,
+  //     radiusX: toothArea.outerRadiusX * 0.5 + canvas.width * 0.015,
+  //     radiusY: toothArea.outerRadiusY * 0.5 - canvas.height * 0.01,
+  //   };
+
+  //   // Check if the click is within any of the tooth areas and outside the restricted area (Tongue)
+  //   const isInsideUpperEllipse =
+  //     (x - toothArea.centerX) ** 2 / toothArea.outerRadiusX ** 2 +
+  //       (y - toothArea.centerY) ** 2 / toothArea.outerRadiusY ** 2 <=
+  //     1;
+  //   const isInsideTongueEllipse =
+  //     (x - tongueArea.centerX) ** 2 / tongueArea.radiusX ** 2 +
+  //       (y - tongueArea.centerY) ** 2 / tongueArea.radiusY ** 2 <=
+  //     1;
+
+  //   if (isInsideUpperEllipse && !isInsideTongueEllipse) {
+  //     // Check if the undo button is clicked (e.g., using a modifier key)
+  //     if (e.ctrlKey) {
+  //       handleUndo();
+  //     } else {
+  //       const selectedTooth = "Upper Tooth";
+  //       const maxSize = 60;
+  //       const minSize = 20;
+  //       const centerX = toothArea.centerX;
+  //       const sizeDelta = maxSize - minSize;
+  //       const size = Math.max(
+  //         minSize,
+  //         Math.min(
+  //           maxSize,
+  //           maxSize -
+  //             sizeDelta *
+  //               Math.sqrt(
+  //                 Math.pow(x - centerX, 2) / Math.pow(toothArea.outerRadiusX, 2)
+  //               )
+  //         )
+  //       );
+
+  //       // const size = (x / toothArea.outerRadiusX) * 40 + 20; // Calculate the size based on the x-coordinate
+  //       setSelectedTeeth([
+  //         ...selectedTeeth,
+  //         { coordinates: { x, y }, label: selectedTooth, size: size },
+  //       ]);
+  //     }
+  //   }
+  // };
 
   const handleImageUpload = async () => {
     const canvas = canvasRef.current;
@@ -182,7 +191,7 @@ const ToothGems = () => {
         const newImage = new Image();
         newImage.src = Gem;
         newImage.onload = () => {
-          const gemSize = isMobile ? 30 : 60;
+          const gemSize = tooth.size;
           context.drawImage(
             newImage,
             x - gemSize / 2,
