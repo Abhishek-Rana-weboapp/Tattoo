@@ -9,7 +9,6 @@ import LoaderModal from "../../modal/LoaderModal";
 
 export default function CompleteAgreement({
   updateAppointment,
-  setUpdateAppointment,
   handlePrev,
 }) {
   const { t } = useTranslation();

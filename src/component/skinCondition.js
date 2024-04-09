@@ -15,11 +15,17 @@ function SkinCondition({
   const [condition, setCondition] = useState(updateAppointment?.skin_conditions === "good" ? "good" :updateAppointment?.skin_conditions === "bad" ? "bad" : "");
   const [explanation, setExplanation] = useState(updateAppointment?.skin_conditions !== "good" ? updateAppointment?.skin_conditions : "");
   const {t} = useTranslation()
+  const {alert, setAlert, setAlertMessage} = useContext(UserContext)
  
 
   const handleUpdateSkin = async () => {
     let data
     if(condition){
+      if(condition === "bad" && !explanation){
+        setAlert(!alert)
+        setAlertMessage(t("Please enter an explanation"))
+        return
+      }
       if(updateAppointment.typeofservice === "tattoo"){
         data = {
           updates: [
