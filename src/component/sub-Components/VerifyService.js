@@ -39,10 +39,6 @@ const VerifyService = ({ step, setStep }) => {
   const handlePrev = () => {
     setStep(0);
   };
-  
-  console.log(appointment)
-  console.log(placement)
-  console.log(description)
 
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between overflow-hidden">
@@ -65,21 +61,24 @@ const VerifyService = ({ step, setStep }) => {
                   {service === "piercing" && <h4>{`Piercing ${key}`}</h4>}
             <div className="flex gap-2">
               <h4 className="font-bold">{t("Placement")} : </h4>
-              <div className="flex flex-col">
+              <div className="flex flex-col justify-center">
                   <React.Fragment key={key}>
-                    {location[key].level1 !== null && <h4>{location[key].level1}</h4>}
-                    {location[key].level2 !== null && <h4>{location[key].level2}</h4>}
-                    {location[key].level3 !== null && <h4>{location[key].level3}</h4>}
-                    {location[key].level4 !== null && <h4>{location[key].level4}</h4>}
+                    {location[key].level1 !== null && <label className="md:text-2xl text-base">{location[key].level1}</label>}
+                    {location[key].level2 !== null && <label className="md:text-2xl text-base">{location[key].level2}</label>}
+                    {location[key].level3 !== null && <label className="md:text-2xl text-base">{location[key].level3}</label>}
+                    {location[key].level4 !== null && <label className="md:text-2xl text-base">{location[key].level4}</label>}
 
                   </React.Fragment>
               </div>
             </div>
                     {service === "tattoo" && (
-                      <div>
-                        <h4>{`Description: ${
+                      <div className="flex items-center gap-2">
+                        <h4>{`Description:`}</h4>
+                        <label className="md:text-2xl text-base">
+                        {
                           description ? description[key]: ""
-                        }`}</h4>
+                        }
+                        </label>
                       </div>
                     )}
             </div>
@@ -128,10 +127,12 @@ const VerifyService = ({ step, setStep }) => {
         {service === "tooth-gems" && (
           <>
             <h4>{t("Placement")} : </h4>
+            <div className="w-full rounded">
             <img
-              className="md:w-2/6 h-96 rounded-lg"
+              className="aspect-square w-full object-contain rounded-lg"
               src={location.level1}
-            ></img>
+              ></img>
+              </div>
           </>
         )}
 

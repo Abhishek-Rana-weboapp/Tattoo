@@ -6,6 +6,7 @@ import Navigation from '../navigation/Navigation';
 import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import { useTranslation } from 'react-i18next';
+import CustomPiercingButton from '../buttons/CustomPiercingButton';
 function NosePiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
@@ -23,31 +24,40 @@ function NosePiercing() {
 
   const buttons = [
     {
-      name:"Nostril 19g"
+      name:"Nostril",     
+      value:"Nostril 19g",
     },
     {
-      name:"Septum 16g"
+      name:"Septum",      
+      value:"Septum 16g",
     },
     {
-      name:"Austin Bar 16g"
+      name:"Austin Bar",      
+      value:"Austin Bar 16g",
     },
     {
-      name:"Erl 16g"
+      name:"Erl",      
+      value:"Erl 16g",
     },
     {
-      name:"High Nostril 19g"
+      name:"High Nostril",      
+      value:"High Nostril 19g",
     },
     {
-      name:"Nostril Nasallang 16g"
+      name:"Nostril Nasallang",      
+      value:"Nostril Nasallang 16g",
     },
     {
-      name:"Rhino 16g"
+      name:"Rhino",      
+      value:"Rhino 16g",
     },
     {
-      name:"Septril 16g"
+      name:"Septril",      
+      value:"Septril 16g",
     },
     {
-      name:"Third Eye"
+      name:"Third Eye",      
+      value:"Third Eye",
     }
   ]
 
@@ -86,9 +96,9 @@ function NosePiercing() {
     <GridLayout title={"nose piercing"}>
     {buttons.map((button, index) => {
           return (
-            <CustomButton key={index} onClick={handlepartLocation} selected={selected}>
+            <CustomPiercingButton key={index} onClick={()=>handlepartLocation(button.value)} selected={selected} value={button.value}>
               {button.name}
-            </CustomButton>
+            </CustomPiercingButton>
           );
         })}
     </GridLayout>

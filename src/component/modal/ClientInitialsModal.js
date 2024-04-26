@@ -2,11 +2,12 @@ import React, { useContext, useRef, useState } from "react";
 import UserContext from "../../context/UserContext";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas"
+import { useMediaQuery } from "react-responsive";
 
 const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, handleAdopt, fullName, activeTab, setActiveTab,drawnSignature, setDrawnSignature , storedInitials}) => {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const { t } = useTranslation();
-
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const signatureRef = useRef();
 
   const handleSignatureSave = () => {
@@ -23,9 +24,10 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
     signatureRef?.current?.clear();
   }
   return (
-    <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
-        <h1>{t("Adopt Your Initials and Signature")}</h1>
+    <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center ">
+      <div className="w-4/5 md:w-2/3 h-2/3 bg-white flex flex-col items-center gap-2 p-4 rounded-lg overflow-hidden">
+      <div className="w-full  bg-white flex flex-col items-center gap-2 p-4 rounded-lg md:overflow-hidden overflow-auto md:text-base text-sm">
+        <h2>{t("Adopt Your Initials and Signature")}</h2>
         <label className="font-bold">{t("Confirm Your Name and Initials")}</label>
         <div className="flex items-center gap-2 w-3/4">
           <div className="flex flex-col text-start w-3/4">
@@ -81,8 +83,8 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
             <SignatureCanvas
               penColor="black"
               canvasProps={{
-                width: 400,
-                height: 200,
+                width: isMobile ? 300 : 400,
+                height: isMobile? 100 :150,
                 className: "sigCanvas",
                 style: {
                   border: "1px solid #000",
@@ -142,7 +144,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
         {activeTab === 1 && (
           <div id="cursiveSignature">
             <p
-              className="selector"
+              className="selector px-1"
               style={{ fontFamily: "Blacksword", fontSize: "18px" }}
             >
               {fullName}
@@ -154,14 +156,15 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
             "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
           )}
         </p>
+        </div>
         <div className="flex justify-end w-full">
           <button
             className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
             onClick={handleAdopt}
-          >
+            >
             {t("Adopt and Initial")}
           </button>
-        </div>
+            </div>
       </div>
     </div>
   );

@@ -35,10 +35,12 @@ function Dashboard() {
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
     setFinalUser({...finalUser, selectedTattooType : selectedType})
+    sessionStorage.setItem("typeofservice", selectedType)
   };
 
   useEffect(() => {
     sessionStorage.removeItem("user")
+    sessionStorage.removeItem("typeofservice")
     if (user?.selectedTattooType !== null){
       setUser({
         selectedTattooType: null,

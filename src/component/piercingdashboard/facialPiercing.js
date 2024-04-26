@@ -6,6 +6,7 @@ import GridLayout from "../Layout/GridLayout";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
 import { useTranslation } from "react-i18next";
+import CustomPiercingButton from "../buttons/CustomPiercingButton";
 
 function FacialPiercing() {
   const progressValue = 30;
@@ -25,13 +26,16 @@ function FacialPiercing() {
 
   const buttons = [
     {
-      name: "Cheek 14g",
+      name: "Cheek",
+      value: "Cheek 14g",
     },
     {
-      name: "Eyebrow 16g",
+      name: "Eyebrow",
+      value: "Eyebrow 16g",
     },
     {
-      name: "sideburn 16g",
+      name: "sideburn",
+      value: "sideburn 16g",
     },
   ];
 
@@ -70,13 +74,14 @@ function FacialPiercing() {
       <GridLayout title={"facial piercing"}>
         {buttons.map((button, index) => {
           return (
-            <CustomButton
+            <CustomPiercingButton
               key={index}
-              onClick={handlepartLocation}
+              onClick={()=>handlepartLocation(button.value)}
               selected={selected}
+              value={button.value}
             >
               {button.name}
-            </CustomButton>
+            </CustomPiercingButton>
           );
         })}
       </GridLayout>

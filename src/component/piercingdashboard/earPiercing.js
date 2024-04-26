@@ -6,6 +6,7 @@ import GridLayout from '../Layout/GridLayout';
 import CustomButton from '../buttons/CustomButton';
 import Navigation from '../navigation/Navigation';
 import { useTranslation } from 'react-i18next';
+import CustomPiercingButton from '../buttons/CustomPiercingButton';
 function EarPiercing() {
   const progressValue = 30;
   const navigate = useNavigate();
@@ -23,49 +24,64 @@ function EarPiercing() {
 
   const buttons = [
     {
-      name: "Regular Earlobe 20g",
+      name: "Regular Earlobe",
+      value: "Regular Earlobe 20g",
     },
     {
-      name: "Upper Earlobe 20g",
+      name: "Upper Earlobe",
+      value: "Upper Earlobe 20g",
     },
     {
-      name: "Industrial 16g",
+      name: "Industrial",
+      value: "Industrial 16g",
     },
     {
-      name: "Tragus 16g",
+      name: "Tragus",
+      value: "Tragus 16g",
     },
     {
-      name: "Rook 16g",
+      name: "Rook",
+      value: "Rook 16g",
     },
     {
-      name: "Conch 16g",
+      name: "Conch",
+      value: "Conch 16g",
     },
     {
-      name: "Daith 16g",
+      name: "Daith",
+      value: "Daith 16g",
     },
     {
-      name: "Snug 16g",
+      name: "Snug",
+      value: "Snug 16g",
     },
     {
-      name: "Forward Helix 16g",
+      name: "Forward Helix",
+      value: "Forward Helix 16g",
     },
     {
-      name: "Helix 16g",
+      name: "Helix",
+      value: "Helix 16g",
     },
     {
-      name: "Anti Helix 16g",
+      name: "Anti Helix",
+      value: "Anti Helix 16g",
     },
     {
-      name: "Anti Tragus 16g",
+      name: "Anti Tragus",
+      value: "Anti Tragus 16g",
     },
     {
-      name: "Auricle 16g",
+      name: "Auricle",
+      value: "Auricle 16g",
     },
     {
-      name: "External Auditory Meatus 16g",
+      name: "External Auditory Meatus",
+      value: "External Auditory Meatus 16g",
     },
     {
-      name: "Transverse Lobe 16g",
+      name: "Transverse Lobe",
+      value: "Transverse Lobe 16g",
     }
   ];
 
@@ -104,9 +120,9 @@ function EarPiercing() {
     <GridLayout title={"ear piercing"}>
     {buttons.map((button, index) => {
           return (
-            <CustomButton key={index} onClick={handlepartLocation} selected={selected}>
+            <CustomPiercingButton key={index} onClick={()=>handlepartLocation(button.value)} selected={selected} value={button.value}>
               {button.name}
-            </CustomButton>
+            </CustomPiercingButton>
           );
         })}
     </GridLayout>

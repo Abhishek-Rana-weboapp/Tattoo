@@ -90,7 +90,7 @@ code {
 }
 
 
-input[type=date],
+/* input[type=date],
 input[type=time] {
     border            : none;
     box-sizing        : border-box;
@@ -132,7 +132,7 @@ input[type=date]::-webkit-datetime-edit,
 input[type=time]::-webkit-datetime-edit {
     text-align: center;
     width     : 100%;
-}
+} */
 
 
 

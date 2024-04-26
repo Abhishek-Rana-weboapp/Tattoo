@@ -10,14 +10,18 @@ import {states} from '../data/states';
 import LoaderModal from './modal/LoaderModal';
 import axios from 'axios';
 import { AUTHHEADERS } from '../commonFunctions/Headers';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { useMediaQuery } from 'react-responsive';
+
+
 function EmergencyContactForm() {
   const { t } = useTranslation();
   var progressValue = 60;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const { emerformData, setemerFormData,alert, setAlert, setAlertMessage } = React.useContext(UserContext);
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false);
   const [showPopup_, setShowPopup_] = useState(false);
     const username = sessionStorage.getItem('username');
   const handleInputChange = (e) => {
@@ -25,6 +29,8 @@ function EmergencyContactForm() {
     setemerFormData({ ...emerformData, [name]: value === "Select City"?"":value}
     );
   };
+
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   
   useEffect(() => {
@@ -71,12 +77,10 @@ function EmergencyContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Check if any of the form fields are empty
     if (!emerformData.name || !emerformData.phone || !emerformData.city || !emerformData.state) {
     setAlert(!alert)
     setAlertMessage(t("Please fill all the details"))
   } else {
-      console.log('Emergency contact form submitted with data:', emerformData);
       navigate('/doctor-info');
     }
   };
@@ -122,16 +126,17 @@ function EmergencyContactForm() {
             onChange={handleInputChange}
             />
         </div>
-<div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("Phone")}:</label>
-          <input
-           className="bg-white text-black rounded-md m-1 p-1 md:flex-1 w-full"
+        <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">{t("Phone")}:</label>
+           <div className='md:flex-1 w-full'>
+           <PhoneInput
+             country='us'
+             value={emerformData.phone}
+             onChange={(value)=>setemerFormData({...emerformData , phone:value})}
+             inputStyle={{width:isMobile ? "100% ": "98%", zIndex: "0"}}
+             />
+             </div>
 
-           type="number"
-           name="phone"
-           value={emerformData?.phone}
-           onChange={handleInputChange}
-           />
         </div>
         <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
           <label className="text-white font-semibold text-md md:w-20 w-full text-start">{t("City")}:</label>
@@ -153,14 +158,6 @@ function EmergencyContactForm() {
               })
             }
           </select>
-          {/* <input
-          className="bg-white text-black rounded-md m-1 p-1 flex-1"
-          type="text"
-          name="state"
-          value={emerformData?.state}
-          onChange={handleInputChange}
-          /> */}
-
         </div>
         </div>
         <div className='flex justify-between'>

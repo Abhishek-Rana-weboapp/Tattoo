@@ -7,6 +7,10 @@ import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import UserContext from "../context/UserContext";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import DatePicker from "react-datepicker";
 
 function SignUp() {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -19,11 +23,12 @@ function SignUp() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [adminUsername, setadminUsername] = useState("");
 
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
   const [phoneNumber, setPhoneNumber] = useState();
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   useEffect(() => {
     sessionStorage.clear();
@@ -219,27 +224,43 @@ function SignUp() {
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-              <input
+              {/* <input
                 type="number"
                 className="flex-1 focus:outline-none bg-white p-1"
                 id="phoneNumber"
                 placeholder="Enter Phone Number"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-              />
-              {/* <input className='flex-1' placeholder='Email'/> */}
+              /> */}
+              <PhoneInput
+             country='us'
+             placeholder="Enter Phone Number"
+             value={phoneNumber}
+             onChange={(value)=>setPhoneNumber(value)}
+             inputStyle={{width:isMobile ? "100% ": "98%", zIndex: "0"}}
+             />
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-              <input
+            <DatePicker
+            name="dateOfBirth"
+            selected={dateOfBirth}
+            className="p-2 rounded-lg w-full"
+            placeholder="D.O.B"
+            onChange={(date)=>setDateOfBirth(date)}
+            maxDate={new Date()}
+            dateFormat={"dd/MM/yyyy"}
+            showYearDropdown
+            scrollableYearDropdown
+          ></DatePicker>
+              {/* <input
                 type="date"
                 className="flex-1 focus:outline-none bg-white p-1"
                 id="dateofbirth"
                 placeholder="Enter Date of Birth"
                 value={dateOfBirth}
                 onChange={(e) => setDateOfBirth(e.target.value)}
-              />
-              {/* <input className='flex-1' placeholder='Email'/> */}
+              /> */}
             </div>
 
             <select

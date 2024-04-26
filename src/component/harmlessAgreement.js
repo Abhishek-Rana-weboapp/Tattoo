@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 function HoldHarmlessAgreement() {
   const { harmlessagreement, setharmlessagreement } =
@@ -25,7 +26,6 @@ function HoldHarmlessAgreement() {
   const name = `${sessionStorage.getItem("firstname")} ${sessionStorage.getItem(
     "lastname"
   )}`;
-
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -112,13 +112,14 @@ function HoldHarmlessAgreement() {
     }
   };
 
+
   return (
     <div className="w-full h-full flex flex-col gap-2 items-center justify-between p-4 md:p-8 text-white  md:w-4/6 overflow-hidden">
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">
         {t("Hold Harmless Agreement")}
       </label>
       <div className="flex flex-col flex-1 p-2 rounded-md gap-2 justify-between overflow-hidden backdrop-blur bg-opacity-50">
-        <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-thumb-rounded scrollbar-track -rounded">
+        <div className="overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-800 scrollbar-thumb-rounded scrollbar-track-rounded p-2" >
           <p className="text-center outline-1 outline-white">
             {t("I,")} <span className="font-bold">{harmlessagreement?.name}{" "}</span>
             {minor === "true" && t(`and I, the guardian `)}{minor === "true" && <span className="font-bold"> {harmlessagreement?.gaurdianName}</span> }
@@ -128,9 +129,23 @@ function HoldHarmlessAgreement() {
           </p>
         </div>
 
-        <div className="flex flex-col  md:flex-row gap-2 justify-center px-1">
-          <div className="flex gap-1 items-center justify-start">
-            <label>{t("Name")}:</label>
+
+        {/* Client Section */}
+
+        <div className="flex flex-col md:grid grid-cols-2 md:mx-auto  gap-2 justify-center px-1">
+          <div className="flex gap-1 items-center justify-center col-span-2">
+            <input
+              type="checkbox"
+              className="w-5 h-5"
+              checked={harmlessagreement?.agreed}
+              onChange={handleAgreementToggle}
+            />
+            <label className="text-sm">
+              {t("Select to add your name , initials and signature")}
+            </label>
+          </div>
+          <div className="flex gap-1 items-center md:justify-end justify-start md:mr-5">
+            <label className="text-xs">{t("Name")}:</label>
             <input
               ref={inputRef}
               className="bg-gray-700 text-white rounded-md p-2"
@@ -138,41 +153,44 @@ function HoldHarmlessAgreement() {
               value={harmlessagreement?.name}
             />
           </div>
-          <div className="flex gap-1 items-center justify-start">
-            <label>{t("Initials")}:</label>
+
+          <div className="flex gap-4 ">
+          <div className="flex gap-1 items-center justify-start w-2/5">
+            <label className="text-xs">{t("Initials")}:</label>
             <input
-              className="bg-gray-700 text-white rounded-md p-2 Blacksword w-2/6"
+              className="bg-gray-700 text-white rounded-md p-2 Blacksword w-full"
               type="text"
               value={harmlessagreement?.initials}
-            />
+              />
           </div>
-          <div className="flex gap-1 items-center justify-center">
-            <input
-              type="checkbox"
-              className="w-5 h-5"
-              checked={harmlessagreement?.agreed}
-              onChange={handleAgreementToggle}
-            />
-            <label>
-              {t("Select to add your name , initials and signature")}
-            </label>
-          </div>
-        </div>
-
         {harmlessagreement?.signatureurl && (
-          <div className=" h-14 w-full flex justify-center ">
+          <div className=" h-10 w-2/5 flex justify-center ">
             <img
-              className="w-1/4 h-full bg-white"
+              className="w-full h-full bg-white"
               src={harmlessagreement?.signatureurl}
-            />
+              />
           </div>
         )}
+        </div>
+        </div>
+
         
 
             {/* gaurdian section */}
-        {minor === "true" && <div className="flex flex-col  md:flex-row gap-2 justify-center">
-          <div className="flex gap-1 items-center justify-center">
-            <label>{t("Name")}:</label>
+        {minor === "true" && <div className="flex flex-col md:grid grid-cols-2 md:mx-auto gap-2 justify-center">
+          <div className="flex gap-1 items-center justify-center col-span-2">
+            <input
+              type="checkbox"
+              className="w-5 h-5"
+              checked={harmlessagreement?.gaurdianAgreed }
+              onChange={handleGaurdianAgreementToggle}
+            />
+            <label className="text-sm">
+              {t("Select to add gaurdian's name , initials and signature")}
+            </label>
+          </div>
+          <div className="flex gap-1 items-center md:justify-end justify-start md:mr-2">
+            <label className="text-xs">{t("Name")}:</label>
             <input
               ref={inputRef}
               className="bg-gray-700 text-white rounded-md p-2"
@@ -180,35 +198,27 @@ function HoldHarmlessAgreement() {
               value={harmlessagreement?.gaurdianName}
             />
           </div>
-          <div className="flex gap-1 items-center justify-center">
-            <label>{t("Initials")}:</label>
+          <div className="flex gap-4">
+
+          <div className="flex gap-2 items-center justify-start w-2/5">
+            <label className="text-xs">{t("Initials")}:</label>
             <input
-              className="bg-gray-700 text-white rounded-md p-2 Blacksword"
+              className="bg-gray-700 text-white rounded-md p-2 Blacksword w-full"
               type="text"
               value={harmlessagreement?.gaurdianInitials}
             />
           </div>
-          <div className="flex gap-1 items-center justify-center">
-            <input
-              type="checkbox"
-              className="w-5 h-5"
-              checked={harmlessagreement?.gaurdianAgreed }
-              onChange={handleGaurdianAgreementToggle}
-            />
-            <label>
-              {t("Select to add your name , initials and signature")}
-            </label>
-          </div>
-        </div>}
-
         {harmlessagreement?.gaurdianSignature && (
-          <div className="h-14 w-full flex justify-center ">
+          <div className="h-10 w-2/5 flex justify-center ">
             <img
-              className="w-1/4 h-full bg-white"
+              className="w-full h-full bg-white"
               src={harmlessagreement?.gaurdianSignature}
             />
           </div>
         )}
+        </div>
+        </div>}
+
 
        
 

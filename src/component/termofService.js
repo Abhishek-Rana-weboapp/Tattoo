@@ -57,6 +57,7 @@ function TermsOfService() {
   const toothGemRules = toothGemTerms;
   const [pageContents, setpageContents] = useState([]);
   
+
   useEffect(() => {
     if (user.selectedTattooType) {
       switch (user.selectedTattooType) {
@@ -175,11 +176,11 @@ function TermsOfService() {
 
       if (response.status === 201) {
         sessionStorage.setItem("appointmentID", responseData.userData.id);
+        sessionStorage.setItem(
+          "appointment_detail",
+          JSON.stringify(responseData.userData)
+        );
         if (minor === "true") {
-          sessionStorage.setItem(
-            "appointment_detail",
-            JSON.stringify(responseData.userData)
-          );
           setLoading(false)
           navigate("/verify");
           return
@@ -229,9 +230,9 @@ function TermsOfService() {
     <ConsentFormLayout title="Terms of Service">
       <div className="flex flex-col gap-2 flex-1 md:p-1 p-2 justify-between overflow-hidden">
         <div className="flex flex-col gap-3 overflow-auto">
-        <h3 className="font-bold text-lg  md:text-2xl text-white  uppercase text-center ">{pageContents !== undefined && t(pageContents[currentPage-1]?.heading)}{" "}:</h3>
+        <label className="font-bold text-sm md:text-2xl text-white  uppercase text-center ">{pageContents !== undefined && t(pageContents[currentPage-1]?.heading)}{" "}:</label>
         {
-          pageContents.length > 0 && Object.keys(pageContents[currentPage-1]).includes("subHeading") && <label className="font-bold text-lg md:text-xl text-white  uppercase text-center ">{pageContents[currentPage-1].subHeading}</label>
+          pageContents.length > 0 && Object.keys(pageContents[currentPage-1]).includes("subHeading") && <label className=" text-[0.60rem] md:text-xl text-white  uppercase text-center ">{pageContents[currentPage-1].subHeading}</label>
         }
         <div  className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-500 scrollbar-thumb-rounded scrollbar-track-rounded">
         <ul className="text-white font-semibold  list-disc flex flex-col gap-2">
@@ -241,55 +242,56 @@ function TermsOfService() {
             })
           }
         </ul>
-          </div>
+        </div>
+        {
+          pageContents.length > 0 && Object.keys(pageContents[currentPage-1]).includes("bottomHeading") && <label className="text-xs md:text-xl text-white  uppercase text-center flex items-center">* {pageContents[currentPage-1].bottomHeading}</label>
+        }
 
           </div>
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-center justify-center">
+        <div className="flex flex-col gap-1">
+          <div className="flex justify-center gap-2 pl-7 md:m-auto md:p-0">
+            <div className="flex gap-2 items-center justify-start w-3/5 md:w-72">
               <input
                 type="checkbox"
                 className="w-6 h-6"
                 checked={initials[currentPage]}
                 onChange={handleCheckbox}
               ></input>
-              <label className="text-white">
+              <label className="text-white text-sm md:text-base">
                 {t("Select to add your initials")}
               </label>
             </div>
-            <div className="flex gap-2 justify-center items-center">
-              <label className="text-white">{t("Initials")}:</label>
+            <div className="flex gap-2 justify-start items-center w-1/4">
               <input
                 type="text"
                 value={initials[currentPage] || ""}
                 disabled
                 // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                className="bg-gray-700 text-white p-2 rounded-md w-2/4 md:w-1/4 Blacksword"
+                className="bg-gray-700 text-white p-2 rounded-md w-full md:w-2/4 Blacksword"
               />
             </div>
           </div>
 
           {minor === "true" && (
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center justify-center">
+            <div className="flex  justify-center gap-2 pl-7 md:m-auto">
+              <div className="flex gap-2 items-center justify-start w-3/5 md:w-80">
                 <input
                   type="checkbox"
                   className="w-6 h-6"
                   checked={gaurdianInitials[currentPage]}
                   onChange={handleGaurdianCheckbox}
                 ></input>
-                <label className="text-white">
-                  {t("Select to add your initials")}
+                <label className="text-white text-sm md:text-base">
+                  {t("Select to add gaurdian's initials")}
                 </label>
               </div>
-              <div className="flex md:flex-row flex-col gap-2 justify-center items-center">
-                <label className="text-white">{t("Initials")}:</label>
+              <div className="flex gap-2 justify-start items-center w-1/4">
                 <input
                   type="text"
                   value={gaurdianInitials[currentPage] || ""}
                   disabled
                   // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                  className="bg-gray-700 text-white p-2 rounded-md Blacksword"
+                  className="bg-gray-700 text-white p-2 rounded-md w-full md:w-2/4 Blacksword"
                 />
               </div>
             </div>
