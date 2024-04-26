@@ -12,6 +12,8 @@ import { states } from '../data/states';
 import LoaderModal from './modal/LoaderModal';
 import VerifyService from './sub-Components/VerifyService';
 import { AUTHHEADERS } from '../commonFunctions/Headers';
+import { artists } from '../data/artistsnames';
+import UploadFL from './sub-Components/UploadFL';
 
 
 const IDVerificationComponent = () => {
@@ -26,13 +28,11 @@ const IDVerificationComponent = () => {
   const [shopLocation , setShopLocation] = useState("Hialeah, Fl")
   const [frontDesk , setFrontDesk] = useState("")
   const [finalAlert , setFinalAlert] = useState(false)
-
-  useEffect(()=>{
-    
-  },[])
   
   const [loading, setLoading] = useState(false);
   const appointmentID = sessionStorage.getItem("appointmentID")
+  const minor = sessionStorage.getItem("minor")
+  const appointment = JSON.parse(sessionStorage.getItem("appointment_detail") || "")
 
 
 
@@ -49,25 +49,6 @@ const IDVerificationComponent = () => {
     }
     }
 
-    
-    const employeeNames = [
-      "Adonay Llerena",
-      "Barbie Gonzalez",
-      "Cheppy Sotelo",
-      "Daniel Proano",
-      "Eduanis Rama",
-      "Ernie Jorge",
-      "Frank Gonzalez",
-      "Gil Benjamin",
-      "Jill Llerena",
-      "Jose Gonzalez",
-      "Keyla Valdes",
-      "Konstantin Alexeyev",
-      "Omar Gonzalez",
-      "Omar Fame Gonzalez",
-      "Osnely Garcia",
-      "Yosmany Dorta"
-    ]
 
  const handleShopLocation = async()=>{
   if(!shopLocation){
@@ -84,7 +65,7 @@ const IDVerificationComponent = () => {
     }
     await axios.post(`${apiUrl}/artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
-        setStep(4)
+        setStep(5)
         setLoading(false)
       }
     }).catch((err)=>{
@@ -129,6 +110,8 @@ const IDVerificationComponent = () => {
   return <LoaderModal/>
  }
 
+ console.log(step)
+
   return (
     <>
     {
@@ -143,8 +126,11 @@ const IDVerificationComponent = () => {
     {
       step === 2 &&  <VerifyUpload step={step} setStep={setStep}/>
     }
+    {
+      step === 3 &&  <UploadFL step={step} setStep={setStep}/>
+    }
      {
-      step === 3 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
+      step === 4 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
         <label className='text-white font-bold md:text-3xl text-lg'>{t("Select Shop Location")}</label>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
@@ -154,18 +140,18 @@ const IDVerificationComponent = () => {
         </select>
         </div>
         <div className='w-full md:w-1/2 flex justify-between'>
-        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>setStep(2)}>{t("Back")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>(appointment.typeofservice === "tattoo" || appointment.typeofservice === "tattoo") && minor === "true"  ? setStep(3) : setStep(2)}>{t("Back")}</button>
         <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleShopLocation}>{t("Submit")}</button>
         </div>
       </div>
     }
      {
-      step === 4 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
+      step === 5 &&  <div className='w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white'>
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
          <label className='text-white font-bold md:text-3xl text-lg'>{t("Select Employee Name")}</label>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={frontDesk} onChange={(e)=>setFrontDesk(e.target.value)}>
           <option value={""}>Select Employee Name</option>
-          {employeeNames.map((employee, index)=><option className='capitalize' value={employee}>{employee}</option>)}
+          {artists.map((employee, index)=><option className='capitalize' value={employee}>{employee}</option>)}
         </select>
         </div>
         <div className='w-full md:w-1/2 flex justify-between'>

@@ -145,7 +145,7 @@ export const medicalQuestions = {
   piercing: [
     {
       id: 1,
-      type: "YNE",
+      type: "YN",
       q: "Have ever been pierced before?",
     },
     {

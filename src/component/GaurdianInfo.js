@@ -5,20 +5,22 @@ import axios from "axios";
 import { apiUrl } from "../url";
 import { useNavigate } from "react-router-dom";
 import Modal from "./modal/Modal";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { useMediaQuery } from "react-responsive";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const GaurdianInfo = () => {
   const { setAlertMessage, alert, setAlert } = useContext(UserContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const storedgaurdianInfo = sessionStorage.getItem("gaurdianInfo");
-  const [updateModal, setUpdateModal] = useState(false);
-  const yes = t("Yes");
-  const No = t("No");
-  const options = [yes, No];
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const [gaurdianInfo, setGaurdianInfo] = useState({
     firstName: "",
     lastName: "",
-    dateOfBirth: "",
+    dateOfBirth: new Date(),
     email: "",
     phoneNumber: "",
   });
@@ -26,7 +28,6 @@ const GaurdianInfo = () => {
   useEffect(() => {
     if (storedgaurdianInfo) {
       setGaurdianInfo((prev) => JSON.parse(storedgaurdianInfo));
-      setUpdateModal(true);
     }
   }, []);
 
@@ -35,6 +36,10 @@ const GaurdianInfo = () => {
     const value = e.target.value;
     setGaurdianInfo((prev) => ({ ...prev, [field]: value }));
   };
+
+  const handleDate = (date)=>{
+    setGaurdianInfo((prev) => ({ ...prev, dateOfBirth: date }));
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,24 +96,6 @@ const GaurdianInfo = () => {
       });
   };
 
-  const handleUpdatedata = (e) => {
-    const value = e.target.value;
-    if (value === "Yes") {
-      setUpdateModal(false);
-      return;
-    }
-    if (value === "No") {
-      sessionStorage.setItem("gaurdianInfo", JSON.stringify(gaurdianInfo));
-      sessionStorage.setItem(
-        "gaurdianInitials",
-        `${gaurdianInfo?.firstName
-          .slice(0, 1)
-          .toUpperCase()}${gaurdianInfo?.lastName.slice(0, 1).toUpperCase()}`
-      );
-      navigate("/dashboard");
-      return;
-    }
-  };
   return (
     <>
       <div className="flex flex-col items-center gap-4 w-full">
@@ -135,14 +122,17 @@ const GaurdianInfo = () => {
             placeholder="Last Name"
             onChange={handleInput}
           ></input>
-          <input
+          <DatePicker
             name="dateOfBirth"
-            value={gaurdianInfo.dateOfBirth}
+            selected={gaurdianInfo.dateOfBirth}
             className="p-2 rounded-lg w-full"
-            type="date"
             placeholder="D.O.B"
-            onChange={handleInput}
-          ></input>
+            onChange={handleDate}
+            maxDate={new Date()}
+            dateFormat={"dd/MM/yyyy"}
+            showYearDropdown
+            scrollableYearDropdown
+          ></DatePicker>
           <input
             name="email"
             value={gaurdianInfo.email}
@@ -151,14 +141,14 @@ const GaurdianInfo = () => {
             placeholder="Email"
             onChange={handleInput}
           ></input>
-          <input
-            name="phoneNumber"
+          <PhoneInput
+            country="us"
             value={gaurdianInfo.phoneNumber}
-            className="p-2 rounded-lg w-full"
-            type="text"
-            placeholder="Phone Number"
-            onChange={handleInput}
-          ></input>
+            onChange={(value) =>
+              setGaurdianInfo({ ...gaurdianInfo, phoneNumber: value })
+            }
+            inputStyle={{ width: isMobile ? "100% " : "98%", zIndex: "0" }}
+          />
           <div className="flex justify-center">
             <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
               Submit
@@ -166,41 +156,6 @@ const GaurdianInfo = () => {
           </div>
         </form>
       </div>
-      {updateModal && (
-        <Modal>
-          <h3 className="font-bold">
-            {t("Do you want to update your gaurdian information?")}
-          </h3>
-
-          {/* // Dropdown menu */}
-          <div className="flex gap-1 items-center">
-            <label className="text-xl font-bold">
-              {t("Select an option:")}
-            </label>
-            <select
-              className="rounded p-2 border-1 bg-black text-white"
-              onChange={handleUpdatedata}
-            >
-              <option value="">Select...</option>
-              {options.map((option, index) => (
-                <option key={index} value={option}>
-                  {console.log(option)}
-                  {option}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button
-            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-            onClick={() => {
-              setUpdateModal(false);
-            }}
-          >
-            {t("Close Popup")}
-          </button>
-        </Modal>
-      )}
     </>
   );
 };

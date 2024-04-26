@@ -390,5 +390,11 @@
   "Please upload client ID photo before submitting.":"Please upload client ID photo before submitting.",
   "Select Shop Location":"Select Shop Location",
   "Select Employee Name":"Select Employee Name",
-  "Do you want to update your Info?" : "Do you want to update your Info?"
+  "Do you want to update your Info?" : "Do you want to update your Info?",
+  "Additional info":"Additional info",
+  "Zip":"Zip",
+  "Male":"Male",
+  "Female":"Female",
+  "I am at least 18 years of age.I am accompanied by my parent or legal guardian.":"I am at least 18 years of age.I am accompanied by my parent or legal guardian."
+
 }

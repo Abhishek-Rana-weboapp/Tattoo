@@ -411,5 +411,10 @@
   "Please upload client ID photo before submitting.":"Por favor, carga la foto de identificación del cliente antes de enviar.",
   "Select Shop Location":"Selecciona la ubicación de la tienda.",
   "Select Employee Name":"Selecciona el nombre del empleado.",
-  "Do you want to update your Info?":"¿Deseas actualizar tu información?"
+  "Do you want to update your Info?":"¿Deseas actualizar tu información?",
+  "Additional info":"Información adicional",
+  "Zip":"ZIP",
+  "Male":"Hombre",
+  "Female":"Mujer",
+  "I am at least 18 years of age.I am accompanied by my parent or legal guardian.":"Al menos tengo 18 años de edad. Estoy acompañado por mi padre o tutor legal."
 }

@@ -5,16 +5,16 @@ import UserContext from "../context/UserContext";
 import ProgressBar from "./ProgressBar";
 import ConsentFormLayout from "./Layout/FormLayout";
 import { useTranslation } from "react-i18next";
-import SignatureModal from "./modal/SignatureModal";
 import html2canvas from "html2canvas";
 
 import ClientInitialsModal from "./modal/ClientInitialsModal";
 import GaurdianInitialsModal from "./modal/GaurdianInitialsModal";
-import { questions } from "../data/ConsentQuestions";
+import { questions, minorQuestions } from "../data/ConsentQuestions";
 
 function ConsentForm() {
   const { t } = useTranslation();
   const importQuestions = questions;
+  const importMinorQuestions = minorQuestions;
   var progressValue = 5;
   const [progressValue_, setprogressValue_] = useState(1);
   const [fullName, setFullName] = useState(
@@ -56,9 +56,11 @@ function ConsentForm() {
   const [totalPages, setTotalPages] = useState(0);
 
   const minor = sessionStorage.getItem("minor");
+  const typeofservice = sessionStorage.getItem("typeofservice")
 
   const [currentPage, setCurrentPage] = useState(1);
   const [statements, setStatements] = useState([]);
+ 
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -96,18 +98,30 @@ function ConsentForm() {
       setCursiveSignatureImage(cursiveSignatureImage);
     };
     handleCursive();
-    user.selectedTattooType
-      ? user.selectedTattooType === "removal"
-        ? setStatements(importQuestions.tattooRemovalQuestions)
-        : user.selectedTattooType === "piercing"
-        ? setStatements(importQuestions.piercingQuestions)
-        : user.selectedTattooType === "tooth-gems"
-        ? setStatements(importQuestions.toothGemQuestions)
-        : setStatements(importQuestions.tattooQuestions)
-      : setStatements(importQuestions.tattooQuestions);
+    if(minor === "true"){
+    typeofservice
+      ? typeofservice === "removal"
+        ? setStatements(importMinorQuestions.tattooRemovalQuestions)
+        : typeofservice === "piercing"
+        ? setStatements(importMinorQuestions.piercingQuestions)
+        : typeofservice === "tooth-gems"
+        ? setStatements(importMinorQuestions.toothGemQuestions)
+        : setStatements(importMinorQuestions.tattooQuestions)
+      : setStatements(importMinorQuestions.tattooQuestions);
+    }
+   else{
+      typeofservice
+        ? typeofservice === "removal"
+          ? setStatements(importQuestions.tattooRemovalQuestions)
+          : typeofservice === "piercing"
+          ? setStatements(importQuestions.piercingQuestions)
+          : typeofservice === "tooth-gems"
+          ? setStatements(importQuestions.toothGemQuestions)
+          : setStatements(importQuestions.tattooQuestions)
+        : setStatements(importQuestions.tattooQuestions);
+      }
   }, []);
 
-  console.log(user);
 
   useEffect(() => {
     if (statements?.length > 0) {
@@ -275,54 +289,51 @@ function ConsentForm() {
         </div>
 
         {/* Clients Section */}
-        <div className="flex flex-col items-center  gap-2 ">
-          <div className="flex gap-2 items-center justify-center">
+        <div className="flex items-center  gap-2 pl-7 md:m-auto md:p-0">
+          <div className="flex gap-2 items-center justify-start w-3/5 md:w-72">
             <input
               type="checkbox"
               className=" w-6 h-6"
               checked={initials[currentPage]}
               onChange={(e) => handleCheckbox(currentPage, e)}
             ></input>
-            <label className=" text-white">
+            <label className=" text-white md:text-base text-sm">
               {t("Select to add your initials")}
             </label>
           </div>
 
-          <div className="flex gap-2 justify-center items-center">
-          <label className="text-white">
-            {t("Initials")}:
-            </label>
+          <div className="w-2/5 flex justify-start">
             <input
               ref={inputRef}
               type="text"
               value={initials[currentPage]}
               readOnly
-              className="bg-gray-700 w-1/4 md:w-full text-white p-2 rounded-md font-bold Blacksword"
+              className="bg-gray-700 w-24 text-white p-2 rounded-md font-bold Blacksword"
               />
               </div>
         </div>
 
         {/* gaurdians section */}
         {minor === "true" && (
-          <div className="flex md:flex-col justify-center gap-2 ">
-            <div className="flex gap-2 items-center justify-center">
+          <div className="flex justify-center gap-2 pl-7 md:m-auto  md:p-0">
+            <div className="flex gap-2 items-center justify-start w-3/5 md:w-80">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
                 checked={gaurdianInitials[currentPage]}
                 onChange={(e) => handleGaurdianCheckbox(currentPage, e)}
               ></input>
-              <label className=" text-white">
+              <label className=" text-white md:text-base text-sm">
                 {t("Select to add Gaurdian's initials")}
               </label>
             </div>
-            <div className="flex flex-col w-1/4 md:w-full md:flex-row items-center justify-center">
+            <div className="w-2/5 flex justify-start">
               <input
                 ref={inputRef}
                 type="text"
                 value={gaurdianInitials[currentPage]}
                 readOnly
-                className="bg-gray-700 text-white p-2 w-full rounded-md font-bold Blacksword"
+                className="bg-gray-700 text-white p-2 w-24 rounded-md font-bold Blacksword"
               />
             </div>
           </div>

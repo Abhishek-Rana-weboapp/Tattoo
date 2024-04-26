@@ -1,7 +1,7 @@
 import React from "react";
 import { useTranslation } from 'react-i18next';
 
-export default function CustomButton({ children, onClick,  maxWidth, selected, value, def ,buttonStyle,}) {
+export default function CustomPiercingButton({ children, onClick,  maxWidth, selected, value, def ,buttonStyle,}) {
   const { t } = useTranslation();
   
   const activeColor = `bg-gradient-to-b from-white to-yellow-400 to-10%`;
@@ -13,11 +13,9 @@ export default function CustomButton({ children, onClick,  maxWidth, selected, v
   return (
     <button
       ref={def}
-      className={`${selected === children ? activeColor : color} w-full max-w-[${maxWidth}] ${dynamicPadding} px-2 uppercase md:text-2xl text-sm
+      className={`${selected === value ? activeColor : color} w-full max-w-[${maxWidth}] ${dynamicPadding} px-2 uppercase md:text-2xl text-sm
       font-bold rounded-lg hover:bg-gradient-to-b from-white to-yellow-400 to-10% select-none`}
-      onClick={() => {
-        onClick(children)
-      }}
+      onClick={onClick}
       style={buttonStyle}
     >
       {t(buttonName)}

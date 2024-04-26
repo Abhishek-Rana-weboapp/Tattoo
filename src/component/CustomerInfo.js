@@ -120,12 +120,12 @@ const CustomerInfo = () => {
           </div>
         </Modal>
       )}
-    <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white gap-4">
-        <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">Additional info</label>
+    <div className="w-full h-full flex flex-col items-center overflow-auto p-4 text-white gap-4">
+        <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">{t("Additional info")}</label>
       <form className="flex flex-col md:w-1/3 w-full justify-between h-full overflow-hidden" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 w-full overflow-auto">
-          <div className="flex justify-between md:flex-row flex-col">
-            <label className="flex gap-3 md:w-20 w-full">Address</label>
+          <div className="flex justify-between md:items-center md:flex-row flex-col">
+            <label className="flex gap-3 md:w-20 w-full">{t("Address")} :</label>
             <input
               name="address"
               placeholder="Address"
@@ -136,8 +136,8 @@ const CustomerInfo = () => {
               ></input>
           </div>
 
-          <div className="flex justify-between md:flex-row flex-col">
-            <label className="flex gap-3 md:w-20 w-full">City</label>
+          <div className="flex justify-between md:items-center md:flex-row flex-col">
+            <label className="flex gap-3 md:w-20 w-full">{t("City")} :</label>
             <input
               name="city"
               placeholder="City"
@@ -148,8 +148,8 @@ const CustomerInfo = () => {
               ></input>
           </div>
 
-          <div className="flex justify-between md:flex-row flex-col">
-            <label className="flex gap-3 md:w-20 w-full">State</label>
+          <div className="flex justify-between md:items-center md:flex-row flex-col">
+            <label className="flex gap-3 md:w-20 w-full">{t("State")} :</label>
             <select
               name="state"
               placeholder="State"
@@ -164,8 +164,8 @@ const CustomerInfo = () => {
               </select>
           </div>
 
-          <div className="flex justify-between md:flex-row flex-col">
-            <label className="flex gap-3 md:w-20 w-full">Zip</label>
+          <div className="flex justify-between md:items-center md:flex-row flex-col">
+            <label className="flex gap-3 md:w-20 w-full">{t("Zip")} :</label>
             <input
               name="zip"
               placeholder="Zip"
@@ -177,28 +177,28 @@ const CustomerInfo = () => {
           </div>
 
           <div className="flex items-center md:flex-row flex-col">
-            <label className="flex  md:w-20 w-full">Gender :</label>
+            <label className="flex  md:w-20 w-full">{t("Gender")} :</label>
             <div className="flex flex-col md:flex-1 w-full">
               <div className="flex gap-2">
-            <label className="flex gap-2 items-center">
+            <label className="flex gap-2 items-center ml-1">
             <input name="genderMale" type="radio" value="male" checked={userData.gender === "male"} onChange={handleInputs}></input>
-                Male
+                {t("Male")}
             </label>
             <label className="flex gap-2 items-center">
             <input name="genderFemale" type="radio" value="female" checked={userData.gender === "female"} onChange={handleInputs}></input>
-                Female
+                {t("Female")}
             </label>
             <label className="flex gap-2 items-center">
                 <input name="genderOther" type="radio" checked={otherChecked} onChange={handleInputs}></input>
-                other 
+                {t("other")} 
             </label>
               </div>
             {otherChecked && <input type="text" className="p-2 rounded-lg text-black" value={otherInput} onChange={(e)=>setOtherInput(e.target.value)} ></input>}
             </div>
           </div>
 
-          <div className="flex justify-between md:flex-row flex-col">
-            <label className="flex gap-3 md:w-20 w-full">Race</label>
+          <div className="flex justify-between md:items-center md:flex-row flex-col">
+            <label className="flex gap-3 md:w-20 w-full">{t("Race")} :</label>
             <input
               name="race"
               placeholder="Race"
@@ -211,7 +211,7 @@ const CustomerInfo = () => {
         </div>
 
         <button className="yellowButton px-4 py-2 text-black font-bold self-center rounded-3xl">
-          Submit
+          {t("Submit")}
         </button>
       </form>
     </div>

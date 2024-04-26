@@ -8,6 +8,8 @@ import { states } from "../data/states";
 import axios from "axios";
 import LoaderModal from "./modal/LoaderModal";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
+import PhoneInput from "react-phone-input-2";
+import { useMediaQuery } from "react-responsive";
 
 
 function DoctorContactForm() {
@@ -25,6 +27,8 @@ function DoctorContactForm() {
     setAlertMessage,
   } = React.useContext(UserContext);
   const username = sessionStorage.getItem("username");
+
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
 
   const handleInputChange = (e) => {
@@ -161,18 +165,18 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
-              {t("Phone")}:
-            </label>
-            <input
-              className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
-              type="text"
-              name="phone"
-              value={drformData?.phone}
-              onChange={handleInputChange}
-            />
-          </div>
+          <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
+          <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">{t("Phone")}:</label>
+           <div className='md:flex-1 w-full'>
+           <PhoneInput
+             country='us'
+             value={drformData.phone}
+             onChange={(value)=>setdrFormData({...drformData , phone:value})}
+             inputStyle={{width:isMobile ? "100% ": "98%", borderRadius : "0.375rem"}}
+             />
+             </div>
+
+        </div>
 
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">

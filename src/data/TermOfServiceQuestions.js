@@ -146,6 +146,7 @@ export const toothGemTerms = [
       "Those who smoke in excess",
       "Those who do not follow the aftercare instructions",
     ],
+    bottomHeading:"You should wait 60 minutes before consuming anything to ensure your Tooth Gem sets properly"
   },
   {
     heading: "Payment Terms of Service",

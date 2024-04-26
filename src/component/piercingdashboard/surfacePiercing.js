@@ -23,46 +23,60 @@ function SurfacePiercing() {
 
   const buttons = [
     {
-      name:"Arm 16g"
+      name:"Arm",      
+      value:"Arm 16g",
     },
     {
-      name:"Back 16g"
+      name:"Back",      
+      value:"Back 16g",
     },
     {
-      name:"Chest 16g"
+      name:"Chest",      
+      value:"Chest 16g",
     },
     {
-      name:"Face 16g"
+      name:"Face",      
+      value:"Face 16g",
     },
     {
-      name:"Finger 16g"
+      name:"Finger",      
+      value:"Finger 16g",
     },
     {
-      name:"Foot 16g"
+      name:"Foot",      
+      value:"Foot 16g",
     },
     {
-      name:"Hand 16g"
+      name:"Hand",      
+      value:"Hand 16g",
     },
     {
-      name:"Hip 16g"
+      name:"Hip",      
+      value:"Hip 16g",
     },
     {
-      name:"Leg 16g"
+      name:"Leg",      
+      value:"Leg 16g",
     },
     {
-      name:"Neck 16g"
+      name:"Neck",      
+      value:"Neck 16g",
     },
     {
-      name:"Pelvic 16g"
+      name:"Pelvic",      
+      value:"Pelvic 16g",
     },
     {
-      name:"Ribs 16g"
+      name:"Ribs",      
+      value:"Ribs 16g",
     },
     {
-      name:"Shoulder 16g"
+      name:"Shoulder",      
+      value:"Shoulder 16g",
     },
     {
-      name:"Stomach 16g"
+      name:"Stomach",      
+      value:"Stomach 16g",
     }
   ]
 
@@ -102,7 +116,7 @@ function SurfacePiercing() {
     <GridLayout title={"surface piercing"}>
     {buttons.map((button, index) => {
           return (
-            <CustomButton key={index} onClick={handlepartLocation} selected={selected}>
+            <CustomButton key={index} onClick={()=>handlepartLocation(button.value)} selected={selected} value={button.value}>
               {button.name}
             </CustomButton>
           );

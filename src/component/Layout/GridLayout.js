@@ -4,7 +4,7 @@ export default function GridLayout({children , title, onChange,selected, otherFi
   const { t } = useTranslation();
 
   return (
-    <div className="w-full h-full flex flex-col  gap-4 items-center">
+    <div className="w-full h-full flex flex-col  gap-4 items-center overflow-hidden">
       <label className='font-bold text-md md:text-5xl text-white uppercase'>{t(title)}</label>
       {subTitle && <label className='font-bold text-sm md:text-3xl text-white uppercase'>{t(subTitle)}</label>}
     <div className="md:w-4/6  w-full h-full flex flex-col items-center gap-5">
