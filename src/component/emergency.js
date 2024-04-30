@@ -43,6 +43,7 @@ function EmergencyContactForm() {
         let finalResult = {};
         try {
           finalResult = JSON.parse(filterResponse)
+          sessionStorage.setItem("emerformData", response.data.emergencycontactnumber)
         } catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
@@ -81,6 +82,7 @@ function EmergencyContactForm() {
     setAlert(!alert)
     setAlertMessage(t("Please fill all the details"))
   } else {
+      sessionStorage.setItem("emerformData", emerformData)
       navigate('/doctor-info');
     }
   };

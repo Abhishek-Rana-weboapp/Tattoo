@@ -110,7 +110,6 @@ const IDVerificationComponent = () => {
   return <LoaderModal/>
  }
 
- console.log(step)
 
   return (
     <>

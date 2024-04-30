@@ -40,6 +40,7 @@ const VerifyService = ({ step, setStep }) => {
     setStep(0);
   };
 
+
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between overflow-hidden">
       <div className="text-white flex flex-col gap-4 items-center  md:w-1/3 w-full h-full overflow-auto">
@@ -48,32 +49,31 @@ const VerifyService = ({ step, setStep }) => {
         {/* Service Section */}
         <h4 className="capitalize font-bold flex gap-2">
           {t("Service")} :{" "}
-          <h4>{service}</h4>{" "}
+          <h4>{t(service)}</h4>{" "}
         </h4>
 
         {(service === "tattoo" ||
-          service === "piercing" ) && (
+          service === "piercing" || service === "removal" ) && (
           <>
             {/* Placement section cjanging based on the service*/}
                 {placement.length && placement.map((key)=>(
                   <div className="p-2 border border-white w-full rounded-lg">
-                  {service === "tattoo" && <h4>{`Tattoo ${key}`}</h4>}
-                  {service === "piercing" && <h4>{`Piercing ${key}`}</h4>}
+                  {service === "tattoo" || service === "removal" && <h4>{`${t("Tattoo")} ${key}`}</h4>}
+                  {service === "piercing" && <h4>{`${t("Piercing")} ${key}`}</h4>}
             <div className="flex gap-2">
               <h4 className="font-bold">{t("Placement")} : </h4>
               <div className="flex flex-col justify-center">
                   <React.Fragment key={key}>
-                    {location[key].level1 !== null && <label className="md:text-2xl text-base">{location[key].level1}</label>}
-                    {location[key].level2 !== null && <label className="md:text-2xl text-base">{location[key].level2}</label>}
-                    {location[key].level3 !== null && <label className="md:text-2xl text-base">{location[key].level3}</label>}
-                    {location[key].level4 !== null && <label className="md:text-2xl text-base">{location[key].level4}</label>}
-
+                    {location[key].level1 !== null && <label className="md:text-2xl text-base">{t(location[key]?.level1)}</label>}
+                    {location[key].level2 !== null && <label className="md:text-2xl text-base">{t(location[key]?.level2)}</label>}
+                    {location[key].level3 !== null && <label className="md:text-2xl text-base">{t(location[key]?.level3)}</label>}
+                    {location[key].level4 !== null && <label className="md:text-2xl text-base">{t(location[key]?.level4)}</label>}
                   </React.Fragment>
               </div>
             </div>
                     {service === "tattoo" && (
                       <div className="flex items-center gap-2">
-                        <h4>{`Description:`}</h4>
+                        <h4>{t(`Description`)}:</h4>
                         <label className="md:text-2xl text-base">
                         {
                           description ? description[key]: ""
@@ -90,36 +90,20 @@ const VerifyService = ({ step, setStep }) => {
         )}
 
         {
-          (service === "permanent-makeup"|| service === "removal" )&& (
+          (service === "permanent-makeup")&& (
             <>
-            {/* Placement section cjanging based on the service*/}
-                {placement.length && placement.map((key)=>(
-                  <>
-
             <div className="flex gap-2">
               <h4 className="font-bold">{t("Placement")} : </h4>
               <div className="flex flex-col">
-                  <React.Fragment key={key}>
-                    {location[key].level1 !== null && <h4>{location[key].level1}</h4>}
-                    {location[key].level2 !== null && <h4>{location[key].level2}</h4>}
-                    {location[key].level3 !== null && <h4>{location[key].level3}</h4>}
-                    {location[key].level4 !== null && <h4>{location[key].level4}</h4>}
+                  <div>
+                    {location.level1 !== null && <h4>{t(location.level1)}</h4>}
+                    {location.level2 !== null && <h4>{t(location.level2)}</h4>}
+                    {location.level3 !== null && <h4>{t(location.level3)}</h4>}
+                    {location.level4 !== null && <h4>{t(location.level4)}</h4>}
 
-                  </React.Fragment>
+                  </div>
               </div>
             </div>
-            {service === "removal" && (
-             <div>
-               <h4>{`Description: ${
-                 description ? description[1]: ""
-               }`}</h4>
-             </div>
-           )}
-            </>
-                ))
-              }
-
-            {/*Description Section */}
           </>
           )
         }

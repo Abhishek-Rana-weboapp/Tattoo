@@ -18,7 +18,6 @@ function MedicalForm() {
   const [showPopup, setShowPopup] = useState(false);
   const [showPopup_, setShowPopup_] = useState(false);
   const [loading, setLoading] = useState(false)
-  console.log("respons data ----",user)
 
   const yes=t("YES")
   const No=t('No')

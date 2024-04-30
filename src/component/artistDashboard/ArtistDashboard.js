@@ -39,6 +39,15 @@ export default function ArtistDashboard() {
 
 
   useEffect(() => {
+    const date = new Date().toLocaleString('en-US', {
+      month: '2-digit',
+      day: '2-digit',
+      year: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+    });
     const fetchAppointments = async () => {
       setLoading(true)
       await axios
@@ -48,6 +57,7 @@ export default function ArtistDashboard() {
             res?.data?.data.filter((a) => {
               const appDate = new Date(a.Date)
               const todayDate = new Date();
+             
               todayDate.setHours(0, 0, 0, 0);
               return (
                 (appDate.toLocaleDateString("en-US", options) === todayDate.toLocaleDateString("en-US", options) && a.Sign_completion === null)

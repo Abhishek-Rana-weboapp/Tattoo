@@ -53,6 +53,7 @@ function DoctorContactForm() {
   };
 
 
+
   useEffect(() => {
     const fetchMedicalHistory = async()=>{
       try{
@@ -62,6 +63,7 @@ function DoctorContactForm() {
         let finalResult = {};
         try {
           finalResult = JSON.parse(filterResponse)
+          sessionStorage.setItem("drformData", response.data.doctor_information)
         } catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
@@ -106,6 +108,7 @@ function DoctorContactForm() {
       return; // Stop further execution
     }
   }
+  sessionStorage.setItem("drformData", drformData)
   navigate("/consent");
   };
 

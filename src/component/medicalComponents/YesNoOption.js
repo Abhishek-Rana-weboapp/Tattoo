@@ -55,8 +55,6 @@ const YesNoOption = ({question, next, prev}) => {
         }
     }
 
-    console.log(question.subOpt)
-
   return (
     <div className="flex flex-col items-center gap-4 w-full flex-1 p-2">
          <label className="uppercase text-white md:text-2xl text-md md:font-bold flex gap-2">

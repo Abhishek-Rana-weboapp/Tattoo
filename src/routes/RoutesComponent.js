@@ -65,8 +65,6 @@ import PriceServices from '../component/priceServices';
 import TattooComponent from '../component/serviceSelection';
 import SkinCondition from '../component/skinCondition';
 import AppointmentList from '../component/AppointmentList';
-import SignaturePad from '../component/signature';
-import SignaturePad_see from '../component/signature_see';
 import JewelleryPiercing from '../component/piercingdashboard/jweleryPiercing';
 import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
@@ -89,10 +87,6 @@ export default function RoutesComponent() {
   const location = useLocation()
 
   useEffect(()=>{
-    console.log("count===" ,count)
-    console.log("currentSelection===",currentSelection)
-    console.log("user===",user)
-    console.log("finalUser===",finalUser)
     if(location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/forget_password" ){
       setIsVisible(false)
     }else{
@@ -101,7 +95,7 @@ export default function RoutesComponent() {
     const storedUser = JSON.parse(sessionStorage.getItem("user"))
     const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
     const storedemerformData = sessionStorage.getItem("emerformData")
-    const storeddrformData = sessionStorage.getItem("medicalHistory")
+    const storeddrformData = sessionStorage.getItem("drformData")
     if(storedUser){
       setUser(storedUser)
     }
@@ -239,8 +233,6 @@ export default function RoutesComponent() {
       <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
       <Route exact path="/billing/" element={<BillingComponent/>}/>
       <Route exact path="/billing/:id/:step" element={<BillingComponent/>}/>
-      <Route exact path="/SignaturePad" element={<SignaturePad/>}/>
-      <Route exact path="/SignaturePad_see" element={<SignaturePad_see/>}/>
       <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>
       </Route>
       {/* <Route element={<AdminRoutes/>}>

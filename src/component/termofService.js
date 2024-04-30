@@ -56,11 +56,13 @@ function TermsOfService() {
   const tattooRemovalRules = tattooRemovalTerms;
   const toothGemRules = toothGemTerms;
   const [pageContents, setpageContents] = useState([]);
+  const service = sessionStorage.getItem("typeofservice")
+
   
 
   useEffect(() => {
-    if (user.selectedTattooType) {
-      switch (user.selectedTattooType) {
+    if (service) {
+      switch (service) {
         case "tattoo":
           setpageContents(tattooRules);
           break;

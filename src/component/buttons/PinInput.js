@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
-const PinInput = ({value, onChange,className, ref}) => {
+const PinInput = ({value, onChange,className}) => {
     const [inputValue, setInputValue] = useState(value);
     const [showPassword, setShowPassword] = useState(false)
 
@@ -17,7 +17,6 @@ const PinInput = ({value, onChange,className, ref}) => {
       <>
       <div className="flex gap-3 bg-white text-black p-2 rounded-2xl items-center">
       <input
-        ref={ref}
         className="outline-none p-1"
         type={showPassword ? "text":"password"}
         value={inputValue}

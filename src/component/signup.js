@@ -142,14 +142,16 @@ function SignUp() {
           alert(" Mail send successfully ");
           setshowPopup(false);
         } else {
-          alert(" Invalid credentials  ");
+          setAlert(!alert)
+          setAlertMessage(t('Invalid credentials'));
           setshowPopup(true);
           setEmail("");
           setPassword("");
         }
       })
       .catch((error) => {
-        console.log(error);
+        setAlert(!alert)
+        setAlertMessage(t('Something went wrong'));
       });
   };
 
@@ -224,14 +226,6 @@ function SignUp() {
             </div>
 
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-              {/* <input
-                type="number"
-                className="flex-1 focus:outline-none bg-white p-1"
-                id="phoneNumber"
-                placeholder="Enter Phone Number"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-              /> */}
               <PhoneInput
              country='us'
              placeholder="Enter Phone Number"
