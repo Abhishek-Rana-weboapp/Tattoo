@@ -44,9 +44,7 @@ function ForgetPassword() {
       // Handle the response, e.g., display a success message to the user
     } catch (error) {
       console.error("Forget Password Error:", error);
-      // Handle errors and provide user feedback
     }
-    // Add code for handling the forget password request here
   };
 
   return (

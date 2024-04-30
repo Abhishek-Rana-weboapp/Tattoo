@@ -40,6 +40,7 @@ function ConsentForm() {
     gaurdianInitials,
     setGaurdianInitials,
     user,
+    drformData
   } = React.useContext(UserContext);
   const inputRef = useRef();
 
@@ -229,6 +230,8 @@ function ConsentForm() {
       }
     }
   };
+
+  console.log(drformData)
 
   const captureCursiveSignature = async () => {
     // Use html2canvas to capture the cursive signature as an image

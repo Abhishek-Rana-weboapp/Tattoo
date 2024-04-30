@@ -30,13 +30,13 @@ function DoctorContactForm() {
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
+  console.log(drformData)
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (name === "useDoctorRecommendation" && checked) {
       // Set default values when Use Doctor Recommendation is checked
       setdrFormData({
-        ...drformData,
         [name]: checked,
         name: "Carbon Health Urgent Care of Hialeah",
         phone: "(305) 200-1225",
@@ -63,7 +63,6 @@ function DoctorContactForm() {
         let finalResult = {};
         try {
           finalResult = JSON.parse(filterResponse)
-          sessionStorage.setItem("drformData", response.data.doctor_information)
         } catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
@@ -72,6 +71,7 @@ function DoctorContactForm() {
           setLoading(false)
           return
         }
+        console.log(finalResult)
         setdrFormData(finalResult)
         setLoading(false)
         setShowPopup_(true)
@@ -108,7 +108,7 @@ function DoctorContactForm() {
       return; // Stop further execution
     }
   }
-  sessionStorage.setItem("drformData", drformData)
+  console.log(drformData)
   navigate("/consent");
   };
 
