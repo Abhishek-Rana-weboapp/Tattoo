@@ -8,6 +8,7 @@ const TattooCount = () => {
   const navigate = useNavigate()
   const {alert ,user,setAlert, setAlertMessage, count, setCount} = useContext(UserContext)
   const {t} = useTranslation()
+  const service = sessionStorage.getItem("typeofservice")
 
 
  const handleChange = (e)=>{
@@ -17,18 +18,18 @@ const TattooCount = () => {
 
  const handleNext = ()=>{
    if(count){
-    if(user.selectedTattooType === "tattoo"){
+    if(service  === "tattoo"){
       navigate("/tattoo")
       return
-    }else if(user.selectedTattooType === "piercing"){
+    }else if(service === "piercing"){
       navigate("/piercing")
       return
     }
    }else{
-    if(user.selectedTattooType === "tattoo"){
+    if(service  === "tattoo"){
       setAlertMessage(t("Please select the number of tattoos you are getting"))
     }
-    else if(user.selectedTattooType === "piercing"){
+    else if(service  === "piercing"){
       setAlertMessage(t("Please select the number of piercings you are getting"))
     }
     setAlert(!alert)
@@ -48,8 +49,8 @@ const TattooCount = () => {
   return (
     <div className='flex flex-col justify-between items-center h-full md:w-4/6  w-full'>
       <div className='flex flex-col items-center gap-3 '>
-      <label className='font-bold text-md md:text-5xl text-white uppercase'>{user.selectedTattooType === "tattoo" ? t("Tattoo Count") : user.selectedTattooType === "piercing" ? t("Piercing Count") : ""}</label>
-      <label className='font-bold text-xl  md:text-4xl text-white  uppercase text-center '>{user.selectedTattooType === "tattoo" ? t("How many tattoos are you getting today? 1-10") : user.selectedTattooType === "piercing" ? t("How many piercings are you getting today? 1-10") :user.selectedTattooType === "removal" ? t("How many tattoos do you have? 1-10") : ""}</label>
+      <label className='font-bold text-md md:text-5xl text-white uppercase'>{service === "tattoo" ? t("Tattoo Count") : service === "piercing" ? t("Piercing Count") : ""}</label>
+      <label className='font-bold text-xl  md:text-4xl text-white  uppercase text-center '>{service === "tattoo" ? t("How many tattoos are you getting today? 1-10") : service === "piercing" ? t("How many piercings are you getting today? 1-10") :user.selectedTattooType === "removal" ? t("How many tattoos do you have? 1-10") : ""}</label>
       <select value={count} onChange={handleChange} className='text-2xl font-bold rounded-lg p-2'>
         {
           options.map((option)=>{

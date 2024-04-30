@@ -41,6 +41,9 @@ function Dashboard() {
   useEffect(() => {
     sessionStorage.removeItem("user")
     sessionStorage.removeItem("typeofservice")
+    sessionStorage.removeItem("emerformData")
+    sessionStorage.removeItem("drformData")
+    sessionStorage.removeItem("medicalHistory")
     if (user?.selectedTattooType !== null){
       setUser({
         selectedTattooType: null,

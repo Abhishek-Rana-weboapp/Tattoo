@@ -21,10 +21,11 @@ const NewMedicalHistory = () => {
   const username = sessionStorage.getItem("username")
   const [showPopup_, setShowPopup_] = useState(false);
   const {t} = useTranslation()
+  const service = sessionStorage.getItem("typeofservice")
   
   useEffect(() => {
-    if(user.selectedTattooType !== ""){
-      setQuestions(medicalQuestions[user.selectedTattooType] || [])
+    if(service !== ""){
+      setQuestions(medicalQuestions[service] || [])
     }
       const fetchMedicalHistory = async()=>{
         try{

@@ -106,7 +106,9 @@ export default function RoutesComponent() {
       setemerFormData(JSON.parse(storedemerformData))
     }
     if(storeddrformData){
-      setdrFormData(JSON.parse(storeddrformData))
+      if(storeddrformData.name !== "" && storeddrformData.state !== "Florida"&& storeddrformData.city !== ""&& storeddrformData.phone !== ""){
+        setdrFormData(JSON.parse(storeddrformData))
+      }
     }
   const handleBeforeUnload = (event) => {
     sessionStorage.setItem('user', JSON.stringify(user));
