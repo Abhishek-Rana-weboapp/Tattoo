@@ -1,59 +1,56 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+import UserContext from '../context/UserContext';
 
 function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword_, setShowPassword_] = useState(false);
+  const {alert, setAlert, setAlertMessage} = useContext(UserContext)
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const {t} = useTranslation()
   const navigate = useNavigate();
   const [psw, setpsw] = useState('');
   const [confirm_psw, setconfirm_psw] = useState('');
   const [responseMessage, setResponseMessage] = useState(''); // New state to store the API response message
 
   const urlSearchParams = new URLSearchParams(window.location.search);
-  const username = urlSearchParams.get('username');
-  const token = urlSearchParams.get('token');
+  const token = urlSearchParams.get('uuid');
+
+  let passReg =
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!(confirm_psw === psw)) {
-      alert('Passwords do not match. Please try again.');
-    } else {
-      const forgetPasswordData = {
-        password: confirm_psw,
-      };
-
-      // Configure the request
-      const url = `${apiUrl}/reset_password?username=${username}&token=${token}`;
-      const config = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(forgetPasswordData),
-      };
-
-      try {
-        const response = await fetch(url, config);
-
-        if (!response.ok) {
-          throw new Error('Reset Password request failed');
-        }
-
-        const responseData = await response.json();
-        setResponseMessage(responseData.message); // Set the response message in state
-
-        // Show the response message in a popup alert
-        alert(responseData.message);
-        navigate("/");
-      } catch (error) {
-        console.error('Reset Password Error:', error);
-        // Handle errors and provide user feedback
-      }
+      setAlertMessage('Passwords do not match. Please try again.');
+      setAlert(!alert)
+      return
+    } 
+    if (!passReg.test(confirm_psw)) {
+      setAlertMessage(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"));
+      setAlert(!alert);
+      return;
     }
+      const data = {
+            token: token,
+            newPassword: confirm_psw
+          }
+      await axios.post(`${apiUrl}/reset_password`, data)
+      .then(res=>{
+        if(res.status === 200){
+          navigate("/")
+        }
+      })
+      .catch(err=>{
+        setAlertMessage(t("Password reset failed"))
+        setAlert(!alert)
+        return
+      })
   };
 
   return (
@@ -100,7 +97,7 @@ function ResetPassword() {
             Reset Password
           </button>
 
-          <Link to="/login" className="text-right">
+          <Link to="/" className="text-right">
             Remember your password? Log in
           </Link>
         </div>
