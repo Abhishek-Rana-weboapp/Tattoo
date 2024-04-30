@@ -18,7 +18,6 @@ function HandInside() {
       if(user.level3) setSelected(user.level3)
     },[])
 
-    console.log(user)
   
     const buttons = [
       {
@@ -34,8 +33,6 @@ function HandInside() {
         name:"fingers"
       }
     ]
-
-    console.log(selected)
 
     
     const handleNext = ()=>{

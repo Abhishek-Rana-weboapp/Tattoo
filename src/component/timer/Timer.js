@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoaderModal from "../modal/LoaderModal";
 import { AUTHHEADERS } from "../../commonFunctions/Headers";
+import { formatCurrentTime } from "../../commonFunctions/timeFunctions";
 
 const Timer = ({
   updateAppointment,
@@ -64,25 +65,6 @@ const Timer = ({
     }
   }, []);
 
-  const fetchBill = async () => {
-    await axios
-      .get(`${apiUrl}/artist/billing_list_id?id`, {headers: AUTHHEADERS()})
-      .then((res) => {
-        const getBill = res.data.data.filter(
-          (bill) =>
-            parseInt(bill.appointment_id) === parseInt(updateAppointment.id)
-        );
-        if (getBill.length > 0) {
-          setBill(getBill[0]);
-        }
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchBill();
-  }, []);
-
   useEffect(() => {
     if (updateAppointment?.start_time && !updateAppointment?.end_time) {
       const startTime = new Date(updateAppointment.start_time);
@@ -114,18 +96,6 @@ const Timer = ({
       setIsRunning(false);
     }
   }, [updateAppointment]);
-
-  const formatCurrentTime = (time) => {
-    const startTime = new Date(time);
-    const hours = startTime.getHours();
-    const minutes = startTime.getMinutes();
-    const seconds = startTime.getSeconds();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    return `${String(hours % 24).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}:${String(seconds).padStart(2, "0")} ${ampm}`;
-  };
 
   const updateBreakTime = async () => {
     setLoading(true);
@@ -230,22 +200,22 @@ const Timer = ({
       setIsRunning(false);
       clearInterval(intervalIdRef.current);
     }
-    const options = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    };
-    const formattedDateTime = now.toLocaleString(undefined, options);
+    // const options = {
+    //   year: "numeric",
+    //   month: "numeric",
+    //   day: "numeric",
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    //   second: "2-digit",
+    //   hour12: true,
+    // };
+    // const formattedDateTime = now.toLocaleString(undefined, options);
     const data = {
       updates: [
         {
           id: updateAppointment?.id,
           updateField: key,
-          updateValue: formattedDateTime,
+          updateValue: now,
         },
       ],
     };
@@ -293,7 +263,7 @@ const Timer = ({
             ],
           };
           axios
-            .post(`${apiUrl}/artist/post_new`, data)
+            .post(`${apiUrl}/artist/post_new`, data,{headers:AUTHHEADERS()})
             .then((res) => {
               axios
                 .get(
@@ -321,6 +291,7 @@ const Timer = ({
         .catch((err) => console.error(err));
     }
   };
+
 
   if (loading) {
     return <LoaderModal />;

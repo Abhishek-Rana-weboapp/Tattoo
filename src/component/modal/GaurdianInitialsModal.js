@@ -67,8 +67,10 @@ const GaurdianInitialsModal = ({
 
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="w-full md:w-1/2  bg-white flex flex-col items-center gap-2 p-4 rounded-lg">
-        <h1>{t("Gaurdian's Initials and Signature")}</h1>
+      <div className="w-4/5 md:w-2/3 h-2/3 bg-white flex flex-col items-center gap-2 p-4 rounded-lg overflow-hidden">
+      <div className="w-full  bg-white flex flex-col items-center gap-2 p-4 rounded-lg md:overflow-hidden overflow-auto md:text-base text-sm">
+
+        <h2>{t("Gaurdian's Initials and Signature")}</h2>
         <label className="font-bold">{t("Confirm Your Name and Initials")}</label>
         <div className="flex items-center gap-2 w-3/4">
           <div className="flex flex-col text-start w-3/4">
@@ -82,7 +84,7 @@ const GaurdianInitialsModal = ({
                 `${gaurdianInfo?.firstName} ${gaurdianInfo?.lastName}` || ""
               }
               readOnly
-            />
+              />
           </div>
           <div className="flex flex-col text-start w-1/4">
             <label className="font-bold">
@@ -93,7 +95,7 @@ const GaurdianInitialsModal = ({
               className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
               value={`${gaurdianInitials}`}
               readOnly
-            ></input>
+              ></input>
           </div>
         </div>
         <div>
@@ -103,7 +105,7 @@ const GaurdianInitialsModal = ({
                 gaurdianActiveTab === 1 && "bg-gray-300"
               } p-2 rounded-lg`}
               onClick={() => setGaurdianActiveTab(1)}
-            >
+              >
               {t("Written")}
             </button>
             <button
@@ -111,7 +113,7 @@ const GaurdianInitialsModal = ({
                 gaurdianActiveTab === 2 && "bg-gray-300"
               } p-2 rounded-lg`}
               onClick={() => setGaurdianActiveTab(2)}
-            >
+              >
               {t("Draw")}
             </button>
           </div>
@@ -121,7 +123,7 @@ const GaurdianInitialsModal = ({
                 <img
                   src={cursiveGaurdianSignatureImage}
                   className="w-full h-40"
-                ></img>
+                  ></img>
               </div>
             )}
           </div>
@@ -141,7 +143,7 @@ const GaurdianInitialsModal = ({
                 },
               }}
               ref={signatureRef}
-            />
+              />
 
             {/* Buttons to handle the save and clear methods */}
             <div
@@ -150,7 +152,7 @@ const GaurdianInitialsModal = ({
                 display: "flex",
                 justifyContent: "center",
               }}
-            >
+              >
               <button
                 type="button"
                 style={{
@@ -163,7 +165,7 @@ const GaurdianInitialsModal = ({
                   marginRight: "10px",
                 }}
                 onClick={handleClear}
-              >
+                >
                 {t("Clear")}
               </button>
               <button
@@ -177,7 +179,7 @@ const GaurdianInitialsModal = ({
                   cursor: "pointer",
                 }}
                 onClick={handleSignatureSave}
-              >
+                >
                 {t("Save")}
               </button>
             </div>
@@ -194,7 +196,7 @@ const GaurdianInitialsModal = ({
             <p
               className="selector"
               style={{ fontFamily: "Blacksword", fontSize: "18px" }}
-            >
+              >
               {`${gaurdianInfo.firstName} ${gaurdianInfo.lastName}`}
             </p>
           </div>
@@ -204,11 +206,12 @@ const GaurdianInitialsModal = ({
             "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
           )}
         </p>
+          </div>
         <div className="flex justify-end w-full">
           <button
             className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
             onClick={handleGaurdianAdopt}
-          >
+            >
             {t("Adopt and Initial")}
           </button>
         </div>

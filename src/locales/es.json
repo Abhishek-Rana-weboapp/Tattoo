@@ -416,5 +416,9 @@
   "Zip":"ZIP",
   "Male":"Hombre",
   "Female":"Mujer",
-  "I am at least 18 years of age.I am accompanied by my parent or legal guardian.":"Al menos tengo 18 años de edad. Estoy acompañado por mi padre o tutor legal."
+  "I am at least 18 years of age.I am accompanied by my parent or legal guardian.":"Al menos tengo 18 años de edad. Estoy acompañado por mi padre o tutor legal.",
+  "Please handover the phone to our representative at the frontdesk":"Por favor, entregue el teléfono a nuestro representante en la recepción.",
+  "Enter Pin":"Ingresa el PIN.",
+  "Description":"Descripción",
+  "During the service we provided were there any complications between you, the client, or any other member of Fame Tattoos Staff? Example: (fainting, contamination, unable to fulfill service, argument, or misunderstanding)":"¿Durante el servicio que proporcionamos, hubo alguna complicación entre tú, el cliente, u otro miembro del personal de Fame Tattoos? Ejemplo: (desmayo, contaminación, incapacidad para completar el servicio, discusión o malentendido)"
 }

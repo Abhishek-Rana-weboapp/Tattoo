@@ -64,7 +64,6 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
     setUploadedUrls((prev) => [...prev, ...filteredUrls]);
   };
 
-  console.log(uploadedUrls)
 
     const handleDeleteImage = (index) => {
       setUploadedUrls(
@@ -201,7 +200,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
       <h3>{t("Please Provide Before Image:")}</h3>
       <div className="flex flex-col gap-2 items-center overflow-hidden">
 
-      {uploadedUrls.length !== 0 && (<div className="md:flex grid grid-cols-2 gap-2 overflow-auto">
+      {uploadedUrls.length !== 0 && (<div className="flex flex-wrap gap-2 overflow-auto">
             {uploadedUrls.map((url, index) => {
               return (
                 <div className="relative">

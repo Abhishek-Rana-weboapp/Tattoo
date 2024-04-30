@@ -29,7 +29,7 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
       <div className="w-full  bg-white flex flex-col items-center gap-2 p-4 rounded-lg md:overflow-hidden overflow-auto md:text-base text-sm">
         <h2>{t("Adopt Your Initials and Signature")}</h2>
         <label className="font-bold">{t("Confirm Your Name and Initials")}</label>
-        <div className="flex items-center gap-2 w-3/4">
+        <div className="flex items-center gap-2 md:w-3/4 w-full">
           <div className="flex flex-col text-start w-3/4">
             <label className="font-bold">
               {t("Full Name")}<span className="text-red-500">*</span>

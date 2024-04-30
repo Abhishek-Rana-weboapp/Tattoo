@@ -13,7 +13,6 @@ const YesNoSub = ({ question, next, type, prev }) => {
     useContext(UserContext);
   const { t } = useTranslation();
   const ref = useRef()
-  console.log("Render", ref)
 
   useEffect(() => {
     if(Object.keys(formData).includes(question.id.toString())){
@@ -49,7 +48,6 @@ const YesNoSub = ({ question, next, type, prev }) => {
             }
             }, [question, formData]);
             
-            console.log("subState===", subState);
             
             function hasEmptyValue(obj) {
               for (let key in obj) {

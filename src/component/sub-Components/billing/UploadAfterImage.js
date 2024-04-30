@@ -206,7 +206,7 @@ export default function UploadAfterImage({
         <h3>{t("After Image")}</h3>
         <div className="flex flex-col gap-2 items-center overflow-hidden">
           {/* Images preview */}
-          <div className="md:flex grid grid-cols-2 gap-2 overflow-auto">
+          <div className="flex flex-wrap gap-2 overflow-auto">
             {uploadedUrls?.map((image, index) => {
               return (
                 <div className="relative">
