@@ -6,6 +6,7 @@ import GridLayout from "../Layout/GridLayout";
 import CustomButton from "../buttons/CustomButton";
 import Navigation from "../navigation/Navigation";
 import { useTranslation } from "react-i18next";
+import CustomPiercingButton from "../buttons/CustomPiercingButton";
 function PiercingDashboard() {
   const { t } = useTranslation();
   const progressValue = 20;
@@ -27,9 +28,11 @@ function PiercingDashboard() {
   const partButton = [
     {
       name: "Belly Piercing",
+      value:"Belly Piercing 14g"
     },
     {
       name: "nipple-piercing",
+      value:"nipple-piercing"
     },
   ];
 
@@ -59,7 +62,7 @@ function PiercingDashboard() {
 
   const handleNext = () => {
     if (selected) {
-      if (partButton.find((item) => item.name === selected)) {
+      if (partButton.find((item) => item.value === selected)) {
         if (user.level1 !== selected) {
           setUser({
             ...user,
@@ -115,13 +118,14 @@ function PiercingDashboard() {
       <GridLayout title={"piercing"} subTitle={`Please Select location for piercing ${currentSelection}`}>
         {partButton.map((button, index) => {
           return (
-            <CustomButton
+            <CustomPiercingButton
               key={button.name}
-              onClick={handpiercingLocation}
+              onClick={()=>handpiercingLocation(button.value)}
               selected={selected}
+              value={button.value}
             >
               {button.name}
-            </CustomButton>
+            </CustomPiercingButton>
           );
         })}
         {buttons.map((button, index) => {

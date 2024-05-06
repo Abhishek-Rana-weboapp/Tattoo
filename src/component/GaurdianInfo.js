@@ -8,8 +8,9 @@ import Modal from "./modal/Modal";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useMediaQuery } from "react-responsive";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "./buttons/DatePicker";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
 
 const GaurdianInfo = () => {
   const { setAlertMessage, alert, setAlert } = useContext(UserContext);
@@ -122,17 +123,9 @@ const GaurdianInfo = () => {
             placeholder="Last Name"
             onChange={handleInput}
           ></input>
-          <DatePicker
-            name="dateOfBirth"
-            selected={gaurdianInfo.dateOfBirth}
-            className="p-2 rounded-lg w-full"
-            placeholder="D.O.B"
-            onChange={handleDate}
-            maxDate={new Date()}
-            dateFormat={"dd/MM/yyyy"}
-            showYearDropdown
-            scrollableYearDropdown
-          ></DatePicker>
+          <div className="bg-white rounded-md">
+           <DatePicker date={gaurdianInfo.dateOfBirth} setDate={handleDate}/>
+          </div>
           <input
             name="email"
             value={gaurdianInfo.email}

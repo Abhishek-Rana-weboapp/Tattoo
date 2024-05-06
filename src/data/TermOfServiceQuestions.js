@@ -128,7 +128,7 @@ export const toothGemTerms = [
     heading: "Rules for During the Procedure",
     terms: [
       "No Foods or Drinks allowed in the workstation.",
-      "Please sit as still as possible while being tattooed, your final satisfaction is our priority.",
+      "Please sit as still as possible during the procedure, your final satisfaction is our priority.",
       "Only the Individual getting a tooth gem is allowed in the workstation.",
       "DO NOT forget to ask for your aftercare instructions before leaving the shop.",
     ],
