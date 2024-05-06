@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import DatePicker from "react-datepicker";
+import DatePicker from "./buttons/DatePicker";
 
 function SignUp() {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -166,7 +166,7 @@ function SignUp() {
         >
           <div className="flex flex-col itmes-center gap-3">
             <div className="flex md:flex-row flex-col gap-3">
-              <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
+              <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2 ">
                 <input
                   type="text"
                   className="flex-1 focus:outline-none bg-white p-1"
@@ -234,27 +234,9 @@ function SignUp() {
              inputStyle={{width:isMobile ? "100% ": "98%", zIndex: "0"}}
              />
             </div>
-
+            
             <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
-            <DatePicker
-            name="dateOfBirth"
-            selected={dateOfBirth}
-            className="p-2 rounded-lg w-full"
-            placeholder="D.O.B"
-            onChange={(date)=>setDateOfBirth(date)}
-            maxDate={new Date()}
-            dateFormat={"dd/MM/yyyy"}
-            showYearDropdown
-            scrollableYearDropdown
-          ></DatePicker>
-              {/* <input
-                type="date"
-                className="flex-1 focus:outline-none bg-white p-1"
-                id="dateofbirth"
-                placeholder="Enter Date of Birth"
-                value={dateOfBirth}
-                onChange={(e) => setDateOfBirth(e.target.value)}
-              /> */}
+           <DatePicker setDate={setDateOfBirth} date={dateOfBirth}/>
             </div>
 
             <select

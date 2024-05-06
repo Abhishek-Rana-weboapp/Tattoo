@@ -73,7 +73,7 @@ export const questions = {
 
 export const minorQuestions = {
   tattooQuestions: [
-    "I am at least 18 years of age.I am accompanied by my parent or legal guardian.",
+    "I am accompanied by my parent or legal guardian.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get a tattoo.",
     "I agree to follow instructions concerning the care of my tattoo. Any tattoo touch-ups will be done at my own expense.",
     "I understand that colors may vary depending on skin tone. I understand that the finished tattoo may look different from the original design.",
@@ -89,7 +89,7 @@ export const minorQuestions = {
   ],
 
   tattooRemovalQuestions: [
-    "I am at least 18 years of age.I am accompanied by my parent or legal guardian.",
+    "I am accompanied by my parent or legal guardian.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get tattoo removal.",
     "I, being of sound mind and body, I hereby release any and all employees, contractors, agents, or persons representing Fame Tattoos, Inc. & Tattoo Vanish Method, LLC. from all responsibility. I agree not to sue Fame Tattoos, Inc. & Tattoo Vanish Method, LLC. or its heirs or assigns in connection with any and all damages, claims, demands, rights, and causes of action of whatever kind or nature, based upon injuries, property damages, or death of myself or any other persons arising from my decisions to have any tattoo removal related work at this time, whether or not caused by any negligence of Fame Tattoos, Inc. & Tattoo Vanish Method, LLC. and its heirs and employees.",
     "I agree for myself, my heirs, assigns and legal representatives to hold harmless from all damages, actions, causes of action, claim judgments, costs of litigations, Attorney fees, and all other costs and expenses which might arise from my decision to have any tattoo removal work done by Fame Tattoos, Inc. & Tattoo Vanish Method, LLC. and its heirs and employees.",
@@ -106,7 +106,7 @@ export const minorQuestions = {
   ],
 
   toothGemQuestions: [
-    "I am at least 18 years of age.I am accompanied by my parent or legal guardian.",
+    "I am accompanied by my parent or legal guardian.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get a tooth gem(s).",
     "I agree to follow instructions concerning the care of my tooth gem(s). Any re-application will be done at my own expense.",
     "I, being of sound mind and body, I hereby release any and all employees, contractors, agents, or persons representing Fame Tattoos, Inc. from all responsibility. I agree not to sue Fame Tattoos, Inc. or its heirs or assigns in connection with any and all damages, claims, demands, rights, and causes of action of whatever kind or nature, based upon injuries, property damages, or death of myself or any other persons arising from my decisions to have any tooth gem(s) related work at this time, whether or not caused by any negligence of Fame Tattoos, Inc. and its heirs and employees.",
@@ -128,7 +128,7 @@ export const minorQuestions = {
   ],
 
   piercingQuestions: [
-    "I am at least 18 years of age.I am accompanied by my parent or legal guardian.",
+    "I am accompanied by my parent or legal guardian.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get a piercing(s).",
     "I agree to follow instructions concerning the care of my piercing(s). Any re-piercing will be done at my own expense.",
     "I, being of sound mind and body, I hereby release any and all employees, contractors, agents, or persons representing Fame Tattoos, Inc. from all responsibility. I agree not to sue Fame Tattoos, Inc. or its heirs or assigns in connection with any and all damages, claims, demands, rights, and causes of action of whatever kind or nature, based upon injuries, property damages, or death of myself or any other persons arising from my decisions to have any piercing(s) related work at this time, whether or not caused by any negligence of Fame Tattoos, Inc. and its heirs and employees.",
