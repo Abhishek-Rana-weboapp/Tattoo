@@ -11,26 +11,18 @@ import { AUTHHEADERS } from "../commonFunctions/Headers";
 import PhoneInput from "react-phone-input-2";
 import { useMediaQuery } from "react-responsive";
 
-
 function DoctorContactForm() {
   const { t } = useTranslation();
   var progressValue = 70;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const [showPopup_, setShowPopup_] = useState(false);
-  const [loading, setLoading] = useState(false)
-  const {
-    drformData,
-    setdrFormData,
-    alert,
-    setAlert,
-    setAlertMessage,
-  } = React.useContext(UserContext);
+  const [loading, setLoading] = useState(false);
+  const { drformData, setdrFormData, alert, setAlert, setAlertMessage } =
+    React.useContext(UserContext);
   const username = sessionStorage.getItem("username");
 
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
-  console.log(drformData)
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -39,86 +31,92 @@ function DoctorContactForm() {
       setdrFormData({
         [name]: checked,
         name: "Carbon Health Urgent Care of Hialeah",
-        phone: "(305) 200-1225",
+        phone: "13052001225",
         city: "915 W 49th St. Hialeah, FL 33012",
         state: "Florida", // Default state as Florida
       });
       setShowPopup_(false);
     } else {
       setdrFormData({
-        ...drformData,
+        name: "",
+        phone: "",
+        city: "",
+        state: "Florida",
         [name]: type === "checkbox" ? checked : value,
       });
     }
   };
 
-
-
   useEffect(() => {
-    const fetchMedicalHistory = async()=>{
-      try{
-        setLoading(true)
-        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
-        const filterResponse = response.data.doctor_information
+    const fetchMedicalHistory = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `${apiUrl}/artist/user_history?username=${username}`,
+          { headers: AUTHHEADERS() }
+        );
+        const filterResponse = response.data.doctor_information;
         let finalResult = {};
         try {
-          finalResult = JSON.parse(filterResponse)
+          finalResult = JSON.parse(filterResponse);
         } catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
         }
-        if(Object.keys(finalResult).length  === 0){
-          setLoading(false)
-          return
+        if (Object.keys(finalResult).length === 0) {
+          setLoading(false);
+          return;
         }
-        console.log(finalResult)
-        setdrFormData(finalResult)
-        setLoading(false)
-        setShowPopup_(true)
-        return 
-      }catch(err){
-        console.log(err)
-      setLoading(false)
-      setAlert(!alert)
-      setAlertMessage(t("Something went wrong"))
-      return
+        console.log(finalResult);
+        setdrFormData(finalResult);
+        setLoading(false);
+        setShowPopup_(true);
+        return;
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+        setAlert(!alert);
+        setAlertMessage(t("Something went wrong"));
+        return;
       }
-  }
-    ;
+    };
     fetchMedicalHistory();
   }, []);
 
-  
-    const handleNo = ()=> {
-      navigate("/consent");
-    }
+  const handleNo = () => {
+    navigate("/consent");
+  };
 
-   const handleYes = ()=> {
-      setShowPopup_(false);
-    }
-
+  const handleYes = () => {
+    setShowPopup_(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  if (!drformData.useDoctorRecommendation) {
-    // Check if Doctor Recommendation is not chosen
-    if (!drformData.name || !drformData.phone || !drformData.city || !drformData.state) {
-      setAlertMessage(t("Please fill all the details"));
-      setAlert(true);
-      return; // Stop further execution
+    if (!drformData.useDoctorRecommendation) {
+      // Check if Doctor Recommendation is not chosen
+      if (
+        !drformData.name ||
+        !drformData.phone ||
+        !drformData.city ||
+        !drformData.state
+      ) {
+        setAlertMessage(t("Please fill all the details"));
+        setAlert(true);
+        return; // Stop further execution
+      }
     }
-  }
-  console.log(drformData)
-  navigate("/consent");
+    console.log(drformData);
+    navigate("/consent");
   };
 
   const handlePrev = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     navigate(-1);
   };
 
-  if(loading){
-    return <LoaderModal/>
+  if (loading) {
+    return <LoaderModal />;
   }
 
   return (
@@ -129,19 +127,18 @@ function DoctorContactForm() {
             {t("Do you want to update your Doctor's contact?")}
           </p>
           <div className="flex  gap-5 items-center">
-          <button
-            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
-            onClick={handleYes}
-          >
-            {t("Yes")}
-          </button>
-          <button
-            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
-            onClick={handleNo}
-          >
-            {t("No")}
-          </button>
-           
+            <button
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              onClick={handleYes}
+            >
+              {t("Yes")}
+            </button>
+            <button
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              onClick={handleNo}
+            >
+              {t("No")}
+            </button>
           </div>
         </Modal>
       )}
@@ -150,13 +147,12 @@ function DoctorContactForm() {
       </label>
       <form
         className="p-6 rounded-md flex flex-col flex-1 gap-3 shadow-md w-full md:w-4/5 lg:w-2/3 xl:w-1/2"
-
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
-              {t("Name")} 
+              {t("Name")}
             </label>
 
             <input
@@ -168,18 +164,24 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className='w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1'>
-          <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">{t("Phone")}:</label>
-           <div className='md:flex-1 w-full'>
-           <PhoneInput
-             country='us'
-             value={drformData.phone}
-             onChange={(value)=>setdrFormData({...drformData , phone:value})}
-             inputStyle={{width:isMobile ? "100% ": "98%", borderRadius : "0.375rem"}}
-             />
-             </div>
-
-        </div>
+          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">
+              {t("Phone")}:
+            </label>
+            <div className="md:flex-1 w-full">
+              <PhoneInput
+                country="us"
+                value={drformData.phone}
+                onChange={(value) =>
+                  setdrFormData({ ...drformData, phone: value })
+                }
+                inputStyle={{
+                  width: isMobile ? "100% " : "98%",
+                  borderRadius: "0.375rem",
+                }}
+              />
+            </div>
+          </div>
 
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
@@ -198,20 +200,18 @@ function DoctorContactForm() {
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("State")}:
             </label>
-            <select value={drformData?.state} className='rounded-md m-1 p-1  md:flex-1 w-full text-black'>
-            {
-              states?.map((state, index)=>{
-                return <option key={state} value={state}>{state}</option>
-              })
-            }
-          </select>
-            {/* <input
-              className="bg-white text-black rounded-md m-1 p-1 flex-1"
-              type="text"
-              name="state"
+            <select
               value={drformData?.state}
-              onChange={handleInputChange}
-            /> */}
+              className="rounded-md m-1 p-1  md:flex-1 w-full text-black"
+            >
+              {states?.map((state, index) => {
+                return (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                );
+              })}
+            </select>
           </div>
 
           <div className="flex items-center gap-2">
