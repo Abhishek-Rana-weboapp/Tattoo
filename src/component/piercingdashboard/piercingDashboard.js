@@ -32,7 +32,7 @@ function PiercingDashboard() {
     },
     {
       name: "nipple-piercing",
-      value:"nipple-piercing"
+      value:"nipple-piercing 14g"
     },
   ];
 

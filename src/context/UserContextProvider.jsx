@@ -27,6 +27,7 @@ const UserContextProvider = ({ children }) => {
   const [drformData, setdrFormData] = useState({
     name: "",
     city: "",
+    phone:"",
     state: "Florida",
     useDoctorRecommendation: false,
   });

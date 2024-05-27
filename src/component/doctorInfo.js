@@ -67,13 +67,11 @@ function DoctorContactForm() {
           setLoading(false);
           return;
         }
-        console.log(finalResult);
         setdrFormData(finalResult);
         setLoading(false);
         setShowPopup_(true);
         return;
       } catch (err) {
-        console.log(err);
         setLoading(false);
         setAlert(!alert);
         setAlertMessage(t("Something went wrong"));
@@ -168,19 +166,14 @@ function DoctorContactForm() {
             <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">
               {t("Phone")}:
             </label>
-            <div className="md:flex-1 w-full">
-              <PhoneInput
-                country="us"
-                value={drformData.phone}
-                onChange={(value) =>
-                  setdrFormData({ ...drformData, phone: value })
-                }
-                inputStyle={{
-                  width: isMobile ? "100% " : "98%",
-                  borderRadius: "0.375rem",
-                }}
-              />
-            </div>
+
+            <input
+              className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
+              type="number"
+              name="phone"
+              value={drformData?.phone}
+              onChange={handleInputChange}
+            />
           </div>
 
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
