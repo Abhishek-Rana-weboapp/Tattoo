@@ -62,8 +62,14 @@ function Dashboard() {
       setharmlessagreement({
         name: "",
         initials: "",
+        initialsImg:"",
         signatureurl: "",
         agreed: false,
+        gaurdianInitials : "",
+        gaurdianInitialsImg:"",
+        gaurdianSignature:"",
+        gaurdianAgreed :false,
+        gaurdianName : ""
       });
 
       setemerFormData({

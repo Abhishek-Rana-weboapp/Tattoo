@@ -32,6 +32,7 @@ function HoldHarmlessAgreement() {
   }, []);
 
 
+
   
   const handleAgreementToggle = (e) => {
     setharmlessagreement((prev) => ({ ...prev, agreed: e.target.checked }));
@@ -175,7 +176,6 @@ function HoldHarmlessAgreement() {
         </div>
 
         
-
             {/* gaurdian section */}
         {minor === "true" && <div className="flex flex-col md:grid grid-cols-2 md:mx-auto gap-2 justify-center">
           <div className="flex gap-1 items-center justify-center col-span-2">
@@ -210,10 +210,10 @@ function HoldHarmlessAgreement() {
           </div>
         {harmlessagreement?.gaurdianSignature && (
           <div className="h-10 w-2/5 flex justify-center ">
-            <img
+              <img
               className="w-full h-full bg-white"
               src={harmlessagreement?.gaurdianSignature}
-            />
+              />
           </div>
         )}
         </div>

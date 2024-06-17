@@ -40,15 +40,14 @@ const ClientInitialsModal = ({cursiveSignatureImage, setCursiveSignatureImage, h
               value={fullName}
             ></input>
           </div>
-          <div className="flex flex-col text-start w-1/4">
+          <div className="flex flex-col  text-start w-1/4">
             <label className="font-bold">
               {t("Initials")}<span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
+            <label
+            id="cursiveinitials"
               className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
-              value={storedInitials}
-            ></input>
+            >{storedInitials}</label>
           </div>
         </div>
         <div>

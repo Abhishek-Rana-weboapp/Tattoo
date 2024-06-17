@@ -9,11 +9,13 @@ import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 import UserContext from "../../context/UserContext";
 import html2canvas from "html2canvas";
+import { captureCursiveSignature } from "../../commonFunctions/utils";
 
 const GaurdianInitialsModal = ({
   gaurdianInitials,
   cursiveGaurdianSignatureImage,
   setCursiveGaurdianSignatureImage,
+  setCursiveGaurdianInitialsImage,
   gaurdianActiveTab,
   setGaurdianActiveTab,
   handleGaurdianAdopt,
@@ -28,8 +30,10 @@ const GaurdianInitialsModal = ({
 
   useEffect(() => {
     const handleGaurdianCursive = async () => {
-      const gaurdianSignature = await captureCursiveSignature();
+      const gaurdianSignature = await captureCursiveSignature("cursiveSignatureGaurdian");
       setCursiveGaurdianSignatureImage(gaurdianSignature);
+      const gaurdianInitials = await captureCursiveSignature("cursiveInitialGaurdian")
+      setCursiveGaurdianInitialsImage(gaurdianInitials)
     };
     handleGaurdianCursive();
   }, []);
@@ -49,21 +53,6 @@ const GaurdianInitialsModal = ({
   };
 
 
-  const captureCursiveSignature = async () => {
-    // Use html2canvas to capture the cursive signature as an image
-    const cursiveSignatureCanvas = await html2canvas(
-      document.getElementById("cursiveSignatureGaurdian"),
-      {
-        scale: 3, // Increase the scale for higher resolution
-        logging: false, // Disable logging to console
-        useCORS: true, // Enable cross-origin resource sharing
-        allowTaint: true, // Allow tainting of the canvas (useful if the content includes images from other domains)
-        backgroundColor: null, // Set background color to null to capture transparency
-      }
-    );
-    // Convert the canvas to a base64-encoded image
-    return cursiveSignatureCanvas.toDataURL();
-  };
 
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
@@ -90,12 +79,10 @@ const GaurdianInitialsModal = ({
             <label className="font-bold">
               {t("Initials")}<span className="text-red-500">*</span>
             </label>
-            <input
-              type="text"
+            <label
+            id="cursiveInitialGaurdian"
               className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
-              value={`${gaurdianInitials}`}
-              readOnly
-              ></input>
+            >{gaurdianInitials}</label>
           </div>
         </div>
         <div>

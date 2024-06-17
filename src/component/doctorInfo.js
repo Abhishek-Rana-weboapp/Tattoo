@@ -22,28 +22,29 @@ function DoctorContactForm() {
     React.useContext(UserContext);
   const username = sessionStorage.getItem("username");
 
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (name === "useDoctorRecommendation" && checked) {
-      // Set default values when Use Doctor Recommendation is checked
-      setdrFormData({
-        [name]: checked,
-        name: "Carbon Health Urgent Care of Hialeah",
-        phone: "13052001225",
-        city: "915 W 49th St. Hialeah, FL 33012",
-        state: "Florida", // Default state as Florida
-      });
+    if (name === "useDoctorRecommendation") {
+      if (checked) {
+        setdrFormData({
+          [name]: checked,
+          name: "Carbon Health Urgent Care of Hialeah",
+          phone: "13052001225",
+          city: "915 W 49th St. Hialeah, FL 33012",
+          state: "Florida", // Default state as Florida
+        });
+      } else {
+        setdrFormData({
+          name: "",
+          phone: "",
+          city: "",
+          state: "Florida",
+          [name]: type === "checkbox" ? checked : checked,
+        });
+      }
       setShowPopup_(false);
     } else {
-      setdrFormData({
-        name: "",
-        phone: "",
-        city: "",
-        state: "Florida",
-        [name]: type === "checkbox" ? checked : value,
-      });
+      setdrFormData({ ...drformData, [name]: value });
     }
   };
 
@@ -59,7 +60,7 @@ function DoctorContactForm() {
         let finalResult = {};
         try {
           finalResult = JSON.parse(filterResponse);
-        } catch (error) {
+        }catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
         }
@@ -104,7 +105,6 @@ function DoctorContactForm() {
         return; // Stop further execution
       }
     }
-    console.log(drformData);
     navigate("/consent");
   };
 

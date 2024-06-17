@@ -34,9 +34,11 @@ const UserContextProvider = ({ children }) => {
   const [harmlessagreement, setharmlessagreement] = useState({
     name: "",
     initials: "",
+    initialsImg:"",
     signatureurl: "",
     agreed: false,
     gaurdianInitials : "",
+    gaurdianInitialsImg:"",
     gaurdianSignature:"",
     gaurdianAgreed :false,
     gaurdianName : ""
