@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
-
 import ProgressBar from "./ProgressBar";
 import ConsentFormLayout from "./Layout/FormLayout";
 import { useTranslation } from "react-i18next";
 import html2canvas from "html2canvas";
-
 import ClientInitialsModal from "./modal/ClientInitialsModal";
 import GaurdianInitialsModal from "./modal/GaurdianInitialsModal";
 import { questions, minorQuestions } from "../data/ConsentQuestions";
@@ -39,8 +37,8 @@ function ConsentForm() {
     setGaurdianSignature,
     gaurdianInitials,
     setGaurdianInitials,
-    user,
-    drformData
+    harmlessagreement,
+    setharmlessagreement,
   } = React.useContext(UserContext);
   const inputRef = useRef();
 
@@ -51,17 +49,18 @@ function ConsentForm() {
   const [storedInitials, setStoredInitials] = useState(
     sessionStorage.getItem("initials")
   );
+  const [cursiveInitialsImage, setCursiveInitialsImage] = useState("");
+  const [cursiveGaurdianInitialsImage, setCursiveGaurdianInitialsImage] =
+    useState("");
   const [clientInitialsModalOpen, setClientInitialsModalOpen] = useState(true);
   const [gaurdianInitialsModalOpen, setGaurdianInitialsModalOpen] =
     useState(false);
   const [totalPages, setTotalPages] = useState(0);
-
   const minor = sessionStorage.getItem("minor");
-  const typeofservice = sessionStorage.getItem("typeofservice")
-
+  const typeofservice = sessionStorage.getItem("typeofservice");
   const [currentPage, setCurrentPage] = useState(1);
   const [statements, setStatements] = useState([]);
- 
+
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -74,7 +73,6 @@ function ConsentForm() {
   }, [currentPage]);
 
   const handleCheckbox = (page, e) => {
-    // setChecked({ ...checked, [page]: e.target.checked });
     if (e.target.checked === true) {
       setInitials({ ...initials, [page]: storedInitials });
     } else {
@@ -95,22 +93,27 @@ function ConsentForm() {
 
   useEffect(() => {
     const handleCursive = async () => {
-      const cursiveSignatureImage = await captureCursiveSignature();
+      const cursiveSignatureImage = await captureCursiveSignature(
+        "cursiveSignature"
+      );
       setCursiveSignatureImage(cursiveSignatureImage);
+      const cursiveInitialsImage = await captureCursiveSignature(
+        "cursiveinitials"
+      );
+      setCursiveInitialsImage(cursiveInitialsImage);
     };
     handleCursive();
-    if(minor === "true"){
-    typeofservice
-      ? typeofservice === "removal"
-        ? setStatements(importMinorQuestions.tattooRemovalQuestions)
-        : typeofservice === "piercing"
-        ? setStatements(importMinorQuestions.piercingQuestions)
-        : typeofservice === "tooth-gems"
-        ? setStatements(importMinorQuestions.toothGemQuestions)
-        : setStatements(importMinorQuestions.tattooQuestions)
-      : setStatements(importMinorQuestions.tattooQuestions);
-    }
-   else{
+    if (minor === "true") {
+      typeofservice
+        ? typeofservice === "removal"
+          ? setStatements(importMinorQuestions.tattooRemovalQuestions)
+          : typeofservice === "piercing"
+          ? setStatements(importMinorQuestions.piercingQuestions)
+          : typeofservice === "tooth-gems"
+          ? setStatements(importMinorQuestions.toothGemQuestions)
+          : setStatements(importMinorQuestions.tattooQuestions)
+        : setStatements(importMinorQuestions.tattooQuestions);
+    } else {
       typeofservice
         ? typeofservice === "removal"
           ? setStatements(importQuestions.tattooRemovalQuestions)
@@ -120,15 +123,16 @@ function ConsentForm() {
           ? setStatements(importQuestions.toothGemQuestions)
           : setStatements(importQuestions.tattooQuestions)
         : setStatements(importQuestions.tattooQuestions);
-      }
+    }
   }, []);
-
 
   useEffect(() => {
     if (statements?.length > 0) {
       setTotalPages(statements?.length);
     }
   }, [statements]);
+
+  console.log(harmlessagreement)
 
   const nextPage = () => {
     if (currentPage < totalPages && currentPage !== statements.length) {
@@ -187,6 +191,10 @@ function ConsentForm() {
         if (minor === "true") {
           setClientInitialsModalOpen(false);
           setGaurdianInitialsModalOpen(true);
+          setharmlessagreement({
+            ...harmlessagreement,
+            initialsImg: cursiveInitialsImage,
+          });
           return;
         } else {
           setClientInitialsModalOpen(false);
@@ -214,6 +222,7 @@ function ConsentForm() {
       if (cursiveGaurdianSignatureImage) {
         setGaurdianSignature(cursiveGaurdianSignatureImage);
         setGaurdianInitialsModalOpen(false);
+        setharmlessagreement({...harmlessagreement , gaurdianInitialsImg : cursiveGaurdianInitialsImage})
         return;
       }
     }
@@ -231,12 +240,10 @@ function ConsentForm() {
     }
   };
 
-  console.log(drformData)
-
-  const captureCursiveSignature = async () => {
+  const captureCursiveSignature = async (id) => {
     // Use html2canvas to capture the cursive signature as an image
     const cursiveSignatureCanvas = await html2canvas(
-      document.getElementById("cursiveSignature"),
+      document.getElementById(id),
       {
         scale: 3, // Increase the scale for higher resolution
         logging: false, // Disable logging to console
@@ -277,6 +284,7 @@ function ConsentForm() {
           handleGaurdianAdopt={handleGaurdianAdopt}
           drawnGaurdianSignature={drawnGaurdianSignature}
           setDrawnGaurdianSignature={setDrawnGaurdianSignature}
+          setCursiveGaurdianInitialsImage={setCursiveGaurdianInitialsImage}
         />
       )}
       <ConsentFormLayout
@@ -312,8 +320,8 @@ function ConsentForm() {
               value={initials[currentPage]}
               readOnly
               className="bg-gray-700 w-24 text-white p-2 rounded-md font-bold Blacksword"
-              />
-              </div>
+            />
+          </div>
         </div>
 
         {/* gaurdians section */}
