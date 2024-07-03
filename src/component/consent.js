@@ -102,7 +102,7 @@ function ConsentForm() {
         "cursiveinitials"
       );
       setCursiveInitialsImage(cursiveInitialsImage);
-      // setInitialsImg(cursiveInitialsImage)
+      setInitialsImg(cursiveInitialsImage)
     };
     handleCursive();
     if (minor === "true") {
@@ -134,7 +134,6 @@ function ConsentForm() {
     }
   }, [statements]);
 
-  console.log(harmlessagreement)
 
   const nextPage = () => {
     if (currentPage < totalPages && currentPage !== statements.length) {
@@ -193,7 +192,6 @@ function ConsentForm() {
         if (minor === "true") {
           setClientInitialsModalOpen(false);
           setGaurdianInitialsModalOpen(true);
-          setInitialsImg(cursiveInitialsImage)
           return;
         } else {
           setClientInitialsModalOpen(false);
