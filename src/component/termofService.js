@@ -117,6 +117,8 @@ function TermsOfService() {
     }
   };
 
+  console.log(harmlessagreement)
+
   const handleSubmit = async () => {
     setLoading(true)
     const username = sessionStorage.getItem("username");

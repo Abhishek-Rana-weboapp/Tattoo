@@ -43,7 +43,7 @@ export default function VerifyUpload({step, setStep}) {
              setGaurdianImagePrev(res.data.identity.guardianidentity)
              setUpdateModal(true)
              setLoading(false)
-             setStep(3)
+             setStep(2)
              return
             }else{
               setLoading(false)
@@ -51,7 +51,9 @@ export default function VerifyUpload({step, setStep}) {
             }
           }else{
             if(res.data.identity.useridentity !== null){
-              setStep(4)
+             setIdPhoto(res.data.identity.useridentity)
+             setImagePrev(res.data.identity.useridentity)
+              setStep(2)
               setLoading(false)
               return
             }else{

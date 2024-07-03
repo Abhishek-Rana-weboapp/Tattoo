@@ -38,7 +38,8 @@ function ConsentForm() {
     gaurdianInitials,
     setGaurdianInitials,
     harmlessagreement,
-    setharmlessagreement,
+    setGaurdianInitialsImg,
+    setInitialsImg
   } = React.useContext(UserContext);
   const inputRef = useRef();
 
@@ -101,6 +102,7 @@ function ConsentForm() {
         "cursiveinitials"
       );
       setCursiveInitialsImage(cursiveInitialsImage);
+      // setInitialsImg(cursiveInitialsImage)
     };
     handleCursive();
     if (minor === "true") {
@@ -191,10 +193,7 @@ function ConsentForm() {
         if (minor === "true") {
           setClientInitialsModalOpen(false);
           setGaurdianInitialsModalOpen(true);
-          setharmlessagreement({
-            ...harmlessagreement,
-            initialsImg: cursiveInitialsImage,
-          });
+          setInitialsImg(cursiveInitialsImage)
           return;
         } else {
           setClientInitialsModalOpen(false);
@@ -222,7 +221,8 @@ function ConsentForm() {
       if (cursiveGaurdianSignatureImage) {
         setGaurdianSignature(cursiveGaurdianSignatureImage);
         setGaurdianInitialsModalOpen(false);
-        setharmlessagreement({...harmlessagreement , gaurdianInitialsImg : cursiveGaurdianInitialsImage})
+        setGaurdianInitialsImg(cursiveGaurdianInitialsImage)
+        // setharmlessagreement({...harmlessagreement , gaurdianInitialsImg : cursiveGaurdianInitialsImage})
         return;
       }
     }
@@ -264,6 +264,7 @@ function ConsentForm() {
           <ClientInitialsModal
             cursiveSignatureImage={cursiveSignatureImage}
             setCursiveSignatureImage={setCursiveSignatureImage}
+            setCursiveInitialsImage={setCursiveInitialsImage}
             handleAdopt={handleAdopt}
             storedInitials={storedInitials}
             activeTab={activeTab}
