@@ -43,6 +43,9 @@ const UserContextProvider = ({ children }) => {
     gaurdianAgreed :false,
     gaurdianName : ""
   });
+
+  const [initialsImg, setInitialsImg] = useState("")
+  const [gaurdianInitialsImg, setGaurdianInitialsImg] = useState("")
   
   const [count, setCount] = useState(1)
 
@@ -103,7 +106,9 @@ const UserContextProvider = ({ children }) => {
         currentSelection, 
         setCurrentSelection,
         finalUser, 
-        setFinalUser
+        setFinalUser,
+        initialsImg, setInitialsImg,
+        gaurdianInitialsImg, setGaurdianInitialsImg,
       }}
     >
       {children}

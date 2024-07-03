@@ -238,6 +238,7 @@ const BillingComponent = () => {
         />
       )}
 
+
       {currentStep === 8 && (
         <CompleteAgreement
           updateAppointment={updateAppointment}

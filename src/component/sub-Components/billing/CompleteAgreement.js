@@ -6,11 +6,9 @@ import { apiUrl } from "../../../url";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoaderModal from "../../modal/LoaderModal";
+import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 
-export default function CompleteAgreement({
-  updateAppointment,
-  handlePrev,
-}) {
+export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   const { t } = useTranslation();
   const [imgUrl, setImgUrl] = useState();
   const signatureRef = useRef();
@@ -61,7 +59,7 @@ export default function CompleteAgreement({
             setAlertMessage(t("Signature Uploaded"));
             setAlert(!alert);
             navigate("/artist-dashboard", { replace: true });
-            return
+            return;
           }
         })
         .catch((err) => {
@@ -77,8 +75,26 @@ export default function CompleteAgreement({
     }
   };
 
-  if(loading){
-    return <LoaderModal/>
+  const handleGeneratePDF = async () => {
+    await axios
+      .post(
+        `${apiUrl}pdf/generate`,
+        {
+          username: updateAppointment?.username,
+          serviceId: updateAppointment?.id,
+        },
+        { headers: AUTHHEADERS() }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  if (loading) {
+    return <LoaderModal />;
   }
 
   return (
@@ -113,11 +129,11 @@ export default function CompleteAgreement({
             ref={signatureRef}
           />
         </div>
-        {imgUrl &&
-        <div className="bg-white h-28 w-30">
-         <img src={imgUrl} className="w-full h-full z-10"></img>
-        </div>
-         }
+        {imgUrl && (
+          <div className="bg-white h-28 w-30">
+            <img src={imgUrl} className="w-full h-full z-10"></img>
+          </div>
+        )}
         <div className="flex justify-center gap-2">
           <button
             type="button"
@@ -168,6 +184,13 @@ export default function CompleteAgreement({
           Sign
         </button>
       </div>
+      <button
+        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+        onClick={handleGeneratePDF}
+        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+      >
+        Generate PDF
+      </button>
     </div>
   );
 }

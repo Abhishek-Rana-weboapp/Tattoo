@@ -15,7 +15,9 @@ function HoldHarmlessAgreement() {
     setAlert,
     setAlertMessage,
     signature,
-    gaurdianSignature
+    gaurdianSignature,
+    initialsImg,
+    gaurdianInitialsImg
   } = useContext(UserContext);
   const inputRef = useRef();
   const storedGaurdianInitials = sessionStorage.getItem("gaurdianInitials")
@@ -31,8 +33,6 @@ function HoldHarmlessAgreement() {
     inputRef?.current?.focus();
   }, []);
 
-
-
   
   const handleAgreementToggle = (e) => {
     setharmlessagreement((prev) => ({ ...prev, agreed: e.target.checked }));
@@ -42,6 +42,7 @@ function HoldHarmlessAgreement() {
         initials: initials,
         name: name,
         signatureurl: signature,
+        initialsImg
       }));
     } else {
       setharmlessagreement((prev) => ({
@@ -49,6 +50,7 @@ function HoldHarmlessAgreement() {
         initials: "",
         name: "",
         signatureurl: undefined,
+        initialsImg:""
       }));
     }
   };
@@ -62,6 +64,7 @@ function HoldHarmlessAgreement() {
         gaurdianInitials: storedGaurdianInitials,
         gaurdianName: `${gaurdianInfo?.firstName} ${gaurdianInfo?.lastName}`,
         gaurdianSignature: gaurdianSignature,
+        gaurdianInitialsImg
       }));
     } else {
       setharmlessagreement((prev) => ({
@@ -69,6 +72,7 @@ function HoldHarmlessAgreement() {
         gaurdianInitials: "",
         gaurdianName: "",
         gaurdianSignature: undefined,
+        gaurdianInitialsImg:""
       }));
     }
   }

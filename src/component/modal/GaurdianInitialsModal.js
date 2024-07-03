@@ -33,6 +33,7 @@ const GaurdianInitialsModal = ({
       const gaurdianSignature = await captureCursiveSignature("cursiveSignatureGaurdian");
       setCursiveGaurdianSignatureImage(gaurdianSignature);
       const gaurdianInitials = await captureCursiveSignature("cursiveInitialGaurdian")
+      console.log(gaurdianInitials)
       setCursiveGaurdianInitialsImage(gaurdianInitials)
     };
     handleGaurdianCursive();
