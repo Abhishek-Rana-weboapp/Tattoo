@@ -117,7 +117,6 @@ function TermsOfService() {
     }
   };
 
-  console.log(harmlessagreement)
 
   const handleSubmit = async () => {
     setLoading(true)
@@ -133,7 +132,7 @@ function TermsOfService() {
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
         body_location: JSON.stringify(finalUser),
-        medicalhistory: formData,
+        medicalhistory: JSON.stringify(formData),
         Consent_form: "agreed",
         gaurdian_initials: storedGaurdianInitials,
         guardian_signature: gaurdianSignature,
@@ -155,7 +154,7 @@ function TermsOfService() {
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
         body_location: JSON.stringify(finalUser),
-        medicalhistory: formData,
+        medicalhistory: JSON.stringify(formData),
         emergencycontactnumber: JSON.stringify(emerformData),
         doctor_information: JSON.stringify(drformData),
         WaiverRelease_url: JSON.stringify(initials),
