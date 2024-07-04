@@ -26,7 +26,7 @@ function SignUp() {
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [adminUsername, setadminUsername] = useState("");
 
-  const [selectedLanguage, setSelectedLanguage] = useState("eng");
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [phoneNumber, setPhoneNumber] = useState();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
@@ -245,7 +245,7 @@ function SignUp() {
               value={selectedLanguage} // Set the selected value
               onChange={(e) => setSelectedLanguage(e.target.value)} // Update state on change
             >
-              <option value="eng">English</option>
+              <option value="en">English</option>
               <option value="es">Spanish</option>
             </select>
           </div>
