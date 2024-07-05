@@ -28,7 +28,7 @@ const DatePicker = ({date, setDate}) => {
   return (
     <div className='relative w-full'>
     <div className='flex gap-1 items-center w-full pr-2'>
-      <input  value={date} readOnly className='p-2 w-full rounded-md' />
+      <input  value={date} readOnly className='px-2 py-1 w-full rounded-md' />
       <IoCalendarNumberOutline size={20} onClick={()=>setOpen(!open)} />
         </div>
       {open &&  <div className='fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center z-20' onClick={()=>setOpen(false)}>

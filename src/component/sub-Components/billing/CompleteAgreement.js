@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoaderModal from "../../modal/LoaderModal";
 import { AUTHHEADERS } from "../../../commonFunctions/Headers";
+import Modal from "../../modal/Modal";
 
 export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   const { t } = useTranslation();
@@ -15,6 +16,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   const navigate = useNavigate();
   const { setAlert, setAlertMessage, alert } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
     if (updateAppointment) {
@@ -56,9 +58,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         .then((res) => {
           if (res.status === 201) {
             setLoading(false);
-            setAlertMessage(t("Signature Uploaded"));
-            setAlert(!alert);
-            navigate("/artist-dashboard", { replace: true });
+            setModalOpen(true)
             return;
           }
         })
@@ -86,7 +86,9 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         { headers: AUTHHEADERS() }
       )
       .then((res) => {
-        console.log(res);
+        setAlert(!alert);
+        setAlertMessage(t("pdf uploaded to google drive"));
+        navigate("/artist-dashboard", { replace: true });
       })
       .catch((err) => {
         console.log(err);
@@ -98,6 +100,21 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   }
 
   return (
+    <>
+    {
+      modalOpen && <Modal>
+        <div className="flex flex-col gap-4 p-4">
+        <label className="text-2xl text-black">Generate pdf for this appointment</label>
+        <button
+        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
+        onClick={handleGeneratePDF}
+        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
+        >
+        Generate PDF
+      </button>
+        </div>
+      </Modal>
+    }
     <div className="flex md:w-2/4 w-full flex-col gap-3 items-center overflow-hidden p-2">
       <h3 className="text-white font-bold text-center">
         {t(
@@ -184,13 +201,8 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
           Sign
         </button>
       </div>
-      <button
-        className="yellowButton py-2 px-4 rounded-xl text-black font-bold"
-        onClick={handleGeneratePDF}
-        // disabled={videoStatus === "UPLOADING" || imageStatus === "UPLOADING"}
-      >
-        Generate PDF
-      </button>
+      
     </div>
+    </>
   );
 }
