@@ -6,8 +6,6 @@ import { useMediaQuery } from "react-responsive";
 
 const ClientInitialsModal = ({
   cursiveSignatureImage,
-  setCursiveSignatureImage,
-  setCursiveInitialsImage,
   handleAdopt,
   fullName,
   activeTab,
@@ -36,7 +34,7 @@ const ClientInitialsModal = ({
   };
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center ">
-      <div className="w-4/5 md:w-2/3 h-2/3 bg-white flex flex-col items-center gap-2 p-4 rounded-lg overflow-hidden">
+      <div className="w-4/5 md:w-2/3 h-2/3 bg-white flex flex-col items-center justify-between gap-2 p-4 rounded-lg overflow-hidden">
         <div className="w-full  bg-white flex flex-col items-center gap-2 p-4 rounded-lg md:overflow-hidden overflow-auto md:text-base text-sm">
           <h2>{t("Adopt Your Initials and Signature")}</h2>
           <label className="font-bold">
@@ -67,8 +65,8 @@ const ClientInitialsModal = ({
               </label>
             </div>
           </div>
-          <div>
-            <div className="flex gap-2">
+          <div className="w-1/3">
+            <div className="flex gap-2 w-max">
               <button
                 className={`bg-none font-semibold text-black hover:bg-gray-300 ${
                   activeTab === 1 && "bg-gray-300"
@@ -86,16 +84,14 @@ const ClientInitialsModal = ({
                 {t("Draw")}
               </button>
             </div>
-            <div>
-              {activeTab === 1 && (
-                <div className="border-1 rounded-lg border-gray-500 w-full">
-                  <img
-                    src={cursiveSignatureImage}
-                    className="w-full h-40"
-                  ></img>
-                </div>
-              )}
-            </div>
+            {activeTab === 1 && (
+              <div className="border-1 rounded-lg border-gray-500 w-full flex justify-center">
+                <img
+                  src={cursiveSignatureImage}
+                  className="aspect-video border rounded-lg mt-2"
+                ></img>
+              </div>
+            )}
           </div>
           {activeTab === 2 && (
             <div className="flex flex-col items-center">
@@ -162,27 +158,26 @@ const ClientInitialsModal = ({
           )}
           {activeTab === 1 && (
             <div id="cursiveSignature">
-              <p
-                className="selector px-1"
-                style={{ fontFamily: "Blacksword", fontSize: "18px" }}
-              >
+              <p className="p-2 text-3xl" style={{ fontFamily: "Blacksword" }}>
                 {fullName}
               </p>
             </div>
           )}
+        </div>
+        <div>
           <p className=" text-xs">
             {t(
               "By selecting Adopt and initial, I agree that the signature and initials will be the electronic representation of my signature and initials for all purposes when I (or my agent) use them on documents, including legally binding contracts-just the same as a pen-and-paper signature or initial"
             )}
           </p>
-        </div>
-        <div className="flex justify-end w-full">
-          <button
-            className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
-            onClick={handleAdopt}
-          >
-            {t("Adopt and Initial")}
-          </button>
+          <div className="flex justify-end w-full">
+            <button
+              className="bg-yellow-400 font-bold p-2 rounded-md hover:scale-105 ease-in-out duration-300"
+              onClick={handleAdopt}
+            >
+              {t("Adopt and Initial")}
+            </button>
+          </div>
         </div>
       </div>
     </div>
