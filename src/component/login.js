@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "bootstrap/dist/css/bootstrap.css";
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
@@ -138,7 +137,7 @@ function Login() {
     <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
       <img src={Title_logo} className="w-3/6 md:w-1/6"></img>
       <h1 className="text-white font-bold md:text-2xl text-lg">LOGIN</h1>
-      <div className="col-md-6">
+      <div className="sm:w-1/3 w-4/5">
         <form
           onSubmit={handleFormSubmit}
           className="flex flex-col justify-center gap-3"

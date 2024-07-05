@@ -159,7 +159,7 @@ function SignUp() {
     <div className="w-full h-full flex flex-col gap-4 justify-center items-center p-4">
       <img src={Title_logo} className="w-2/6 md:w-1/6"></img>
       <h1 className="text-white font-bold">Sign Up</h1>
-      <div className="col-md-6">
+      <div className="sm:w-2/3 lg:1/3 w-4/5">
         <form
           onSubmit={handleFormSubmit}
           className="flex flex-col justify-center gap-3"
@@ -169,7 +169,7 @@ function SignUp() {
               <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2 ">
                 <input
                   type="text"
-                  className="flex-1 focus:outline-none bg-white p-1"
+                  className="w-full focus:outline-none bg-white p-1"
                   id="firstname"
                   placeholder="First Name"
                   value={firstName}
@@ -180,7 +180,7 @@ function SignUp() {
               <div className="flex gap-3 bg-white p-2 rounded-lg items-center md:w-1/2">
                 <input
                   type="text"
-                  className="flex-1 focus:outline-none bg-white p-1"
+                  className="w-full focus:outline-none bg-white p-1"
                   id="lastname"
                   placeholder="Last Name"
                   value={lastName}
