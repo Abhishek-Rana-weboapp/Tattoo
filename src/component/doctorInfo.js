@@ -30,7 +30,7 @@ function DoctorContactForm() {
           [name]: checked,
           name: "Carbon Health Urgent Care of Hialeah",
           phone: "13052001225",
-          city: "915 W 49th St. Hialeah, FL 33012",
+          city: "Hialeah",
           state: "Florida", // Default state as Florida
         });
       } else {

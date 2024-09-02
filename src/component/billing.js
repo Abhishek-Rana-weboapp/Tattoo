@@ -15,6 +15,7 @@ import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
 import LoaderModal from "./modal/LoaderModal";
 import Complications from "./artistDashboard/Complications";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
+import TattooStyles from "./artistDashboard/TattooStyles";
 
 const BillingComponent = () => {
   let { id, step } = useParams();
@@ -27,7 +28,7 @@ const BillingComponent = () => {
   } = useContext(UserContext);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [loading , setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState();
   const [bill, setBill] = useState({});
   const [resultantMinutes, setResultantMinutes] = useState();
@@ -37,22 +38,24 @@ const BillingComponent = () => {
   );
 
   const fetchAppointment = async () => {
-    setLoading(true)
+    setLoading(true);
     axios
-      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {headers:AUTHHEADERS()})
+      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {
+        headers: AUTHHEADERS(),
+      })
       .then((res) => {
         sessionStorage.setItem(
           "selectedAppointment",
           JSON.stringify(res.data.data[0])
         );
-        setLoading(false)
-        setUpdateAppointment(res.data.data[0])
+        setLoading(false);
+        setUpdateAppointment(res.data.data[0]);
       })
       .catch((err) => {
-        setLoading(false)
-        setAlertMessage(t('Something went wrong'));
-        setAlert(!alert)
-        return
+        setLoading(false);
+        setAlertMessage(t("Something went wrong"));
+        setAlert(!alert);
+        return;
       });
   };
 
@@ -68,8 +71,6 @@ const BillingComponent = () => {
       navigate("/artist-dashboard");
     }
   }, []);
-
-
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -116,45 +117,47 @@ const BillingComponent = () => {
     };
   }, [currentStep, updateAppointment?.end_time]);
 
-  
-
   const handlePrev = () => {
     switch (currentStep) {
       case 1:
         navigate("/artist-dashboard");
         break;
       case 2:
-        navigate(`/billing/${updateAppointment?.id}/1`)
+        navigate(`/billing/${updateAppointment?.id}/1`);
         break;
 
       case 3:
-        navigate(`/billing/${updateAppointment?.id}/2`)
+        navigate(`/billing/${updateAppointment?.id}/2`);
         break;
 
       case 4:
         if (updateAppointment?.typeofservice === "tattoo") {
-          navigate(`/billing/${updateAppointment?.id}/3`)
+          navigate(`/billing/${updateAppointment?.id}/3`);
           break;
         } else {
-          navigate(`/billing/${updateAppointment?.id}/2`)
+          navigate(`/billing/${updateAppointment?.id}/2`);
           break;
         }
 
-        case 5 :
-          navigate(`/billing/${updateAppointment?.id}/4`)
-          break;
+      case 5:
+        navigate(`/billing/${updateAppointment?.id}/4`);
+        break;
 
-        case 6 :
-          navigate(`/billing/${updateAppointment?.id}/5`)
-          break;
-        
-        case 7:
-          navigate(`/billing/${updateAppointment?.id}/6`)
-          break;
+      case 6:
+        navigate(`/billing/${updateAppointment?.id}/5`);
+        break;
 
-          case 8:
-          navigate(`/billing/${updateAppointment?.id}/7`)
-          break;
+      case 7:
+        navigate(`/billing/${updateAppointment?.id}/6`);
+        break;
+
+      case 8:
+        navigate(`/billing/${updateAppointment?.id}/7`);
+        break;
+
+        case 9:
+        navigate(`/billing/${updateAppointment?.id}/8`);
+        break;
     }
   };
 
@@ -166,8 +169,8 @@ const BillingComponent = () => {
     }
   }, [updateAppointment]);
 
-  if(loading){
-    return <LoaderModal/>
+  if (loading) {
+    return <LoaderModal />;
   }
 
   return (
@@ -190,12 +193,11 @@ const BillingComponent = () => {
 
       {currentStep === 3 && (
         <>
-            <UploadBeforeImage
-              handlePrev={handlePrev}
-              updateAppointment={updateAppointment}
-              setUpdateAppointment={setUpdateAppointment}
-            />
-          
+          <UploadBeforeImage
+            handlePrev={handlePrev}
+            updateAppointment={updateAppointment}
+            setUpdateAppointment={setUpdateAppointment}
+          />
         </>
       )}
 
@@ -206,7 +208,7 @@ const BillingComponent = () => {
             setUpdateAppointment={setUpdateAppointment}
             bill={bill}
             setBill={setBill}
-            handlePrev = {handlePrev}
+            handlePrev={handlePrev}
           />
         </div>
       )}
@@ -221,16 +223,23 @@ const BillingComponent = () => {
           handlePrev={handlePrev}
         />
       )}
-      {
-        currentStep === 6 && (
-          <Complications
+      {currentStep === 6 && (
+        <Complications
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
-          handlePrev={handlePrev} 
-          />
-        )
-      }
+          handlePrev={handlePrev}
+        />
+      )}
+
       {currentStep === 7 && (
+        <TattooStyles
+          updateAppointment={updateAppointment}
+          setUpdateAppointment={setUpdateAppointment}
+          handlePrev={handlePrev}
+        />
+      )}
+
+      {currentStep === 8 && (
         <UploadAfterImage
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
@@ -238,8 +247,7 @@ const BillingComponent = () => {
         />
       )}
 
-
-      {currentStep === 8 && (
+      {currentStep === 9 && (
         <CompleteAgreement
           updateAppointment={updateAppointment}
           setUpdateAppointment={setUpdateAppointment}
