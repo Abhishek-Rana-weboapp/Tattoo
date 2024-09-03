@@ -33,6 +33,7 @@ const GaurdianInitialsModal = ({
       const gaurdianSignature = await captureCursiveSignature("cursiveSignatureGaurdian");
       setCursiveGaurdianSignatureImage(gaurdianSignature);
       const gaurdianInitials = await captureCursiveSignature("cursiveInitialGaurdian")
+      console.log(gaurdianInitials)
       setCursiveGaurdianInitialsImage(gaurdianInitials)
     };
     handleGaurdianCursive();
@@ -51,6 +52,7 @@ const GaurdianInitialsModal = ({
   const handleClear = () => {
     signatureRef?.current?.clear()
   };
+
 
 
 
@@ -81,7 +83,7 @@ const GaurdianInitialsModal = ({
             </label>
             <label
             id="cursiveInitialGaurdian"
-              className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
+              className="w-max border-gray-400 border-1 rounded-lg  Blacksword bg-none m-0 pb-3 pr-1"
             >{gaurdianInitials}</label>
           </div>
         </div>
@@ -179,7 +181,7 @@ const GaurdianInitialsModal = ({
         {gaurdianActiveTab === 1 && (
           <div id="cursiveSignatureGaurdian">
             <p
-              className="selector p-2 text-3xl"
+              className="selector pb-5 px-2 text-3xl"
               style={{ fontFamily: "Blacksword"}}
               >
               {`${gaurdianInfo.firstName} ${gaurdianInfo.lastName}`}

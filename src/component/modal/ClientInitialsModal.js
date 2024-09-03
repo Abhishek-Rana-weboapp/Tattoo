@@ -32,6 +32,8 @@ const ClientInitialsModal = ({
   const handleClear = () => {
     signatureRef?.current?.clear();
   };
+
+
   return (
     <div className="fixed inset-0 z-10 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center ">
       <div className="w-4/5 md:w-2/3 h-2/3 bg-white flex flex-col items-center justify-between gap-2 p-4 rounded-lg overflow-hidden">
@@ -59,7 +61,7 @@ const ClientInitialsModal = ({
               </label>
               <label
                 id="cursiveinitials"
-                className="p-1 border-gray-400 border-1 rounded-lg  Blacksword"
+                className="w-max border-gray-400 border-1 rounded-lg  Blacksword bg-none m-0 pb-3 pr-1"
               >
                 {storedInitials}
               </label>
@@ -157,8 +159,8 @@ const ClientInitialsModal = ({
             </div>
           )}
           {activeTab === 1 && (
-            <div id="cursiveSignature">
-              <p className="p-2 text-3xl" style={{ fontFamily: "Blacksword" }}>
+            <div id="cursiveSignature" className="w-max p-4">
+              <p className="text-3xl" style={{ fontFamily: "Blacksword" }}>
                 {fullName}
               </p>
             </div>
