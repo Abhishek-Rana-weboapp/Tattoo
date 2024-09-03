@@ -43,6 +43,7 @@ function ConsentForm() {
   } = React.useContext(UserContext);
   const inputRef = useRef();
 
+
   // const [signatureRef, setSignatureRef] = useState();
   const [cursiveSignatureImage, setCursiveSignatureImage] = useState("");
   const [cursiveGaurdianSignatureImage, setCursiveGaurdianSignatureImage] =
@@ -101,6 +102,7 @@ function ConsentForm() {
       const cursiveInitialsImage = await captureCursiveSignature(
         "cursiveinitials"
       );
+      console.log(cursiveInitialsImage)
       setCursiveInitialsImage(cursiveInitialsImage);
       setInitialsImg(cursiveInitialsImage)
     };
@@ -244,10 +246,10 @@ function ConsentForm() {
       document.getElementById(id),
       {
         scale: 3, // Increase the scale for higher resolution
+        backgroundColor: null, // Set background color to null to capture transparency
         logging: false, // Disable logging to console
         useCORS: true, // Enable cross-origin resource sharing
         allowTaint: true, // Allow tainting of the canvas (useful if the content includes images from other domains)
-        backgroundColor: null, // Set background color to null to capture transparency
       }
     );
     // Convert the canvas to a base64-encoded image

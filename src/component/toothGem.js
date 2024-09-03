@@ -161,26 +161,21 @@ const ToothGems = () => {
       ></canvas>
 
       <button
-        className={`yellowButton py-2 px-${
-          isMobile ? "3" : "5"
-        } rounded-3xl font-bold mb-2 mr-2`}
+        className={`yellowButton py-2 px-5 rounded-3xl font-bold mb-2 mr-2`}
         onClick={handleUndo}
       >
         {t("Undo")}
       </button>
       <div className="flex justify-between w-full">
         <button
-          className={`yellowButton py-2 px-${
-            isMobile ? "3" : "5"
-          } rounded-3xl font-bold mb-2 mr-2 flex gap-1 items-center`}
+          className={`yellowButton py-2 px-5 rounded-3xl font-bold mb-2 mr-2 flex gap-1 items-center`}
           onClick={handlePrev}
         >
           <IoMdArrowRoundBack />
           {t("Back")}
         </button>
         <button
-          className={`yellowButton py-2 px-${
-            isMobile ? "3" : "5"
+          className={`yellowButton py-2 px-5
           } rounded-3xl font-bold mb-2 mr-2`}
           onClick={handleImageUpload}
         >
