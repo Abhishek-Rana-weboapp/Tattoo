@@ -97,23 +97,9 @@ const TattooStyles = ({
       console.log(data);
       await axios
         .post(`${apiUrl}/artist/post_new`, data, { headers: AUTHHEADERS() })
-        .then((response) => {
-          axios
-            .get(
-              `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`,
-              { headers: AUTHHEADERS() }
-            )
-            .then((res) => {
-              setUpdateAppointment(res.data.data[0]);
-              navigate(
-                `/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`
-              );
-            })
-            .catch((err) => {
-              setLoading(false);
-              setAlert(!alert);
-              setAlertMessage(t("Something went wrong"));
-            });
+        .then((res) => {
+          setUpdateAppointment(res.data.updatedtable);
+          navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
         })
         .catch((err) => {
           setLoading(false);

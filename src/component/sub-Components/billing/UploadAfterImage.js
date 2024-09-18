@@ -165,25 +165,10 @@ export default function UploadAfterImage({
       }
         await axios.post(`${apiUrl}/artist/post_new`, data, {headers : AUTHHEADERS()}).
         then((res) => {
-          axios
-          .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
-            )
-            .then((response) => {
-              setUpdateAppointment(response.data.data[0]);
-              setLoading(false)
-              navigate(
-                `/billing/${updateAppointment?.id}/${response.data.data[0].process_step}`
-                );
-              })
-              .catch((err) =>{
-                setLoading(false)
-                setAlert(!alert);
-            setAlertMessage(t("Something went wrong"));
-            return;
-              }
-              );
-            }).catch(err=>{
+          setUpdateAppointment(res.data.updatedtable);
+          setLoading(false)
+          navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
+        }).catch(err=>{
               setLoading(false)
               setAlert(!alert);
             setAlertMessage(t("Something went wrong"));

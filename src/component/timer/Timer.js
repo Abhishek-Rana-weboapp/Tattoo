@@ -111,20 +111,8 @@ const Timer = ({
     await axios
       .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
-        axios
-          .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
-          )
-          .then((res) => {
-            setUpdateAppointment(res.data.data[0]);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-            setAlert(!alert);
-            setAlertMessage(t("Something went wrong"));
-            return;
-          });
+        setUpdateAppointment(res.data.updatedtable);
+        setLoading(false)
       })
       .catch((err) => {
         setLoading(false);
@@ -222,16 +210,7 @@ const Timer = ({
     await axios
       .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
-        axios
-          .get(
-            `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
-          )
-          .then((res) => {
-            setUpdateAppointment(res.data.data[0]);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        setUpdateAppointment(res.data.updatedtable);
       })
       .catch((err) => {
         console.error(err);
@@ -265,22 +244,9 @@ const Timer = ({
           axios
             .post(`${apiUrl}/artist/post_new`, data,{headers:AUTHHEADERS()})
             .then((res) => {
-              axios
-                .get(
-                  `${apiUrl}/artist/appointment_list_id?id=${updateAppointment?.id}`, {headers:AUTHHEADERS()}
-                )
-                .then((res) => {
-                  setUpdateAppointment(res.data.data[0]);
-                  setLoading(false);
-                  navigate(
-                    `/billing/${updateAppointment?.id}/${res.data.data[0].process_step}`
-                  );
-                })
-                .catch((err) => {
-                  setLoading(false);
-                  setAlert(!alert);
-                  setAlertMessage(t("Something went wrong"));
-                });
+              setUpdateAppointment(res.data.updatedtable);
+              setLoading(false)
+              navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
             })
             .catch((err) => {
               setLoading(false);

@@ -32,39 +32,34 @@ export default function VerifyUpload({step, setStep}) {
  useEffect(()=>{
    const fetchPrevIDs = async()=>{
      setLoading(true)
-     await axios.get(`${apiUrl}/appointment/identity?username=${username}`, {headers:AUTHHEADERS()})
+     await axios.get(`${apiUrl}/Identity/latest_identity/`, {headers:AUTHHEADERS()})
      .then(res=>{
-       if(res.data.identity){
-         if(minor === "true"){
-           if(res.data.identity.guardianidentity !== null && res.data.identity.useridentity !== null){
-             setIdPhoto(res.data.identity.useridentity)
-             setImagePrev(res.data.identity.useridentity)
-             setGaurdianIDPhoto(res.data.identity.guardianidentity)
-             setGaurdianImagePrev(res.data.identity.guardianidentity)
-             setUpdateModal(true)
-             setLoading(false)
-             setStep(2)
-             return
-            }else{
-              setLoading(false)
-              return
-            }
-          }else{
-            if(res.data.identity.useridentity !== null){
-             setIdPhoto(res.data.identity.useridentity)
-             setImagePrev(res.data.identity.useridentity)
-              setStep(2)
-              setLoading(false)
-              return
-            }else{
-              setLoading(false)
-              return
-            }
-          }
+      if(minor === "false"){
+        if(res.data.useridentity){
+          setIdPhoto(res.data.useridentity.useridcard)
+          setImagePrev(res.data.useridentity.useridcard)
+          setStep(2)
+          setLoading(false)
+          return
         }else{
           setLoading(false)
           return
         }
+      }
+      if(minor === "true"){
+        if(res.data.useridentity && res.data.guardianidentity){
+          setIdPhoto(res.data.useridentity.useridcard)
+          setImagePrev(res.data.useridentity.useridcard)
+             setGaurdianIDPhoto(res.data.guardianidentity.guardianidcard)
+             setGaurdianImagePrev(res.data.guardianidentity.guardianidcard)
+             setUpdateModal(true)
+             setLoading(false)
+             setStep(2)
+        }else{
+          setLoading(false)
+          return
+        }
+      }
       })
       .catch(err=>{
         setLoading(false)
@@ -134,9 +129,9 @@ export default function VerifyUpload({step, setStep}) {
           return
         }else{
           data = {
-            image_url:idPhoto
+            UserIDCard:idPhoto
           }
-          await axios.post(`${apiUrl}/appointment/identity?username=${username}` ,data,{headers:AUTHHEADERS()}).then((res)=>{
+          await axios.post(`${apiUrl}/identity/user_identity` ,data,{headers:AUTHHEADERS()}).then((res)=>{
               setLoading(false)
               setStep(4)
               return
@@ -149,15 +144,15 @@ export default function VerifyUpload({step, setStep}) {
       if(minor==="true"){
         if(idPhoto!==null && gaurdianIDPhoto!==null){
           let data = {
-              image_url: idPhoto
+            UserIDCard: idPhoto
           };
           let gaurdiandata = {
-              image_url: gaurdianIDPhoto
+            GuardianIDCard: gaurdianIDPhoto
           };
       
           Promise.all([
-              axios.post(`${apiUrl}/appointment/identity?username=${username}`, data, {headers: AUTHHEADERS()}),
-              axios.post(`${apiUrl}/appointment/identity_guardian?username=${username}`, gaurdiandata, {headers: AUTHHEADERS()}),
+              axios.post(`${apiUrl}/identity/user_identity`, data, {headers: AUTHHEADERS()}),
+              axios.post(`${apiUrl}/identity/guardian_identity`, gaurdiandata, {headers: AUTHHEADERS()}),
           ]).then((responses) => {
               setLoading(false);
               if(typeofservice === "tattoo" || typeofservice === "piercing"){

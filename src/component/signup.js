@@ -70,45 +70,45 @@ function SignUp() {
         .post(`${apiUrl}/signup`, user)
         .then((res) => {
           if (res.status === 201) {
-            if (res.data.userData.lang === "es") {
+            if (res.data.user.lang === "es") {
               i18n.changeLanguage("es");
             }
             sessionStorage.setItem("responseData", JSON.stringify(res.data));
             sessionStorage.setItem("username", email);
-            sessionStorage.setItem("minor", res.data.userData.minor);
+            sessionStorage.setItem("minor", res.data.user.minor);
             sessionStorage.setItem("token", res.data.token);
-            sessionStorage.setItem("lang", res.data.userData.lang);
-            sessionStorage.setItem("userType", res.data.userData.usertype);
-            sessionStorage.setItem("firstname", res.data.userData.firstname);
-            sessionStorage.setItem("lastname", res.data.userData.lastname);
+            sessionStorage.setItem("lang", res.data.user.lang);
+            sessionStorage.setItem("userType", res.data.user.usertype);
+            sessionStorage.setItem("firstname", res.data.user.firstname);
+            sessionStorage.setItem("lastname", res.data.user.lastname);
             sessionStorage.setItem(
               "fullname",
-              `${res.data.userData.firstname} ${res.data.userData.lastname}`
+              `${res.data.user.firstname} ${res.data.user.lastname}`
             );
             sessionStorage.setItem(
               "initials",
-              `${res?.data?.userData?.firstname
+              `${res?.data?.user?.firstname
                 ?.slice(0, 1)
-                .toUpperCase()}${res?.data?.userData?.lastname
+                .toUpperCase()}${res?.data?.user?.lastname
                 ?.slice(0, 1)
                 .toUpperCase()}`
             );
             sessionStorage.setItem(
               "detailedInfo",
               JSON.stringify({
-                address: res.data.userData.address,
-                city: res.data.userData.city,
-                state: res.data.userData.state,
-                zip: res.data.userData.zip,
-                race: res.data.userData.race,
-                gender: res.data.userData.gender,
+                address: res.data.user.address,
+                city: res.data.user.city,
+                state: res.data.user.state,
+                zip: res.data.user.zip,
+                race: res.data.user.race,
+                gender: res.data.user.gender,
               })
             );
-            if (res.data.userData.minor === "true") {
+            if (res.data.user.minor === "true") {
               navigate("/detailedinfo");
               return;
             }
-            if (res.data.userData.minor === "false") {
+            if (res.data.user.minor === "false") {
               navigate("/detailedinfo");
               return;
             }
