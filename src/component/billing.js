@@ -37,32 +37,35 @@ const BillingComponent = () => {
     sessionStorage.getItem("selectedAppointment")
   );
 
-  const fetchAppointment = async () => {
-    setLoading(true);
-    axios
-      .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {
-        headers: AUTHHEADERS(),
-      })
-      .then((res) => {
-        sessionStorage.setItem(
-          "selectedAppointment",
-          JSON.stringify(res.data.data[0])
-        );
-        setLoading(false);
-        setUpdateAppointment(res.data.data[0]);
-      })
-      .catch((err) => {
-        setLoading(false);
-        setAlertMessage(t("Something went wrong"));
-        setAlert(!alert);
-        return;
-      });
-  };
-
+  
   useEffect(() => {
-    setCurrentStep(parseInt(step) || 1);
+    const fetchAppointment = async () => {
+      setLoading(true);
+      axios
+        .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {
+          headers: AUTHHEADERS(),
+        })
+        .then((res) => {
+          sessionStorage.setItem(
+            "selectedAppointment",
+            JSON.stringify(res.data.data[0])
+          );
+          setLoading(false);
+          setUpdateAppointment(res.data.data[0]);
+        })
+        .catch((err) => {
+          setLoading(false);
+          setAlertMessage(t("Something went wrong"));
+          setAlert(!alert);
+          return;
+        });
+    };
     fetchAppointment();
-  }, [step, id]);
+  }, []);
+  
+  useEffect(()=>{
+    setCurrentStep(parseInt(step) || 1);
+  },[updateAppointment])
 
   useEffect(() => {
     if (selectedAppointment) {
