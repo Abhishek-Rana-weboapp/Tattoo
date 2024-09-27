@@ -6,11 +6,13 @@ import { useTranslation } from 'react-i18next'
 
 const BriefDescription = () => {
   const navigate = useNavigate()
-  const {alert ,setAlert, setAlertMessage,description, setDescription, currentSelection, setCurrentSelection, count,finalUser, setFinalUser, user , setUser} = useContext(UserContext)
+  const {alert ,setAlert, setAlertMessage,description, setDescription, currentSelection, setCurrentSelection, count, setFinalUser,finalUser, user , setUser} = useContext(UserContext)
   const {t} = useTranslation()
   const inputRef = useRef()
   const [desc, setDesc] = useState("")
-
+  
+  console.log(user)
+  console.log(finalUser)
   useEffect(()=>{
     inputRef.current.focus()
     if(description[currentSelection]){
@@ -23,17 +25,18 @@ const BriefDescription = () => {
      setDesc(e.target.value)
  }
 
+
  const handleNext = ()=>{
    if(desc){
     if(count > 1 && currentSelection < count ){
-      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user.level1 , level2 : user.level2,level3 : user.level3,level4 : user.level4}}))
-      setUser(prev=>({...prev, level1 : null,level2 : null,level3 : null,level4 : null}))
+      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user[1] , level2 : user[2],level3 : user[3],level4 : user[4]}}))
+      // setUser(prev=>({...prev, 1 : null,2 : null,3 : null,4 : null}))
       setDescription(prev=>({...prev, [currentSelection] : desc}))
       setCurrentSelection(currentSelection+1)
       navigate("/tattoo")
       return
     }else{
-      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user.level1 , level2 : user.level2,level3 : user.level3,level4 : user.level4}}))
+      setFinalUser(prev=>({...prev , [currentSelection ] : {level1 : user[1] , level2 : user[2],level3 : user[3],level4 : user[4]}}))
       setDescription(prev=>({...prev, [currentSelection] : desc}))
       navigate("/medical-form")
       return

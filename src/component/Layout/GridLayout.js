@@ -17,7 +17,7 @@ export default function GridLayout({children , title, onChange,selected, otherFi
               <input
                 type="text"
                 value={otherFieldValue}
-                onChange={(e)=>onChange(e)}
+                onChange={(e)=>onChange(e.target.value)}
                 className="p-2 rounded-lg text-black"
                 />
                 </label>

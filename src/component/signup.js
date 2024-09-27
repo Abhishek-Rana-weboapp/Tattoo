@@ -18,7 +18,6 @@ function SignUp() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
-  const [showPopup, setshowPopup] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -140,11 +139,9 @@ function SignUp() {
       .then((data) => {
         if (data.message === "meil send successful.") {
           alert(" Mail send successfully ");
-          setshowPopup(false);
         } else {
           setAlert(!alert)
           setAlertMessage(t('Invalid credentials'));
-          setshowPopup(true);
           setEmail("");
           setPassword("");
         }

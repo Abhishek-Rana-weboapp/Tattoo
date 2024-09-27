@@ -47,10 +47,10 @@ function Dashboard() {
     if (user?.selectedTattooType !== null){
       setUser({
         selectedTattooType: null,
-        level1: null,
-        level2: null,
-        level3: null,
-        level4: null,
+        1: null,
+        2: null,
+        3: null,
+        4: null,
       });
 
       setFinalUser({})
