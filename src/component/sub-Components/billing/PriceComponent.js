@@ -107,19 +107,21 @@ export default function PriceComponent({
       <div className="flex flex-col md:flex-row gap-2 items-center w-2/4">
         <div className="flex flex-col gap-2 items-center w-full">
           <label>{t("Enter Price:")}</label>
-          <span className="w-full flex gap-1 items-center">
-            $
-            <input
-              type="number"
-              name="price"
-              className="p-2 rounded-lg text-black flex-1"
-              disabled={fix === ""}
-              value={formatedPrice}
-              onChange={handleInputChangeInternal}
-              onBlur={handleZeros}
-              placeholder={t("Price")}
-            />
-          </span>
+            <div className="flex gap-1 bg-white p-1 rounded-lg items-center pl-2">
+              <span className="text-black">
+                $
+              </span>
+                <input
+                  type="number"
+                  name="price"
+                  className="p-1 rounded-lg text-black flex-1 focus:outline-none"
+                  disabled={fix === ""}
+                  value={formatedPrice}
+                  onChange={handleInputChangeInternal}
+                  onBlur={handleZeros}
+                  placeholder={t("Price")}
+                />
+            </div>
         </div>
       </div>
       <div className="flex items-center gap-5"> 

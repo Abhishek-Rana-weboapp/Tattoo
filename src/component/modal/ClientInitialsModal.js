@@ -67,7 +67,7 @@ const ClientInitialsModal = ({
               </label>
             </div>
           </div>
-          <div className="w-1/3">
+          <div className="">
             <div className="flex gap-2 w-max">
               <button
                 className={`bg-none font-semibold text-black hover:bg-gray-300 ${
@@ -87,11 +87,11 @@ const ClientInitialsModal = ({
               </button>
             </div>
             {activeTab === 1 && (
-              <div className="border-1 rounded-lg border-gray-500 w-full flex justify-center">
+              <div className="border-1 rounded-lg border-gray-500 w-48 mx-auto flex justify-center">
                 <img
                   src={cursiveSignatureImage}
                   className="aspect-video border rounded-lg mt-2"
-                ></img>
+                />
               </div>
             )}
           </div>
@@ -152,15 +152,15 @@ const ClientInitialsModal = ({
               </div>
               {/* <button className="bg-yellow-400 font-bold text-black py-2 rounded-lg px-4" onClick={()=>setSignatureModal(!signatureModal)}>Add Signature</button> */}
               {drawnSignature && (
-                <div className="border-1 rounded-lg border-gray-500 w-1/4 flex justify-center">
-                  <img src={drawnSignature} className="w-full h-20"></img>
+                <div className="border-1 rounded-lg border-gray-500 w-40 flex justify-center">
+                  <img src={drawnSignature} className="w-full h-20 aspect-video"/>
                 </div>
               )}
             </div>
           )}
           {activeTab === 1 && (
             <div id="cursiveSignature" className="w-max p-4">
-              <p className="text-3xl" style={{ fontFamily: "Blacksword" }}>
+              <p className="text-xl" style={{ fontFamily: "Blacksword" }}>
                 {fullName}
               </p>
             </div>

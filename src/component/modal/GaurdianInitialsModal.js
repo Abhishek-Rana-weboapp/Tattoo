@@ -107,7 +107,7 @@ const GaurdianInitialsModal = ({
             </button>
           </div>
             {gaurdianActiveTab === 1 && (
-              <div className="border-1 rounded-lg border-gray-500 w-1/3 flex justify-center">
+              <div className="border-1 rounded-lg border-gray-500 w-48 flex justify-center">
                 <img
                   src={cursiveGaurdianSignatureImage}
                   className="aspect-video border rounded-lg mt-2"
@@ -181,7 +181,7 @@ const GaurdianInitialsModal = ({
         {gaurdianActiveTab === 1 && (
           <div id="cursiveSignatureGaurdian">
             <p
-              className="selector pb-5 px-2 text-3xl"
+              className="selector pb-5 px-2 text-xl"
               style={{ fontFamily: "Blacksword"}}
               >
               {`${gaurdianInfo.firstName} ${gaurdianInfo.lastName}`}

@@ -61,7 +61,7 @@ const YesNoExplain = ({question, next, prev,}) => {
          </label>
 
          <div className="flex flex-col items-center md:text-2xl text-base gap-4 flex-1">
-            <div className="w-20 justify-start flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
               <input
                 type="checkbox"
                 className="w-6 h-6"
@@ -69,9 +69,9 @@ const YesNoExplain = ({question, next, prev,}) => {
                 checked={selected === "yes"}
                 onChange={handleCheckboxes}
                 />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("Yes")}</label>
-            </div>
-            <div className="w-20 justify-start flex gap-2 items-center">
+                {t("Yes")}
+              </label>
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -79,8 +79,8 @@ const YesNoExplain = ({question, next, prev,}) => {
                 checked={selected === "no"}
                 onChange={handleCheckboxes}
                 />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
-            </div>
+                {t("No")}
+              </label>
           </div>
 
 

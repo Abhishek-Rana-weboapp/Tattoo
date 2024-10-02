@@ -63,7 +63,8 @@ const YesNoOption = ({question, next, prev}) => {
          </label>
 
          <div className="flex flex-col items-center gap-4 flex-1 md:text-2xl text-base">
-            <div className="w-20 justify-start flex gap-2 items-center">
+            
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -71,9 +72,10 @@ const YesNoOption = ({question, next, prev}) => {
                 checked={selected === "yes"}
                 onChange={handleCheckboxes}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("Yes")}</label>
-            </div>
-            <div className="w-20 justify-start flex gap-2 items-center">
+                {t("Yes")}</label>
+           
+           
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -81,14 +83,14 @@ const YesNoOption = ({question, next, prev}) => {
                 checked={selected === "no"}
                 onChange={handleCheckboxes}
               />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
-            </div>
+                {t("No")}</label>
+
 
           {selected === "yes" && <><label className="text-white uppercase md:text-2xl text-base">{t("PLEASE SELECT WHICH ONE")}</label>
           <div className="flex gap-10">
             {question?.subOpt?.map((option, index)=>{
               return <>
-            <div className="flex gap-2 items-center md:text-2xl text-base">
+              <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -96,8 +98,8 @@ const YesNoOption = ({question, next, prev}) => {
                 checked={optSelected === option}
                 onChange={handleOpt}
                 />
-              <label className="md:text-2xl text-base uppercase text-white">{t(option)}</label>
-            </div>
+                {t(option)}
+              </label>
                 </>
                 
               })
