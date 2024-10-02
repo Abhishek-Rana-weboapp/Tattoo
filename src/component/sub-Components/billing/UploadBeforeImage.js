@@ -135,7 +135,7 @@ export default function UploadBeforeImage({ handlePrev, updateAppointment, setUp
             };
           }
           await axios
-          .post(`${apiUrl}/artist/post_new`, data)
+          .post(`${apiUrl}/artist/post_new`, data, {headers: AUTHHEADERS()})
           .then((res) => {
             setUpdateAppointment(res.data.updatedtable);
             setLoading(false)

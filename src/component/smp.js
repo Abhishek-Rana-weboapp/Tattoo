@@ -18,15 +18,12 @@ import sixteen from '../assets/16.png'
 import { useNavigate } from "react-router-dom";
 import UserContext from '../context/UserContext';
 
-import ProgressBar from './ProgressBar';
 import SmpCard from './card/SmpCard';
-import GridLayout from './Layout/GridLayout';
 import SixGridLayout from './Layout/SixGridLayout';
 import Navigation from './navigation/Navigation';
 import { useTranslation } from 'react-i18next';
 
 const HairLossPatternSelection = () => {
-  const progressValue = 30;
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { selectedPattern, setSelectedPattern , alert, setAlert, setAlertMessage,user,setUser,setFinalUser } = React.useContext(UserContext);

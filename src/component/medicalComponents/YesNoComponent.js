@@ -66,7 +66,7 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
          
 
          {type !== "sub" ? <div className="flex flex-col md:text-2xl text-base items-center gap-4">
-            <div className="w-20 justify-start flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className="w-6 h-6"
@@ -74,22 +74,23 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
                 checked={selected === "yes"}
                 onChange={handleCheckboxes}
                 />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("Yes")}</label>
-            </div>
-            <div className="w-20 justify-start flex gap-2 items-center">
+              {t("Yes")}
+              </label>
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
-                className=" w-6 h-6"
+                className=" w-6 h-6 "
                 value="no"
                 checked={selected === "no"}
                 onChange={handleCheckboxes}
                 />
-              <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
-            </div>
+                {t("No")}
+                </label>
           </div> :
 
 <div className="flex flex-col md:text-xl text-sm items-center gap-4">
-<div className="w-20 justify-start flex gap-2 items-center">
+  
+  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
   <input
     type="checkbox"
     className="w-6 h-6"
@@ -97,9 +98,11 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
     checked={subState[question.id]?.ans === "yes"}
     onChange={handleSubState}
     />
-  <label className="md:text-2xl text-lg uppercase text-white">{t("Yes")}</label>
-</div>
-<div className="w-20 justify-start flex gap-2 items-center">
+    {t("Yes")}
+
+  </label>
+  
+  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
   <input
     type="checkbox"
     className=" w-6 h-6"
@@ -107,8 +110,8 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
     checked={subState[question.id]?.ans === "no"}
     onChange={handleSubState}
     />
-  <label className="md:text-2xl text-lg uppercase text-white">{t("No")}</label>
-</div>
+    {t("No")}
+    </label>
 </div>
           }
 

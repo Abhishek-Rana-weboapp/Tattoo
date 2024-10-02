@@ -102,7 +102,6 @@ function ConsentForm() {
       const cursiveInitialsImage = await captureCursiveSignature(
         "cursiveinitials"
       );
-      console.log(cursiveInitialsImage)
       setCursiveInitialsImage(cursiveInitialsImage);
       setInitialsImg(cursiveInitialsImage)
     };
@@ -301,45 +300,39 @@ function ConsentForm() {
         </div>
 
         {/* Clients Section */}
-        <div className="flex items-center  gap-2 pl-7 md:m-auto md:p-0">
-          <div className="flex gap-2 items-center justify-start w-3/5 md:w-72">
+        <div className="md:w-3/4 w-full px-4 mx-auto flex justify-between items-center">
+          <label className=" text-white md:text-base text-sm flex gap-2 items-center select-none cursor-pointer">
             <input
               type="checkbox"
               className=" w-6 h-6"
               checked={initials[currentPage]}
               onChange={(e) => handleCheckbox(currentPage, e)}
             ></input>
-            <label className=" text-white md:text-base text-sm">
               {t("Select to add your initials")}
             </label>
-          </div>
-
-          <div className="w-2/5 flex justify-start">
             <input
               ref={inputRef}
               type="text"
               value={initials[currentPage]}
-              readOnly
+              disabled
               className="bg-gray-700 w-24 text-white p-2 rounded-md font-bold Blacksword"
             />
-          </div>
         </div>
 
         {/* gaurdians section */}
         {minor === "true" && (
-          <div className="flex justify-center gap-2 pl-7 md:m-auto  md:p-0">
+          <div className="md:w-3/4 w-full px-4 mx-auto flex justify-between items-center">
             <div className="flex gap-2 items-center justify-start w-3/5 md:w-80">
+              <label className=" text-white md:text-base text-sm flex items-center gap-2 select-none cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
                 checked={gaurdianInitials[currentPage]}
                 onChange={(e) => handleGaurdianCheckbox(currentPage, e)}
               ></input>
-              <label className=" text-white md:text-base text-sm">
                 {t("Select to add Gaurdian's initials")}
               </label>
             </div>
-            <div className="w-2/5 flex justify-start">
               <input
                 ref={inputRef}
                 type="text"
@@ -347,7 +340,6 @@ function ConsentForm() {
                 readOnly
                 className="bg-gray-700 text-white p-2 w-24 rounded-md font-bold Blacksword"
               />
-            </div>
           </div>
         )}
 

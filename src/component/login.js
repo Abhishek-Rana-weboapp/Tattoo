@@ -19,6 +19,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setIsVisible } = useContext(UserContext);
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     setIsVisible(false);
@@ -45,11 +46,16 @@ function Login() {
       body: JSON.stringify(user),
     };
 
-    const url = `${apiUrl}/login`;
+    const url = `${apiUrl}login`;
     try {
       const response = await fetch(url, config);
-
       const responseData = await response.json();
+      console.log(responseData)
+      if(response.status === 401){
+        setError(responseData.error)
+        return
+      }
+
       if (responseData.message === "Login successful.") {
         if (responseData?.user?.lang == "es") {
           i18n.changeLanguage("es");
@@ -199,6 +205,7 @@ function Login() {
               </NavLink>
             </div>
           </div>
+          {error && <p className="text-sm text-red-400">{error}</p>}
           <button className="yellowButton py-2 px-8 rounded-3xl font-bold ">
             login
           </button>

@@ -54,7 +54,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         ],
       };
       await axios
-        .post(`${apiUrl}/artist/post_new`, data)
+        .post(`${apiUrl}/artist/post_new`, data, {headers : AUTHHEADERS()})
         .then((res) => {
           if (res.status === 201) {
             setLoading(false);

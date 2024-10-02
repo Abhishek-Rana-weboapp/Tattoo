@@ -32,10 +32,10 @@ function TermsOfService() {
   const [storedGaurdianInitials, setStoredGaurdianInitials] = useState(
     sessionStorage.getItem("gaurdianInitials")
   );
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const minor = sessionStorage.getItem("minor");
-  const token = sessionStorage.getItem("token") || ""
-  
+  const token = sessionStorage.getItem("token") || "";
+
   const {
     user,
     alert,
@@ -48,7 +48,7 @@ function TermsOfService() {
     gaurdianSignature,
     description,
     count,
-    finalUser
+    finalUser,
   } = useContext(UserContext);
   const tattooRules = tattooTerms;
   const piercingRules = piercingTerms;
@@ -56,9 +56,7 @@ function TermsOfService() {
   const tattooRemovalRules = tattooRemovalTerms;
   const toothGemRules = toothGemTerms;
   const [pageContents, setpageContents] = useState([]);
-  const service = sessionStorage.getItem("typeofservice")
-
-  
+  const service = sessionStorage.getItem("typeofservice");
 
   useEffect(() => {
     if (service) {
@@ -78,9 +76,9 @@ function TermsOfService() {
         case "tooth-gems":
           setpageContents(toothGemRules);
           break;
-          case "smp":
-            setpageContents(pmuRules);
-            break;
+        case "smp":
+          setpageContents(pmuRules);
+          break;
         default:
           console.log("No Tattoo Type Selected");
       }
@@ -89,7 +87,6 @@ function TermsOfService() {
 
   // Navigation function
   const navigate = useNavigate();
-
 
   // Navigate to the next page
   const nextPage = () => {
@@ -117,9 +114,8 @@ function TermsOfService() {
     }
   };
 
-
   const handleSubmit = async () => {
-    setLoading(true)
+    setLoading(true);
     const username = sessionStorage.getItem("username");
     const minor = sessionStorage.getItem("minor");
     const toothgem_url = sessionStorage.getItem("toothgem_url");
@@ -142,8 +138,8 @@ function TermsOfService() {
         WaiverRelease_url: JSON.stringify(initials),
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
-        count:count,
-        brief_description : JSON.stringify(description),
+        count: count,
+        brief_description: JSON.stringify(description),
         ArtistPiercerNames: null,
       });
     } else {
@@ -160,8 +156,8 @@ function TermsOfService() {
         WaiverRelease_url: JSON.stringify(initials),
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
-        count:count,
-        brief_description:JSON.stringify(description),
+        count: count,
+        brief_description: JSON.stringify(description),
         ArtistPiercerNames: null,
       });
     }
@@ -170,7 +166,7 @@ function TermsOfService() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization":`Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: data,
       });
@@ -184,21 +180,21 @@ function TermsOfService() {
           JSON.stringify(responseData.userData)
         );
         if (minor === "true") {
-          setLoading(false)
+          setLoading(false);
           navigate("/verify");
-          return
+          return;
         } else {
-          setLoading(false)
+          setLoading(false);
           navigate("/verify");
-          return
+          return;
         }
       } else {
-        setLoading(false)
+        setLoading(false);
         setAlertMessage(t("Please fill in all the required fields"));
         setAlert(!alert);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       console.error("Error:", error);
     }
   };
@@ -224,8 +220,8 @@ function TermsOfService() {
     }
   };
 
-  if(loading){
-    return <LoaderModal/>
+  if (loading) {
+    return <LoaderModal />;
   }
 
   // Return the JSX structure
@@ -233,70 +229,74 @@ function TermsOfService() {
     <ConsentFormLayout title="Terms of Service">
       <div className="flex flex-col gap-2 flex-1 md:p-1 p-2 justify-between overflow-hidden">
         <div className="flex flex-col gap-3 overflow-auto">
-        <label className="font-bold text-sm md:text-2xl text-white  uppercase text-center ">{pageContents !== undefined && t(pageContents[currentPage-1]?.heading)}{" "}:</label>
-        {
-          pageContents.length > 0 && Object.keys(pageContents[currentPage-1]).includes("subHeading") && <label className=" text-[0.60rem] md:text-xl text-white  uppercase text-center ">{pageContents[currentPage-1].subHeading}</label>
-        }
-        <div  className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-500 scrollbar-thumb-rounded scrollbar-track-rounded">
-        <ul className="text-white font-semibold  list-disc flex flex-col gap-2">
-          {
-            pageContents !== undefined && pageContents[currentPage-1]?.terms.map(term=>{
-              return <li key={term}>{t(term)}</li>
-            })
-          }
-        </ul>
-        </div>
-        {
-          pageContents.length > 0 && Object.keys(pageContents[currentPage-1]).includes("bottomHeading") && <label className="text-xs md:text-xl text-white  uppercase text-center flex items-center">* {pageContents[currentPage-1].bottomHeading}</label>
-        }
-
+          <label className="font-bold text-sm md:text-2xl text-white  uppercase text-center ">
+            {pageContents !== undefined &&
+              t(pageContents[currentPage - 1]?.heading)}{" "}
+            :
+          </label>
+          {pageContents.length > 0 &&
+            Object.keys(pageContents[currentPage - 1]).includes(
+              "subHeading"
+            ) && (
+              <label className=" text-[0.60rem] md:text-xl text-white  uppercase text-center ">
+                {pageContents[currentPage - 1].subHeading}
+              </label>
+            )}
+          <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-500 scrollbar-thumb-rounded scrollbar-track-rounded">
+            <ul className="text-white font-semibold  list-disc flex flex-col gap-2">
+              {pageContents !== undefined &&
+                pageContents[currentPage - 1]?.terms.map((term) => {
+                  return <li key={term}>{t(term)}</li>;
+                })}
+            </ul>
           </div>
+          {pageContents.length > 0 &&
+            Object.keys(pageContents[currentPage - 1]).includes(
+              "bottomHeading"
+            ) && (
+              <label className="text-xs md:text-xl text-white  uppercase text-center flex items-center">
+                * {pageContents[currentPage - 1].bottomHeading}
+              </label>
+            )}
+        </div>
         <div className="flex flex-col gap-1">
-          <div className="flex justify-center gap-2 pl-7 md:m-auto md:p-0">
-            <div className="flex gap-2 items-center justify-start w-3/5 md:w-72">
+          <div className="flex  justify-between items-center gap-2 md:w-3/4 lg:w-2/4 mx-auto w-full">
+            <label className="text-white text-sm md:text-base flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className="w-6 h-6"
                 checked={initials[currentPage]}
                 onChange={handleCheckbox}
               ></input>
-              <label className="text-white text-sm md:text-base">
-                {t("Select to add your initials")}
-              </label>
-            </div>
-            <div className="flex gap-2 justify-start items-center w-1/4">
-              <input
-                type="text"
-                value={initials[currentPage] || ""}
-                disabled
-                // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                className="bg-gray-700 text-white p-2 rounded-md w-full md:w-2/4 Blacksword"
-              />
-            </div>
+              {t("Select to add your initials")}
+            </label>
+            <input
+              type="text"
+              value={initials[currentPage] || ""}
+              disabled
+              // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+              className="bg-gray-700 text-white p-2 rounded-md w-20 Blacksword"
+            />
           </div>
 
           {minor === "true" && (
-            <div className="flex  justify-center gap-2 pl-7 md:m-auto">
-              <div className="flex gap-2 items-center justify-start w-3/5 md:w-80">
-                <input
+            <div className="flex  justify-between items-center gap-2 md:w-3/4 lg:w-2/4 mx-auto w-full">
+                 <label className="text-white text-sm md:text-base flex gap-2 items-center hover:cursor-pointer">
+                  <input
                   type="checkbox"
                   className="w-6 h-6"
                   checked={gaurdianInitials[currentPage]}
                   onChange={handleGaurdianCheckbox}
                 ></input>
-                <label className="text-white text-sm md:text-base">
                   {t("Select to add gaurdian's initials")}
                 </label>
-              </div>
-              <div className="flex gap-2 justify-start items-center w-1/4">
                 <input
                   type="text"
                   value={gaurdianInitials[currentPage] || ""}
                   disabled
                   // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                  className="bg-gray-700 text-white p-2 rounded-md w-full md:w-2/4 Blacksword"
+                  className="bg-gray-700 text-white p-2 rounded-md w-20 Blacksword"
                 />
-              </div>
             </div>
           )}
         </div>

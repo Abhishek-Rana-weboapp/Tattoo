@@ -20,7 +20,7 @@ function ForgetPassword() {
     };
 
     // Configure the request
-    const url = `${apiUrl}/forgot_password`;
+    const url = `${apiUrl}forgot_password`;
     const config = {
       method: "POST",
       headers: {
@@ -31,6 +31,9 @@ function ForgetPassword() {
 
     try {
       const response = await fetch(url, config);
+      if(response.status === 404){
+        throw new Error("User not Found")
+      }
 
       if (!response.ok) {
         throw new Error("Forget Password request failed");
@@ -39,11 +42,9 @@ function ForgetPassword() {
       const responseData = await response.json();
       setResponseMessage("Check you mail");
       alert(responseData.message);
-      console.log("Forget Password Response:", responseData);
-
       // Handle the response, e.g., display a success message to the user
     } catch (error) {
-      console.error("Forget Password Error:", error);
+      setResponseMessage(error.message)
     }
   };
 
@@ -69,6 +70,9 @@ function ForgetPassword() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+        {responseMessage && (
+          <div className="text-red-400 text-sm mt-3">{responseMessage}</div>
+        )}
           <div className="flex flex-col gap-3">
             <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
               Reset Password
@@ -79,9 +83,6 @@ function ForgetPassword() {
             </Link>
           </div>
         </form>
-        {responseMessage && (
-          <div className="alert alert-info mt-3">{responseMessage}</div>
-        )}
       </div>
     </div>
   );

@@ -5,10 +5,10 @@ import UserContext from "./UserContext";
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({
     selectedTattooType: null,
-    level1:null,
-    level2:null,
-    level3:null,
-    level4:null,
+    1:null,
+    2:null,
+    3:null,
+    4:null,
   });
   
   const [formData, setFormData] = useState({});

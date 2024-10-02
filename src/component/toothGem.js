@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMediaQuery } from "react-responsive";
@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import ToothGem from "../assets/tooth-gen.png";
 import Gem from "../assets/Gem.png";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
+import { debounce } from "lodash";
 
 const ToothGems = () => {
   const { t } = useTranslation();
@@ -14,13 +15,38 @@ const ToothGems = () => {
     React.useContext(UserContext);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
+  
 
   const canvasRef = useRef(null);
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
+  const [canvasSize, setCanvasSize] = useState({
+    width: isMobile ? 300 : 900,
+    height: isMobile ? 200 : 500,
+  });
+
+
+  const handleResize =useCallback(() => {
+    setCanvasSize({
+      width: isMobile ? 300 : 900,
+      height: isMobile ? 200 : 500,
+    });
+  }, [isMobile]);
+
+  const debouncedHandleResize = useCallback(
+    debounce(handleResize, 400), // Use 400ms delay
+    [handleResize]
+  );
+
+  useEffect(() => {
+    window.addEventListener("resize", debouncedHandleResize);
+    return () => window.removeEventListener("resize", debouncedHandleResize);
+  }, [debouncedHandleResize]);
+
+
   useEffect(() => {
     redrawCanvas();
-  }, [selectedTeeth]);
+  }, [selectedTeeth, canvasSize]);
 
   const handleUndo = () => {
     const updatedSelectedTeeth = [...selectedTeeth];
@@ -115,6 +141,8 @@ const ToothGems = () => {
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
+    canvas.width = canvasSize.width;
+    canvas.height = canvasSize.height;
     
     context.clearRect(0, 0, canvas.width, canvas.height);
 

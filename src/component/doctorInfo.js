@@ -163,10 +163,9 @@ function DoctorContactForm() {
           </div>
 
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Phone")}:
             </label>
-
             <input
               className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="number"
@@ -207,7 +206,7 @@ function DoctorContactForm() {
             </select>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center  gap-2">
             <input
               type="checkbox"
               className="w-5 h-5"
@@ -219,7 +218,8 @@ function DoctorContactForm() {
               {t("Use Doctor Recommendation")}
             </label>
           </div>
-
+ 
+          <div className="w-full md:w-3/6 flex  md:justify-end items-center gap-1">
           {drformData?.useDoctorRecommendation && (
             <div className="text-white font-semibold text-md">
               <h2>{t("Doctor Information")}</h2>
@@ -232,6 +232,7 @@ function DoctorContactForm() {
               </p>
             </div>
           )}
+          </div>
         </div>
         <div className="w-full flex justify-between">
           <button
@@ -244,7 +245,7 @@ function DoctorContactForm() {
             className="bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% py-2 px-8 rounded-3xl font-bold mt-4 text-black"
             type="submit"
           >
-            {t("Submit")}
+            {t("Next")}
           </button>
         </div>
       </form>

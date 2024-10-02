@@ -66,6 +66,9 @@ const NewMedicalHistory = () => {
     }
   };
 
+  console.log(user)
+  console.log(finalUser)
+
 
   const next = () => {
     if (current < questions.length) {

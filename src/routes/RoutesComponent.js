@@ -1,44 +1,11 @@
 import React, { useContext, useEffect, } from 'react'
-import {  Route, Routes, useLocation,  } from 'react-router-dom'
+import {  Route, Routes, useLocation, useNavigate,  } from 'react-router-dom'
 import Login from '../component/login';
 import SignUp from '../component/signup';
 import ForgetPassword from '../component/forgetPassword';
 import Resetpassword from '../component/resetPassword';
 import Dashboard from '../component/dashboard';
 import TattooDashboard from '../component/tatoodashboard/tatoodashboard'
-import HeadTattoo from '../component/tatoodashboard/headDashboard'
-import FaceDashboard from '../component/tatoodashboard/face'
-import Forehead from '../component/tatoodashboard/forehead'
-import FaceTemple from '../component/tatoodashboard/temple'
-import Eyebrow from '../component/tatoodashboard/eyebrow'
-import Eyelid from '../component/tatoodashboard/eyelid'
-import Nose from '../component/tatoodashboard/nose'
-import Cheeks from '../component/tatoodashboard/cheeks'
-import Lip from '../component/tatoodashboard/lip'
-import Jaw from '../component/tatoodashboard/jaw'
-import Scalp from '../component/tatoodashboard/scalp'
-import Ear from '../component/tatoodashboard/ear'
-import Neck from '../component/tatoodashboard/Neck';
-import Nipple from '../component/tatoodashboard/nipple';
-import UnderChest from '../component/tatoodashboard/underChest';
-import EarDashboard from '../component/tatoodashboard/earInside'
-import ChestDeshboard from '../component/tatoodashboard/chestDashboard'
-import ChestInside from '../component/tatoodashboard/chestInside';
-import Torso from '../component/tatoodashboard/torso';
-import Back from '../component/tatoodashboard/Back';
-import Arm from '../component/tatoodashboard/Arm';
-import ArmDashboard from '../component/tatoodashboard/armDashboard';
-import ArmInside from '../component/tatoodashboard/armInside';
-import Hand from '../component/tatoodashboard/hand';
-import HandInside from '../component/tatoodashboard/handInside';
-import Hip from '../component/tatoodashboard/hip';
-import Glute from '../component/tatoodashboard/glutes';
-import Pelvic from '../component/tatoodashboard/pelvic';
-import Leg from '../component/tatoodashboard/leg';
-import LegDashboard from '../component/tatoodashboard/legDashboard';
-import LegInside from '../component/tatoodashboard/legInside';
-import Foot from '../component/tatoodashboard/foot';
-import FootDashboard from '../component/tatoodashboard/footDashboard'
 
 import Piercing from '../component/piercingdashboard/piercingDashboard'
 import EarPiercing from '../component/piercingdashboard/earPiercing'
@@ -83,8 +50,9 @@ import CustomerInfo from '../component/CustomerInfo';
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData, count,currentSelection,finalUser } = useContext(UserContext)
+  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(()=>{
     if(location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/forget_password" ){
@@ -136,13 +104,24 @@ export default function RoutesComponent() {
   };
  },[location])
 
+
+
+ const handleLogout = ()=>{
+   sessionStorage.clear()
+   navigate("/")
+ }
+
   return (
     <>
       {
         alert && <AlertModal/>
        }
-    {isVisible && <div className='flex justify-center'>
-        <img src={Title} className='w-4/5 md:w-2/5'></img>
+    {isVisible && <div className='flex justify-center relative'>
+        <img src={Title} alt='logo' className='w-4/5 md:w-2/5'></img>
+        <div className='absolute right-10 top-5'>
+        <button className='yellowButton px-4 py-2 rounded-3xl font-semibold' onClick={handleLogout}>Log Out</button>
+        </div>
+
           </div>}
     <Routes>
       <Route exact path="/" element={<Login />} />
@@ -161,42 +140,7 @@ export default function RoutesComponent() {
       <Route exact path="/dashboard" element={<Dashboard />} />
       <Route exact path="/tattoo" element={<TattooDashboard />} />
       <Route exact path='/count' element={<TattooCount/>}/>
-      <Route exact path="/head" element={<HeadTattoo />} />
-      <Route exact path="/face" element={<FaceDashboard />} />
-      <Route exact path="/forehead" element={<Forehead />} />
-      <Route exact path="/neck" element={<Neck />} />
-      <Route exact path="/face-temple" element={<FaceTemple />} />
 
-      
-      <Route exact path="/eyebrow" element={<Eyebrow />} />
-      <Route exact path="/eyelid" element={<Eyelid />} />
-      <Route exact path="/nose" element={<Nose />} />
-      <Route exact path="/cheeks" element={<Cheeks />} />
-      <Route exact path="/lip" element={<Lip />} />
-      <Route exact path="/jaw" element={<Jaw />} />
-      <Route exact path="/upper-chest" element={<UnderChest />} />
-      <Route exact path="/scalp" element={<Scalp />} />
-      <Route exact path="/ear" element={<Ear />} />
-      <Route exact path="/ear-dashboard" element={<EarDashboard />} />
-      <Route exact path="/chest" element={<ChestDeshboard />} />
-      <Route exact path="/under-chest" element={<ChestInside />} />
-      <Route exact path="/torso" element={<Torso />} />
-      <Route exact path="/back" element={<Back />} />
-      <Route exact path="/arm" element={<Arm />} />
-      <Route exact path="/arm-dashboard" element={<ArmDashboard />} />
-      <Route exact path="/arm-inside" element={<ArmInside />} />
-      <Route exact path="/hand" element={<Hand />} />
-      <Route exact path="/hand-inside" element={<HandInside />} />
-      <Route exact path="/hip" element={<Hip />} />
-      <Route exact path="/glutes" element={<Glute />} />
-      <Route exact path="/pelvic" element={<Pelvic />} />
-      <Route exact path="/leg" element={<Leg />} />
-      <Route exact path="/nipple" element={<Nipple />} />
-      <Route exact path="/leg-dashboard" element={<LegDashboard />} />
-      <Route exact path="/leginside" element={<LegInside />} />
-      <Route exact path="/foot" element={<Foot />} />
-      <Route exact path="/foot-dashboard" element={<FootDashboard />} />
-      <Route exact path="/temple" element={<FaceTemple />} />
       <Route exact path="/description" element={<BriefDescription/>} />
       
       
