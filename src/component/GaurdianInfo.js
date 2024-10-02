@@ -141,7 +141,7 @@ const GaurdianInfo = () => {
               onChange={(value) =>
                 setGaurdianInfo({ ...gaurdianInfo, phoneNumber: value })
               }
-              inputStyle={{ paddingLeft : "3rem", zIndex: "0" }}
+              inputStyle={{ paddingLeft : "3rem",width:"100%", zIndex: "0" }}
             />
           </div>
           <div className="flex justify-center">
