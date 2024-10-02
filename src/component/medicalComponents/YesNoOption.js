@@ -64,7 +64,7 @@ const YesNoOption = ({question, next, prev}) => {
 
          <div className="flex flex-col items-center gap-4 flex-1 md:text-2xl text-base">
             
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -75,7 +75,7 @@ const YesNoOption = ({question, next, prev}) => {
                 {t("Yes")}</label>
            
            
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -90,7 +90,7 @@ const YesNoOption = ({question, next, prev}) => {
           <div className="flex gap-10">
             {question?.subOpt?.map((option, index)=>{
               return <>
-              <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"

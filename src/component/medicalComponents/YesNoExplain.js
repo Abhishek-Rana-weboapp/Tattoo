@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
 
-const YesNoExplain = ({question, next, prev,}) => {
+const  YesNoExplain = ({question, next, prev,}) => {
     const [selected, setSelected] = useState("")
     const {alert, setAlert, setAlertMessage, formData, setFormData} = useContext(UserContext)
     const [explanation, setExplanation] = useState("")
@@ -61,7 +61,7 @@ const YesNoExplain = ({question, next, prev,}) => {
          </label>
 
          <div className="flex flex-col items-center md:text-2xl text-base gap-4 flex-1">
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className="w-6 h-6"
@@ -71,7 +71,7 @@ const YesNoExplain = ({question, next, prev,}) => {
                 />
                 {t("Yes")}
               </label>
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"

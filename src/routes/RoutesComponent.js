@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, } from 'react'
-import {  Route, Routes, useLocation,  } from 'react-router-dom'
+import {  Route, Routes, useLocation, useNavigate,  } from 'react-router-dom'
 import Login from '../component/login';
 import SignUp from '../component/signup';
 import ForgetPassword from '../component/forgetPassword';
@@ -52,6 +52,7 @@ export default function RoutesComponent() {
 
   const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(()=>{
     if(location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/forget_password" ){
@@ -103,13 +104,24 @@ export default function RoutesComponent() {
   };
  },[location])
 
+
+
+ const handleLogout = ()=>{
+   sessionStorage.clear()
+   navigate("/")
+ }
+
   return (
     <>
       {
         alert && <AlertModal/>
        }
-    {isVisible && <div className='flex justify-center'>
+    {isVisible && <div className='flex justify-center relative'>
         <img src={Title} alt='logo' className='w-4/5 md:w-2/5'></img>
+        <div className='absolute right-10 top-5'>
+        <button className='yellowButton px-4 py-2 rounded-3xl font-semibold' onClick={handleLogout}>Log Out</button>
+        </div>
+
           </div>}
     <Routes>
       <Route exact path="/" element={<Login />} />

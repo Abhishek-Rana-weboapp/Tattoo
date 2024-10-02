@@ -20,7 +20,7 @@ function ForgetPassword() {
     };
 
     // Configure the request
-    const url = `${apiUrl}/forgot_password`;
+    const url = `${apiUrl}forgot_password`;
     const config = {
       method: "POST",
       headers: {

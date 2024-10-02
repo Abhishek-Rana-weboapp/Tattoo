@@ -163,10 +163,9 @@ function DoctorContactForm() {
           </div>
 
           <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
-            <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">
+            <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Phone")}:
             </label>
-
             <input
               className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="number"

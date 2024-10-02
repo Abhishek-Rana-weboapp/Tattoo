@@ -134,14 +134,16 @@ const GaurdianInfo = () => {
             placeholder="Email"
             onChange={handleInput}
           ></input>
-          <PhoneInput
-            country="us"
-            value={gaurdianInfo.phoneNumber}
-            onChange={(value) =>
-              setGaurdianInfo({ ...gaurdianInfo, phoneNumber: value })
-            }
-            inputStyle={{ width: isMobile ? "100% " : "98%", zIndex: "0" }}
-          />
+          <div className="">
+            <PhoneInput
+              country="us"
+              value={gaurdianInfo.phoneNumber}
+              onChange={(value) =>
+                setGaurdianInfo({ ...gaurdianInfo, phoneNumber: value })
+              }
+              inputStyle={{ paddingLeft : "3rem", zIndex: "0" }}
+            />
+          </div>
           <div className="flex justify-center">
             <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
               Submit

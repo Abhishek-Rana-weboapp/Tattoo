@@ -66,7 +66,7 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
          
 
          {type !== "sub" ? <div className="flex flex-col md:text-2xl text-base items-center gap-4">
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className="w-6 h-6"
@@ -76,7 +76,7 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
                 />
               {t("Yes")}
               </label>
-              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+              <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6 "
@@ -90,7 +90,7 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
 
 <div className="flex flex-col md:text-xl text-sm items-center gap-4">
   
-  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
   <input
     type="checkbox"
     className="w-6 h-6"
@@ -102,7 +102,7 @@ const YesNoComponent = ({question, next, type, prev, subState, setSubState}) => 
 
   </label>
   
-  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center">
+  <label className="md:text-2xl text-lg uppercase text-white flex gap-2 items-center hover:cursor-pointer">
   <input
     type="checkbox"
     className=" w-6 h-6"

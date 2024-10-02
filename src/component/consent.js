@@ -102,7 +102,6 @@ function ConsentForm() {
       const cursiveInitialsImage = await captureCursiveSignature(
         "cursiveinitials"
       );
-      console.log(cursiveInitialsImage)
       setCursiveInitialsImage(cursiveInitialsImage);
       setInitialsImg(cursiveInitialsImage)
     };

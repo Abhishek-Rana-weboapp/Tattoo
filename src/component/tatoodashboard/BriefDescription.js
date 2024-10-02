@@ -11,8 +11,6 @@ const BriefDescription = () => {
   const inputRef = useRef()
   const [desc, setDesc] = useState("")
   
-  console.log(user)
-  console.log(finalUser)
   useEffect(()=>{
     inputRef.current.focus()
     if(description[currentSelection]){

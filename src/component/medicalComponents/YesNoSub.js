@@ -6,7 +6,7 @@ import YesNoExplain from "./YesNoExplain";
 import ExplanationComponent from "./ExplanationComponent";
 import Navigation from "../navigation/Navigation";
 
-const YesNoSub = ({ question, next, type, prev }) => {
+const  YesNoSub = ({ question, next, type, prev }) => {
   const [selected, setSelected] = useState("");
   const [subState, setSubState] = useState({});
   const { alert, setAlert, setAlertMessage, formData, setFormData } =
@@ -104,7 +104,7 @@ const YesNoSub = ({ question, next, type, prev }) => {
       <div className="flex flex-col gap-2 flex-1">
         <div className="flex flex-col items-center gap-4">
            
-            <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center">
+            <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center hover:cursor-pointer">
             <input
               type="checkbox"
               className=" w-6 h-6"
@@ -115,7 +115,7 @@ const YesNoSub = ({ question, next, type, prev }) => {
               {t("Yes")}
             </label>
            
-            <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center">
+            <label className="md:text-2xl text-base uppercase text-white flex gap-2 items-center hover:cursor-pointer">
             <input
               type="checkbox"
               className=" w-6 h-6"
