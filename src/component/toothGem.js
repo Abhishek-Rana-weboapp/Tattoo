@@ -120,7 +120,7 @@ const ToothGems = () => {
       const data = await response.json();
       
       if (response.ok) {
-        setUser((prev) => ({ ...prev, level1: data.profile_url }));
+        setUser((prev) => ({ ...prev, 1: data.profile_url }));
         setFinalUser((prev) => ({ ...prev, level1: data.profile_url, level2:null, levl3:null , level4:null }));
         navigate("/medical-form");
       } else {

@@ -66,8 +66,6 @@ const NewMedicalHistory = () => {
     }
   };
 
-  console.log(user)
-  console.log(finalUser)
 
 
   const next = () => {

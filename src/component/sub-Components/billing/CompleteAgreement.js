@@ -148,7 +148,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         </div>
         {imgUrl && (
           <div className="bg-white h-28 w-30">
-            <img src={imgUrl} className="w-full h-full z-10"></img>
+            <img src={imgUrl} className="w-full h-full"></img>
           </div>
         )}
         <div className="flex justify-center gap-2">

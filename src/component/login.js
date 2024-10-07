@@ -50,12 +50,10 @@ function Login() {
     try {
       const response = await fetch(url, config);
       const responseData = await response.json();
-      console.log(responseData)
       if(response.status === 401){
         setError(responseData.error)
         return
       }
-
       if (responseData.message === "Login successful.") {
         if (responseData?.user?.lang == "es") {
           i18n.changeLanguage("es");
