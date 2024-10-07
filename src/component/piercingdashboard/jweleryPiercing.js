@@ -13,7 +13,7 @@ function JewelleryPiercing() {
   const {t} = useTranslation()
 
   useEffect(()=>{
- if(user.level2) setSelected(user.level2)
+ if(user[2]) setSelected(user[2])
   },[])
 
   const handlepartLocation = (bodyPart) => {
@@ -49,15 +49,15 @@ function JewelleryPiercing() {
 
   const handleNext = ()=>{
     if(selected){
-      if(user.level2 !== selected){
-        setUser({ ...user, level2: selected, level3:null, level4:null});
-        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+      if(user[2] !== selected){
+        setUser({ ...user, 2: selected, 3:null, 4:null});
+        setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user[1] , level2: selected, level3: null, level4: null }}))
         if(currentSelection < count){
           setCurrentSelection(currentSelection + 1)
         }
         }else{
-          setUser({ ...user, level2: selected});
-          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user.level1 , level2: selected, level3: null, level4: null }}))
+          setUser({ ...user, 2: selected});
+          setFinalUser(prev=>({...prev ,[currentSelection] : {level1 : user[1] , level2: selected, level3: null, level4: null }}))
           if(currentSelection < count){
             setCurrentSelection(currentSelection + 1)
           }

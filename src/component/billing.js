@@ -61,19 +61,17 @@ const BillingComponent = () => {
         });
     };
     fetchAppointment();
-  }, []);
-  
-  useEffect(()=>{
-    setCurrentStep(parseInt(step) || 1);
-  },[updateAppointment])
-
-  useEffect(() => {
     if (selectedAppointment) {
       setUpdateAppointment(selectedAppointment);
     } else {
       navigate("/artist-dashboard");
     }
   }, []);
+  
+  useEffect(()=>{
+    setCurrentStep(parseInt(step) || 1);
+  },[updateAppointment, step])
+
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
@@ -128,7 +126,6 @@ const BillingComponent = () => {
       case 2:
         navigate(`/billing/${updateAppointment?.id}/1`);
         break;
-
       case 3:
         navigate(`/billing/${updateAppointment?.id}/2`);
         break;

@@ -142,7 +142,6 @@ function TattooDashboard() {
 
   useEffect(()=>{
     if(currentStep === 2){
-      console.log(selected[1])
       if(selected[currentStep] && selected[1] === "back"){
          if(!Object.keys(levelObjects).includes(selected[2])){
           let tempValue = selected[2]

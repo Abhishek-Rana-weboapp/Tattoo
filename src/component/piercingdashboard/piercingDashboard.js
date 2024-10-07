@@ -20,9 +20,9 @@ function PiercingDashboard() {
   };
 
   useEffect(() => {
-    if (user.level1) {
-      setUser((prev) => ({ ...prev, level1: user.level1 }));
-    }
+    if (user[1]) {
+      setSelected(user[1])
+    }           
   }, []);
 
   const partButton = [
@@ -60,23 +60,24 @@ function PiercingDashboard() {
     },
   ];
 
+
   const handleNext = () => {
     if (selected) {
       if (partButton.find((item) => item.value === selected)) {
-        if (user.level1 !== selected) {
+        if (user[1] !== selected) {
           setUser({
             ...user,
-            level1: selected,
-            level2: null,
-            level3: null,
-            level4: null,
+            1: selected,
+            2: null,
+            3: null,
+            4: null,
           });
           setFinalUser({...finalUser,[currentSelection] : {level1 : selected, level2 : null, level3:null, level4:null}})
           if(currentSelection < count){
             setCurrentSelection(currentSelection+1)
           }
         } else {
-          setUser({ ...user, level1: selected });
+          setUser({ ...user, 1: selected });
           setFinalUser({...finalUser,[currentSelection] : {level1 : selected, level2 : null, level3:null, level4:null}})
           if(count < currentSelection){
             setCurrentSelection(currentSelection+1)
@@ -94,13 +95,13 @@ function PiercingDashboard() {
       if (user.level1 !== selected) {
         setUser({
           ...user,
-          level1: selected,
-          level2: null,
-          level3: null,
-          level4: null,
+          1: selected,
+          2: null,
+          3: null,
+          4: null,
         });
       } else {
-        setUser({ ...user, level1: selected });
+        setUser({ ...user, 1: selected });
       }
       navigate(`/${selected}`);
       return;
