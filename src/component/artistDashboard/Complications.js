@@ -59,7 +59,7 @@ const Complications = ({
             {
               id: updateAppointment?.id,
               updateField: "process_step",
-              updateValue: 7,
+              updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "pmu" ? 7 : 8 ,
             },
           ],
         };
@@ -82,7 +82,7 @@ const Complications = ({
           {
             id: updateAppointment?.id,
             updateField: "process_step",
-            updateValue: 7,
+            updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "pmu" ? 7 : 8,
           },
         ],
       };

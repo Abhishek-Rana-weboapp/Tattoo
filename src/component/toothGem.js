@@ -121,7 +121,7 @@ const ToothGems = () => {
       
       if (response.ok) {
         setUser((prev) => ({ ...prev, 1: data.profile_url }));
-        setFinalUser((prev) => ({ ...prev, level1: data.profile_url, level2:null, levl3:null , level4:null }));
+        setFinalUser((prev) => ({ ...prev, 1 : {level1: data.profile_url, level2:null, level3:null , level4:null }}));
         navigate("/medical-form");
       } else {
         console.error(

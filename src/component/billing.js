@@ -129,9 +129,8 @@ const BillingComponent = () => {
       case 3:
         navigate(`/billing/${updateAppointment?.id}/2`);
         break;
-
       case 4:
-        if (updateAppointment?.typeofservice === "tattoo") {
+        if (updateAppointment?.typeofservice === "tattoo" || updateAppointment.typeofservice === "removal" ) {
           navigate(`/billing/${updateAppointment?.id}/3`);
           break;
         } else {
@@ -152,7 +151,11 @@ const BillingComponent = () => {
         break;
 
       case 8:
+        if (updateAppointment?.typeofservice === "tattoo" || updateAppointment.typeofservice === "permanent-makeup" ) {
         navigate(`/billing/${updateAppointment?.id}/7`);
+        }else{
+          navigate(`/billing/${updateAppointment?.id}/6`)
+        }
         break;
 
         case 9:
@@ -173,8 +176,11 @@ const BillingComponent = () => {
     return <LoaderModal />;
   }
 
+  console.log(selectedAppointment)
+
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
+      <h1 className="text-3xl uppercase font-bold mb-4">{selectedAppointment.typeofservice}</h1>
       {currentStep === 1 && (
         <PriceComponent
           updateAppointment={updateAppointment}

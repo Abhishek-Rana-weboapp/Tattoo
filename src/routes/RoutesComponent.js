@@ -47,6 +47,7 @@ import Complications from '../component/artistDashboard/Complications';
 import TattooCount from '../component/TattooCount';
 import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory';
 import CustomerInfo from '../component/CustomerInfo';
+import { FaPowerOff } from "react-icons/fa";
 
 export default function RoutesComponent() {
 
@@ -118,9 +119,8 @@ export default function RoutesComponent() {
        }
     {isVisible && <div className='flex justify-center relative'>
         <img src={Title} alt='logo' className='w-4/5 md:w-2/5'></img>
-        <div className='absolute right-10 top-5'>
-        <button className='yellowButton px-4 py-2 rounded-3xl font-semibold' onClick={handleLogout}>Log Out</button>
-        </div>
+        <button className='yellowButton px-4 py-2 rounded-3xl font-semibold md:block hidden absolute right-10 top-5' onClick={handleLogout}>Log Out</button>
+        <button className='text-yellow-600 top-2 right-2 absolute flex flex-col text-[8px] items-center md:hidden ' onClick={handleLogout}><FaPowerOff size={20}/>LogOut</button>
 
           </div>}
     <Routes>

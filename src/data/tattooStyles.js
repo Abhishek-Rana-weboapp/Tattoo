@@ -42,6 +42,7 @@ export const tattooStyles = [
   "Other",
 ];
 
+
 export const pmuStyles = [
   "Eyebrow (Solid)",
   "Eyebrow (Ombre)",

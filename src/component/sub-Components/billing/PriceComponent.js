@@ -20,7 +20,7 @@ export default function PriceComponent({
 
   const [formatedPrice, setFormatedPrice] = useState()
   const [price, setPrice] = useState(updateAppointment.price ||  "")
-  const [fix, setFix] = useState(updateAppointment.fix_price || "")
+  const [fix, setFix] = useState(updateAppointment.fix_price ? updateAppointment.fix_price : updateAppointment.typeofservice !== "tattoo" ? "yes" : "")
   const [loading, setLoading] = useState(false)
   
   useEffect(()=>{
@@ -92,8 +92,8 @@ export default function PriceComponent({
 
   return (
     <div className="flex flex-col items-center w-full gap-4">
-      <h3>{t("Is this hourly or set price?")}</h3>
-      <select
+      {updateAppointment.typeofservice === "tattoo" && <h3>{t("Is this hourly or set price?")}</h3>}
+     {updateAppointment.typeofservice === "tattoo" && <select
         name="fix"
         className="p-2 md:w-2/4 w-full text-black font-semibold rounded-lg"
         onChange={handleSelect}
@@ -102,7 +102,7 @@ export default function PriceComponent({
         <option value={""}>{t("Select")}</option>
         <option value={"no"}>{t("Hourly")}</option>
         <option value={"yes"}>{t("Set Price")}</option>
-      </select>
+      </select>}
 
       <div className="flex flex-col md:flex-row gap-2 items-center w-2/4">
         <div className="flex flex-col gap-2 items-center w-full">

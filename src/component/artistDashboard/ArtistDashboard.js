@@ -19,7 +19,7 @@ export default function ArtistDashboard() {
     setUpdateAppointment,
   } = useContext(UserContext);
   const [selectedClient, setSelectedClient] = useState();
-  const {t} = useTranslation()
+  const {t} = useTranslation()                
 
   // const [selectedArtist, setSelectedArtist] = useState([]);
   const [selectedMedicalHistory, setSelectedMedicalHistory] = useState();
@@ -189,8 +189,9 @@ export default function ArtistDashboard() {
               <option value={""}>{t("Select the client")} </option>
               {appointments?.map((appointment) => {
                 return (
-                  <option key={appointment?.id} value={appointment?.id}>
+                  <option className="flex justify-between" key={appointment?.id} value={appointment?.id}>
                     {`${appointment?.firstname} ${appointment?.lastname}`}
+                    {" - "}{appointment?.typeofservice}
                   </option>
                 );
               })}

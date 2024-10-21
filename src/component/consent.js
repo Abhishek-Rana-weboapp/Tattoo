@@ -65,7 +65,6 @@ function ConsentForm() {
 
 
   useEffect(() => {
-    inputRef?.current?.focus();
     if (minor === "false" && currentPage > Object.keys(initials).length) {
       setInitials({ ...initials, [currentPage]: "" });
     } else if (currentPage > Object.keys(initials).length) {

@@ -42,7 +42,7 @@ const HairLossPatternSelection = () => {
     if(selected){
       setSelectedPattern(selected);
       setUser({...user,level1:selected})
-      setFinalUser({...user,level1:selected , level2 : null, level3 : null, level4 : null})
+      setFinalUser((prev)=>({...prev ,1:{level1:selected , level2 : null, level3 : null, level4 : null}}))
       navigate("/medical-form")
     }else{
       setAlert(!alert)
