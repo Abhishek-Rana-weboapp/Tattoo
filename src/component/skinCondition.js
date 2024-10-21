@@ -26,7 +26,7 @@ function SkinCondition({
         setAlertMessage(t("Please enter an explanation"))
         return
       }
-      if(updateAppointment.typeofservice === "tattoo"){
+      if(updateAppointment.typeofservice === "tattoo" || updateAppointment.typeofservice === "removal"){
         data = {
           updates: [
             {

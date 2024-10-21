@@ -19,6 +19,7 @@ const VerifyService = ({ step, setStep }) => {
         .get(`${apiUrl}/artist/appointment_list_id_user?id=${appointmentId}`, {headers:AUTHHEADERS()})
         .then((res) => {
           const data = JSON.parse(res?.data?.data[0].body_location)
+          console.log(data)
           setAppointment(res?.data?.data[0]);
           setService(data.selectedTattooType || "")
           setLocation(data)
@@ -39,6 +40,9 @@ const VerifyService = ({ step, setStep }) => {
   const handlePrev = () => {
     setStep(0);
   };
+
+  console.log(location)
+  console.log(location[1]?.level1)
 
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between overflow-hidden">
@@ -95,10 +99,10 @@ const VerifyService = ({ step, setStep }) => {
               <h4 className="font-bold">{t("Placement")} : </h4>
               <div className="flex flex-col">
                   <div>
-                    {location.level1 !== null && <h4>{t(location.level1)}</h4>}
-                    {location.level2 !== null && <h4>{t(location.level2)}</h4>}
-                    {location.level3 !== null && <h4>{t(location.level3)}</h4>}
-                    {location.level4 !== null && <h4>{t(location.level4)}</h4>}
+                    {location[1].level1 !== null && <h4>{t(location[1].level1)}</h4>}
+                    {location[1].level2 !== null && <h4>{t(location[1].level2)}</h4>}
+                    {location[1].level3 !== null && <h4>{t(location[1].level3)}</h4>}
+                    {location[1].level4 !== null && <h4>{t(location[1].level4)}</h4>}
 
                   </div>
               </div>
@@ -112,8 +116,8 @@ const VerifyService = ({ step, setStep }) => {
             <h4>{t("Placement")} : </h4>
             <div className="w-full rounded">
             <img
-              className="aspect-square w-full object-contain rounded-lg"
-              src={location.level1}
+              className="aspect-video w-full object-contain rounded-lg"
+              src={location[1].level1}
               ></img>
               </div>
           </>
@@ -123,8 +127,8 @@ const VerifyService = ({ step, setStep }) => {
           <>
             <h4>{`Placement :`} </h4>
             <img
-              className="md:w-1/6 h-64 rounded-lg"
-              src={location.level1}
+              className="w-full aspect-video h-64 rounded-lg"
+              src={location[1].level1}
             ></img>
           </>
         )}
