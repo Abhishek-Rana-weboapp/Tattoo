@@ -59,7 +59,7 @@ const Complications = ({
             {
               id: updateAppointment?.id,
               updateField: "process_step",
-              updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "pmu" ? 7 : 8 ,
+              updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "permanent-makeup" ? 7 : 8 ,
             },
           ],
         };
@@ -82,7 +82,7 @@ const Complications = ({
           {
             id: updateAppointment?.id,
             updateField: "process_step",
-            updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "pmu" ? 7 : 8,
+            updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "permanent-makeup" ? 7 : 8,
           },
         ],
       };
@@ -109,7 +109,7 @@ const Complications = ({
   }
 
   return (
-      <div className="flex flex-col items-center gap-4 w-full h-full">
+      <div className="flex flex-col items-center gap-4 md:w-1/3 h-full">
         <div className="flex flex-col items-center gap-4 w-full p-2">
           <label className="uppercase text-white text-center md:text-2xl text-md md:font-bold flex gap-1">
             <span>

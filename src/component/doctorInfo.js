@@ -206,7 +206,7 @@ function DoctorContactForm() {
             </select>
           </div>
 
-          <div className="flex items-center  gap-2">
+            <label className="flex items-center  gap-2 text-white font-semibold text-md">
             <input
               type="checkbox"
               className="w-5 h-5"
@@ -214,10 +214,8 @@ function DoctorContactForm() {
               checked={drformData?.useDoctorRecommendation}
               onChange={handleInputChange}
             />
-            <label className="text-white font-semibold text-md">
               {t("Use Doctor Recommendation")}
             </label>
-          </div>
  
           <div className="w-full md:w-3/6 flex  md:justify-end items-center gap-1">
           {drformData?.useDoctorRecommendation && (
