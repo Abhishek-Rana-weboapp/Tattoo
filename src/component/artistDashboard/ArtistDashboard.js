@@ -220,17 +220,15 @@ export default function ArtistDashboard() {
                   })
                 }
               </div>
-              <div className="flex gap-2 w-full items-center justify-center">
+                <label className="font-bold text-white flex gap-2 w-full items-center justify-center hover:cursor-pointer">
                 <input
                   type="checkbox"
                   className="w-6 h-6"
                   value={acknowledgement}
                   onChange={(e) => setAcknowledgement(e.target.checked)}
                 />
-                <label className="font-bold text-white">
                   {t("I understand the Medical History of the client")}
                 </label>
-              </div>
             </div>
             <div className="flex justify-center gap-4">
               <button

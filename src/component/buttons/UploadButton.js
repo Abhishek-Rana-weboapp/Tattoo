@@ -16,7 +16,7 @@ const UploadButton = ({children,disabled, handleInput, accept}) => {
           ref={ref}
           multiple
           className="hidden"// Hide the input element
-          onChange={handleInput}
+          onChange={(e)=>handleInput(e, ref)}
         />
         <button
           className="yellowButton py-2 px-4 rounded-xl text-black font-bold"

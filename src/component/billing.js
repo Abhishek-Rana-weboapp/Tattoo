@@ -176,7 +176,6 @@ const BillingComponent = () => {
     return <LoaderModal />;
   }
 
-  console.log(selectedAppointment)
 
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
@@ -229,6 +228,7 @@ const BillingComponent = () => {
           handlePrev={handlePrev}
         />
       )}
+      
       {currentStep === 6 && (
         <Complications
           updateAppointment={updateAppointment}

@@ -71,6 +71,7 @@ export default function UploadAfterImage({
       const urls = await Promise.all(uploadPromises);
       const filteredUrls = urls.filter((url) => url !== null);
       setVideoStatus("IDLE");
+      videoRef.current.value=""
       setUploadedVideoUrl((prev) => [...prev, ...filteredUrls]);
     }
   };
@@ -86,6 +87,7 @@ export default function UploadAfterImage({
     setImageStatus("UPLOADING");
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
     const urls = await Promise.all(uploadPromises);
+    imageRef.current.value=""
     setImageStatus("IDLE");
     setUploadedUrls((prev) => [...prev, ...urls]);
   };
@@ -192,7 +194,7 @@ export default function UploadAfterImage({
         <div className="flex flex-col gap-2 items-center overflow-hidden">
           {/* Images preview */}
           <div className="flex flex-wrap gap-2 overflow-auto">
-            {uploadedUrls?.map((image, index) => {
+            {uploadedUrls.length !== 0 && uploadedUrls.map((image, index) => {
               return (
                 <div className="relative">
                   <img
@@ -228,7 +230,7 @@ export default function UploadAfterImage({
 
         <>
           {/* Video Preview */}
-          {uploadedVideoUrl && (
+          {uploadedVideoUrl.length !== 0 && (
             <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
               {uploadedVideoUrl.map((url, index) => {
                 return (
