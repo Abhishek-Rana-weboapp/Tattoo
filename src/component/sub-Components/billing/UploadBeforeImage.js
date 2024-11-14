@@ -62,7 +62,7 @@ export default function UploadBeforeImage({
     }
   };
 
-  const handleUploadBeforeImage = async (e) => {
+  const handleUploadBeforeImage = async (e, ref) => {
     const selectedFiles = e.target.files;
     if (selectedFiles.length === 0) {
       setAlert(!alert);
@@ -73,6 +73,7 @@ export default function UploadBeforeImage({
     const uploadPromises = Array.from(selectedFiles).map(uploadFile);
     const urls = await Promise.all(uploadPromises);
     const filteredUrls = urls.filter((url) => url !== null);
+    ref.current.value = ""
     setImageStatus("IDLE");
     setUploadedUrls((prev) => [...prev, ...filteredUrls]);
   };
@@ -196,7 +197,7 @@ export default function UploadBeforeImage({
   };
 
 
-  const handleBeforeVideo = async (e) => {
+  const handleBeforeVideo = async (e, ref) => {
     const selectedFiles = e.target.files;
     if (selectedFiles.length === 0) {
       setAlertMessage(t("Please upload a video"));
@@ -208,6 +209,7 @@ export default function UploadBeforeImage({
       const urls = await Promise.all(uploadPromises);
       const filteredUrls = urls.filter((url) => url !== null);
       setVideoStatus("IDLE");
+      ref.current.value = "";
       setUploadedVideoUrl((prev) => [...prev, ...filteredUrls]);
     }
   };
@@ -302,7 +304,7 @@ export default function UploadBeforeImage({
       {/* Videos previews */}
 
       <div className="flex flex-col gap-2 items-center overflow-hidden">
-        {uploadedVideoUrl && (
+        {uploadedUrls.length !== 0  && (
           <div className="w-30 h-30 flex md:flex-row flex-col gap-2 overflow-auto">
             {uploadedVideoUrl.map((url, index) => {
               return (

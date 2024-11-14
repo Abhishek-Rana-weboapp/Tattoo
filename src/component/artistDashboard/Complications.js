@@ -119,8 +119,8 @@ const Complications = ({
             </span>
           </label>
           <div className="flex flex-col items-center gap-4">
-            <div className="w-20 justify-start flex gap-2 items-center">
-              <input
+            <label className="text-2xl uppercase text-white w-20 justify-start flex gap-2 items-center hover:cursor-pointer">
+            <input
                 type="checkbox"
                 className=" w-6 h-6"
                 name="page5"
@@ -128,11 +128,9 @@ const Complications = ({
                 checked={yes}
                 onChange={handleRadioButtons}
               />
-              <label className="text-2xl uppercase text-white">
                 {t("Yes")}
               </label>
-            </div>
-            <div className="w-20 justify-start flex gap-2 items-center">
+            <label className="text-2xl uppercase text-white w-20 justify-start flex gap-2 items-center hover:cursor-pointer">
               <input
                 type="checkbox"
                 className=" w-6 h-6"
@@ -141,8 +139,7 @@ const Complications = ({
                 checked={no}
                 onChange={handleRadioButtons}
               />
-              <label className="text-2xl uppercase text-white">NO</label>
-            </div>
+              NO</label>
           </div>
 
           {yes && (
