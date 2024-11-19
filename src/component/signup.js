@@ -11,6 +11,7 @@ import { useMediaQuery } from "react-responsive";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import DatePicker from "./buttons/DatePicker";
+import Loader from "./loader/Loader";
 
 function SignUp() {
   const { alert, setAlert, setAlertMessage } = useContext(UserContext);
@@ -29,6 +30,7 @@ function SignUp() {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [phoneNumber, setPhoneNumber] = useState();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     sessionStorage.clear();
@@ -38,6 +40,7 @@ function SignUp() {
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     const user = {
       firstname: firstName,
@@ -64,10 +67,11 @@ function SignUp() {
           )
         );
         setAlert(!alert);
+        setLoading(false)
         return;
       }
       await axios
-        .post(`${apiUrl}/signup`, user)
+        .post(`${apiUrl}signup`, user)
         .then((res) => {
           if (res.status === 201) {
             if (res.data.user.lang === "es") {
@@ -104,12 +108,15 @@ function SignUp() {
                 gender: res.data.user.gender,
               })
             );
+            
             if (res.data.user.minor === "true") {
               navigate("/detailedinfo");
+              setLoading(false)
               return;
             }
             if (res.data.user.minor === "false") {
               navigate("/detailedinfo");
+              setLoading(false)
               return;
             }
           }
@@ -117,11 +124,13 @@ function SignUp() {
         .catch((err) => {
           setAlertMessage(err.response.data.error);
           setAlert(!alert);
+          setLoading(false)
           return;
         });
     } else {
       setAlertMessage("Please Enter all details");
       setAlert(!alert);
+      setLoading(false)
     }
   };
 
@@ -261,8 +270,8 @@ function SignUp() {
               </NavLink>
             </div>
           </div>
-          <button className="yellowButton py-2 px-8 rounded-3xl font-bold ">
-            Sign Up
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold flex justify-center items-center" disabled={loading}>
+           {loading ? <Loader/> :   "Sign Up"}
           </button>
         </form>
       </div>

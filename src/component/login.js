@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
 import { PiUserCircleFill } from "react-icons/pi";
@@ -9,9 +9,9 @@ import Button_bg from "../assets/Button_bg.png";
 import UserContext from "../context/UserContext";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import i18n from "i18next";
+import Loader from "./loader/Loader";
 
 function Login() {
-  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState("");
@@ -19,20 +19,16 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { setIsVisible } = useContext(UserContext);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setIsVisible(false);
     sessionStorage.clear();
   }, []);
 
-  const buttonStyle = {
-    backgroundImage: Button_bg,
-    backgroundSize: "cover",
-    // Add any other styles you need
-  };
-
   const handleFormSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const user = {
       username: email,
@@ -46,13 +42,14 @@ function Login() {
       body: JSON.stringify(user),
     };
 
-    const url = `${apiUrl}login`;
+    const url = `${apiUrl}/login`;
     try {
       const response = await fetch(url, config);
       const responseData = await response.json();
-      if(response.status === 401){
-        setError(responseData.error)
-        return
+      if (response.status === 401) {
+        setError(responseData.error);
+        setLoading(false);
+        return;
       }
       if (responseData.message === "Login successful.") {
         if (responseData?.user?.lang == "es") {
@@ -82,7 +79,7 @@ function Login() {
               ?.slice(0, 1)
               .toUpperCase()}`
           );
-
+          setLoading(false);
           navigate("/artist-dashboard");
         }
         if (responseData?.user?.usertype === "user") {
@@ -125,15 +122,19 @@ function Login() {
               );
             }
             navigate("/detailedinfo");
+            setLoading(false);
           } else {
             navigate("/detailedinfo");
+            setLoading(false);
           }
         }
       } else {
         setResponseMessage("Invalid credentials");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
 
@@ -204,8 +205,8 @@ function Login() {
             </div>
           </div>
           {error && <p className="text-sm text-red-400">{error}</p>}
-          <button className="yellowButton py-2 px-8 rounded-3xl font-bold ">
-            login
+          <button className="yellowButton py-2 px-8 rounded-3xl font-bold flex justify-center items-center" disabled={loading}>
+            {loading ? <Loader/> : "login"}
           </button>
         </form>
         {responseMessage && (
