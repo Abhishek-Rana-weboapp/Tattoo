@@ -111,7 +111,7 @@ const ToothGems = () => {
  if(selectedTeeth.length > 0){
 
    try {
-     const response = await fetch(`${apiUrl}/upload`, {
+     const response = await fetch(`${apiUrl}upload`, {
        method: "POST",
        body: formData,
        headers : AUTHHEADERS()

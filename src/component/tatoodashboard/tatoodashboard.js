@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../context/UserContext";
 import CustomButton from "../buttons/CustomButton";
@@ -9,13 +9,14 @@ import { tattooButtons } from "../../data/buttonChoices";
 
 const renderButtons = (data, handleSelect, selected) => {
   if (data) {
-    return Object.keys(data).map((key, index) => (
-      <CustomButton onClick={handleSelect} selected={selected} key={index}>
+    return Object.keys(data).map((key, index) => {
+      return <CustomButton onClick={handleSelect} selected={selected} key={index} value={key}>
         {Object.keys(data[key]).length !== 0 && data[key].label}
       </CustomButton>
-    ));
+    });
   }
 };
+
 
 const renderInput = (handleInput, value) => {
   return (
@@ -32,7 +33,7 @@ const renderInput = (handleInput, value) => {
 function TattooDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage, currentSelection } =
+  const { user, setUser, alert, setAlert, setAlertMessage} =
     useContext(UserContext);
   const [selected, setSelected] = useState({
     1: null,
@@ -40,9 +41,12 @@ function TattooDashboard() {
     3: null,
     4: null,
   });
+
   const [inputOpen, setInputOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+
+  console.log(selected)
 
   const handlePrev = () => {
     if (currentStep === 1) {
@@ -157,6 +161,8 @@ function TattooDashboard() {
     }
   },[currentStep])
 
+
+  console.log(selected)
 
 
   return (

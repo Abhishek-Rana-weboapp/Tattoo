@@ -1,9 +1,8 @@
 // Import necessary modules and components
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ConsentFormLayout from "./Layout/FormLayout";
 import ProgressBar from "./ProgressBar";
-import Title from "../assets/Title.png";
 import { useTranslation } from "react-i18next";
 import UserContext from "../context/UserContext";
 import {
@@ -118,38 +117,21 @@ function TermsOfService() {
     setLoading(true);
     const username = sessionStorage.getItem("username");
     const minor = sessionStorage.getItem("minor");
-    const toothgem_url = sessionStorage.getItem("toothgem_url");
-    let data;
-    if (minor === "true") {
-      data = JSON.stringify({
+
+    const keys = Object.keys(finalUser).filter(
+      (key) => key !== "selectedTattooType"
+    );
+    const requests = keys.map((key) => {
+      let data = JSON.stringify({
         username: username,
         minor: minor,
         typeofservice: user.selectedTattooType,
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
-        body_location: JSON.stringify(finalUser),
-        medicalhistory: JSON.stringify(formData),
-        Consent_form: "agreed",
-        gaurdian_initials: storedGaurdianInitials,
-        guardian_signature: gaurdianSignature,
-        guardian_info: gaurdianInfo,
-        emergencycontactnumber: JSON.stringify(emerformData),
-        doctor_information: JSON.stringify(drformData),
-        WaiverRelease_url: JSON.stringify(initials),
-        HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
-        id_url: null,
-        count: count,
-        brief_description: JSON.stringify(description),
-        ArtistPiercerNames: null,
-      });
-    } else {
-      data = JSON.stringify({
-        username: username,
-        minor: minor,
-        typeofservice: user.selectedTattooType,
-        firstname: sessionStorage.getItem("firstname"),
-        lastname: sessionStorage.getItem("lastname"),
-        body_location: JSON.stringify(finalUser),
+        body_location: JSON.stringify({
+          1: finalUser[key],
+          selectedTattooType: finalUser.selectedTattooType,
+        }),
         medicalhistory: JSON.stringify(formData),
         emergencycontactnumber: JSON.stringify(emerformData),
         doctor_information: JSON.stringify(drformData),
@@ -157,12 +139,21 @@ function TermsOfService() {
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
         count: count,
-        brief_description: JSON.stringify(description),
+        brief_description: JSON.stringify({ 1: description[key] }),
         ArtistPiercerNames: null,
       });
-    }
-    try {
-      const response = await fetch(`${apiUrl}/appointment/post`, {
+
+      if (minor === "true") {
+        data = JSON.stringify({
+          ...JSON.parse(data),
+          Consent_form: "agreed",
+          gaurdian_initials: storedGaurdianInitials,
+          guardian_signature: gaurdianSignature,
+          guardian_info: gaurdianInfo,
+        });
+      }
+
+      return fetch(`${apiUrl}appointment/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -170,34 +161,145 @@ function TermsOfService() {
         },
         body: data,
       });
+    });
 
-      const responseData = await response.json();
-
-      if (response.status === 201) {
-        sessionStorage.setItem("appointmentID", responseData.userData.id);
-        sessionStorage.setItem(
-          "appointment_detail",
-          JSON.stringify(responseData.userData)
-        );
-        if (minor === "true") {
-          setLoading(false);
-          navigate("/verify");
-          return;
-        } else {
-          setLoading(false);
-          navigate("/verify");
-          return;
-        }
-      } else {
+    try {
+      const responses = await Promise.all(requests);
+      // const responseIds = await Promise.all(responses.map((response) => response.json().userData.id));
+      const responseDatas = await Promise.all(
+        responses.map(async (response) => {
+          const data = await response.json();
+          return data;
+        })
+      );
+      const responseIds = responseDatas.map((data) => data.userData.id);
+      const responseDetails = responseDatas.map((data) => data.userData);
+      
+      sessionStorage.setItem("appointmentIDs", JSON.stringify(responseIds));
+      sessionStorage.setItem(
+        "appointment_detail",
+        JSON.stringify(responseDetails)
+      );
+      if (responses.every((responses) => responses.status === 201)) {
         setLoading(false);
-        setAlertMessage(t("Please fill in all the required fields"));
+        navigate("/verify");
+      } else {
+        console.log("failed");
+        setLoading(false);
+        setAlertMessage("An error occurred while submitting the form.");
         setAlert(!alert);
       }
     } catch (error) {
+      console.log(error);
       setLoading(false);
+      setAlertMessage("An error occurred while submitting the form.");
+      setAlert(!alert);
       console.error("Error:", error);
     }
   };
+
+  // const handleSubmit = async () => {
+  //   setLoading(true);
+  //   const username = sessionStorage.getItem("username");
+  //   const minor = sessionStorage.getItem("minor");
+
+  //   let data = JSON.stringify({
+  //     username: username,
+  //     minor: minor,
+  //     typeofservice: user.selectedTattooType,
+  //     firstname: sessionStorage.getItem("firstname"),
+  //     lastname: sessionStorage.getItem("lastname"),
+  //     body_location: JSON.stringify(finalUser ),
+  //     medicalhistory: JSON.stringify(formData),
+  //     emergencycontactnumber: JSON.stringify(emerformData),
+  //     doctor_information: JSON.stringify(drformData),
+  //     WaiverRelease_url: JSON.stringify(initials),
+  //     HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
+  //     id_url: null,
+  //     count: count,
+  //     brief_description: JSON.stringify(description),
+  //     ArtistPiercerNames: null,
+  //   });
+
+  //   if (minor === "true") {
+  //     data = JSON.stringify({
+  //       ...JSON.parse(data),
+  //       Consent_form: "agreed",
+  //       gaurdian_initials: storedGaurdianInitials,
+  //       guardian_signature: gaurdianSignature,
+  //       guardian_info: gaurdianInfo,
+  //     });
+  //   }
+  // if (minor === "true") {
+  //   data = JSON.stringify({
+  //     username: username,
+  //     minor: minor,
+  //     typeofservice: user.selectedTattooType,
+  //     firstname: sessionStorage.getItem("firstname"),
+  //     lastname: sessionStorage.getItem("lastname"),
+  //     body_location: JSON.stringify(finalUser),
+  //     medicalhistory: JSON.stringify(formData),
+  //     Consent_form: "agreed",
+  //     gaurdian_initials: storedGaurdianInitials,
+  //     guardian_signature: gaurdianSignature,
+  //     guardian_info: gaurdianInfo,
+  //     emergencycontactnumber: JSON.stringify(emerformData),
+  //     doctor_information: JSON.stringify(drformData),
+  //     WaiverRelease_url: JSON.stringify(initials),
+  //     HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
+  //     id_url: null,
+  //     count: count,
+  //     brief_description: JSON.stringify(description),
+  //     ArtistPiercerNames: null,
+  //   });
+  // } else {
+  //   data = JSON.stringify({
+  //     username: username,
+  //     minor: minor,
+  //     typeofservice: user.selectedTattooType,
+  //     firstname: sessionStorage.getItem("firstname"),
+  //     lastname: sessionStorage.getItem("lastname"),
+  //     body_location: JSON.stringify(finalUser),
+  //     medicalhistory: JSON.stringify(formData),
+  //     emergencycontactnumber: JSON.stringify(emerformData),
+  //     doctor_information: JSON.stringify(drformData),
+  //     WaiverRelease_url: JSON.stringify(initials),
+  //     HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
+  //     id_url: null,
+  //     count: count,
+  //     brief_description: JSON.stringify(description),
+  //     ArtistPiercerNames: null,
+  //   });
+  // }
+  //   try {
+  //     const response = await fetch(`${apiUrl}appointment/post`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //       body: data,
+  //     });
+  //     const responseData = await response.json();
+  //     if (response.status === 201) {
+  //       sessionStorage.setItem("appointmentID", responseData.userData.id);
+  //       sessionStorage.setItem(
+  //         "appointment_detail",
+  //         JSON.stringify(responseData.userData)
+  //       );
+  //       setLoading(false);
+  //       navigate("/verify");
+  //       return;
+  //     } else {
+  //       setLoading(false);
+  //       setAlertMessage(t("Please fill in all the required fields"));
+  //       setAlert(!alert);
+  //     }
+  //   } catch (error) {
+  //     setLoading(false);
+  //     console.error("Error:", error);
+  //   }
+  // };
 
   const handleCheckbox = (e) => {
     if (e.target.checked === true) {
@@ -281,22 +383,22 @@ function TermsOfService() {
 
           {minor === "true" && (
             <div className="flex  justify-between items-center gap-2 md:w-3/4 lg:w-2/4 mx-auto w-full">
-                 <label className="text-white text-sm md:text-base flex gap-2 items-center hover:cursor-pointer">
-                  <input
+              <label className="text-white text-sm md:text-base flex gap-2 items-center hover:cursor-pointer">
+                <input
                   type="checkbox"
                   className="w-6 h-6"
                   checked={gaurdianInitials[currentPage]}
                   onChange={handleGaurdianCheckbox}
                 ></input>
-                  {t("Select to add gaurdian's initials")}
-                </label>
-                <input
-                  type="text"
-                  value={gaurdianInitials[currentPage] || ""}
-                  disabled
-                  // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
-                  className="bg-gray-700 text-white p-2 rounded-md w-20 Blacksword"
-                />
+                {t("Select to add gaurdian's initials")}
+              </label>
+              <input
+                type="text"
+                value={gaurdianInitials[currentPage] || ""}
+                disabled
+                // onChange={(e) => handleInitialsChange(currentPage, e.target.value)}
+                className="bg-gray-700 text-white p-2 rounded-md w-20 Blacksword"
+              />
             </div>
           )}
         </div>

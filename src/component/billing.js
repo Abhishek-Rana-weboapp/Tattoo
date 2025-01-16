@@ -42,7 +42,7 @@ const BillingComponent = () => {
     const fetchAppointment = async () => {
       setLoading(true);
       axios
-        .get(`${apiUrl}/artist/appointment_list_id?id=${id}`, {
+        .get(`${apiUrl}artist/appointment_list_id?id=${id}`, {
           headers: AUTHHEADERS(),
         })
         .then((res) => {
@@ -179,7 +179,7 @@ const BillingComponent = () => {
 
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
-      <h1 className="text-3xl uppercase font-bold mb-4">{selectedAppointment.typeofservice}</h1>
+      <h1 className="text-3xl uppercase font-bold mb-4">{selectedAppointment?.typeofservice}</h1>
       {currentStep === 1 && (
         <PriceComponent
           updateAppointment={updateAppointment}

@@ -88,13 +88,12 @@ function VaginalPiercing() {
   }
 
   return (
-
     <>
     <GridLayout title={"vaginal piercing"}>
     {buttons?.map((button, index) => {
           return (
             <CustomButton key={index} def={buttonRef} buttonStyle={{ height: buttonHeight }} onClick={handlepartLocation} selected={selected}>
-              {button.name}
+              {button.name.split(" ").slice(0, -1).join(" ")}
             </CustomButton>
           );
         })}

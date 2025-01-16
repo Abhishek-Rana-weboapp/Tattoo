@@ -38,7 +38,7 @@ function EmergencyContactForm() {
     const fetchMedicalHistory = async()=>{
       try{
         setLoading(true)
-        const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers:AUTHHEADERS()})
+        const response = await axios.get(`${apiUrl}artist/user_history?username=${username}`, {headers:AUTHHEADERS()})
         const filterResponse = response.data.emergencycontactnumber
         let finalResult = {};
         try {

@@ -51,7 +51,7 @@ export default function ArtistDashboard() {
     const fetchAppointments = async () => {
       setLoading(true)
       await axios
-        .get(`${apiUrl}/artist/appointment_list`)
+        .get(`${apiUrl}artist/appointment_list`)
         .then((res) =>{
           setAppointments(
             res?.data?.data.filter((a) => {
@@ -131,9 +131,9 @@ export default function ArtistDashboard() {
                     }
                   ]
                 }
-                  await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
+                  await axios.post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
                   .then(res=>{
-                    axios.get(`${apiUrl}/artist/appointment_list_id?id=${selectedClient?.id}`, {headers:AUTHHEADERS()})
+                    axios.get(`${apiUrl}artist/appointment_list_id?id=${selectedClient?.id}`, {headers:AUTHHEADERS()})
                     .then(response=>{
                       navigate(`/billing/${selectedClient?.id}/${selectedClient?.process_step}`)
                       return

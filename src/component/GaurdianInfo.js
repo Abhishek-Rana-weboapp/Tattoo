@@ -78,7 +78,7 @@ const GaurdianInfo = () => {
     }
 
     await axios
-      .post(`${apiUrl}/updateGuardianInitials/?userId=${userId}`, {
+      .post(`${apiUrl}updateGuardianInitials/?userId=${userId}`, {
         gaurdian_info: JSON.stringify(gaurdianInfo),
       })
       .then((res) => {

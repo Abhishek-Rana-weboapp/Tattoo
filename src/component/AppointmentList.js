@@ -15,7 +15,7 @@ const AppointmentList = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await fetch(`${apiUrl}/artist/appointment_list`);
+        const response = await fetch(`${apiUrl}artist/appointment_list`);
         const data = await response.json();
         setAppointments(data.data);
         setLoading(false);
@@ -50,7 +50,7 @@ const AppointmentList = () => {
 
   const handleAssignArtist = async () => {
     try {
-      const response = await fetch(`${apiUrl}/artist/artist_assign`, {
+      const response = await fetch(`${apiUrl}artist/artist_assign`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

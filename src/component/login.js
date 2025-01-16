@@ -42,7 +42,7 @@ function Login() {
       body: JSON.stringify(user),
     };
 
-    const url = `${apiUrl}/login`;
+    const url = `${apiUrl}login`;
     try {
       const response = await fetch(url, config);
       const responseData = await response.json();

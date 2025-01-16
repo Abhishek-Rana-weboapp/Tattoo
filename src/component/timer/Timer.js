@@ -109,7 +109,7 @@ const Timer = ({
       ],
     };
     await axios
-      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
+      .post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         setUpdateAppointment(res.data.updatedtable);
         setLoading(false)
@@ -208,7 +208,7 @@ const Timer = ({
       ],
     };
     await axios
-      .post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
+      .post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         setUpdateAppointment(res.data.updatedtable);
       })
@@ -224,7 +224,7 @@ const Timer = ({
         appointment_id: updateAppointment?.id,
       };
       await axios
-        .post(`${apiUrl}/artist/calculate-billing`, data, {headers:AUTHHEADERS()})
+        .post(`${apiUrl}artist/calculate-billing`, data, {headers:AUTHHEADERS()})
         .then((res) => {
           setBill(res.data.updatedBillingData);
           const data = {
@@ -242,7 +242,7 @@ const Timer = ({
             ],
           };
           axios
-            .post(`${apiUrl}/artist/post_new`, data,{headers:AUTHHEADERS()})
+            .post(`${apiUrl}artist/post_new`, data,{headers:AUTHHEADERS()})
             .then((res) => {
               setUpdateAppointment(res.data.updatedtable);
               setLoading(false)

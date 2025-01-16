@@ -4,15 +4,16 @@ import UserContext from "../context/UserContext";
 import ProgressBar from "./ProgressBar";
 import GridLayout from "./Layout/GridLayout";
 import CustomButton from "./buttons/CustomButton";
-import Navigation from "./navigation/Navigation"
+import Navigation from "./navigation/Navigation";
 import { useTranslation } from "react-i18next";
 
 function PermanentMakeup() {
   const progressValue = 20;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage,setFinalUser } = React.useContext(UserContext);
+  const { user, setUser, alert, setAlert, setAlertMessage, setFinalUser } =
+    React.useContext(UserContext);
   const [selected, setSelected] = useState();
-  const {t} = useTranslation()
+  const { t } = useTranslation();
 
   const handlepartLocation = (bodyPart) => {
     setSelected(bodyPart);
@@ -21,28 +22,33 @@ function PermanentMakeup() {
   const buttons = [
     {
       name: "Eyebrows",
+      value: "Eyebrows",
     },
     {
       name: "Eyeliner",
+      value: "Eyeliner",
     },
     {
       name: "Lips",
+      value: "Lips",
     },
   ];
 
   const handleNext = () => {
     if (selected) {
-      setUser({ ...user,level1: selected });
-      setFinalUser({...user,1:{level1:selected , level2 : null, level3 : null, level4 : null}})
+      setUser({ ...user, level1: selected });
+      setFinalUser({
+        1: { level1: selected, level2: null, level3: null, level4: null },
+      });
       navigate("/medical-form");
-    }else{
-      setAlert(!alert)
-      setAlertMessage(t("Please select an option"))
+    } else {
+      setAlert(!alert);
+      setAlertMessage(t("Please select an option"));
     }
   };
 
   const handlePrev = () => {
-    navigate(-1)
+    navigate(-1);
   };
 
   return (
@@ -54,6 +60,7 @@ function PermanentMakeup() {
               key={index}
               onClick={handlepartLocation}
               selected={selected}
+              value={button.value}
             >
               {button.name}
             </CustomButton>

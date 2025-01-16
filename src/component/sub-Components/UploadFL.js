@@ -5,7 +5,6 @@ import { AUTHHEADERS } from "../../commonFunctions/Headers";
 import axios from "axios";
 import { apiUrl } from "../../url";
 import { useTranslation } from "react-i18next";
-import { upload } from "@testing-library/user-event/dist/upload";
 import UserContext from "../../context/UserContext";
 import LoaderModal from "../modal/LoaderModal";
 
@@ -16,39 +15,90 @@ const UploadFL = ({setStep, step}) => {
   const [loading, setLoading]  = useState(false)
   const [flIDPhoto, setFlIDPhoto] = useState(null);
   const [flLoading, setFlLoading] = useState(false);
-  const appointmentID = sessionStorage.getItem("appointmentID")
-
+  const appointmentIDsw = sessionStorage.getItem("appointmentIDs")
 
   const uploadFLData = async () => {
-    setLoading(true)
-    let fldata = {
-      updates: [
-        {
-          id: appointmentID,
-          updateField: "fl_form",
-          updateValue: flIDPhoto,
-        },
-      ],
-    };
-    await axios.post(`${apiUrl}/artist/post_new`, fldata , {headers : AUTHHEADERS()})
-    .then(res=>{
-        if(res.status === 201){
-         axios.get(`${apiUrl}/artist/appointment_list_id_user?id=${appointmentID}`, {headers:AUTHHEADERS()})
-         .then(response=>{
-           sessionStorage.setItem("appointment_detail", JSON.stringify(response?.data?.data[0]))
-              setStep(4)
-              setLoading(false)
-              return
-             })
-            }
+    if (!flIDPhoto) {
+      setAlertMessage(t("Please select employee name"));
+      setAlert(!alert);
+      return;
+    } else {
+      setLoading(true);
+      const appointmentIDs = JSON.parse(sessionStorage.getItem("appointmentIDs"));
+      const requests = appointmentIDs.map((id) => {
+        let fldata = {
+              updates: [
+                {
+                  id: id,
+                  updateField: "fl_form",
+                  updateValue: flIDPhoto,
+                },
+              ],
+            };
+        return axios.post(`${apiUrl}artist/post_new`, fldata, {
+          headers: AUTHHEADERS(),
+        })})
+      await Promise.all(requests)
+        .then((responses) => {
+          if (responses.every((response) => response.status === 201)) {
+            axios.get(`${apiUrl}artist/appointment_list_id_user?id=${appointmentIDs[0]}`, {
+              headers: AUTHHEADERS(),
+            })
+              .then((response) => {
+                const appointmentDetails = response.data.data;
+                sessionStorage.setItem("appointment_details", JSON.stringify(appointmentDetails));
+                setStep(4);
+                setLoading(false);
+              })
+              .catch((err) => {
+                setAlertMessage(t("Error fetching updated details"));
+                setLoading(false);
+                setAlert(!alert);
+              });
+          } else {
+            setAlertMessage(t("Error updating the fl form"));
+            setAlert(!alert);
+            setLoading(false);
+          }
         })
-    .catch(err=>{
-        setAlertMessage(t("Please upload FL Consent Form"));
-        setLoading(false);
-        setAlert(!alert);
-        return
-    })
+        .catch((err) => {
+          setAlertMessage(t("Error updating the fl form"));
+          setAlert(!alert);
+          setLoading(false);
+        });
+    }
   };
+
+  // const uploadFLData = async () => {
+  //   setLoading(true)
+  //   let fldata = {
+  //     updates: [
+  //       {
+  //         id: appointmentID,
+  //         updateField: "fl_form",
+  //         updateValue: flIDPhoto,
+  //       },
+  //     ],
+  //   };
+  //   await axios.post(`${apiUrl}artist/post_new`, fldata , {headers : AUTHHEADERS()})
+  //   .then(res=>{
+  //       if(res.status === 201){
+  //        axios.get(`${apiUrl}artist/appointment_list_id_user?id=${appointmentID}`, {headers:AUTHHEADERS()})
+  //        .then(response=>{
+  //          sessionStorage.setItem("appointment_detail", JSON.stringify(response?.data?.data[0]))
+  //             setStep(4)
+  //             setLoading(false)
+  //             return
+  //            })
+  //           }
+  //       })
+  //   .catch(err=>{
+  //       setAlertMessage(t("Please upload FL Consent Form"));
+  //       setLoading(false);
+  //       setAlert(!alert);
+  //       return
+  //   })
+  // };
 
   const handleFLDelete = () => {
     setFlPrev(null);
@@ -63,7 +113,7 @@ const UploadFL = ({setStep, step}) => {
       const formData = new FormData();
       formData.append("profile", file);
       await axios
-        .post(`${apiUrl}/upload`, formData, { headers: AUTHHEADERS() })
+        .post(`${apiUrl}upload`, formData, { headers: AUTHHEADERS() })
         .then((res) => {
           if (res.data.profile_url) {
             setFlIDPhoto(res.data.profile_url);

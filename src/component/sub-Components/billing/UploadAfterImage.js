@@ -42,7 +42,7 @@ export default function UploadAfterImage({
     const formData = new FormData();
     formData.append("profile", file);
     try {
-      const response = await axios.post(`${apiUrl}/upload`, formData, {headers:AUTHHEADERS()});
+      const response = await axios.post(`${apiUrl}upload`, formData, {headers:AUTHHEADERS()});
       return response.data.profile_url;
     } catch (err) {
       console.error("File Upload Failed", err.message);
@@ -165,7 +165,7 @@ export default function UploadAfterImage({
           ],
         };
       }
-        await axios.post(`${apiUrl}/artist/post_new`, data, {headers : AUTHHEADERS()}).
+        await axios.post(`${apiUrl}artist/post_new`, data, {headers : AUTHHEADERS()}).
         then((res) => {
           setUpdateAppointment(res.data.updatedtable);
           setLoading(false)

@@ -89,7 +89,7 @@ const Complications = ({
     }
     if (data) {
       await axios
-        .post(`${apiUrl}/artist/post_new`, data, { headers: AUTHHEADERS() })
+        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
         .then((res) => {
           setUpdateAppointment(res.data.updatedtable);
           setLoading(false)

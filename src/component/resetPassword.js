@@ -40,7 +40,7 @@ function ResetPassword() {
             token: token,
             newPassword: confirm_psw
           }
-      await axios.post(`${apiUrl}/reset_password`, data)
+      await axios.post(`${apiUrl}reset_password`, data)
       .then(res=>{
         if(res.status === 200){
           navigate("/")

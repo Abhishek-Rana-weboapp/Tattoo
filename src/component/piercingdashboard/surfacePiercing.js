@@ -106,6 +106,8 @@ function SurfacePiercing() {
     }
   }
 
+  console.log(selected)
+
   const handlePrev = ()=>{
  navigate(-1)
   }
@@ -117,7 +119,7 @@ function SurfacePiercing() {
     <GridLayout title={"surface piercing"}>
     {buttons.map((button, index) => {
           return (
-            <CustomButton key={index} onClick={()=>handlepartLocation(button.value)} selected={selected}>
+            <CustomButton key={index} onClick={()=>handlepartLocation(button.value)} selected={selected} value={button.value}>
               {button.name}
             </CustomButton>
           );

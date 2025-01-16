@@ -29,7 +29,7 @@ const NewMedicalHistory = () => {
     }
       const fetchMedicalHistory = async()=>{
         try{
-          const response = await axios.get(`${apiUrl}/artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
+          const response = await axios.get(`${apiUrl}artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
           const service = user?.selectedTattooType
           const filterResponse = response.data.medical_history[service] 
           let finalResult = {};

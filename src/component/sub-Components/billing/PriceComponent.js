@@ -71,7 +71,7 @@ export default function PriceComponent({
         }
       ]
     }
-      await axios.post(`${apiUrl}/artist/post_new`, data, {headers:AUTHHEADERS()})
+      await axios.post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
       .then((res) => {
         setLoading(false)
         setUpdateAppointment(res.data.updatedtable);

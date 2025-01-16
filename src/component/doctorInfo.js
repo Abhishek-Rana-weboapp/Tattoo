@@ -53,7 +53,7 @@ function DoctorContactForm() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${apiUrl}/artist/user_history?username=${username}`,
+          `${apiUrl}artist/user_history?username=${username}`,
           { headers: AUTHHEADERS() }
         );
         const filterResponse = response.data.doctor_information;
