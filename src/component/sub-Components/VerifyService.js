@@ -47,9 +47,6 @@ const VerifyService = ({ step, setStep }) => {
     setStep(0);
   };
 
-  console.log(location);
-  console.log(service);
-
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between overflow-hidden">
       <div className="text-white flex flex-col gap-4 items-center  md:w-1/3 w-full h-full overflow-auto">

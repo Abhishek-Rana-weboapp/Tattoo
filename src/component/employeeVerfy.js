@@ -28,7 +28,7 @@ const IDVerificationComponent = () => {
   const [loading, setLoading] = useState(false);
   const appointmentIDs = sessionStorage.getItem("appointmentIDs")
   const minor = sessionStorage.getItem("minor")
-  const appointment = JSON.parse(sessionStorage.getItem("appointment_details") || "")
+  const appointment = JSON.parse(sessionStorage.getItem("appointment_detail") || "")
 
 
 
