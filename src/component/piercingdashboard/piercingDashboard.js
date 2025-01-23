@@ -144,10 +144,14 @@ function PiercingDashboard() {
   };
 
   const handlePrev = () => {
+    if(currentSelection > 1){
+      setCurrentSelection(currentSelection - 1);
+    }
     navigate(-1);
   };
 
-  console.log(selected)
+  console.log(currentSelection)
+
   return (
     <>
       <GridLayout

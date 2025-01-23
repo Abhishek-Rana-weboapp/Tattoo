@@ -46,7 +46,6 @@ function TattooDashboard() {
   const [inputValue, setInputValue] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
-  console.log(selected)
 
   const handlePrev = () => {
     if (currentStep === 1) {
@@ -141,7 +140,11 @@ function TattooDashboard() {
     if (user[1] || user[2] || user[3] ||user[4]){
       setSelected({...copyObject});
     }
-  }, []);
+
+    return ()=>{
+      setInputOpen(false)
+    }
+  }, [user]);
 
 
   useEffect(()=>{
@@ -161,8 +164,6 @@ function TattooDashboard() {
     }
   },[currentStep])
 
-
-  console.log(selected)
 
 
   return (
