@@ -36,14 +36,14 @@ const AppointmentDetails = () => {
   }
 
   return (
-    <div className="text-white flex-1 flex flex-col gap-10 overflow-y-hidden">
-      <h1 className="md:text-3xl font-bold w-max mx-auto">
+    <div className="text-white flex-1 flex flex-col gap-10 overflow-hidden">
+      <h1 className="md:text-3xl text-xl font-bold w-max mx-auto">
         Appointment Details
       </h1>
-      <div className="max-w-7xl flex-1 mx-auto space-y-10 w-full md:w-[50vw] h-[600px] p-4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded">
-        <div className="flex lg:flex-row flex-col gap-5 justify-between">
-          <div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Customer Name:</label>
+      <div className="max-w-7xl flex-1 mx-auto md:space-y-10 space-y-3 w-full h-[600px] p-4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded">
+        <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
+          <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Customer Name:</label>
             <input
               type="text"
               readOnly
@@ -51,8 +51,8 @@ const AppointmentDetails = () => {
               value={appointment?.firstname + " " + appointment?.lastname}
             />
           </div>
-          <div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Service:</label>
+          <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Service:</label>
             <input
               type="text"
               readOnly
@@ -63,8 +63,8 @@ const AppointmentDetails = () => {
         </div>
 
 
-        {appointment?.brief_description &&<div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Description:</label>
+        {appointment?.brief_description &&<div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Description:</label>
             <input
               type="text"
               readOnly
@@ -73,9 +73,9 @@ const AppointmentDetails = () => {
             />
           </div>}
 
-        <div className="flex lg:flex-row flex-col gap-5 justify-between">
-          <div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Booking Date:</label>
+        <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
+          <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Booking Date:</label>
             <input
               type="text"
               readOnly
@@ -88,8 +88,8 @@ const AppointmentDetails = () => {
             />
           </div>
 
-          <div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Artist's Name:</label>
+          <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Artist's Name:</label>
             <input
               type="text"
               readOnly
@@ -98,9 +98,9 @@ const AppointmentDetails = () => {
             />
           </div>
         </div>
-        <div className="flex lg:flex-row flex-col gap-5 justify-between">
-          <div className="flex gap-2 items-start max-lg:justify-between">
-            <label className="font-bold md:text-lg">Verification ID:</label>
+        <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
+          <div className="flex gap-2 items-start ">
+            <label className="font-bold md:text-lg w-36">Verification ID:</label>
             <a href={appointment?.id_url} target="_blank">
               <img
                 src={appointment?.id_url}
@@ -110,8 +110,8 @@ const AppointmentDetails = () => {
           </div>
 
           {appointment?.gaurdian_id && (
-            <div className="flex gap-2 items-start max-lg:justify-between">
-              <label className="font-bold md:text-lg">
+            <div className="flex gap-2 items-start ">
+              <label className="font-bold md:text-lg w-36">
                 Gaurdian Verification ID:
               </label>
               <a href={appointment?.gaurdian_id} target="_blank">
@@ -124,44 +124,10 @@ const AppointmentDetails = () => {
           )}
         </div>
 
-        {/* {appointment?.before_image && (
-          <div className="flex gap-2 items-start max-lg:justify-between">
-            <label className="font-bold md:text-lg">Before Images:</label>
-            <div className="flex gap-3 flex-wrap">
-              {decodeUrls(appointment?.before_image)?.map((img, index) => {
-                return (
-                  <a href={img} target="_blank">
-                    <img
-                      key={index}
-                      src={img}
-                      className="w-52 h-32 object-cover rounded-md shadow-md"
-                    />
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        <div className="flex gap-3 items-start py-2 max-lg:justify-between">
-          <label className="font-bold md:text-lg ">After Images:</label>
-          <div className="flex gap-3 flex-wrap max-sm:justify-end">
-            {decodeUrls(appointment?.after_image)?.map((img, index) => {
-              return (
-                <a href={img} target="_blank">
-                  <img
-                    key={index}
-                    src={img}
-                    className="w-52 h-32 object-cover rounded-md shadow-md"
-                  />
-                </a>
-              );
-            })}
-          </div>
-        </div> */}
+    
 
         <div className="flex gap-2 items-center">
-          <label className="font-bold md:text-lg ">Attachments:</label>
+          <label className="font-bold md:text-lg w-36 ">Attachments:</label>
           <a
             href={appointment?.google_drive_folder_id}
             target="_blank"
@@ -174,8 +140,8 @@ const AppointmentDetails = () => {
 
 
 
-        <div className="flex gap-2 items-center max-lg:justify-between">
-            <label className="font-bold md:text-lg">Total Cost:</label>
+        <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Total Cost:</label>
             <input
               type="text"
               readOnly

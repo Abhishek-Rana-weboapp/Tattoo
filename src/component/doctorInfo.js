@@ -60,7 +60,7 @@ function DoctorContactForm() {
         let finalResult = {};
         try {
           finalResult = JSON.parse(filterResponse);
-        }catch (error) {
+        } catch (error) {
           console.error("Error parsing JSON:", error);
           finalResult = {};
         }
@@ -193,10 +193,12 @@ function DoctorContactForm() {
               {t("State")}:
             </label>
             <select
+              name="state"
               value={drformData?.state}
               className="rounded-md m-1 p-1  md:flex-1 w-full text-black"
+              onChange={handleInputChange}
             >
-              {states?.map((state, index) => {
+              {states?.map((state) => {
                 return (
                   <option key={state} value={state}>
                     {state}
@@ -206,7 +208,7 @@ function DoctorContactForm() {
             </select>
           </div>
 
-            <label className="flex items-center  gap-2 text-white font-semibold text-md">
+          <label className="flex items-center  gap-2 text-white font-semibold text-md">
             <input
               type="checkbox"
               className="w-5 h-5"
@@ -214,22 +216,22 @@ function DoctorContactForm() {
               checked={drformData?.useDoctorRecommendation}
               onChange={handleInputChange}
             />
-              {t("Use Doctor Recommendation")}
-            </label>
- 
+            {t("Use Doctor Recommendation")}
+          </label>
+
           <div className="w-full md:w-3/6 flex  md:justify-end items-center gap-1">
-          {drformData?.useDoctorRecommendation && (
-            <div className="text-white font-semibold text-md">
-              <h2>{t("Doctor Information")}</h2>
-              <p>
-                {t("Carbon Health Urgent Care of Hialeah")}
-                <br />
-                {t("Phone: (305) 200-1225")}
-                <br />
-                {t("Address: 915 W 49th St. Hialeah, FL 33012")}
-              </p>
-            </div>
-          )}
+            {drformData?.useDoctorRecommendation && (
+              <div className="text-white font-semibold text-md">
+                <h2>{t("Doctor Information")}</h2>
+                <p>
+                  {t("Carbon Health Urgent Care of Hialeah")}
+                  <br />
+                  {t("Phone: (305) 200-1225")}
+                  <br />
+                  {t("Address: 915 W 49th St. Hialeah, FL 33012")}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div className="w-full flex justify-between">
