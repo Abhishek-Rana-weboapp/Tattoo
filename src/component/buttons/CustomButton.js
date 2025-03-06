@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from 'react-i18next';
 
 export default function CustomButton({ children, onClick,  maxWidth, selected, value, def ,buttonStyle,}) {
