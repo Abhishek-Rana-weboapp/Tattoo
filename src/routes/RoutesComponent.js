@@ -50,7 +50,7 @@ import AppointmentDetails from '../component/artistDashboard/AppointmentDetails'
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
+  const {isVisible, setIsVisible, alert, user, setUser,finalUser,setFinalUser,description,setDescription, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -61,9 +61,19 @@ export default function RoutesComponent() {
       setIsVisible(true)
     }
     const storedUser = JSON.parse(sessionStorage.getItem("user"))
+    const storedFinalUser = JSON.parse(sessionStorage.getItem("finalUser"))
+    const storedDescription = JSON.parse(sessionStorage.getItem("description"))
     const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
     const storedemerformData = sessionStorage.getItem("emerformData")
     const storeddrformData = sessionStorage.getItem("drformData")
+
+    if(storedFinalUser){
+      setFinalUser(storedFinalUser)
+    }
+    if(storedDescription){
+      setDescription(storedDescription)
+    }
+
     if(storedUser){
       setUser(storedUser)
     }
@@ -80,6 +90,8 @@ export default function RoutesComponent() {
     }
   const handleBeforeUnload = (event) => {
     sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('finalUser', JSON.stringify(finalUser));
+    sessionStorage.setItem('description', JSON.stringify(description));
     if(Object.keys(formData).length > 0){
       sessionStorage.setItem("medicalHistory", JSON.stringify(formData))
     }

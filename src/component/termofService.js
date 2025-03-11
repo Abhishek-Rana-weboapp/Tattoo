@@ -35,6 +35,9 @@ function TermsOfService() {
   const minor = sessionStorage.getItem("minor");
   const token = sessionStorage.getItem("token") || "";
 
+
+ 
+
   const {
     user,
     alert,
@@ -114,9 +117,12 @@ function TermsOfService() {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     const username = sessionStorage.getItem("username");
     const minor = sessionStorage.getItem("minor");
+    console.log(typeof(minor))
+    console.log(username , minor, user, finalUser)
+    if (!username || !minor || !user || !finalUser) return;
+    setLoading(true);
 
     const keys = Object.keys(finalUser).filter(
       (key) => key !== "selectedTattooType"
@@ -174,7 +180,7 @@ function TermsOfService() {
       );
       const responseIds = responseDatas.map((data) => data.userData.id);
       const responseDetails = responseDatas.map((data) => data.userData);
-      
+
       sessionStorage.setItem("appointmentIDs", JSON.stringify(responseIds));
       sessionStorage.setItem(
         "appointment_detail",

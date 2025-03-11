@@ -138,6 +138,8 @@ const ToothGems = () => {
   }
   };
   
+
+  console.log(selectedTeeth)
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");

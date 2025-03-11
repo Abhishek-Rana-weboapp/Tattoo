@@ -139,13 +139,12 @@ function Login() {
   };
 
   return (
-    <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
-      <img src={Title_logo} className="w-3/6 md:w-1/6"></img>
+    <div className="max-w-2xl h-full flex flex-col gap-4 justify-center items-center">
+      <img src={Title_logo} className="w-2/5"></img>
       <h1 className="text-white font-bold md:text-2xl text-lg">LOGIN</h1>
-      <div className="sm:w-1/3 w-4/5">
         <form
           onSubmit={handleFormSubmit}
-          className="flex flex-col justify-center gap-3"
+          className="flex flex-col justify-center gap-3 w-full"
         >
           <div className="flex flex-col itmes-center gap-3">
             <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
@@ -212,7 +211,6 @@ function Login() {
         {responseMessage && (
           <div className="alert alert-info mt-3">{responseMessage}</div>
         )}
-      </div>
     </div>
   );
 }

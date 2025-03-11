@@ -29,7 +29,8 @@ function Dashboard() {
     setDescription,
     finalUser,
     setFinalUser,
-    setCurrentSelection
+    setCurrentSelection,
+    setSelectedTeeth
   } = React.useContext(UserContext);
 
   const handleTattooTypeSelect = (selectedType) => {
@@ -78,7 +79,8 @@ function Dashboard() {
         city: "",
         state: "Florida",
       });
-      setDescription("")
+      setDescription({})
+      setSelectedTeeth([])
 
       setdrFormData({
         name: "",
