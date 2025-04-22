@@ -16,25 +16,15 @@ const VerifyService = ({ step, setStep }) => {
   const appointments =
     JSON.parse(sessionStorage.getItem("appointment_detail")) || [];
 
+    console.log(appointments)
+
   useEffect(() => {
-    if (appointments.length > 0) {
-      const newLocations = [];
-      const newPlacements = [];
-      const newDescriptions = [];
-
-      appointments.forEach((appointment) => {
-        newLocations.push(JSON.parse(appointment.body_location));
-
-        const placementKeys = Object.keys(appointment.body_location).filter(
-          (key) => key !== "selectedTattooType"
-        );
-        newPlacements.push(...placementKeys);
-        newDescriptions.push(JSON.parse(appointment.brief_description));
-      });
-      setLocation([...newLocations]);
-      setPlacement([...newPlacements]);
-      setService(appointments[0].typeofservice);
-      setDescription([...newDescriptions]);
+    if (appointments) {
+      const data = JSON.parse(appointments?.body_location)
+      setLocation(data);
+      setPlacement(Object.keys(data).filter(key=>key !== "selectedTattooType"));
+      setService(appointments.typeofservice);
+      setDescription(JSON.parse(appointments?.brief_description));
     }
   }, []);
 
@@ -46,6 +36,10 @@ const VerifyService = ({ step, setStep }) => {
   const handlePrev = () => {
     setStep(0);
   };
+
+  console.log(location)
+  console.log(placement)
+  console.log(description)
 
   return (
     <div className="text-white flex flex-col gap-4 items-center  w-full h-full p-3 justify-between overflow-hidden">
@@ -62,10 +56,10 @@ const VerifyService = ({ step, setStep }) => {
           service === "removal") && (
           <>
             {/* Placement section cjanging based on the service*/}
-            {location.length &&
-              location.map((loc, index) => (
-                <div className="p-2 border border-white w-full rounded-lg">
-                  {console.log(loc[1])}
+            {placement.length > 0 &&
+              placement.map((loc, index) => (
+                <div key={loc} className="p-2 border border-white w-full rounded-lg">
+                  {console.log(loc)}
                   {service === "tattoo" ||
                     (service === "removal" && (
                       <h4>{`${t("Tattoo")} ${index + 1}`}</h4>
@@ -76,26 +70,26 @@ const VerifyService = ({ step, setStep }) => {
                   <div className="flex gap-2">
                     <h4 className="font-bold">{t("Placement")} : </h4>
                     <div className="flex flex-col justify-center">
-                      {loc[1] && (
+                      {location[loc] && (
                         <React.Fragment>
-                          {loc[1].level1 !== null && (
+                          {location[loc].level1 !== null && (
                             <label className="md:text-2xl text-base">
-                              {t(loc[1].level1)}
+                              {t(location[loc].level1)}
                             </label>
                           )}
-                          {loc[1].level2 !== null && (
+                          {location[loc].level2 !== null && (
                             <label className="md:text-2xl text-base">
-                              {t(loc[1].level2)}
+                              {t(location[loc].level2)}
                             </label>
                           )}
-                          {loc[1].level3 !== null && (
+                          {location[loc].level3 !== null && (
                             <label className="md:text-2xl text-base">
-                              {t(loc[1].level3)}
+                              {t(location[loc].level3)}
                             </label>
                           )}
-                          {loc[1].level4 !== null && (
+                          {location[loc].level4 !== null && (
                             <label className="md:text-2xl text-base">
-                              {t(loc[1].level4)}
+                              {t(location[loc].level4)}
                             </label>
                           )}
                         </React.Fragment>
@@ -106,7 +100,7 @@ const VerifyService = ({ step, setStep }) => {
                     <div className="flex items-center gap-2">
                       <h4>{t(`Description`)}:</h4>
                       <label className="md:text-2xl text-base">
-                        {description ? description[index][1] : ""}
+                        {description ? description[loc] : ""}
                       </label>
                     </div>
                   )}
@@ -118,22 +112,22 @@ const VerifyService = ({ step, setStep }) => {
         )}
 
         {service === "permanent-makeup" &&
-          location.map((loc, index) => (
+          placement.map((loc, index) => (
             <div className="flex gap-2" key={index}>
               <h4 className="font-bold">{t("Placement")} : </h4>
               <div className="flex flex-col">
                 <div>
-                  {loc[1].level1 !== null && (
-                    <h4>{t(loc[1].level1)}</h4>
+                  {location[loc].level1 !== null && (
+                    <h4>{t(location[loc].level1)}</h4>
                   )}
-                  {loc[1].level2 !== null && (
-                    <h4>{t(loc[1].level2)}</h4>
+                  {location[loc].level2 !== null && (
+                    <h4>{t(location[loc].level2)}</h4>
                   )}
-                  {loc[1].level3 !== null && (
-                    <h4>{t(loc[1].level3)}</h4>
+                  {location[loc].level3 !== null && (
+                    <h4>{t(location[loc].level3)}</h4>
                   )}
-                  {loc[1].level4 !== null && (
-                    <h4>{t(loc[1].level4)}</h4>
+                  {location[loc].level4 !== null && (
+                    <h4>{t(location[loc].level4)}</h4>
                   )}
                 </div>
               </div>
@@ -141,15 +135,15 @@ const VerifyService = ({ step, setStep }) => {
           ))}
 
         {service === "tooth-gems" &&
-          location.length > 0 &&
-          location.map((loc, index) => {
+          placement.length > 0 &&
+          placement.map((loc, index) => {
             return (
               <React.Fragment key={index}>
                 <h4>{t("Placement")} : </h4>
                 <div className="w-full rounded">
                   <img
                     className="aspect-video w-full object-contain rounded-lg"
-                    src={loc[1].level1}
+                    src={location[loc].level1}
                   ></img>
                 </div>
               </React.Fragment>
@@ -157,14 +151,14 @@ const VerifyService = ({ step, setStep }) => {
           })}
 
         {service === "smp" &&
-          location.length > 0 &&
-          location.map((loc, index) => {
+          placement.length > 0 &&
+          placement.map((loc, index) => {
             return (
               <React.Fragment key={index}>
                 <h4>{`Placement :`} </h4>
                 <img
                   className="w-full aspect-video h-64 rounded-lg"
-                  src={loc[1].level1}
+                  src={location[loc].level1}
                 ></img>
               </React.Fragment>
             );

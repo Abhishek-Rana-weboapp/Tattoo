@@ -33,7 +33,7 @@ const renderInput = (handleInput, value) => {
 function TattooDashboard() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage} =
+  const { user, setUser, alert, setAlert, setAlertMessage,currentSelection} =
     useContext(UserContext);
   const [selected, setSelected] = useState({
     1: null,
@@ -171,7 +171,7 @@ function TattooDashboard() {
       {" "}
       <GridLayout
         title={"Tattoo"}
-        subTitle={`Please Select location for tattoo`}
+        subTitle={`Please Select location for tattoo ${currentSelection}`}
       >
         {renderButtons(
           levelObjects[currentStep],

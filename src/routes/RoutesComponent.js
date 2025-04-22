@@ -47,6 +47,7 @@ import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory'
 import CustomerInfo from '../component/CustomerInfo';
 import { FaPowerOff } from "react-icons/fa";
 import AppointmentDetails from '../component/artistDashboard/AppointmentDetails';
+import i18n from "i18next"
 
 export default function RoutesComponent() {
 
@@ -114,6 +115,12 @@ export default function RoutesComponent() {
   return () => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
   };
+ },[location])
+
+ useEffect(()=>{
+  if(location.pathname === "/"){
+    i18n.changeLanguage("en")
+  }
  },[location])
 
 

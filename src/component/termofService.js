@@ -36,7 +36,6 @@ function TermsOfService() {
   const token = sessionStorage.getItem("token") || "";
 
 
- 
 
   const {
     user,
@@ -91,19 +90,45 @@ function TermsOfService() {
   const navigate = useNavigate();
 
   // Navigate to the next page
-  const nextPage = () => {
-    if (!initials[currentPage]) {
-      setAlert(!alert);
-      setAlertMessage("Please provide your initials");
-    } else {
-      if (currentPage < totalPages) {
-        setProgressValue_(progressValue_ + 1);
-        setCurrentPage(currentPage + 1);
-      } else if (currentPage === 3) {
-        handleSubmit();
-      }
-    }
-  };
+
+  const nextPage = ()=>{
+   if(!initials[currentPage]){
+    setAlert(!alert);
+    setAlertMessage("Please provide your initials");
+    return
+   }
+   if(minor==="true"){
+       if(!gaurdianInitials[currentPage]){
+        setAlert(!alert);
+        setAlertMessage("Please provide gaurdians initials");
+        return
+       }
+   }
+   if(currentPage < 3){
+    setProgressValue_(progressValue_ + 1);
+    setCurrentPage(currentPage + 1);
+   }else{
+    handleSubmit()
+   }
+
+  }
+
+  // const nextPage = () => {
+  //   if(!minor){
+  //     if (!initials[currentPage]) {
+  //       setAlert(!alert);
+  //       setAlertMessage("Please provide your initials");
+  //       return
+  //     }
+  //   } else {
+  //     if (currentPage < totalPages) {
+  //       setProgressValue_(progressValue_ + 1);
+  //       setCurrentPage(currentPage + 1);
+  //     } else if (currentPage === 3) {
+  //       handleSubmit();
+  //     }
+  //   }
+  // };
 
   // Navigate to the previous page
   const prevPage = () => {
@@ -116,28 +141,22 @@ function TermsOfService() {
     }
   };
 
+
+
   const handleSubmit = async () => {
     const username = sessionStorage.getItem("username");
     const minor = sessionStorage.getItem("minor");
-    console.log(typeof(minor))
     console.log(username , minor, user, finalUser)
     if (!username || !minor || !user || !finalUser) return;
     setLoading(true);
 
-    const keys = Object.keys(finalUser).filter(
-      (key) => key !== "selectedTattooType"
-    );
-    const requests = keys.map((key) => {
       let data = JSON.stringify({
         username: username,
         minor: minor,
         typeofservice: user.selectedTattooType,
         firstname: sessionStorage.getItem("firstname"),
         lastname: sessionStorage.getItem("lastname"),
-        body_location: JSON.stringify({
-          1: finalUser[key],
-          selectedTattooType: finalUser.selectedTattooType,
-        }),
+        body_location: JSON.stringify(finalUser),
         medicalhistory: JSON.stringify(formData),
         emergencycontactnumber: JSON.stringify(emerformData),
         doctor_information: JSON.stringify(drformData),
@@ -145,7 +164,7 @@ function TermsOfService() {
         HoldHarmlessAgreement_url: JSON.stringify(harmlessagreement),
         id_url: null,
         count: count,
-        brief_description: JSON.stringify({ 1: description[key] }),
+        brief_description: JSON.stringify(description),
         ArtistPiercerNames: null,
       });
 
@@ -159,49 +178,35 @@ function TermsOfService() {
         });
       }
 
-      return fetch(`${apiUrl}appointment/post`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: data,
-      });
-    });
 
     try {
-      const responses = await Promise.all(requests);
-      // const responseIds = await Promise.all(responses.map((response) => response.json().userData.id));
-      const responseDatas = await Promise.all(
-        responses.map(async (response) => {
-          const data = await response.json();
-          return data;
-        })
-      );
-      const responseIds = responseDatas.map((data) => data.userData.id);
-      const responseDetails = responseDatas.map((data) => data.userData);
-
-      sessionStorage.setItem("appointmentIDs", JSON.stringify(responseIds));
-      sessionStorage.setItem(
-        "appointment_detail",
-        JSON.stringify(responseDetails)
-      );
-      if (responses.every((responses) => responses.status === 201)) {
-        setLoading(false);
-        navigate("/verify");
-      } else {
-        console.log("failed");
-        setLoading(false);
-        setAlertMessage("An error occurred while submitting the form.");
-        setAlert(!alert);
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      setAlertMessage("An error occurred while submitting the form.");
-      setAlert(!alert);
-      console.error("Error:", error);
-    }
+          const response = await fetch(`${apiUrl}appointment/post`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: data,
+          });
+          const responseData = await response.json();
+          if (response.status === 201) {
+            sessionStorage.setItem("appointmentID", responseData.userData.id);
+            sessionStorage.setItem(
+              "appointment_detail",
+              JSON.stringify(responseData.userData)
+            );
+            setLoading(false);
+            navigate("/verify");
+            return;
+          } else {
+            setLoading(false);
+            setAlertMessage(t("Please fill in all the required fields"));
+            setAlert(!alert);
+          }
+        } catch (error) {
+          setLoading(false);
+          console.error("Error:", error);
+        }
   };
 
   // const handleSubmit = async () => {

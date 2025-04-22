@@ -26,7 +26,7 @@ const IDVerificationComponent = () => {
   const [finalAlert , setFinalAlert] = useState(false)
   
   const [loading, setLoading] = useState(false);
-  const appointmentIDs = sessionStorage.getItem("appointmentIDs")
+  const appointmentID = sessionStorage.getItem("appointmentID")
   const minor = sessionStorage.getItem("minor")
   const appointment = JSON.parse(sessionStorage.getItem("appointment_detail") || "")
 
@@ -45,135 +45,54 @@ const IDVerificationComponent = () => {
     }
     }
 
-    const handleShopLocation = async () => {
-      if (!shopLocation) {
-        setAlertMessage(t("Please select shop location"));
-        setAlert(!alert);
-      } else {
-        setLoading(true);
-        const appointmentIDs = JSON.parse(sessionStorage.getItem("appointmentIDs"));
-        const requests = appointmentIDs.map((id) => {
-          const data = {
-            updates: [
-              {
-                id: id,
-                updateField: "shop_location",
-                updateValue: shopLocation,
-              },
-            ],
-          };
-          return axios.post(`${apiUrl}artist/post_new`, data, {
-            headers: AUTHHEADERS(),
-          });
-        });
-        await Promise.all(requests)
-          .then((responses) => {
-            if (responses.every((response) => response.status === 201)) {
-              setStep(5);
-              setLoading(false);
-            } else {
-              setAlertMessage(t("Error updating shop location"));
-              setAlert(!alert);
-              setLoading(false);
-            }
-          })
-          .catch((err) => {
-            setAlertMessage(t("Error updating shop location"));
-            setAlert(!alert);
-            console.error(err.message);
-            setLoading(false);
-          });
+
+
+ const handleShopLocation = async()=>{
+  if(!shopLocation){
+    setAlertMessage(t("Please select shop location"))
+    setAlert(!alert)
+  }else{
+    setLoading(true)
+    const data = {
+      updates : [{
+        id: appointmentID,
+        updateField : "shop_location",
+        updateValue : shopLocation
+      }]
+    }
+    await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
+      if(res.status === 201){
+        setStep(5)
+        setLoading(false)
       }
-    };
+    }).catch((err)=>{
+      console.error(err.message)
+      setLoading(false)
+    })
+  }
+ }
 
-    const handleFrontDesk = async () => {
-      if (!frontDesk) {
-        setAlertMessage(t("Please select employee name"));
-        setAlert(!alert);
-      } else {
-        setLoading(true);
-        const appointmentIDs = JSON.parse(sessionStorage.getItem("appointmentIDs"));
-        const requests = appointmentIDs.map((id) => {
-          const data = {
-            updates: [
-              {
-                id: id,
-                updateField: "frontDeskEmployee",
-                updateValue: frontDesk,
-              },
-            ],
-          };
-          return axios.post(`${apiUrl}artist/post_new`, data, {
-            headers: AUTHHEADERS(),
-          });
-        });
-        await Promise.all(requests)
-          .then((responses) => {
-            if (responses.every((response) => response.status === 201)) {
-              setFinalAlert(!finalAlert);
-              setLoading(false);
-            } else {
-              setAlertMessage(t("Error updating front desk employee"));
-              setAlert(!alert);
-              setLoading(false);
-            }
-          })
-          .catch((err) => {
-            setAlertMessage(t("Error updating front desk employee"));
-            setAlert(!alert);
-            console.error(err.message);
-            setLoading(false);
-          });
+ const handleFrontDesk = async()=>{
+  if(!frontDesk){
+    setAlertMessage(t("Please select employee name"))
+    setAlert(!alert)
+  }else{
+    const data = {
+      updates : [{
+        id: appointmentID,
+        updateField : "frontDeskEmployee",
+        updateValue : frontDesk
+      }]
+    }
+    await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
+      if(res.status === 201){
+        setFinalAlert(!finalAlert)
       }
-    };
-
-
-//  const handleShopLocation = async()=>{
-//   if(!shopLocation){
-//     setAlertMessage(t("Please select shop location"))
-//     setAlert(!alert)
-//   }else{
-//     setLoading(true)
-//     const data = {
-//       updates : [{
-//         id: appointmentID,
-//         updateField : "shop_location",
-//         updateValue : shopLocation
-//       }]
-//     }
-//     await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
-//       if(res.status === 201){
-//         setStep(5)
-//         setLoading(false)
-//       }
-//     }).catch((err)=>{
-//       console.error(err.message)
-//       setLoading(false)
-//     })
-//   }
-//  }
-
-//  const handleFrontDesk = async()=>{
-//   if(!frontDesk){
-//     setAlertMessage(t("Please select employee name"))
-//     setAlert(!alert)
-//   }else{
-//     const data = {
-//       updates : [{
-//         id: appointmentID,
-//         updateField : "frontDeskEmployee",
-//         updateValue : frontDesk
-//       }]
-//     }
-//     await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
-//       if(res.status === 201){
-//         setFinalAlert(!finalAlert)
-//       }
-//     }).catch((err)=>{
-//       console.error(err.message)
-//     })
-//   }
-//  }
+    }).catch((err)=>{
+      console.error(err.message)
+    })
+  }
+ }
 
 
  const handleFinalClick = ()=>{

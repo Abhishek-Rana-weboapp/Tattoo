@@ -18,8 +18,6 @@ i18n.use(initReactI18next).init({
 
 // Root Component
 function App() {
-  const [userLanguage, setUserLanguage] = useState("en"); // Replace with logic to get user language
-  const { t } = useTranslation();
 
   useEffect(() => {
     const storedLang = sessionStorage.getItem("lang");
