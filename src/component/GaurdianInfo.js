@@ -4,26 +4,22 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { apiUrl } from "../url";
 import { useNavigate } from "react-router-dom";
-import Modal from "./modal/Modal";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import { useMediaQuery } from "react-responsive";
 import DatePicker from "./buttons/DatePicker";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 
 const GaurdianInfo = () => {
   const { setAlertMessage, alert, setAlert } = useContext(UserContext);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const storedgaurdianInfo = sessionStorage.getItem("gaurdianInfo");
-  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const [gaurdianInfo, setGaurdianInfo] = useState({
     firstName: "",
     lastName: "",
     dateOfBirth: new Date(),
     email: "",
     phoneNumber: "",
+    address:"",
   });
   const userId = sessionStorage.getItem("userId");
   useEffect(() => {
@@ -78,7 +74,7 @@ const GaurdianInfo = () => {
     }
 
     await axios
-      .post(`${apiUrl}/updateGuardianInitials/?userId=${userId}`, {
+      .post(`${apiUrl}updateGuardianInitials/?userId=${userId}`, {
         gaurdian_info: JSON.stringify(gaurdianInfo),
       })
       .then((res) => {
@@ -132,6 +128,14 @@ const GaurdianInfo = () => {
             className="p-2 rounded-lg w-full"
             type="email"
             placeholder="Email"
+            onChange={handleInput}
+          ></input>
+          <input
+            name="address"
+            value={gaurdianInfo.address}
+            className="p-2 rounded-lg w-full"
+            type="text"
+            placeholder="Address"
             onChange={handleInput}
           ></input>
           <div className="">

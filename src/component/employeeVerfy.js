@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
-import ProgressBar from './ProgressBar';
-import Title from '../assets/Title.png';
 import { useTranslation } from 'react-i18next';
 import VerifyUpload from './sub-Components/VerifyUpload';
 import VerifyPin from './sub-Components/VerifyPin';
 import axios from 'axios';
 import CustomAlertModal from './modal/CustomAlertModal';
-import { states } from '../data/states';
 import LoaderModal from './modal/LoaderModal';
 import VerifyService from './sub-Components/VerifyService';
 import { AUTHHEADERS } from '../commonFunctions/Headers';
@@ -18,7 +15,6 @@ import UploadFL from './sub-Components/UploadFL';
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
-  var progressValue = 95;
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const navigate = useNavigate();
   const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
@@ -50,6 +46,7 @@ const IDVerificationComponent = () => {
     }
 
 
+
  const handleShopLocation = async()=>{
   if(!shopLocation){
     setAlertMessage(t("Please select shop location"))
@@ -63,7 +60,7 @@ const IDVerificationComponent = () => {
         updateValue : shopLocation
       }]
     }
-    await axios.post(`${apiUrl}/artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
+    await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
         setStep(5)
         setLoading(false)
@@ -87,7 +84,7 @@ const IDVerificationComponent = () => {
         updateValue : frontDesk
       }]
     }
-    await axios.post(`${apiUrl}/artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
+    await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
         setFinalAlert(!finalAlert)
       }
@@ -96,6 +93,7 @@ const IDVerificationComponent = () => {
     })
   }
  }
+
 
  const handleFinalClick = ()=>{
   setFinalAlert(!finalAlert)
@@ -113,6 +111,8 @@ const IDVerificationComponent = () => {
 
   return (
     <>
+          <h1 className="text-3xl uppercase text-white font-bold mt-4">{appointment[0]?.typeofservice}</h1>
+
     {
       finalAlert && <CustomAlertModal message={"Verification Done"} onClick={handleFinalClick} />
     }
@@ -133,13 +133,13 @@ const IDVerificationComponent = () => {
         <div className='w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white'>
         <label className='text-white font-bold md:text-3xl text-lg'>{t("Select Shop Location")}</label>
         <select className='p-2 rounded-xl md:w-1/4 w-full text-black font-semibold' value={shopLocation} onChange={(e)=>setShopLocation(e.target.value)}>
-        {shopLocationOption.map((state, index)=>{
+        {shopLocationOption.map((state)=>{
           return <option key={state} value={state}>{state}</option>
         })}
         </select>
         </div>
         <div className='w-full md:w-1/2 flex justify-between'>
-        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>appointment.typeofservice === "tattoo" && minor === "true"  ? setStep(3) : setStep(2)}>{t("Back")}</button>
+        <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={()=>appointment?.typeofservice === "tattoo" && minor === "true"  ? setStep(3) : setStep(2)}>{t("Back")}</button>
         <button className='yellowButton py-2 px-4 rounded-3xl font-bold text-black' onClick={handleShopLocation}>{t("Submit")}</button>
         </div>
       </div>

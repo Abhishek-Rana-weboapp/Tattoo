@@ -1,0 +1,1625 @@
+[33mcommit e511ef8299e90236d0c13e9aa53a172e1be6ba97[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mduplicateFolder[m[33m, [m[1;31morigin/appointmentdetails[m[33m, [m[1;32mappointmentdetails[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Mar 6 10:37:15 2025 +0530
+
+    Appointment details page added
+
+[33mcommit fea076c390ed5c2943d41d957f3830bd8683db0e[m[33m ([m[1;31morigin/piercingFix[m[33m, [m[1;32mpiercingFix[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Jan 23 11:16:59 2025 +0530
+
+    piercing section multiselect issue fixed and some layout changes
+
+[33mcommit 9db4608ef6157c51714408a4d3a3568e33525ac0[m[33m ([m[1;31morigin/TypoFixed[m[33m, [m[1;32mTypoFixed[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jan 17 16:25:02 2025 +0530
+
+    typo fixed
+
+[33mcommit 4a8d32344a4f06d38fd76532d26ebe9e2f3d7bab[m[33m ([m[1;31morigin/multipleService[m[33m, [m[1;32mmultipleService[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Jan 16 16:16:30 2025 +0530
+
+    Flow changed for multiple services
+
+[33mcommit 01d2682a13f1684ccd55557493317f205717dcb1[m[33m ([m[1;31morigin/duplicateFolder[m[33m, [m[1;32minputFix[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Nov 19 11:17:22 2024 +0530
+
+    fixed:duplicate folder issue fixed
+
+[33mcommit 95ef5b691a4ff09787c9723422d176ef91167bdc[m[33m ([m[1;31morigin/inputFix[m[33m, [m[1;32mbeforeImage[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Nov 14 11:45:16 2024 +0530
+
+    upload input issue fixed
+
+[33mcommit 194eb67169f0ab900a5796fe88199f8288243038[m[33m ([m[1;31morigin/interactChanges[m[33m, [m[1;32minteractChanges[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Oct 23 09:34:15 2024 +0530
+
+    visual changes done
+
+[33mcommit abbd8006ce94793043b745f78afdb1c079f49ee8[m[33m ([m[1;31morigin/beforeImage[m[33m, [m[1;32mAlignment[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Oct 21 16:00:40 2024 +0530
+
+    before image and header changes done
+
+[33mcommit 7fc5c2b5f97760187ade0db66ac311c7e4d22803[m[33m ([m[1;31morigin/piercingDashboard[m[33m, [m[1;31morigin/Alignment[m[33m, [m[1;32mpiercingDashboard[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Oct 7 12:20:59 2024 +0530
+
+    piercing dashboard fixed
+
+[33mcommit 643f93c8854bfafd540dc672e741dd96b8254fa0[m[33m ([m[1;32mvisualChanges[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Oct 2 16:28:25 2024 +0530
+
+    alignment issues solved
+
+[33mcommit 3ef595d5781534126e0413beb5367a6d516751f6[m[33m ([m[1;31morigin/visualChanges[m[33m, [m[1;32mlayoutChanges[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Oct 2 14:39:41 2024 +0530
+
+    Visual Changes
+
+[33mcommit e311166ee4e4cfdadbe28e0849995e5533e99800[m[33m ([m[1;31morigin/layoutChanges[m[33m, [m[1;32mnewRoutes[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Oct 2 10:02:21 2024 +0530
+
+    Layout changes and a few more fixes
+
+[33mcommit 9d080662e2fdc6b49d3bfb8c1e2014a362f21264[m[33m ([m[1;31morigin/newRoutes[m[33m, [m[1;32mmain[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Sep 27 12:55:39 2024 +0530
+
+    unnecessary routes removed
+
+[33mcommit ccc1364712b7cddc280adb3318c379b6c8e1ac70[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: db98b58 f8ce824
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Sep 18 12:22:29 2024 +0530
+
+    Merge pull request #96 from Abhishek-Rana-weboapp/newAPI
+    
+    new identity and update API's integrated
+
+[33mcommit f8ce824297414a066f11315d447b7109cb1fac3b[m[33m ([m[1;31morigin/newAPI[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Sep 18 12:21:41 2024 +0530
+
+    new identity and update API's integrated
+
+[33mcommit db98b589d60c48ad332f8b45887cc5d8aef6ebac[m
+Merge: efe2783 d744250
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Sep 3 11:00:51 2024 +0530
+
+    Merge pull request #95 from Abhishek-Rana-weboapp/tattooStyles
+    
+    tattoo and pmu styles added
+
+[33mcommit d7442506589b3bd0828333b3a2f0b3ea03ffb0b6[m[33m ([m[1;31morigin/tattooStyles[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Sep 3 11:00:07 2024 +0530
+
+    intials changes
+
+[33mcommit 83e2c095917ae4d90894c943b19da7827378cdac[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Sep 2 23:47:34 2024 +0530
+
+    tattoo and pmu styles added
+
+[33mcommit efe278371d57b4c72d43350649941dad274f0f2a[m
+Merge: 2d85ce3 bb94b3e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Jul 5 16:06:28 2024 +0530
+
+    Merge pull request #94 from Abhishek-Rana-weboapp/signatureFix
+    
+    signature issue fixed
+
+[33mcommit bb94b3e2e4fbf3cff563fe375b64142af4866015[m[33m ([m[1;31morigin/signatureFix[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jul 5 16:05:54 2024 +0530
+
+    signature issue fixed
+
+[33mcommit 2d85ce315778d117844c8a7cc688ef5e01e8d871[m
+Merge: 6ba6508 d6ceb09
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Jul 5 14:07:32 2024 +0530
+
+    Merge pull request #93 from Abhishek-Rana-weboapp/pdfGenerate
+    
+    pdf button added
+
+[33mcommit d6ceb0987d4cee5924cf4064f86d0d45b5b9ca16[m[33m ([m[1;31morigin/pdfGenerate[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jul 5 14:04:47 2024 +0530
+
+    pdf button added
+
+[33mcommit 6ba6508559635b2d8bad794d6125f09acb6d2193[m
+Merge: 59c0d79 8f7f43a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Jul 4 15:42:16 2024 +0530
+
+    Merge pull request #92 from Abhishek-Rana-weboapp/encodersRemoved
+    
+    payload changes and removed encoders
+
+[33mcommit 8f7f43abb373c16278e80e88277ec0886bad11a2[m[33m ([m[1;31morigin/encodersRemoved[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Jul 4 15:41:31 2024 +0530
+
+    payload changes and removed encoders
+
+[33mcommit 59c0d7979f6eb4f568a9f0e17c5f3f69dc0ca5af[m
+Merge: f5cc781 b7d0017
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jul 3 15:01:23 2024 +0530
+
+    Merge pull request #91 from Abhishek-Rana-weboapp/initialsImagePayloadFix
+    
+    initialsImage payload fixed
+
+[33mcommit b7d00178699c9f38eb7e406ea3b4086f392a90b7[m[33m ([m[1;31morigin/initialsImagePayloadFix[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jul 3 15:00:25 2024 +0530
+
+    initialsImage payload fixed
+
+[33mcommit f5cc78105efe5bf66e5fc92672a058bc34dff24b[m
+Merge: 084fc67 a6be58c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jul 3 14:33:46 2024 +0530
+
+    Merge pull request #90 from Abhishek-Rana-weboapp/harmlessPayload
+    
+    Payload Changes
+
+[33mcommit a6be58c09e081711027205cce93758f81c112886[m[33m ([m[1;31morigin/harmlessPayload[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jul 3 14:32:34 2024 +0530
+
+    Payload Changes
+
+[33mcommit 084fc67441e22adc5f33ff951f42cd81d7f525fd[m
+Merge: b1945ee 5bcc246
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jun 17 10:15:51 2024 +0530
+
+    Merge pull request #89 from Abhishek-Rana-weboapp/initialsImages
+    
+    Added the initials images
+
+[33mcommit 5bcc246ca5f5fad91a477b33f48d2311da95613e[m[33m ([m[1;31morigin/initialsImages[m[33m)[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jun 17 10:15:07 2024 +0530
+
+    Added the initials images
+
+[33mcommit b1945ee2a452778c1e87bb7eac2e86bcd156026e[m
+Merge: d8a7096 972369a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon May 27 14:53:10 2024 +0530
+
+    Merge pull request #88 from Abhishek-Rana-weboapp/gaugeAdded
+    
+    phone input changed and added gauge size to nipple piercing
+
+[33mcommit 972369a58273b6c2122500dabbf9d209b861fa03[m
+Author: Abhishek-Rana-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon May 27 14:52:09 2024 +0530
+
+    phone input changed and added gauge size to nipple piercing
+
+[33mcommit d8a7096eb468c3c0ef99cb54daeb3831344c8822[m
+Merge: 69de521 589ccc4
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri May 10 13:00:46 2024 +0530
+
+    Merge pull request #87 from Abhishek-Rana-weboapp/detailedChange
+    
+    doctorinfo change and detailed info change
+
+[33mcommit 589ccc468c05a7c994937a7dbce50ff7640973fb[m[33m ([m[1;31morigin/detailedChange[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Fri May 10 12:59:08 2024 +0530
+
+    doctorinfo change and detailed info change
+
+[33mcommit 69de5212209326cd02177328924e6233807cc910[m
+Merge: b8a4c16 e14031c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon May 6 15:46:11 2024 +0530
+
+    Merge pull request #86 from Abhishek-Rana-weboapp/datePicker
+    
+    fixed: a few typos and datepicker
+
+[33mcommit e14031c87163ecb7571b9162a1dbd5258fd1bd8d[m[33m ([m[1;31morigin/datePicker[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Mon May 6 14:53:11 2024 +0530
+
+    fixed: a few typos and datepicker
+
+[33mcommit b8a4c1654d1ebfc682be822026b104a50f57feef[m
+Merge: dd3f5be 260ce3b
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Apr 30 17:43:38 2024 +0530
+
+    Merge pull request #85 from Abhishek-Rana-weboapp/ResetPass
+    
+    fixed: Reset Password APi changed
+
+[33mcommit 260ce3b420e65e4f8b76ed1ef3107a19e26a5c9a[m[33m ([m[1;31morigin/ResetPass[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Apr 30 17:42:54 2024 +0530
+
+    fixed: Reset Password APi changed
+
+[33mcommit dd3f5beb9f6d762931b4d2c5bd04aa5d3fc3f222[m
+Merge: 8ac1aa0 34e0437
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Apr 30 16:19:42 2024 +0530
+
+    Merge pull request #84 from Abhishek-Rana-weboapp/doctorFix
+    
+    fixed : doctor info blank screen issue
+
+[33mcommit 34e0437ed19a6f08559e35c5a7f7282169e21233[m[33m ([m[1;31morigin/doctorFix[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Apr 30 16:18:57 2024 +0530
+
+    fixed : doctor info blank screen issue
+
+[33mcommit 8ac1aa09da8f1cfd55544668f8e85115201c1797[m
+Merge: 8f72603 e1526aa
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Apr 30 13:53:19 2024 +0530
+
+    Merge pull request #83 from Abhishek-Rana-weboapp/timerIssue
+    
+    fixed:Timer not working on mobile
+
+[33mcommit e1526aabe142bd4c9a9594d5909ccf9e234c324e[m[33m ([m[1;31morigin/timerIssue[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Apr 30 13:52:03 2024 +0530
+
+    fixed:Timer not working on mobile
+
+[33mcommit 8f72603af3eb71d9fdc3c83299845b0be4888695[m
+Merge: 2641b25 6028cd0
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Apr 26 18:00:18 2024 +0530
+
+    Merge pull request #82 from Abhishek-Rana-weboapp/latest_frontend
+    
+    client changes done
+
+[33mcommit 6028cd03c040457590b1b9369758e1915d2b2bde[m[33m ([m[1;31morigin/latest_frontend[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Fri Apr 26 17:57:43 2024 +0530
+
+    client changes done
+
+[33mcommit 2641b2533436651e9f9ca683ebf97cfbb32ee43f[m
+Merge: 51f28bd 288cfc0
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Apr 9 18:00:07 2024 +0530
+
+    Merge pull request #81 from Abhishek-Rana-weboapp/toothGem
+    
+    Tooth gem size issue fixed
+
+[33mcommit 288cfc082c2645a8fc0cafd68b6f3d981df7cb31[m[33m ([m[1;31morigin/toothGem[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Apr 9 17:55:56 2024 +0530
+
+    Tooth gem size issue fixed
+
+[33mcommit 51f28bd1d314159600187355f77c3db6e72c2835[m
+Merge: 9427fa4 e8a5279
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Apr 8 17:52:03 2024 +0530
+
+    Merge pull request #80 from Abhishek-Rana-weboapp/littleChanges
+    
+    Little Changes
+
+[33mcommit e8a52797b73ec95ba35d0e9d8426e70875acda29[m[33m ([m[1;31morigin/littleChanges[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Mon Apr 8 17:51:11 2024 +0530
+
+    Little Changes
+
+[33mcommit 9427fa49fed36dfaee7f623a3b33b3164da6156c[m
+Merge: efc995f dd86e92
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Apr 8 14:11:52 2024 +0530
+
+    Merge pull request #79 from Abhishek-Rana-weboapp/multipleFlow
+    
+    Multiple flow
+
+[33mcommit dd86e926c17ab979abe75027e943ea43e0a48b3d[m[33m ([m[1;31morigin/multipleFlow[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Mon Apr 8 14:09:55 2024 +0530
+
+    new flow done
+
+[33mcommit ee1b83191ec3abc93eeb05ab419cd37995c3b7ce[m[33m ([m[1;31morigin/combined[m[33m)[m
+Merge: 540b0ab 1618cd5
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Mon Apr 1 13:40:27 2024 +0530
+
+    combined refactor and authentication
+
+[33mcommit 540b0aba04080017bf7b6c4aec5f61d3807e8729[m[33m ([m[1;31morigin/authentication[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Sun Mar 31 18:27:14 2024 +0530
+
+    authentication added
+
+[33mcommit 1618cd546f8f31f39d1ab9c32535e5deb4c86f64[m[33m ([m[1;31morigin/refactor[m[33m)[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Sun Mar 31 17:27:06 2024 +0530
+
+    Refactor code
+
+[33mcommit efc995fa45761f546cac09ee9e7f4c9ae6e110c3[m
+Merge: eac58d9 6a02683
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Mar 13 17:47:08 2024 +0530
+
+    Merge pull request #77 from Abhishek-Rana-weboapp/newTranslate
+    
+    Minor translation fixes
+
+[33mcommit 6a0268357d8944934a4598b61841ad60b3f7f8b7[m[33m ([m[1;31morigin/newTranslate[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Mar 13 17:43:57 2024 +0530
+
+    Minor translation fixes
+
+[33mcommit eac58d93f3ad27e7f20ad2bddbe226ef504d4e69[m
+Merge: d9e3a6f 3fad4f4
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Mar 13 15:41:19 2024 +0530
+
+    Merge pull request #76 from Abhishek-Rana-weboapp/translation
+    
+    Translation
+
+[33mcommit 3fad4f40d0edee17fd2e1d459662b59ff77bd148[m[33m ([m[1;31morigin/translation[m[33m)[m
+Merge: 270b293 d9e3a6f
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Mar 13 15:30:28 2024 +0530
+
+    Merge branch 'main' of https://github.com/Abhishek-Rana-weboapp/Tattoo into translation
+
+[33mcommit 270b2935ebced29df2c905400bc66341a28742c1[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Mar 13 15:22:40 2024 +0530
+
+    translation_update
+
+[33mcommit d9e3a6f9efe40d9b16aa7b5bf6a95ff3b5ffd646[m
+Merge: 2372de7 fd23030
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Mar 13 14:45:27 2024 +0530
+
+    Merge pull request #75 from Abhishek-Rana-weboapp/MedicalReview
+    
+    Medical Review Component Added
+
+[33mcommit fd23030f244bbf46b7ba6cdcbadce511d8a9fcc8[m[33m ([m[1;31morigin/MedicalReview[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Mar 13 14:44:10 2024 +0530
+
+    Medical Review Component Added
+
+[33mcommit 2372de754917c5d0e7d5f9c12cb0c61982c04546[m
+Merge: ce5fc3f e46e24c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Mar 12 18:26:02 2024 +0530
+
+    Merge pull request #74 from Abhishek-Rana-weboapp/termsError
+    
+    terms error fix
+
+[33mcommit e46e24c62fb9cdee6f2886f5d022f57d35cdcb3d[m[33m ([m[1;31morigin/termsError[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Mar 12 18:25:10 2024 +0530
+
+    terms error fix
+
+[33mcommit ce5fc3ffed000bf672b040d2387c9e3b361b0ded[m
+Merge: 1fd6882 76cbd62
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Mar 12 17:48:35 2024 +0530
+
+    Merge pull request #73 from Abhishek-Rana-weboapp/imageRevert
+    
+    image fix revert
+
+[33mcommit 76cbd6232842d3333f3744efa246d4915b6aee75[m[33m ([m[1;31morigin/imageRevert[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Mar 12 17:46:13 2024 +0530
+
+    image fix revert
+
+[33mcommit 1fd68821c66f61f60f129831fd160344c4cf4073[m
+Merge: 5dfe478 a97120c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Mar 12 17:29:33 2024 +0530
+
+    Merge pull request #72 from Abhishek-Rana-weboapp/imageFix
+    
+    import images fix
+
+[33mcommit a97120c4246f5087b43b46a892b6e42015e2d494[m[33m ([m[1;31morigin/imageFix[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Mar 12 17:28:59 2024 +0530
+
+    import images fix
+
+[33mcommit 5dfe478bd631177cfed0464cf0595d5012d88118[m
+Merge: 87d28ec 6ea2de2
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Mar 12 16:46:49 2024 +0530
+
+    Merge pull request #71 from Abhishek-Rana-weboapp/MedicalChange
+    
+    new Medical history Component
+
+[33mcommit 6ea2de2d722c7396917f5105a273f105b41d64f1[m[33m ([m[1;31morigin/MedicalChange[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Mar 12 16:44:47 2024 +0530
+
+    new Medical history Component
+
+[33mcommit 87d28ecb0bd0e768b565956b9be1d16977246602[m
+Merge: cf22ef6 d334753
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Mar 7 10:33:35 2024 +0530
+
+    Merge pull request #70 from Abhishek-Rana-weboapp/count
+    
+    Count and placement components added
+
+[33mcommit d334753bb77a4eacb4cd7306c040ceb865f27923[m[33m ([m[1;31morigin/count[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Thu Mar 7 10:30:35 2024 +0530
+
+    Count and placement components added
+
+[33mcommit cf22ef6e68531aa1d671934c24dd318e8afcbdc3[m
+Merge: b5d1782 c6c3a96
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 28 18:02:40 2024 +0530
+
+    Merge pull request #69 from Abhishek-Rana-weboapp/loadingFixed
+    
+    loading state fix
+
+[33mcommit c6c3a96b4d86ecdaca2a6cd61551927b79a53a54[m[33m ([m[1;31morigin/loadingFixed[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 28 18:01:41 2024 +0530
+
+    loading state fix
+
+[33mcommit b5d1782ebd3bcc1f55a8b26cfbf284542b748f20[m
+Merge: 1a5cb0c 794accb
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 28 17:15:24 2024 +0530
+
+    Merge pull request #68 from Abhishek-Rana-weboapp/PiercingNavigateFix
+    
+    Navigate fix
+
+[33mcommit 794accb35ea6e7b35cf7ba85fec4033be7998720[m[33m ([m[1;31morigin/PiercingNavigateFix[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 28 17:14:41 2024 +0530
+
+    Navigate fix
+
+[33mcommit 1a5cb0cef8902be914a4f36baec0654bb9337da3[m
+Merge: dd023a7 9acbe06
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 28 16:19:00 2024 +0530
+
+    Merge pull request #67 from Abhishek-Rana-weboapp/new_flow
+    
+    New flow
+
+[33mcommit 9acbe06d426a3ce0e5e1eb2e2b054a850dbcef24[m[33m ([m[1;31morigin/new_flow[m[33m)[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Feb 28 16:17:47 2024 +0530
+
+    new_flow
+
+[33mcommit 7881313a941604e609f65e9e06aa4e2fd5232ce4[m
+Merge: e14e846 dd023a7
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Feb 28 16:09:46 2024 +0530
+
+    Merge branch 'main' of https://github.com/Abhishek-Rana-weboapp/Tattoo into new_flow
+
+[33mcommit e14e84631c4a06cd6eae4430e62baafb5cc60bb5[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Feb 28 16:09:15 2024 +0530
+
+    new_flow
+
+[33mcommit dd023a743dcc3db566feecb02e46b2e0fe0f5596[m
+Merge: f5732bf 97dc52e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 28 16:07:24 2024 +0530
+
+    Merge pull request #66 from Abhishek-Rana-weboapp/NavigationDisplay
+    
+    Navigation display
+
+[33mcommit 97dc52ee48f44dd1f513f22668a43e6033a2fe49[m[33m ([m[1;31morigin/NavigationDisplay[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 28 16:02:35 2024 +0530
+
+    duplicacy issue solve
+
+[33mcommit b975deb535615979cf4ac1353e29ae1ecf04a7ef[m[33m ([m[1;31morigin/newStruncture[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 28 11:22:19 2024 +0530
+
+    changes starter
+
+[33mcommit f5732bf5d71be9311575ac3ba011f836d96b8c7d[m
+Merge: dad4c0b c0cb8d9
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Feb 23 17:58:39 2024 +0530
+
+    Merge pull request #65 from Abhishek-Rana-weboapp/complciation
+    
+    complications page added
+
+[33mcommit c0cb8d927df05b226f4d31cff750daa07d162391[m[33m ([m[1;31morigin/complciation[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Fri Feb 23 17:57:29 2024 +0530
+
+    complications page added
+
+[33mcommit dad4c0b060a294a6109d0df3140e3f36eacb4c31[m
+Merge: a175199 77ab43d
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Feb 22 18:18:48 2024 +0530
+
+    Merge pull request #64 from Abhishek-Rana-weboapp/changedName
+    
+    changes due to name
+
+[33mcommit 77ab43d62a6014f55acdead8967654718fa69ceb[m[33m ([m[1;31morigin/changedName[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Thu Feb 22 18:17:43 2024 +0530
+
+    changes due to name
+
+[33mcommit a17519952c44925a52738ed1430f260955161eb7[m
+Merge: fcb7b20 0b96192
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Feb 22 18:06:39 2024 +0530
+
+    Merge pull request #63 from Abhishek-Rana-weboapp/statePersist
+    
+    state persistence fix
+
+[33mcommit 0b96192544d92f346ddd27baf27613ebc9f0ce4c[m[33m ([m[1;31morigin/statePersist[m[33m, [m[1;31morigin/nameChange[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Thu Feb 22 18:04:31 2024 +0530
+
+    state persistence fix
+
+[33mcommit fcb7b20d31e7791c77bd3e88513eb71baf42cd2f[m
+Merge: 6ecc98b 9757066
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 21 18:05:57 2024 +0530
+
+    Merge pull request #62 from Abhishek-Rana-weboapp/Tested
+    
+    Testing Done
+
+[33mcommit 9757066425857b20caba93308f925505f14389b3[m[33m ([m[1;31morigin/Tested[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 21 18:05:02 2024 +0530
+
+    Testing Done
+
+[33mcommit 6ecc98be9beda35f15c3c34205fdda48f884c788[m
+Merge: d4340de f59eb80
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 21 15:58:17 2024 +0530
+
+    Merge pull request #61 from Abhishek-Rana-weboapp/loadingIssue
+    
+    loading issue fixed
+
+[33mcommit f59eb8043f8e6093a924ce9e2037822c41b43e3a[m[33m ([m[1;31morigin/loadingIssue[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 21 15:57:46 2024 +0530
+
+    loading issue fixed
+
+[33mcommit d4340de0ab8c8e2a2b3f4692c4c39fd74f46cc34[m
+Merge: 6c63e65 2de4685
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 21 15:36:04 2024 +0530
+
+    Merge pull request #60 from Abhishek-Rana-weboapp/translation_update2
+    
+    translation_update2
+
+[33mcommit 2de46851853746a3e56c04519a7917956c1eb5c8[m[33m ([m[1;31morigin/translation_update2[m[33m)[m
+Merge: 6ba0538 6c63e65
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 21 15:35:13 2024 +0530
+
+    Merge branch 'main' into translation_update2
+
+[33mcommit 6ba0538de62b79d0e971e0965c54f3e9ed99eb10[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Feb 21 15:32:54 2024 +0530
+
+    translation_update2
+
+[33mcommit 6c63e6523f3598d2bd469afef7e4387d9edc30e5[m
+Merge: 0bd3b3b 821360e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 21 15:28:22 2024 +0530
+
+    Merge pull request #59 from Abhishek-Rana-weboapp/medicalQuestions
+    
+    Medical questions dynamic
+
+[33mcommit 821360e0efa728936e58980e6bc1c852fa8c89b4[m[33m ([m[1;31morigin/medicalQuestions[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 21 15:27:33 2024 +0530
+
+    Medical questions dynamic
+
+[33mcommit 0bd3b3b6e5c03353f465d4bba16b78b146fdb2bd[m
+Merge: b1e4a41 5d26d73
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Feb 20 17:47:23 2024 +0530
+
+    Merge pull request #58 from Abhishek-Rana-weboapp/passwordVal
+    
+    Password val
+
+[33mcommit 5d26d739ed46e11043940e018df3f1b222b19bda[m[33m ([m[1;31morigin/passwordVal[m[33m)[m
+Merge: 4f405bd b1e4a41
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Feb 20 17:44:09 2024 +0530
+
+    password validation
+
+[33mcommit 4f405bd634482819591ff7979a298e808359228d[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Feb 20 16:20:49 2024 +0530
+
+     Update doctorInfo, emergency, medicalHistory, and termofService components. (generated by blackbox.ai )
+
+[33mcommit b1e4a41d423a72b4248f324bfc2ff4cd8aa94a8e[m
+Merge: d98001e 7670a9f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Feb 20 16:19:22 2024 +0530
+
+    Merge pull request #57 from Abhishek-Rana-weboapp/translation_update
+    
+    Translation update
+
+[33mcommit 7670a9f5609d97a3c214b77c8ff919b6bd447683[m[33m ([m[1;31morigin/translation_update[m[33m)[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Tue Feb 20 15:54:59 2024 +0530
+
+    translation_update
+
+[33mcommit 9b302bf9f08727e8957d49fa81d6f11d17f26dd5[m[33m ([m[1;31morigin/Fixes[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Feb 20 10:55:46 2024 +0530
+
+    app notes fixes
+
+[33mcommit d98001ed24b107d4668a7a2512a9fa5f8505ac82[m
+Merge: d478a14 65f2998
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Feb 15 15:03:21 2024 +0530
+
+    Merge pull request #55 from Abhishek-Rana-weboapp/translation_update
+    
+    Translation update
+
+[33mcommit 65f299807f8a830eaca2e020ea3ee3903afcffeb[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Feb 15 14:41:57 2024 +0530
+
+    translation_update
+
+[33mcommit 36d3c00ee43d094054dfc95525d2156bac537e2a[m[33m ([m[1;31morigin/minor[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 14 18:13:14 2024 +0530
+
+    minor flow done
+
+[33mcommit d478a142ea1d6087e1f3ec4201742fc95e0cec43[m
+Merge: d94050b d490e1c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Feb 7 18:15:29 2024 +0530
+
+    Merge pull request #54 from Abhishek-Rana-weboapp/loaderAdd
+    
+    loaders added
+
+[33mcommit d490e1c1c89dc477106eb6a841d455625a7d1a69[m[33m ([m[1;31morigin/loaderAdd[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Feb 7 18:14:18 2024 +0530
+
+    loaders added
+
+[33mcommit d94050b07b4e456c6ca9d01305a25cfee9bbdc4d[m
+Merge: 61f7103 2b4acde
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Feb 6 19:11:17 2024 +0530
+
+    Merge pull request #53 from Abhishek-Rana-weboapp/NewNavigation
+    
+    new Navigation
+
+[33mcommit 2b4acde2a219d8921c70b80b03c9b03489772be9[m[33m ([m[1;31morigin/NewNavigation[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Tue Feb 6 19:10:26 2024 +0530
+
+    new Navigation
+
+[33mcommit 61f71035eadb9325b0a551cd011fa8e305edc9c5[m
+Merge: e2ea814 0609d57
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Feb 1 15:55:14 2024 +0530
+
+    Merge pull request #52 from Abhishek-Rana-weboapp/sizeValidate
+    
+    Size validations done
+
+[33mcommit 0609d579c18418ee65bd3fc3daa6ef973a74c198[m[33m ([m[1;31morigin/sizeValidate[m[33m)[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Thu Feb 1 15:51:50 2024 +0530
+
+    Size validations done
+
+[33mcommit e2ea814f09a28298e04c7bf36cfc20b06e44d618[m
+Merge: 19d4359 69d7a56
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 31 18:57:59 2024 +0530
+
+    Merge pull request #51 from Abhishek-Rana-weboapp/languageFix
+    
+    spanish changed
+
+[33mcommit 69d7a566cce6df18cbd9552480acac0c3b3d484f[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Jan 31 18:57:18 2024 +0530
+
+    spanish changed
+
+[33mcommit 19d43591ae135ac3c78dfe839989b8b28f75835f[m
+Merge: db29c17 3ab27ef
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 31 18:18:16 2024 +0530
+
+    Merge pull request #50 from Abhishek-Rana-weboapp/Styling
+    
+    minor styling done
+
+[33mcommit 3ab27efc54ad4e36727e21c31eb94eb592ad5acf[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Jan 31 18:17:23 2024 +0530
+
+    minor styling done
+
+[33mcommit db29c171108578616a2423853dfb4ad320146d39[m
+Merge: d35b4d4 31235bd
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 31 16:30:47 2024 +0530
+
+    Merge pull request #49 from Abhishek-Rana-weboapp/Upload
+    
+    uploadAPI integrated
+
+[33mcommit 31235bd751c4e48a8ea4a73d2ce2016cf2a43e1b[m
+Author: Abhishek Rana <arana0944@gmail.com>
+Date:   Wed Jan 31 16:29:50 2024 +0530
+
+    uploadAPI integrated
+
+[33mcommit d35b4d44c912d859c42aab6c617a87dbf6d1f1a6[m
+Merge: 5809c7b c3a836b
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 31 16:28:11 2024 +0530
+
+    Merge pull request #48 from Abhishek-Rana-weboapp/UploadBranch
+    
+    Minor changes done
+
+[33mcommit c3a836b261486623857842fa8261a4bf7adeec18[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Jan 30 14:14:47 2024 +0530
+
+    Minor changes done
+
+[33mcommit 5809c7bd4d93cd2d26fd64c5b589afa91ad6afa1[m
+Merge: 3b4b1fa 4442457
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jan 22 18:42:15 2024 +0530
+
+    Merge pull request #47 from Abhishek-Rana-weboapp/signupFix
+    
+    signup error fix
+
+[33mcommit 444245785da3e2f3b0fe8f39c4809911800c4034[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jan 22 18:41:30 2024 +0530
+
+    signup error fix
+
+[33mcommit 3b4b1fa8ad57d8b42f402574d0f0ce7c4d5c8268[m
+Merge: cacff2e 97abaa2
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jan 22 17:43:17 2024 +0530
+
+    Merge pull request #46 from Abhishek-Rana-weboapp/electronicSign
+    
+    Electric Signature Added
+
+[33mcommit 97abaa23475f2896280a694386d8c565c0e47b87[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jan 22 17:42:21 2024 +0530
+
+    Electric Signature Added
+
+[33mcommit cacff2e19f3cf5198b9f4e5890189e4d8f09efac[m
+Merge: 858db77 adf29bf
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Jan 19 21:39:00 2024 +0530
+
+    Merge pull request #45 from Abhishek-Rana-weboapp/Timer
+    
+    popup and timer done
+
+[33mcommit adf29bfcafd730a9dc136df1010ce1d7940c04c4[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jan 19 21:37:58 2024 +0530
+
+    popup and timer done
+
+[33mcommit 858db773a641cba427cc7da02a2a65577a002fd8[m
+Merge: 02c5a4f f0fd9b8
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jan 15 21:05:53 2024 +0530
+
+    Merge pull request #44 from Abhishek-Rana-weboapp/changesNew
+    
+    changes reflected
+
+[33mcommit f0fd9b80652f576c4bb309eb4e1471717ce564bc[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jan 15 21:04:59 2024 +0530
+
+    changes reflected
+
+[33mcommit 02c5a4ffeb462f79bfe5f525448a8eb41f407f3b[m
+Merge: 0810507 290b22d
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Jan 11 20:04:02 2024 +0530
+
+    Merge pull request #43 from Abhishek-Rana-weboapp/ChangesComplete
+    
+    Changes complete
+
+[33mcommit 290b22d1655438690d8160e77bd46c7ad3bf23f3[m
+Merge: d95e7b8 0810507
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Jan 11 20:03:53 2024 +0530
+
+    Merge branch 'main' into ChangesComplete
+
+[33mcommit d95e7b8a02d1580f44cb8046452f34db7932b823[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Jan 11 19:59:28 2024 +0530
+
+    Changes Completed
+
+[33mcommit bd5054ce58065cc3596314a5886948e37ec72636[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jan 10 18:56:10 2024 +0530
+
+    Suggested changes from client
+
+[33mcommit 08105074785ae475aa760bf0efa5732141387f02[m
+Merge: 5d530e1 e05b53e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Jan 9 17:42:03 2024 +0530
+
+    Merge pull request #41 from Abhishek-Rana-weboapp/billingFixed
+    
+    fixed : billing API
+
+[33mcommit e05b53e5658bc92e5bb9f4d87cc5201d2bf14f5c[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Jan 9 17:41:18 2024 +0530
+
+    fixed : billing API
+
+[33mcommit 5d530e1f7d035fa8a92bc78aa686b97d72291033[m
+Merge: 19cc2c3 e4fad0a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jan 8 22:04:26 2024 +0530
+
+    Merge pull request #40 from Abhishek-Rana-weboapp/billingBug
+    
+    bugfix
+
+[33mcommit e4fad0a3c8d2e99a8e42b47b4bf6a94846b086d0[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jan 8 22:03:41 2024 +0530
+
+    bugfix
+
+[33mcommit 19cc2c3e5dafdc17d9e6068b0b6416f5aa42178e[m
+Merge: d32a8fb 24b8621
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Jan 8 21:20:16 2024 +0530
+
+    Merge pull request #39 from Abhishek-Rana-weboapp/billingFlow
+    
+    Billing flow
+
+[33mcommit 24b86216ff272526975e62b11da5e6ae625a5ab4[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Mon Jan 8 21:19:29 2024 +0530
+
+    Billing Flow done
+
+[33mcommit 4f338e4aa468541630bbca97fbed742231485428[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jan 5 17:18:31 2024 +0530
+
+    verify flow finished
+
+[33mcommit 06bc3cff83d7942fb5a0e1ef5b687f09c7d9f0cd[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Jan 5 15:04:33 2024 +0530
+
+    test code
+
+[33mcommit d32a8fbb5423cb6317615f494528bbadb85cf613[m
+Merge: 7be1b4d b63d287
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Jan 4 18:09:19 2024 +0530
+
+    Merge pull request #38 from Abhishek-Rana-weboapp/new_changes
+    
+    new_changes
+
+[33mcommit b63d28742afe68f6092bf8f0f02bff7a3de325d9[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Jan 4 16:58:58 2024 +0530
+
+    new_changes
+
+[33mcommit 7be1b4d50092031a21358a07c23889869883db5d[m
+Merge: 1372336 eac19f0
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 3 16:55:27 2024 +0530
+
+    Merge pull request #37 from Abhishek-Rana-weboapp/popupCondition
+    
+    popup change
+
+[33mcommit eac19f0c892edd5e7401525e3f4e7a8b3359b386[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jan 3 16:54:39 2024 +0530
+
+    popup change
+
+[33mcommit 137233619caf03f98556f7c4dbf26b545059d3a7[m
+Merge: 3588160 6f41769
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 3 16:36:07 2024 +0530
+
+    Merge pull request #36 from Abhishek-Rana-weboapp/responsiveFixes
+    
+    responsive fix
+
+[33mcommit 6f417698feedc4bdc28c88ac9e6210b205cfa67f[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jan 3 16:34:54 2024 +0530
+
+    responsive fix
+
+[33mcommit 358816061aad157ec9ce827e831f85a00e4f4ed6[m
+Merge: 29ab17c d3a3e20
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 3 16:03:02 2024 +0530
+
+    Merge pull request #35 from Abhishek-Rana-weboapp/languageFix
+    
+    language reload fix
+
+[33mcommit d3a3e207df046c7fde7e5505dbec5b85fd0da587[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jan 3 16:02:19 2024 +0530
+
+    language reload fix
+
+[33mcommit 29ab17caded150bf397bca8526401eeae8f85e5d[m
+Merge: 8996d6e e1948d6
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 3 15:52:38 2024 +0530
+
+    Merge pull request #34 from Abhishek-Rana-weboapp/fixesBranch
+    
+    Bug fixes
+
+[33mcommit e1948d69eec35c824ad386e455df4ac1ef4bed82[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Jan 3 15:50:46 2024 +0530
+
+    Bug fixes
+
+[33mcommit 8996d6ef4b84a662a29c87309d54a8f3913004e3[m
+Merge: 039c982 b52cd7f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Jan 3 11:27:29 2024 +0530
+
+    Merge pull request #33 from Abhishek-Rana-weboapp/update_
+    
+    harmles_a
+
+[33mcommit b52cd7f1dafa88122b97a17db85073c7f3b631f5[m[33m ([m[1;31morigin/update_[m[33m)[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Jan 3 11:25:43 2024 +0530
+
+    harmles_a
+
+[33mcommit 039c982654d6595dde61bed0cf6c7020e680843d[m
+Merge: 7e44097 c6c97e4
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Jan 2 18:13:06 2024 +0530
+
+    Merge pull request #32 from Abhishek-Rana-weboapp/signatureModal
+    
+    consent gaurd submit issue fixed and signature modal added
+
+[33mcommit c6c97e4b7ffa99c0d16adfb933fa737de5df2777[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Jan 2 18:03:47 2024 +0530
+
+    consent gaurd submit issue fixed and signature modal added
+
+[33mcommit 7e44097135658f721e601c8037558fdca7311d06[m
+Merge: d717969 7ac1b1f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Dec 29 14:11:39 2023 +0530
+
+    Merge pull request #31 from Abhishek-Rana-weboapp/popups
+    
+    Popups added and alignment fixed
+
+[33mcommit 7ac1b1fffc4157af5ee41e839d0a932224eee813[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Dec 29 14:09:31 2023 +0530
+
+    Popups added and alignment fixed
+
+[33mcommit d71796915b9260cacc04038be47f4ed0b78523c3[m
+Merge: 7e2b134 04ec59a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 28 18:33:29 2023 +0530
+
+    Merge pull request #30 from Abhishek-Rana-weboapp/update_
+    
+    signature_canvas
+
+[33mcommit 04ec59abbb2df931e462a5b97e662b9cacac5daa[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Dec 28 18:05:43 2023 +0530
+
+    signature_canvas
+
+[33mcommit 7e2b1346e259bb2993dc4c3f45504e00225b95ae[m
+Merge: 2637be0 17fafde
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Dec 27 18:32:09 2023 +0530
+
+    Merge pull request #29 from Abhishek-Rana-weboapp/update_
+    
+    new_update
+
+[33mcommit 17fafde0dd71e101fb2356a5570950812b93a44a[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Dec 27 17:51:25 2023 +0530
+
+    new_update
+
+[33mcommit 2637be03e1d8423b200948e95454a2f5f21143b0[m
+Merge: 5266e30 a5487e1
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Dec 22 17:28:39 2023 +0530
+
+    Merge pull request #28 from Abhishek-Rana-weboapp/LatestCode
+    
+    Latest code
+
+[33mcommit a5487e183371450308610f27597fbaf6abeddf95[m
+Merge: 95fc14e 5266e30
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Dec 22 17:26:12 2023 +0530
+
+    latest pull merged
+
+[33mcommit 95fc14e8323c9aebdfbc7b7147b5cc68b5d04379[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Fri Dec 22 17:25:19 2023 +0530
+
+    Bug fixes and Tooth gem UI update
+
+[33mcommit 5266e3053360937197c5db43a8e6cef6f486c0a1[m
+Merge: 84c781f 7f7aa95
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Fri Dec 22 17:24:26 2023 +0530
+
+    Merge pull request #27 from Abhishek-Rana-weboapp/update_
+    
+    Update_
+
+[33mcommit 7f7aa95f062ec1735fe13d5e03ae804b82b8041c[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Fri Dec 22 17:22:09 2023 +0530
+
+    update/
+
+[33mcommit 74992e43787aa96298fb74939aaa097d9dba4eae[m[33m ([m[1;31morigin/update[m[33m)[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Fri Dec 22 17:04:12 2023 +0530
+
+    update
+
+[33mcommit 84c781f2252611b724ffeb0e4c99c1f8b684e709[m
+Merge: 50ed811 d4ff2ff
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 21 18:19:01 2023 +0530
+
+    Merge pull request #25 from Abhishek-Rana-weboapp/fixes
+    
+    Some Fixes
+
+[33mcommit d4ff2ff42a878f5103f7327b5d08a79cf118f9f7[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 21 18:17:50 2023 +0530
+
+    Some Fixes
+
+[33mcommit 50ed8119b36e3d47b1e9aa7a292aa0fc49fa4032[m
+Merge: ec317aa b2f0108
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 21 11:31:55 2023 +0530
+
+    Merge pull request #24 from Abhishek-Rana-weboapp/ConsentGuard
+    
+    style : Consent guard form changed
+
+[33mcommit b2f010849cb3b20d4709e0f44f44c1380a74861b[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 21 11:30:54 2023 +0530
+
+    style : Consent guard form changed
+
+[33mcommit ec317aa2eaff69900998f9afaa88cea114777971[m
+Merge: 7d000a8 581cce7
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Dec 20 17:52:21 2023 +0530
+
+    Merge pull request #23 from Abhishek-Rana-weboapp/changes
+    
+    Style : UI changes to the design for consistency
+
+[33mcommit 581cce7c6b6e7fd60b49f08bb79d3fe5cfda29cc[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Dec 20 17:51:13 2023 +0530
+
+    Style : UI changes to the design for consistency
+
+[33mcommit 7d000a83198198fcfe83ce81336349d0276c09fe[m
+Merge: c31272e f1091d1
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Dec 20 14:25:28 2023 +0530
+
+    Merge pull request #22 from Abhishek-Rana-weboapp/consistentDesign
+    
+    Conflicts resolved and consistent design
+
+[33mcommit f1091d14b3dbf82bb7baf348b97df8769d32ed90[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Dec 20 14:24:41 2023 +0530
+
+    Conflicts resolved and consistent design
+
+[33mcommit c31272e80336f9a9928e03d5f1fd8ebf244a47fc[m
+Merge: 1853d4a 43297c0
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Dec 19 18:18:42 2023 +0530
+
+    Merge pull request #21 from Abhishek-Rana-weboapp/new-feature
+    
+    translation_
+
+[33mcommit 43297c0a0430bc1a904529d4f34ce9d97725596d[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Tue Dec 19 18:15:35 2023 +0530
+
+    translation_
+
+[33mcommit 1853d4a3a645de96777502f49b2b30a1e98e7579[m
+Merge: eb26b96 ea15159
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Dec 18 18:30:35 2023 +0530
+
+    Merge pull request #20 from Abhishek-Rana-weboapp/new-feature
+    
+    translation
+
+[33mcommit ea1515962a16a8eb179e32e507d5c6083f9b8f96[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Mon Dec 18 18:21:14 2023 +0530
+
+    translation
+
+[33mcommit eb26b96984d44061360ecae85359a9053fc720e9[m
+Merge: a68ab6d c2d29b9
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Dec 13 18:29:04 2023 +0530
+
+    Merge pull request #19 from Abhishek-Rana-weboapp/responsiveDesign
+    
+    Mobile view bugs fixed
+
+[33mcommit c2d29b97c29f07807227234fd4fd3f18d4094b14[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Wed Dec 13 18:28:14 2023 +0530
+
+    Mobile view bugs fixed
+
+[33mcommit a68ab6d730663d4c1a872888383836ac060030fa[m
+Merge: 365b0fe 08e3711
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Dec 12 17:19:34 2023 +0530
+
+    Merge pull request #18 from Abhishek-Rana-weboapp/overflowFix
+    
+    Screens fixed with overflowing issue
+
+[33mcommit 08e3711e49957ac1efcd3646a57a199332bdbdf3[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Dec 12 17:18:35 2023 +0530
+
+    Screens fixed with overflowing issue
+
+[33mcommit 365b0fe39987867c0f8deac91c5082c397702a4e[m
+Merge: d1be965 529044c
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Dec 12 14:38:17 2023 +0530
+
+    Merge pull request #17 from Abhishek-Rana-weboapp/changes
+    
+    UI changes and responsive issues fixed
+
+[33mcommit 529044c40751653a9c6cdb118cba95fc11d05800[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Dec 12 14:37:28 2023 +0530
+
+    UI changes and responsive issues fixed
+
+[33mcommit d1be96537af03afa4984776ae4aca664ce9e07bf[m
+Merge: 3f5b621 b87b752
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Dec 12 11:29:42 2023 +0530
+
+    Merge pull request #16 from Abhishek-Rana-weboapp/new-feature
+    
+    remove error
+
+[33mcommit b87b752c6563c9b18ded0746b2e4095582fdd731[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Tue Dec 12 11:27:58 2023 +0530
+
+    remove error
+
+[33mcommit 3f5b621f98ac21af4c879717c65714c5e1d1b42b[m
+Merge: be2195e d12e25f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Dec 11 18:29:26 2023 +0530
+
+    Merge pull request #15 from Abhishek-Rana-weboapp/new-feature
+    
+    tooth-gem_flow
+
+[33mcommit d12e25f452eba63acb3f567943893496be85e576[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Mon Dec 11 18:21:11 2023 +0530
+
+    tooth-gem_flow
+
+[33mcommit be2195e37d71c8db6447075390667b6dc101387e[m
+Merge: 97bfc42 751162f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Dec 11 17:58:39 2023 +0530
+
+    Merge pull request #14 from Abhishek-Rana-weboapp/new-feature
+    
+    responsive
+
+[33mcommit 751162f8520402eaede3844129228ac024902ced[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Mon Dec 11 17:56:00 2023 +0530
+
+    responsive
+
+[33mcommit 97bfc4215f52ec9baa6a11b01f5c52b0f29a11be[m
+Merge: 5d970c9 5918f46
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 17:25:06 2023 +0530
+
+    Merge pull request #13 from Abhishek-Rana-weboapp/new-feature
+    
+    nevugation_
+
+[33mcommit 5918f46c2db08286429bd9015c90c9fa5abeb6bf[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Dec 7 17:19:31 2023 +0530
+
+    tooth-gems_nevigation
+
+[33mcommit a4bae192d9d0f38c205b585fb47657037c96f3fe[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Dec 7 17:15:57 2023 +0530
+
+    tooth-gems__
+
+[33mcommit 5d970c924051bb96b6183baff7b70110a482c339[m
+Merge: 8b877e9 f25534e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 16:55:32 2023 +0530
+
+    Merge pull request #12 from Abhishek-Rana-weboapp/new-feature
+    
+    tooth-gems_
+
+[33mcommit f25534e7b90b00e8b38adfedca6210ae358e5982[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Dec 7 16:53:57 2023 +0530
+
+    tooth-gems_
+
+[33mcommit 8b877e9e82b15f57aa7dc2c5bb55ed6c023f208d[m
+Merge: 5d9278a df0434d
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 16:48:45 2023 +0530
+
+    Merge pull request #11 from Abhishek-Rana-weboapp/SignupUI
+    
+    style : Signup UI done and minor bug fixes
+
+[33mcommit df0434d5ed495d844f91f8addba81185f5fc49a9[m
+Merge: d00dca3 5d9278a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 16:48:36 2023 +0530
+
+    Merge branch 'main' into SignupUI
+
+[33mcommit d00dca307c21706180a25909f9c8fae8d026ac40[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 7 16:44:32 2023 +0530
+
+    style : Signup UI done and minor bug fixes
+
+[33mcommit 5d9278aecbe72ff3987d6ea237d8cc7b6546da6e[m
+Merge: 7924d39 15ac980
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 16:38:01 2023 +0530
+
+    Merge pull request #10 from Abhishek-Rana-weboapp/new-feature
+    
+    tooth-gems
+
+[33mcommit 15ac980c60635dead3f01e0c7d440362ed008be9[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Dec 7 15:40:58 2023 +0530
+
+    tooth-gems
+
+[33mcommit 7924d394f2d091a8c4f932ef4a567b8e9131f707[m
+Merge: bc978c6 04e5e71
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 12:04:21 2023 +0530
+
+    Merge pull request #9 from Abhishek-Rana-weboapp/layoutFix
+    
+    bug : layout error fixed :- missing useNavigate statement
+
+[33mcommit 04e5e71e8a8992a8caca6d925caefea5815abe62[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 7 12:03:18 2023 +0530
+
+    bug : layout error fixed :- missing useNavigate statement
+
+[33mcommit bc978c6585a5ddcba402c6b4a82b8d7b7cbb2b69[m
+Merge: 70ffd43 0307b1f
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Dec 7 12:00:18 2023 +0530
+
+    Merge pull request #8 from Abhishek-Rana-weboapp/medicalUI
+    
+    Medical UI
+
+[33mcommit 0307b1fb952e765e445f75d858a4062a93a1c1dd[m
+Merge: d6bd661 70ffd43
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 7 11:59:21 2023 +0530
+
+    conflicts in progress bar resolved
+
+[33mcommit d6bd661d61841e3e1e647f4a5c306056dbd51ada[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Dec 7 11:58:06 2023 +0530
+
+    style : medical form UI and validations done
+
+[33mcommit 70ffd43179f8ce183b6b1be44168c529192125eb[m
+Merge: 45eac51 9f56e46
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Wed Dec 6 10:12:01 2023 +0530
+
+    Merge pull request #7 from Abhishek-Rana-weboapp/new-feature
+    
+    progerss_bar
+
+[33mcommit 9f56e46b82e0d224f71fc243a51fc5771357b809[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Tue Dec 5 18:14:35 2023 +0530
+
+    progerss_bar
+
+[33mcommit 45eac51d6b1c3aafb8d69851eadc6c1823ba23c3[m
+Merge: a403389 5fa7d1d
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Dec 5 10:36:56 2023 +0530
+
+    Merge pull request #6 from Abhishek-Rana-weboapp/SelectionUI
+    
+    Selection UI
+
+[33mcommit 5fa7d1df82f620729896e43759914d1757f67cc0[m
+Merge: ec864be a403389
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Dec 5 10:35:56 2023 +0530
+
+    conflicts resolved
+
+[33mcommit ec864bea4fbb25b7896c8ae6552787eb2fafd889[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Dec 5 10:27:04 2023 +0530
+
+    style : Selection tattoo UI done
+
+[33mcommit a403389697a074002f037cee73545577091758a6[m
+Merge: cd3b716 478621a
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Dec 4 22:47:01 2023 +0530
+
+    Merge pull request #5 from Abhishek-Rana-weboapp/new-feature
+    
+    progress_bar
+
+[33mcommit 478621af3db4bf2de95f1fecbd2f5839e9a0dc96[m
+Merge: 65f2304 cd3b716
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Mon Dec 4 17:56:40 2023 +0530
+
+    new desine
+
+[33mcommit 65f230429e691a746f74edd66e9390a465086a49[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Thu Nov 30 16:03:55 2023 +0530
+
+    progress_bar
+
+[33mcommit cd3b71656fc4ca1f6a47199a3f5a88155bba5169[m
+Merge: 4916015 027702e
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Nov 30 10:00:13 2023 +0530
+
+    Merge pull request #4 from Abhishek-Rana-weboapp/dashboardUI
+    
+    Dashboard UI
+
+[33mcommit 027702ee7543499a8664c7000c4ff7446e08e0a8[m
+Merge: ee60601 4916015
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Nov 30 09:58:32 2023 +0530
+
+    Merge branch 'main' of https://github.com/Abhishek-Rana-weboapp/Tattoo into dashboardUI
+
+[33mcommit ee60601a9a967962981bb4b34b06c647a9ac7591[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Nov 30 09:58:15 2023 +0530
+
+    Dashboard UI done
+
+[33mcommit 4916015dbd547de3042f90ec2e8607e635ecf646[m
+Merge: dcf08e7 70fca84
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Thu Nov 30 09:55:46 2023 +0530
+
+    Merge pull request #3 from Abhishek-Rana-weboapp/new-feature
+    
+    popup_add_admin
+
+[33mcommit 70fca84333b353539bfe66b5f996005c9c6e69f8[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Wed Nov 29 12:13:37 2023 +0530
+
+    popup_add_admin
+
+[33mcommit dcf08e7dcdf2f6659edfe873b52cab73412f18bf[m
+Merge: e52bbcd 965a5e1
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Tue Nov 28 17:24:06 2023 +0530
+
+    Merge pull request #2 from Abhishek-Rana-weboapp/LoginDone
+    
+    Login Page Styling done
+
+[33mcommit 965a5e18f1e3c56c995bf94bb9315b0cf68f23f4[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Tue Nov 28 17:22:50 2023 +0530
+
+    Login Page Styling done
+
+[33mcommit e52bbcdc600a24e6f3dc19b888234c2da62ead8a[m
+Merge: 4cd4227 c3774d8
+Author: Abhishek-Rana-weboapp <133847603+Abhishek-Rana-weboapp@users.noreply.github.com>
+Date:   Mon Nov 27 18:16:22 2023 +0530
+
+    Merge pull request #1 from Abhishek-Rana-weboapp/new-feature
+    
+    new feature
+
+[33mcommit c3774d8095f86fc6f06a478a1b79e7610f686bf9[m
+Author: amanmaurya24079 <amanmaurya24079>
+Date:   Mon Nov 27 17:53:49 2023 +0530
+
+    new feature
+
+[33mcommit 4cd422729bee58ee4ab5ec9e5a849b5a2baf0e80[m
+Author: aman maurya <amanmaurya24079@gmail.com>
+Date:   Thu Nov 23 17:59:20 2023 +0530
+
+    book appointment
+
+[33mcommit 9d63ec037cfec14a3d69f7ae5da063f32a7a87dc[m
+Author: abhishek-weboapp <abhishek@weboappdiscovery.com>
+Date:   Thu Nov 23 12:31:12 2023 +0530
+
+    First Commit

@@ -18,8 +18,6 @@ i18n.use(initReactI18next).init({
 
 // Root Component
 function App() {
-  const [userLanguage, setUserLanguage] = useState("en"); // Replace with logic to get user language
-  const { t } = useTranslation();
 
   useEffect(() => {
     const storedLang = sessionStorage.getItem("lang");
@@ -35,7 +33,7 @@ function App() {
     <UserContextProvider>
       <Router>
         <div
-          className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto px-2 md:py-4 py-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded"
+          className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto overflow-x-hidden px-2 md:py-4 py-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded"
           style={{ height: "100dvh" }}
         >
           <RoutesComponent />

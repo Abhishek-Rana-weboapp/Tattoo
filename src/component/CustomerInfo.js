@@ -64,7 +64,7 @@ const CustomerInfo = () => {
     const handleSubmit = async (e)=>{
       e.preventDefault()
       if(userData.address && userData.city && userData.state && userData.zip && userData.gender && userData.race ){
-        await axios.patch(`${apiUrl}/artist/user_update?username=${username}`, userData , {headers:AUTHHEADERS()})
+        await axios.patch(`${apiUrl}artist/user_update?username=${username}`, userData , {headers:AUTHHEADERS()})
         .then(res=>{
           if(minor === "true"){
             navigate("/gaurdian-info")

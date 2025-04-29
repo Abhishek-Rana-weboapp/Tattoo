@@ -23,8 +23,6 @@ export default function VerifyUpload({step, setStep}) {
   const [loading, setLoading] = useState(false)
   const minor = sessionStorage.getItem("minor")
   const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
- const username = sessionStorage.getItem("username")
- const appointmentID = sessionStorage.getItem('appointmentID')
  const typeofservice = JSON.parse(sessionStorage.getItem("appointment_detail")||"")?.typeofservice
  const [updateModal, setUpdateModal] = useState(false)
 
@@ -32,13 +30,14 @@ export default function VerifyUpload({step, setStep}) {
  useEffect(()=>{
    const fetchPrevIDs = async()=>{
      setLoading(true)
-     await axios.get(`${apiUrl}/Identity/latest_identity/`, {headers:AUTHHEADERS()})
+     await axios.get(`${apiUrl}Identity/latest_identity/`, {headers:AUTHHEADERS()})
      .then(res=>{
       if(minor === "false"){
         if(res.data.useridentity){
           setIdPhoto(res.data.useridentity.useridcard)
           setImagePrev(res.data.useridentity.useridcard)
           setStep(2)
+          setUpdateModal(true)
           setLoading(false)
           return
         }else{
@@ -95,7 +94,7 @@ export default function VerifyUpload({step, setStep}) {
     }
         const formData = new FormData()
         formData.append("profile", file)
-        await axios.post(`${apiUrl}/upload`,formData, {headers : AUTHHEADERS()} )
+        await axios.post(`${apiUrl}upload`,formData, {headers : AUTHHEADERS()} )
         .then(res=>{
           if(res.data.profile_url){
             const url =  URL.createObjectURL(file)
@@ -131,7 +130,7 @@ export default function VerifyUpload({step, setStep}) {
           data = {
             UserIDCard:idPhoto
           }
-          await axios.post(`${apiUrl}/identity/user_identity` ,data,{headers:AUTHHEADERS()}).then((res)=>{
+          await axios.post(`${apiUrl}identity/user_identity` ,data,{headers:AUTHHEADERS()}).then((res)=>{
               setLoading(false)
               setStep(4)
               return
@@ -151,8 +150,8 @@ export default function VerifyUpload({step, setStep}) {
           };
       
           Promise.all([
-              axios.post(`${apiUrl}/identity/user_identity`, data, {headers: AUTHHEADERS()}),
-              axios.post(`${apiUrl}/identity/guardian_identity`, gaurdiandata, {headers: AUTHHEADERS()}),
+              axios.post(`${apiUrl}identity/user_identity`, data, {headers: AUTHHEADERS()}),
+              axios.post(`${apiUrl}identity/guardian_identity`, gaurdiandata, {headers: AUTHHEADERS()}),
           ]).then((responses) => {
               setLoading(false);
               if(typeofservice === "tattoo" || typeofservice === "piercing"){

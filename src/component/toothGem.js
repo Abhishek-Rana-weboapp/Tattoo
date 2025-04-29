@@ -111,7 +111,7 @@ const ToothGems = () => {
  if(selectedTeeth.length > 0){
 
    try {
-     const response = await fetch(`${apiUrl}/upload`, {
+     const response = await fetch(`${apiUrl}upload`, {
        method: "POST",
        body: formData,
        headers : AUTHHEADERS()
@@ -138,6 +138,8 @@ const ToothGems = () => {
   }
   };
   
+
+  console.log(selectedTeeth)
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");

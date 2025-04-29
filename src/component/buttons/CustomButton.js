@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from 'react-i18next';
 
 export default function CustomButton({ children, onClick,  maxWidth, selected, value, def ,buttonStyle,}) {
@@ -14,10 +13,10 @@ export default function CustomButton({ children, onClick,  maxWidth, selected, v
   return (
     <button
       ref={def}
-      className={`${selected === children ? activeColor : color} w-full max-w-[${maxWidth}] py-2 px-2 uppercase md:text-2xl text-sm
+      className={`${selected === value ? activeColor : color} w-full max-w-[${maxWidth}] py-2 px-2 uppercase md:text-2xl text-sm
       font-bold rounded-lg hover:bg-gradient-to-b from-white to-yellow-400 to-10% select-none`}
       onClick={() => {
-        onClick(children)
+        onClick(value)
       }}
       style={buttonStyle}
     >

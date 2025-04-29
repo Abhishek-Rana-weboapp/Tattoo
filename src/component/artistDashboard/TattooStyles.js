@@ -96,7 +96,7 @@ const TattooStyles = ({
     if (data) {
       console.log(data);
       await axios
-        .post(`${apiUrl}/artist/post_new`, data, { headers: AUTHHEADERS() })
+        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
         .then((res) => {
           setUpdateAppointment(res.data.updatedtable);
           navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);

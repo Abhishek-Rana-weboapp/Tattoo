@@ -17,7 +17,7 @@ export default function ArtistList() {
 
   const fetchArtists = async () => {
     await axios
-      .get(`${apiUrl}/artist/getAllArtists`)
+      .get(`${apiUrl}artist/getAllArtists`)
       .then((res) => {
         console.log(res);
       })
@@ -62,7 +62,7 @@ export default function ArtistList() {
         (async () => {
           await axios
             .post(
-              `${apiUrl}/add_admin`,
+              `${apiUrl}add_admin`,
               { username: email },
               {
                 headers: {

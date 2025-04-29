@@ -51,7 +51,7 @@ export default function UploadBeforeImage({
     const formData = new FormData();
     formData.append("profile", file);
     try {
-      const response = await axios.post(`${apiUrl}/upload`, formData, {
+      const response = await axios.post(`${apiUrl}upload`, formData, {
         headers: AUTHHEADERS(),
       });
       return response.data.profile_url;
@@ -148,7 +148,7 @@ export default function UploadBeforeImage({
         };
       }
       await axios
-        .post(`${apiUrl}/artist/post_new`, data, { headers: AUTHHEADERS() })
+        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
         .then((res) => {
           setUpdateAppointment(res.data.updatedtable);
           setLoading(false);
@@ -174,7 +174,7 @@ export default function UploadBeforeImage({
           ],
         }
         await axios
-        .post(`${apiUrl}/artist/post_new`, data, { headers: AUTHHEADERS() })
+        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
         .then((res) => {
           setUpdateAppointment(res.data.updatedtable);
           setLoading(false);

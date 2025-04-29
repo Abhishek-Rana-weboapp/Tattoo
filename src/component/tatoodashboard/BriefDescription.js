@@ -48,6 +48,9 @@ const BriefDescription = () => {
 
 
  const handlePrev = ()=>{
+  if(currentSelection > 1){
+    setCurrentSelection(currentSelection-1)
+  }
      navigate(-1)
  }
 

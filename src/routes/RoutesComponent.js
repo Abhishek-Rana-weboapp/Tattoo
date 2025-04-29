@@ -31,7 +31,6 @@ import MedicalReview from '../component/medicalReview';
 import PriceServices from '../component/priceServices';
 import TattooComponent from '../component/serviceSelection';
 import SkinCondition from '../component/skinCondition';
-import AppointmentList from '../component/AppointmentList';
 import JewelleryPiercing from '../component/piercingdashboard/jweleryPiercing';
 import Title from "../assets/Title.png"
 import UserContext from '../context/UserContext';
@@ -39,7 +38,6 @@ import PrivateRoutes from './PrivateRoutes';
 import AlertModal from '../component/modal/AlertModal';
 import ArtistDashboard from '../component/artistDashboard/ArtistDashboard';
 import BillingComponent from '../component/billing';
-import SuperAdminDashboard from '../component/artistDashboard/SuperAdminDashboard';
 import AdminInvite from '../component/artistDashboard/AdminInvite';
 import BriefDescription from '../component/tatoodashboard/BriefDescription';
 import GaurdianInfo from '../component/GaurdianInfo';
@@ -48,10 +46,12 @@ import TattooCount from '../component/TattooCount';
 import NewMedicalHistory from '../component/medicalComponents/NewMedicalHistory';
 import CustomerInfo from '../component/CustomerInfo';
 import { FaPowerOff } from "react-icons/fa";
+import AppointmentDetails from '../component/artistDashboard/AppointmentDetails';
+import i18n from "i18next"
 
 export default function RoutesComponent() {
 
-  const {isVisible, setIsVisible, alert, user, setUser, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
+  const {isVisible, setIsVisible, alert, user, setUser,finalUser,setFinalUser,description,setDescription, formData,setFormData,emerformData, setemerFormData,drformData, setdrFormData } = useContext(UserContext)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -62,9 +62,19 @@ export default function RoutesComponent() {
       setIsVisible(true)
     }
     const storedUser = JSON.parse(sessionStorage.getItem("user"))
+    const storedFinalUser = JSON.parse(sessionStorage.getItem("finalUser"))
+    const storedDescription = JSON.parse(sessionStorage.getItem("description"))
     const storedMedicalHistory = sessionStorage.getItem("medicalHistory")
     const storedemerformData = sessionStorage.getItem("emerformData")
     const storeddrformData = sessionStorage.getItem("drformData")
+
+    if(storedFinalUser){
+      setFinalUser(storedFinalUser)
+    }
+    if(storedDescription){
+      setDescription(storedDescription)
+    }
+
     if(storedUser){
       setUser(storedUser)
     }
@@ -81,6 +91,8 @@ export default function RoutesComponent() {
     }
   const handleBeforeUnload = (event) => {
     sessionStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('finalUser', JSON.stringify(finalUser));
+    sessionStorage.setItem('description', JSON.stringify(description));
     if(Object.keys(formData).length > 0){
       sessionStorage.setItem("medicalHistory", JSON.stringify(formData))
     }
@@ -103,6 +115,12 @@ export default function RoutesComponent() {
   return () => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
   };
+ },[location])
+
+ useEffect(()=>{
+  if(location.pathname === "/"){
+    i18n.changeLanguage("en")
+  }
  },[location])
 
 
@@ -129,7 +147,6 @@ export default function RoutesComponent() {
       <Route exact path="/forget_password" element={<ForgetPassword />} />
       <Route exact path="/reset_password" element={<Resetpassword/>} />
       <Route exact path="/invite_artist" element={<AdminInvite/>} />
-      <Route exact path="/admin" element={<SuperAdminDashboard/>} />
       <Route element={<PrivateRoutes/>} >
       
 
@@ -168,6 +185,8 @@ export default function RoutesComponent() {
       <Route exact path="/verify" element={<IDVerificationComponent />} />
       <Route exact path="/consent-guard" element={<ConsentFormGuard />} />
       <Route exact path="/admin" element={<AdminDashboard />} />
+      <Route exact path="/appointmentdetails" element={<AppointmentDetails />} />
+
 
       <Route exact path="/medical-review" element={<MedicalReview />} />
       <Route exact path="/price" element={<PriceServices />} />
@@ -175,8 +194,6 @@ export default function RoutesComponent() {
 
       <Route exact path="/skin" element={<SkinCondition />} />
 
-
-      <Route exact path="/AppointmentList" element={<AppointmentList/>}/>
       <Route exact path="/billing/" element={<BillingComponent/>}/>
       <Route exact path="/billing/:id/:step" element={<BillingComponent/>}/>
       <Route exact path='/artist-dashboard' element={<ArtistDashboard/>}/>

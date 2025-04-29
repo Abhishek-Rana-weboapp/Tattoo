@@ -54,7 +54,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         ],
       };
       await axios
-        .post(`${apiUrl}/artist/post_new`, data, {headers : AUTHHEADERS()})
+        .post(`${apiUrl}artist/post_new`, data, {headers : AUTHHEADERS()})
         .then((res) => {
           if (res.status === 201) {
             setLoading(false);
@@ -87,7 +87,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
       )
       .then((res) => {
         setAlert(!alert);
-        setAlertMessage(t("pdf uploaded to google drive"));
+        setAlertMessage(t("PDF uploaded to google drive"));
         navigate("/artist-dashboard", { replace: true });
       })
       .catch((err) => {
