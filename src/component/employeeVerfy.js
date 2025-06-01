@@ -63,16 +63,17 @@ const IDVerificationComponent = () => {
     await axios.post(`${apiUrl}artist/post_new` ,data, {headers : AUTHHEADERS()}).then((res)=>{
       if(res.status === 201){
         setStep(5)
-        setLoading(false)
       }
     }).catch((err)=>{
       console.error(err.message)
+    }).finally(()=>{
       setLoading(false)
     })
   }
  }
 
  const handleFrontDesk = async()=>{
+  setLoading(true);
   if(!frontDesk){
     setAlertMessage(t("Please select employee name"))
     setAlert(!alert)
@@ -90,6 +91,8 @@ const IDVerificationComponent = () => {
       }
     }).catch((err)=>{
       console.error(err.message)
+    }).finally(()=>{
+      setLoading(false)
     })
   }
  }
