@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
@@ -17,6 +17,7 @@ function ResetPassword() {
   const [psw, setpsw] = useState('');
   const [confirm_psw, setconfirm_psw] = useState('');
   const [responseMessage, setResponseMessage] = useState(''); // New state to store the API response message
+  const [loading, setLoading] = useState(false)
 
   const urlSearchParams = new URLSearchParams(window.location.search);
   const token = urlSearchParams.get('uuid');
@@ -25,6 +26,7 @@ function ResetPassword() {
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
   const handleFormSubmit = async (e) => {
+    setLoading(true)
     e.preventDefault();
     if (!(confirm_psw === psw)) {
       setAlertMessage('Passwords do not match. Please try again.');
@@ -50,6 +52,8 @@ function ResetPassword() {
         setAlertMessage(t("Password reset failed"))
         setAlert(!alert)
         return
+      }).finally(()=>{
+        setLoading(false)
       })
   };
 

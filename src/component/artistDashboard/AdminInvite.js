@@ -32,8 +32,10 @@ export default function AdminInvite() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("eng");
+  const [loading, setLoading] = useState(false)
 
   const handleFormSubmit = async(e)=>{
+    setLoading(true)
     e.preventDefault()
     if(firstName && lastName && email && password && dateOfBirth && selectedLanguage){
         const data = {
@@ -48,9 +50,13 @@ export default function AdminInvite() {
         navigate("/artist-dashboard")
       }
      }).catch(err=>console.log(err))
+     .finally(()=>{
+        setLoading(false);
+      })
     }else{
-      setAlert(!alert)
-      setAlertMessage(t("Please provide all details"))
+      setAlert(!alert);
+      setAlertMessage(t("Please provide all details"));
+      setLoading(false);
     }
 }
 
