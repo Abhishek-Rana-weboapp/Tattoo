@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useTranslation, initReactI18next } from "react-i18next";
+import { useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 import UserContextProvider from "./context/UserContextProvider";
 import RoutesComponent from "./routes/RoutesComponent";
 import "./App.css";
+import { AuthContextProvider } from "./context/AuthContext";
+import { AppointmentContextProvider } from "./context/AppointmentContext";
 
 // i18next libraries implementation
 i18n.use(initReactI18next).init({
@@ -18,7 +20,6 @@ i18n.use(initReactI18next).init({
 
 // Root Component
 function App() {
-
   useEffect(() => {
     const storedLang = sessionStorage.getItem("lang");
     if (storedLang) {
@@ -27,19 +28,25 @@ function App() {
       i18n.changeLanguage("en");
     }
   }, []);
-  
 
   return (
-    <UserContextProvider>
-      <Router>
-        <div
-          className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto overflow-x-hidden px-2 md:py-4 py-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded"
-          style={{ height: "100dvh" }}
-        >
-          <RoutesComponent />
-        </div>
-      </Router>
-    </UserContextProvider>
+    <>
+    {/* <ImageGenerator text={"XP"} /> */}
+      <AuthContextProvider>
+        <UserContextProvider>
+          <Router>
+            <div
+              className="App bg-[#000000] w-screen  flex flex-col items-center overflow-auto overflow-x-hidden px-2 md:py-4 py-2 gap-2 scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-400 scrollbar-rounded"
+              style={{ height: "100dvh" }}
+            >
+              <AppointmentContextProvider>
+                <RoutesComponent />
+              </AppointmentContextProvider>
+            </div>
+          </Router>
+        </UserContextProvider>
+      </AuthContextProvider>
+    </>
   );
 }
 

@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
+import { useAppointmentContext } from '../../context/AppointmentContext'
 
 const  YesNoExplain = ({question, next, prev,}) => {
     const [selected, setSelected] = useState("")
+    const {medicalhistory, setMedicalHistory} = useAppointmentContext();
     const {alert, setAlert, setAlertMessage, formData, setFormData} = useContext(UserContext)
     const [explanation, setExplanation] = useState("")
     const {t}= useTranslation()
     const inputRef = useRef()   
 
     useEffect(()=>{
-      if(formData[question.id]){
-        setSelected(formData[question.id].ans)
-        setExplanation(formData[question.id].explanation)
+      if(medicalhistory[question.id]){
+        setSelected(medicalhistory[question.id].ans)
+        setExplanation(medicalhistory[question.id].explanation)
       }else{
         setSelected("")
         setExplanation("")
@@ -45,8 +47,12 @@ const  YesNoExplain = ({question, next, prev,}) => {
               return 
             }
           }
-            setFormData(prev=>({...prev, [question.id] : {ans : selected, explanation:explanation}}))
-            next()
+          setMedicalHistory((prev) => ({
+            ...prev,
+            [question.id]: { ans: selected, explanation: explanation },
+          }));
+           const latestMedicalState = {...medicalhistory,[question.id]: { ans: selected, explanation: explanation } }
+            next(latestMedicalState)
         }
     }
 

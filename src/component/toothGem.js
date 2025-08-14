@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMediaQuery } from "react-responsive";
@@ -8,14 +8,17 @@ import ToothGem from "../assets/tooth-gen.png";
 import Gem from "../assets/Gem.png";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
 import { debounce } from "lodash";
+import toast from "react-hot-toast";
+import axiosInstance from "../config/axios";
+import { useAppointmentContext } from "../context/AppointmentContext";
 
 const ToothGems = () => {
+  const { appointmentData, setAppointmentData, bodyLocation, setBodyLocation } =
+    useAppointmentContext();
   const { t } = useTranslation();
-  const { setUser, selectedTeeth, setSelectedTeeth, setFinalUser,setAlert, alert, setAlertMessage } =
-    React.useContext(UserContext);
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const [loading, setLoading] = useState(false);
+  const { selectedTeeth, setSelectedTeeth } = useContext(UserContext);
   const navigate = useNavigate();
-  
 
   const canvasRef = useRef(null);
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
@@ -25,8 +28,7 @@ const ToothGems = () => {
     height: isMobile ? 200 : 500,
   });
 
-
-  const handleResize =useCallback(() => {
+  const handleResize = useCallback(() => {
     setCanvasSize({
       width: isMobile ? 300 : 900,
       height: isMobile ? 200 : 500,
@@ -43,7 +45,6 @@ const ToothGems = () => {
     return () => window.removeEventListener("resize", debouncedHandleResize);
   }, [debouncedHandleResize]);
 
-
   useEffect(() => {
     redrawCanvas();
   }, [selectedTeeth, canvasSize]);
@@ -59,7 +60,7 @@ const ToothGems = () => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left - canvas.width * 0.005;
     const y = e.clientY - rect.top;
-  
+
     // Define the parameters for the tooth areas
     const toothArea = {
       centerX: canvas.width * 0.5 - canvas.width * 0.005 + canvas.width * 0.005,
@@ -67,13 +68,13 @@ const ToothGems = () => {
       outerRadiusX: canvas.width * 0.2691 + canvas.width * 0.005,
       outerRadiusY: canvas.height * 0.2,
     };
-  
+
     // Check if the click is within the defined curves
     const isInsideDefinedCurves =
       (x - toothArea.centerX) ** 2 / toothArea.outerRadiusX ** 2 +
-      (y - toothArea.centerY) ** 2 / toothArea.outerRadiusY ** 2 <=
+        (y - toothArea.centerY) ** 2 / toothArea.outerRadiusY ** 2 <=
       1;
-  
+
     if (isInsideDefinedCurves) {
       if (e.ctrlKey) {
         handleUndo();
@@ -83,75 +84,120 @@ const ToothGems = () => {
         const minSize = isMobile ? 10 : 20;
         const centerX = toothArea.centerX;
         const sizeDelta = maxSize - minSize;
-  
+
         // Calculate the size based on the distance from the center
-        const distanceFromCenter = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - toothArea.centerY, 2));
+        const distanceFromCenter = Math.sqrt(
+          Math.pow(x - centerX, 2) + Math.pow(y - toothArea.centerY, 2)
+        );
         const size = Math.max(
           minSize,
           maxSize - sizeDelta * (distanceFromCenter / toothArea.outerRadiusX)
         );
-  
+
         setSelectedTeeth([
           ...selectedTeeth,
-          { coordinates: { x, y }, label: selectedTooth, size: Math.floor(size) },
+          {
+            coordinates: { x, y },
+            label: selectedTooth,
+            size: Math.floor(size),
+          },
         ]);
       }
     }
   };
-  
 
   const handleImageUpload = async () => {
+    if (selectedTeeth.length === 0) {
+      toast.error("Please select a tooth location");
+      return;
+    }
+
     const canvas = canvasRef.current;
     const imageBlob = await new Promise((resolve) =>
       canvas.toBlob(resolve, "image/jpeg", 1)
     );
 
     const formData = new FormData();
-    formData.append("profile", imageBlob);
- if(selectedTeeth.length > 0){
+    formData.append("profiles", imageBlob);
 
-   try {
-     const response = await fetch(`${apiUrl}upload`, {
-       method: "POST",
-       body: formData,
-       headers : AUTHHEADERS()
-      });
-      
-      const data = await response.json();
-      
-      if (response.ok) {
-        setUser((prev) => ({ ...prev, 1: data.profile_url }));
-        setFinalUser((prev) => ({ ...prev, 1 : {level1: data.profile_url, level2:null, level3:null , level4:null }}));
+    try {
+      setLoading(true);
+      const res = await axiosInstance.post("/upload", formData);
+      if (res.status === 200) {
+        const location = {
+          1: {
+            level1: res.data.profile_urls[0],
+          },
+        };
+        setAppointmentData((prev) => ({
+          ...prev,
+          bodyLocation: JSON.stringify(location),
+        }));
         navigate("/medical-form");
-      } else {
-        console.error(
-          "Failed to upload image. Server returned:",
-          response.status
-        );
       }
     } catch (error) {
-      console.error("Error:", error);
+      toast.error("Error uploading the image");
+    } finally {
+      setLoading(false);
     }
-  }else{
-    setAlert(!alert)
-    setAlertMessage(t('Please select at least one tooth'))
-  }
   };
-  
 
-  console.log(selectedTeeth)
+  //   const handleImageUpload = async () => {
+  //     const canvas = canvasRef.current;
+  //     const imageBlob = await new Promise((resolve) =>
+  //       canvas.toBlob(resolve, "image/jpeg", 1)
+  //     );
+
+  //     const formData = new FormData();
+  //     formData.append("profiles", imageBlob);
+  //  if(selectedTeeth.length > 0){
+
+  //    try {
+  //      const response = await fetch(`${apiUrl}upload`, {
+  //        method: "POST",
+  //        body: formData,
+  //        headers : AUTHHEADERS()
+  //       });
+
+  //       const data = await response.json();
+
+  //       if (response.ok) {
+  //         setUser((prev) => ({ ...prev, 1: data.profile_url }));
+  //         setFinalUser((prev) => ({ ...prev, 1 : {level1: data.profile_url, level2:null, level3:null , level4:null }}));
+  //         navigate("/medical-form");
+  //       } else {
+  //         console.error(
+  //           "Failed to upload image. Server returned:",
+  //           response.status
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error:", error);
+  //     }
+  //   }else{
+  //     setAlert(!alert)
+  //     setAlertMessage(t('Please select at least one tooth'))
+  //   }
+  //   };
+
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     canvas.width = canvasSize.width;
     canvas.height = canvasSize.height;
-    
+
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     const image = new Image();
     image.src = ToothGem;
     image.onload = () => {
-      context.drawImage(image, -25, 0, isMobile ? canvas.width+70 : canvas.width+90, canvas.height);
+      context.drawImage(
+        image,
+        -25,
+        0,
+        isMobile ? canvas.width + 70 : canvas.width + 90,
+        canvas.height
+      );
       selectedTeeth.forEach((tooth) => {
         const { x, y } = tooth.coordinates;
         const newImage = new Image();

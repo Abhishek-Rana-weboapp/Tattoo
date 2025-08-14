@@ -1,17 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { NavLink } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
 import { PiUserCircleFill } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
-import Button_bg from "../assets/Button_bg.png";
 import UserContext from "../context/UserContext";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import i18n from "i18next";
 import Loader from "./loader/Loader";
+import axios from "axios";
+import { createInitialsAndFullName } from "../utils/helperFunctions";
+import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 function Login() {
+  const {setUser} = useAuthContext();
+  const location = useLocation()
   const [showPassword, setShowPassword] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState("");
@@ -22,195 +26,127 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  console.log(location)
+
   useEffect(() => {
     setIsVisible(false);
     sessionStorage.clear();
   }, []);
 
   const handleFormSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
-    const user = {
-      username: email,
+    setLoading(true);
+
+    if (!email || !password) {
+      setLoading(false);
+      return alert("Both email and password required");
+    }
+
+    const data = {
+      userName: email,
       password: password,
     };
-    const config = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    };
 
-    const url = `${apiUrl}login`;
     try {
-      const response = await fetch(url, config);
-      const responseData = await response.json();
-      if (response.status === 401) {
-        setError(responseData.error);
-        setLoading(false);
-        return;
-      }
-      if (responseData.message === "Login successful.") {
-        if (responseData?.user?.lang == "es") {
-          i18n.changeLanguage("es");
+      const response = await axios.post(`${apiUrl}login`, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        response.lang === "es" && i18n.changeLanguage("es");
+        toast.success("Login successful");
+        sessionStorage.setItem("token", response.data.token);
+        setUser(response.data.user);
+        if(response.data.user.userType === "admin"){
+         navigate("/artist-dashboard");
+        }else{
+          navigate("/detailedinfo");
         }
-        if (!responseData.hasOwnProperty("user")) {
-          sessionStorage.setItem("token", responseData.token);
-          navigate("/admin");
-        }
-        if (responseData?.user?.usertype === "admin") {
-          sessionStorage.setItem("username", email);
-          sessionStorage.setItem("minor", responseData.user.minor);
-          sessionStorage.setItem("token", responseData.token);
-          sessionStorage.setItem("lang", responseData.user.lang);
-          sessionStorage.setItem("userType", responseData.user.usertype);
-          sessionStorage.setItem("firstname", responseData.user.firstname);
-          sessionStorage.setItem("lastname", responseData.user.lastname);
-          sessionStorage.setItem(
-            "fullname",
-            `${responseData.user.firstname} ${responseData.user.lastname}`
-          );
-          sessionStorage.setItem(
-            "initials",
-            `${responseData?.user?.firstname
-              ?.slice(0, 1)
-              .toUpperCase()}${responseData?.user?.lastname
-              ?.slice(0, 1)
-              .toUpperCase()}`
-          );
-          setLoading(false);
-          navigate("/artist-dashboard");
-        }
-        if (responseData?.user?.usertype === "user") {
-          sessionStorage.setItem("username", email);
-          sessionStorage.setItem("userId", responseData.user.id);
-          sessionStorage.setItem("minor", responseData.user.minor);
-          sessionStorage.setItem("token", responseData.token);
-          sessionStorage.setItem("lang", responseData.user.lang);
-          sessionStorage.setItem("userType", responseData.user.usertype);
-          sessionStorage.setItem("firstname", responseData.user.firstname);
-          sessionStorage.setItem("lastname", responseData.user.lastname);
-          sessionStorage.setItem(
-            "fullname",
-            `${responseData.user.firstname} ${responseData.user.lastname}`
-          );
-          sessionStorage.setItem(
-            "initials",
-            `${responseData?.user?.firstname
-              ?.slice(0, 1)
-              .toUpperCase()}${responseData?.user?.lastname
-              ?.slice(0, 1)
-              .toUpperCase()}`
-          );
-          sessionStorage.setItem(
-            "detailedInfo",
-            JSON.stringify({
-              address: responseData.user.address,
-              city: responseData.user.city,
-              state: responseData.user.state,
-              zip: responseData.user.zip,
-              race: responseData.user.race,
-              gender: responseData.user.gender,
-            })
-          );
-          if (responseData.user.minor === "true") {
-            if (responseData.user.gaurdian_info) {
-              sessionStorage.setItem(
-                "gaurdianInfo",
-                responseData.user.gaurdian_info
-              );
-            }
-            navigate("/detailedinfo");
-            setLoading(false);
-          } else {
-            navigate("/detailedinfo");
-            setLoading(false);
-          }
-        }
-      } else {
-        setResponseMessage("Invalid credentials");
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="max-w-2xl h-full flex flex-col gap-4 justify-center items-center">
       <img src={Title_logo} className="w-2/5"></img>
       <h1 className="text-white font-bold md:text-2xl text-lg">LOGIN</h1>
-        <form
-          onSubmit={handleFormSubmit}
-          className="flex flex-col justify-center gap-3 w-full"
+      <form
+        onSubmit={handleFormSubmit}
+        className="flex flex-col justify-center gap-3 w-full"
+      >
+        <div className="flex flex-col itmes-center gap-3">
+          <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
+            <PiUserCircleFill size={30} />
+            <input
+              type="email"
+              className="flex-1 focus:outline-none bg-white p-2"
+              id="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {/* <input className='flex-1' placeholder='Email'/> */}
+          </div>
+          <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
+            <CiLock size={30} />
+            <input
+              type={showPassword ? "text" : "password"}
+              className="flex-1 focus:outline-none bg-white p-2"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {showPassword ? (
+              <RiEyeOffFill
+                size={20}
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            ) : (
+              <RiEyeFill
+                size={20}
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            )}
+          </div>
+        </div>
+        <div className="flex gap-2 justify-between">
+          <div className="flex gap-2 text-white items-center">
+            {/* <input type='checkbox' className='w-4 h-4' ref={rememberMeRef} /> */}
+            {/* <label>Remember Me?</label> */}
+          </div>
+          <div className="flex gap-2">
+            <NavLink to="/signup" className={" no-underline w-max text-white"}>
+              Sign Up
+            </NavLink>
+            <span className="text-white">|</span>
+            <NavLink
+              to="/forget_password"
+              className={" no-underline w-max text-white"}
+            >
+              Forgot Password?
+            </NavLink>
+          </div>
+        </div>
+        {error && <p className="text-sm text-red-400">{error}</p>}
+        <button
+          className="yellowButton py-2 px-8 rounded-3xl font-bold flex justify-center items-center"
+          disabled={loading}
         >
-          <div className="flex flex-col itmes-center gap-3">
-            <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
-              <PiUserCircleFill size={30} />
-              <input
-                type="email"
-                className="flex-1 focus:outline-none bg-white p-2"
-                id="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {/* <input className='flex-1' placeholder='Email'/> */}
-            </div>
-            <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
-              <CiLock size={30} />
-              <input
-                type={showPassword ? "text" : "password"}
-                className="flex-1 focus:outline-none bg-white p-2"
-                id="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {showPassword ? (
-                <RiEyeOffFill
-                  size={20}
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : (
-                <RiEyeFill
-                  size={20}
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              )}
-            </div>
-          </div>
-          <div className="flex gap-2 justify-between">
-            <div className="flex gap-2 text-white items-center">
-              {/* <input type='checkbox' className='w-4 h-4' ref={rememberMeRef} /> */}
-              {/* <label>Remember Me?</label> */}
-            </div>
-            <div className="flex gap-2">
-              <NavLink
-                to="/signup"
-                className={" no-underline w-max text-white"}
-              >
-                Sign Up
-              </NavLink>
-              <span className="text-white">|</span>
-              <NavLink
-                to="/forget_password"
-                className={" no-underline w-max text-white"}
-              >
-                Forgot Password?
-              </NavLink>
-            </div>
-          </div>
-          {error && <p className="text-sm text-red-400">{error}</p>}
-          <button className="yellowButton py-2 px-8 rounded-3xl font-bold flex justify-center items-center" disabled={loading}>
-            {loading ? <Loader/> : "login"}
-          </button>
-        </form>
-        {responseMessage && (
-          <div className="alert alert-info mt-3">{responseMessage}</div>
-        )}
+          {loading ? <Loader /> : "login"}
+        </button>
+      </form>
+      {responseMessage && (
+        <div className="alert alert-info mt-3">{responseMessage}</div>
+      )}
     </div>
   );
 }

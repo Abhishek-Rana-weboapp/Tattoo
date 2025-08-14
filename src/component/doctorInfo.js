@@ -1,86 +1,69 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
-import ProgressBar from "./ProgressBar";
 import Modal from "./modal/Modal";
 import { useTranslation } from "react-i18next";
 import { states } from "../data/states";
-import axios from "axios";
-import LoaderModal from "./modal/LoaderModal";
-import { AUTHHEADERS } from "../commonFunctions/Headers";
-import PhoneInput from "react-phone-input-2";
-import { useMediaQuery } from "react-responsive";
+import { useAppointmentContext } from "../context/AppointmentContext";
+import toast from "react-hot-toast";
 
 function DoctorContactForm() {
   const { t } = useTranslation();
-  var progressValue = 70;
-  const apiUrl = process.env.REACT_APP_API_BASE_URL;
+  const {
+    appointmentData,
+    setAppointmentData,
+    doctorInfo,
+    setDoctorInfo,
+    prevFormsInfo,
+  } = useAppointmentContext();
+
   const navigate = useNavigate();
   const [showPopup_, setShowPopup_] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { drformData, setdrFormData, alert, setAlert, setAlertMessage } =
-    React.useContext(UserContext);
-  const username = sessionStorage.getItem("username");
-
-  const handleInputChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (name === "useDoctorRecommendation") {
-      if (checked) {
-        setdrFormData({
-          [name]: checked,
-          name: "Carbon Health Urgent Care of Hialeah",
-          phone: "13052001225",
-          city: "Hialeah",
-          state: "Florida", // Default state as Florida
-        });
-      } else {
-        setdrFormData({
-          name: "",
-          phone: "",
-          city: "",
-          state: "Florida",
-          [name]: type === "checkbox" ? checked : checked,
-        });
-      }
-      setShowPopup_(false);
-    } else {
-      setdrFormData({ ...drformData, [name]: value });
-    }
-  };
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    const fetchMedicalHistory = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${apiUrl}artist/user_history?username=${username}`,
-          { headers: AUTHHEADERS() }
-        );
-        const filterResponse = response.data.doctor_information;
-        let finalResult = {};
-        try {
-          finalResult = JSON.parse(filterResponse);
-        } catch (error) {
-          console.error("Error parsing JSON:", error);
-          finalResult = {};
-        }
-        if (Object.keys(finalResult).length === 0) {
-          setLoading(false);
-          return;
-        }
-        setdrFormData(finalResult);
-        setLoading(false);
-        setShowPopup_(true);
-        return;
-      } catch (err) {
-        setLoading(false);
-        setAlert(!alert);
-        setAlertMessage(t("Something went wrong"));
-        return;
-      }
-    };
-    fetchMedicalHistory();
+    if (appointmentData?.doctorInfo) {
+      setDoctorInfo(JSON.parse(appointmentData.doctorInfo));
+      setShowPopup_(true)
+      return;
+    }
+
+    if (prevFormsInfo?.doctorInfo) {
+      setDoctorInfo(JSON.parse(prevFormsInfo.doctorInfo));
+      setAppointmentData(prev=>({...prev, doctorInfo:prevFormsInfo.doctorInfo}))
+      setShowPopup_(true);
+      return;
+    }
+    setDoctorInfo({
+      name: "",
+      phone: "",
+      city: "",
+      state: "Florida",
+    });
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setDoctorInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckbox = () => {
+    setChecked(!checked);
+    if (!checked) {
+      setDoctorInfo({
+        name: "Carbon Health Urgent Care of Hialeah",
+        phone: "13052001225",
+        city: "Hialeah",
+        state: "Florida",
+      });
+    } else {
+      setDoctorInfo({
+        name: "",
+        phone: "",
+        city: "",
+        state: "Florida",
+      });
+    }
+  };
 
   const handleNo = () => {
     navigate("/consent");
@@ -92,19 +75,18 @@ function DoctorContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!drformData.useDoctorRecommendation) {
-      // Check if Doctor Recommendation is not chosen
-      if (
-        !drformData.name ||
-        !drformData.phone ||
-        !drformData.city ||
-        !drformData.state
-      ) {
-        setAlertMessage(t("Please fill all the details"));
-        setAlert(true);
-        return; // Stop further execution
-      }
+    if (
+      !doctorInfo.name ||
+      !doctorInfo.phone ||
+      !doctorInfo.city ||
+      !doctorInfo.state
+    ) {
+      toast.error("All fields are required");
+      return; // Stop further execution
     }
+    setAppointmentData(prev=>({
+      ...prev, doctorInfo:JSON.stringify(doctorInfo) 
+    }))
     navigate("/consent");
   };
 
@@ -112,10 +94,6 @@ function DoctorContactForm() {
     e.preventDefault();
     navigate(-1);
   };
-
-  if (loading) {
-    return <LoaderModal />;
-  }
 
   return (
     <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
@@ -157,7 +135,7 @@ function DoctorContactForm() {
               className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="text"
               name="name"
-              value={drformData?.name}
+              value={doctorInfo?.name}
               onChange={handleInputChange}
             />
           </div>
@@ -170,7 +148,7 @@ function DoctorContactForm() {
               className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="number"
               name="phone"
-              value={drformData?.phone}
+              value={doctorInfo?.phone}
               onChange={handleInputChange}
             />
           </div>
@@ -183,7 +161,7 @@ function DoctorContactForm() {
               className="bg-white text-black rounded-md m-1 p-1  md:flex-1 w-full"
               type="text"
               name="city"
-              value={drformData?.city}
+              value={doctorInfo?.city}
               onChange={handleInputChange}
             />
           </div>
@@ -194,7 +172,7 @@ function DoctorContactForm() {
             </label>
             <select
               name="state"
-              value={drformData?.state}
+              value={doctorInfo?.state}
               className="rounded-md m-1 p-1  md:flex-1 w-full text-black"
               onChange={handleInputChange}
             >
@@ -212,15 +190,15 @@ function DoctorContactForm() {
             <input
               type="checkbox"
               className="w-5 h-5"
-              name="useDoctorRecommendation"
-              checked={drformData?.useDoctorRecommendation}
-              onChange={handleInputChange}
+              name="recommend"
+              checked={checked}
+              onChange={handleCheckbox}
             />
             {t("Use Doctor Recommendation")}
           </label>
 
           <div className="w-full md:w-3/6 flex  md:justify-end items-center gap-1">
-            {drformData?.useDoctorRecommendation && (
+            {checked && (
               <div className="text-white font-semibold text-md">
                 <h2>{t("Doctor Information")}</h2>
                 <p>
@@ -249,9 +227,6 @@ function DoctorContactForm() {
           </button>
         </div>
       </form>
-      <div className="w-full h-10">
-        <ProgressBar progress={progressValue} />
-      </div>
     </div>
   );
 }

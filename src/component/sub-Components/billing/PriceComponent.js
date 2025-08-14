@@ -1,33 +1,30 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { apiUrl } from "../../../url";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../../../context/UserContext";
 import { useTranslation } from "react-i18next";
 import LoaderModal from "../../modal/LoaderModal";
-import { AUTHHEADERS } from "../../../commonFunctions/Headers";
+import { useAppointmentContext } from "../../../context/AppointmentContext";
+import toast from "react-hot-toast";
+import axiosInstance from "../../../config/axios";
 
-export default function PriceComponent({
-  updateAppointment,
-  setUpdateAppointment,
-  handlePrev,
-}) 
+export default function PriceComponent() 
 {
 
+  const {appointment, setAppointment} = useAppointmentContext();
+  const [isFixedPrice, setIsFixedPrice] = useState(appointment?.typeofservice !== "tattoo" ? "yes" : appointment?.isFixedPrice ? appointment?.isFixedPrice : "" )
+
   const navigate = useNavigate()
-  const {alert,setAlert, setAlertMessage} = useContext(UserContext)
-  const {t} = useTranslation()
+  const {t} = useTranslation() 
 
   const [formatedPrice, setFormatedPrice] = useState()
-  const [price, setPrice] = useState(updateAppointment.price ||  "")
-  const [fix, setFix] = useState(updateAppointment.fix_price ? updateAppointment.fix_price : updateAppointment.typeofservice !== "tattoo" ? "yes" : "")
+  const [price, setPrice] = useState(appointment?.price ||  "")
   const [loading, setLoading] = useState(false)
-  
+
   useEffect(()=>{
-     if(updateAppointment.price){
-      setFormatedPrice(`${parseFloat(updateAppointment.price).toFixed(2)}`);
+     if(appointment?.price){
+      setFormatedPrice(`${parseFloat(appointment.price).toFixed(2)}`)
      }
-  },[updateAppointment])
+  },[appointment])
+  
   
   
   const handleInputChangeInternal = (event) => {
@@ -40,7 +37,7 @@ export default function PriceComponent({
 
 
   const handleSelect = (e)=>{
-       setFix(e.target.value)
+       setIsFixedPrice(e.target.value)
   }
   
   const handleZeros = ()=>{
@@ -49,41 +46,74 @@ export default function PriceComponent({
     }
   }
 
-  const handleNext = async()=>{
-    if(price && fix){
-      setLoading(true)
-      const data = {
-      updates:[
-        {
-          id:updateAppointment?.id,
-          updateField:"price",
-          updateValue:price
-        },
-        {
-          id:updateAppointment?.id,
-          updateField:"fix_price",
-          updateValue:fix
-        },
-        {
-          id:updateAppointment?.id,
-          updateField:"process_step",
-          updateValue:2
-        }
-      ]
+  const handleNext  = async()=>{
+    if(appointment.typeofservice === "tattoo" && !isFixedPrice){
+      toast.error("Please Select if the price is fixed or hourly")
+      return;
     }
-      await axios.post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
-      .then((res) => {
-        setLoading(false)
-        setUpdateAppointment(res.data.updatedtable);
-        navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
-      })
-      .catch(err=>{
-        setLoading(false)
-        setAlertMessage(t("Something went wrong"))
-        setAlert(!alert)
-      })
+    if(!price){
+      toast.error("Please Enter the price")
+      return
+    }
+    try {
+      setLoading(true)
+      const updates = {
+        price,
+        isFixedPrice,
+        adminProcessStep:2,
+      }
+      const response = await axiosInstance.put(`appointment/${appointment.id}`,updates )
+      if(response.status === 200){
+        setAppointment(response.data.appointment)
+        navigate(`/billing/${response.data.appointment.adminProcessStep}`);
+      }
+      
+    } catch (error) {
+      toast.error(error.response.data.message || "Something went wrong")
+    }finally{
+      setLoading(false)
     }
   }
+
+  const handlePrev = ()=>{
+    navigate("/artist-dashboard")
+  }
+
+  // const handleNext = async()=>{
+  //   if(price && fix){
+  //     setLoading(true)
+  //     const data = {
+  //     updates:[
+  //       {
+  //         id:updateAppointment?.id,
+  //         updateField:"price",
+  //         updateValue:price
+  //       },
+  //       {
+  //         id:updateAppointment?.id,
+  //         updateField:"fix_price",
+  //         updateValue:fix
+  //       },
+  //       {
+  //         id:updateAppointment?.id,
+  //         updateField:"process_step",
+  //         updateValue:2
+  //       }
+  //     ]
+  //   }
+  //     await axios.post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
+  //     .then((res) => {
+  //       setLoading(false)
+  //       setUpdateAppointment(res.data.updatedtable);
+  //       navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
+  //     })
+  //     .catch(err=>{
+  //       setLoading(false)
+  //       setAlertMessage(t("Something went wrong"))
+  //       setAlert(!alert)
+  //     })
+  //   }
+  // }
 
   if(loading){
     return <LoaderModal/>
@@ -92,12 +122,12 @@ export default function PriceComponent({
 
   return (
     <div className="flex flex-col items-center w-full gap-4">
-      {updateAppointment.typeofservice === "tattoo" && <h3>{t("Is this hourly or set price?")}</h3>}
-     {updateAppointment.typeofservice === "tattoo" && <select
+      {appointment?.typeofservice === "tattoo" && <h3>{t("Is this hourly or set price?")}</h3>}
+     {appointment?.typeofservice === "tattoo" && <select
         name="fix"
         className="p-2 md:w-2/4 w-full text-black font-semibold rounded-lg"
         onChange={handleSelect}
-        value={fix}
+        value={isFixedPrice}
       >
         <option value={""}>{t("Select")}</option>
         <option value={"no"}>{t("Hourly")}</option>
@@ -115,7 +145,7 @@ export default function PriceComponent({
                   type="number"
                   name="price"
                   className="p-1 rounded-lg text-black flex-1 focus:outline-none"
-                  disabled={fix === ""}
+                  disabled={isFixedPrice === ""}
                   value={formatedPrice}
                   onChange={handleInputChangeInternal}
                   onBlur={handleZeros}

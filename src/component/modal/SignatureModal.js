@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignatureCanvas from 'react-signature-canvas'
 import UserContext from '../../context/UserContext'

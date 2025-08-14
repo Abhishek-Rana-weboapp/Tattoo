@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 
 const PinInput = ({value, onChange,className}) => {

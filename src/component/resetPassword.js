@@ -6,6 +6,7 @@ import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import UserContext from '../context/UserContext';
+import Loader from './loader/Loader';
 
 function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -97,8 +98,8 @@ function ResetPassword() {
             </div>
         </div>
         <div className="flex flex-col gap-3">
-          <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
-            Reset Password
+          <button disabled={loading} className="yellowButton py-2 px-8 rounded-3xl font-bold">
+            {loading ? <Loader /> : "Reset Password"}
           </button>
 
           <Link to="/" className="text-right">

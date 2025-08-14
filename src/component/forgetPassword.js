@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import UserContext from "../context/UserContext";
 import Title_logo from "../assets/Title_logo.png";
@@ -7,7 +7,7 @@ function ForgetPassword() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
-  const { setIsVisible } = React.useContext(UserContext);
+  const { setIsVisible } = useContext(UserContext);
 
   useEffect(() => {
     setIsVisible(false);

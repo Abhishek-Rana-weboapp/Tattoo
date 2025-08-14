@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { medicalQuestions } from "../../data/MedicalQuestions";
 import YesNoComponent from "./YesNoComponent";
 import UserContext from "../../context/UserContext";
@@ -7,56 +7,58 @@ import { useNavigate } from "react-router-dom";
 import YesNoSub from "./YesNoSub";
 import ExplanationComponent from "./ExplanationComponent";
 import YesNoExplain from "./YesNoExplain";
-import axios from "axios";
-import { apiUrl } from "../../url";
 import Modal from "../modal/Modal";
 import { useTranslation } from "react-i18next";
-import { AUTHHEADERS } from "../../commonFunctions/Headers";
+import { useAppointmentContext } from "../../context/AppointmentContext";
+import toast from "react-hot-toast";
 
 const NewMedicalHistory = () => {
+  const {
+    appointmentData,
+    setAppointmentData,
+    medicalhistory,
+    setMedicalHistory,
+    prevFormsInfo,
+  } = useAppointmentContext();
   const [current, setCurrent] = useState(1);
   const navigate = useNavigate();
-  const { user , setFormData,formData, setAlert, alert, setAlertMessage, finalUser} = useContext(UserContext);
   const [questions, setQuestions] = useState([]);
-  const username = sessionStorage.getItem("username")
   const [showPopup_, setShowPopup_] = useState(false);
-  const {t} = useTranslation()
-  const service = sessionStorage.getItem("typeofservice")
-  
+  const { t } = useTranslation();
+
+  console.log({appointmentData})
+
   useEffect(() => {
-    if(service !== ""){
-      setQuestions(medicalQuestions[service] || [])
+    if (appointmentData) {
+      setQuestions(medicalQuestions[appointmentData.typeofservice] || []);
     }
-      const fetchMedicalHistory = async()=>{
-        try{
-          const response = await axios.get(`${apiUrl}artist/user_history?username=${username}`, {headers : AUTHHEADERS()})
-          const service = user?.selectedTattooType
-          const filterResponse = response.data.medical_history[service] 
-          let finalResult = {};
-        try {
-            finalResult = filterResponse ? JSON.parse(filterResponse) : {};
-        } catch (error) { 
-            console.error("Error parsing JSON:", error);
-            finalResult = {};
-        }
-          if(Object.keys(finalResult).length  === 0){
-            setFormData({})
-            return
-          }
-          setShowPopup_(!showPopup_)
-          setFormData(finalResult)
-          return 
-        }catch(err){
-          console.log(err)
-        setAlert(!alert)
-        setAlertMessage(t("Something went wrong"))
-        return
-        }
+    if (!appointmentData.medicalHistory) {
+      if (
+        Object.keys(prevFormsInfo?.medicalHistory).length > 0 &&
+        prevFormsInfo?.medicalHistory[appointmentData.typeofservice]
+      ) {
+        setMedicalHistory(
+          JSON.parse(
+            prevFormsInfo.medicalHistory[appointmentData.typeofservice]
+          )
+        );
+        setAppointmentData((prev) => ({
+          ...prev,
+          medicalHistory:prevFormsInfo.medicalHistory[appointmentData.typeofservice],
+        }));
+        setShowPopup_(true);
+        return;
+      } else {
+        setMedicalHistory({});
+        return;
+      }
     }
-
-    fetchMedicalHistory()
-  }, [user]);
-
+    if(appointmentData.medicalHistory){  
+      setMedicalHistory(JSON.parse(appointmentData.medicalHistory));
+      setShowPopup_(true)
+      return
+    }
+  }, []);
 
   const prev = () => {
     if (current > 1) {
@@ -67,26 +69,30 @@ const NewMedicalHistory = () => {
   };
 
 
-
-  const next = () => {
+  const next = (latestMedicalState) => {
     if (current < questions.length) {
       setCurrent(current + 1);
     } else {
+      if (medicalhistory && Object.keys(medicalhistory).length === 0) {
+        toast.error("Please answer all the questions");
+        return;
+      }
+      setAppointmentData((prev) => ({
+        ...prev,
+        medicalHistory: JSON.stringify(latestMedicalState),
+      }));
       navigate("/emergency-contact");
     }
   };
 
-  const handleYes = ()=>{
-    setShowPopup_(!showPopup_)
-  }
+  const handleYes = () => {
+    setShowPopup_(!showPopup_);
+  };
 
-  const handleNo = ()=>{
-    setShowPopup_(!showPopup_)
+  const handleNo = () => {
+    setShowPopup_(!showPopup_);
     navigate("/emergency-contact");
-  }
-
-
-
+  };
 
   return (
     <div
@@ -99,6 +105,7 @@ const NewMedicalHistory = () => {
       <div className="w-full backdrop-blur bg-opacity-50 h-full rounded-md flex flex-col overflow-hidden">
         {questions.length > 0 && questions[current - 1]?.type === "YN" && (
           <YesNoComponent
+            current={current}
             question={questions[current - 1]}
             next={next}
             prev={prev}
@@ -117,21 +124,21 @@ const NewMedicalHistory = () => {
           <YesNoSub question={questions[current - 1]} next={next} prev={prev} />
         )}
 
-        {questions.length > 0 && questions[current - 1]?.type === "NUM"&& (
+        {questions.length > 0 && questions[current - 1]?.type === "NUM" && (
           <ExplanationComponent
             question={questions[current - 1]}
             next={next}
             prev={prev}
             inputType={"number"}
-            />
+          />
         )}
 
-          {questions.length > 0 && questions[current - 1]?.type === "E"&& (
+        {questions.length > 0 && questions[current - 1]?.type === "E" && (
           <ExplanationComponent
             question={questions[current - 1]}
             next={next}
             prev={prev}
-            />
+          />
         )}
 
         {questions.length > 0 && questions[current - 1]?.type === "YNE" && (
@@ -144,25 +151,26 @@ const NewMedicalHistory = () => {
         )}
       </div>
 
-
       {showPopup_ && (
         <Modal>
-          <h3 className="font-bold">{t("Do you want to update your medical history?")}</h3>
+          <h3 className="font-bold">
+            {t("Do you want to update your medical history?")}
+          </h3>
 
           <div className="flex gap-1 items-center">
-          <button
-            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-            onClick={handleYes}
-          >
-            {t("Yes")}
-          </button>
+            <button
+              className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+              onClick={handleYes}
+            >
+              {t("Yes")}
+            </button>
 
-          <button
-            className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-            onClick={handleNo}
-          >
-            {t("No")}
-          </button>
+            <button
+              className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
+              onClick={handleNo}
+            >
+              {t("No")}
+            </button>
           </div>
         </Modal>
       )}

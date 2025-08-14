@@ -23,7 +23,7 @@
   "foot": "pie",
   "neck": "cuello",
   "pelvic": "pélvico",
-  "Belly Piercing": "Piercing en el ombligo",
+  "belly Piercing": "Piercing en el ombligo",
   "nipple piercing": "Piercing en el pezón",
   "ear piercing": "Piercing en la oreja",
   "facial piercing": "Piercing facial",
@@ -32,9 +32,9 @@
   "oral piercing": "Piercing oral",
   "surface piercing": "Piercing superficial",
   "vaginal piercing": "Piercing vaginal",
-  "Eyebrows": "Cejas",
-  "Eyeliner": "Delineador de ojos",
-  "Lips": "Labios",
+  "eyebrows": "Cejas",
+  "eyeliner": "Delineador de ojos",
+  "lips": "Labios",
   "Which image most closely resembles your hair loss pattern?": "Cuál imagen se asemeja más a tu patrón de pérdida de cabello?",
   "face": "rostro",
   "scalp": "cuero cabelludo",
@@ -420,5 +420,7 @@
   "Enter Pin":"Ingresa el PIN.",
   "Description":"Descripción",
   "During the service we provided were there any complications between you, the client, or any other member of Fame Tattoos Staff? Example: (fainting, contamination, unable to fulfill service, argument, or misunderstanding)":"¿Durante el servicio que proporcionamos, hubo alguna complicación entre tú, el cliente, u otro miembro del personal de Fame Tattoos? Ejemplo: (desmayo, contaminación, incapacidad para completar el servicio, discusión o malentendido)",
-  "Please sit as still as possible during the procedure, your final satisfaction is our priority.":"Por favor, permanezca lo más quieto posible durante el procedimiento. Su satisfacción final es nuestra prioridad."
+  "Please sit as still as possible during the procedure, your final satisfaction is our priority.":"Por favor, permanezca lo más quieto posible durante el procedimiento. Su satisfacción final es nuestra prioridad.",
+  "ID should be either an image(.jpg /.png) or pdf": "La identificación debe ser una imagen (.jpg / .png) o un archivo PDF.",
+  "Please provide a before procedure image or video":"Por favor, proporciona una imagen o video antes del procedimiento."
 }

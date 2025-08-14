@@ -1,19 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
+import { useAppointmentContext } from '../../context/AppointmentContext'
 
 const YesNoOption = ({question, next, prev}) => {
+  const { medicalhistory, setMedicalHistory } = useAppointmentContext();
     const [selected, setSelected] = useState("")
     const [optSelected, setOptSelected] = useState("")
     const {alert, setAlert, setAlertMessage, formData, setFormData} = useContext(UserContext)
     const {t}= useTranslation()
 
     useEffect(()=>{
-        if(formData[question.id]){
-          setSelected(formData[question.id].ans)
-          if(formData[question.id].ans === "yes"){
-            setOptSelected(formData[question.id].opt)
+       if(medicalhistory[question.id]){
+          setSelected(medicalhistory[question.id].ans)
+          if(medicalhistory[question.id].ans === "yes"){
+            setOptSelected(medicalhistory[question.id].opt)
           }
         }
     },[question])
@@ -50,8 +52,14 @@ const YesNoOption = ({question, next, prev}) => {
                     return  
                 }
             }
-            setFormData({...formData, [question.id] : {ans : selected, opt:optSelected}})  
-            next()      // here provide the handleNext function recieved in props
+            setMedicalHistory((prev) => ({
+              ...prev,
+              [question.id]: { ans: selected, opt: optSelected },
+            }));
+
+            const latestMedicalState = {...medicalhistory ,[question.id]: { ans: selected, opt: optSelected } }
+            // setFormData({...formData, [question.id] : {ans : selected, opt:optSelected}})  
+            next(latestMedicalState)      // here provide the handleNext function recieved in props
         }
     }
 

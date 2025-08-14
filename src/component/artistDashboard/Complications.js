@@ -1,37 +1,32 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import MedicalFormLayout from "../Layout/MedicalFormLayout";
-import UserContext from "../../context/UserContext";
-import axios from "axios";
-import { apiUrl } from "../../url";
 import { useNavigate } from "react-router-dom";
 import LoaderModal from "../modal/LoaderModal";
-import { AUTHHEADERS } from "../../commonFunctions/Headers";
+import { useAppointmentContext } from "../../context/AppointmentContext";
+import toast from "react-hot-toast";
+import axiosInstance from "../../config/axios";
 
 const Complications = ({
-  updateAppointment,
-  setUpdateAppointment,
-  handlePrev,
 }) => {
+  const {appointment, setAppointment} = useAppointmentContext()
   const { t } = useTranslation();
   const textRef = useRef(null);
   const [yes, setYes] = useState(false);
   const [no, setNo] = useState(false);
   const [inputData, setInputData] = useState("");
-  const { alert, setAlertMessage, setAlert } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (updateAppointment.complication !== null) {
-      if (updateAppointment.complication === "no") {
-        setNo(true);
-      } else {
-        setYes(true);
-        setInputData(updateAppointment.complication);
+    if(appointment && appointment.complication){
+      if(appointment.complication === "no"){
+        setNo(true)
+      }else{
+        setYes(true)
+        setInputData(appointment.complication)
       }
     }
-  }, []);
+  }, [appointment]);
 
   const handleRadioButtons = (e) => {
     if (e.target.value === "yes") {
@@ -44,66 +39,46 @@ const Complications = ({
     }
   };
 
-  const nextPage = async () => {
-    setLoading(true);
-    let data;
-    if (yes) {
-      if (inputData) {
-        data = {
-          updates: [
-            {
-              id: updateAppointment?.id,
-              updateField: "complication",
-              updateValue: inputData,
-            },
-            {
-              id: updateAppointment?.id,
-              updateField: "process_step",
-              updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "permanent-makeup" ? 7 : 8 ,
-            },
-          ],
-        };
-      } else {
-        setLoading(false);
-        setAlertMessage(t("Please enter explanation"));
-        setAlert(!alert);
+  const nextPage = async()=>{
+    if(!no && !yes){
+      toast.error("Please select an option");
+      return
+    }
+    const updates= {};
+    if(yes){
+        if(!inputData){
+           toast.error("Please explain in the input box");
+          return
+        }
+        updates.complication = inputData
+    }else{
+      updates.complication = "no"
+    }
 
-        return;
+    if(appointment.typeofservice === "tattoo"){
+      updates.adminProcessStep = 7
+    }else{
+      updates.adminProcessStep = 8
+    }
+
+    try {
+      setLoading(true)
+      const res = await axiosInstance.put(`appointment/${appointment.id}`, updates)
+      if(res.status === 200){
+        setAppointment(res.data.appointment);
+        navigate(`/billing/${res.data.appointment.adminProcessStep}`)
       }
+    } catch (error) {
+      toast.error(error.response.data.message || "Something went wrong")
+    }finally{
+      setLoading(false)
     }
-    if (no) {
-      data = {
-        updates: [
-          {
-            id: updateAppointment?.id,
-            updateField: "complication",
-            updateValue: "no",
-          },
-          {
-            id: updateAppointment?.id,
-            updateField: "process_step",
-            updateValue: updateAppointment.typeofservice === "tattoo" ||updateAppointment.typeofservice === "permanent-makeup" ? 7 : 8,
-          },
-        ],
-      };
-    }
-    if (data) {
-      await axios
-        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
-        .then((res) => {
-          setUpdateAppointment(res.data.updatedtable);
-          setLoading(false)
-          navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
-          })
-        .catch((err) => {
-          setLoading(false);
-          setAlert(!alert);
-          setAlertMessage(t("Something went wrong"));
-        });
-    } else {
-      setLoading(false);
-    }
-  };
+  }
+
+  const handlePrev = ()=>{
+     navigate(`/billing/5`)
+  }
+
   if (loading) {
     return <LoaderModal />;
   }

@@ -1,296 +1,569 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next';
-import { apiUrl } from '../../url';
-import Loader from '../loader/Loader';
-import LoaderModal from '../modal/LoaderModal';
-import UserContext from '../../context/UserContext';
-import axios from 'axios';
-import { IoMdClose } from 'react-icons/io';
-import { AUTHHEADERS } from '../../commonFunctions/Headers';
-import InputButton from '../buttons/InputButton';
-import Modal from '../modal/Modal';
+import {useEffect, useState } from "react";
+import { apiUrl } from "../../url";
+import LoaderModal from "../modal/LoaderModal";
+import { IoMdClose } from "react-icons/io";
+import InputButton from "../buttons/InputButton";
+import Modal from "../modal/Modal";
+import { useAppointmentContext } from "../../context/AppointmentContext";
+import { useAuthContext } from "../../context/AuthContext";
+import TranslationWrapper from "../Layout/TranslationWrapper";
+import toast from "react-hot-toast";
+import axiosInstance from "../../config/axios";
 
-export default function VerifyUpload({step, setStep}) {
-  const { t } = useTranslation();
-
-  const [idPhoto, setIdPhoto] = useState(null);
-  const [gaurdianIDPhoto, setGaurdianIDPhoto] = useState(null)
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-  const [imagePrev , setImagePrev] = useState()
-  const [gaurdianImagePrev , setGaurdianImagePrev] = useState()
-  const [clientLoading, setClientLoading] = useState(false)
-  const [gaurdianLoading, setGaurdianLoading] = useState(false)
+export default function VerifyUpload({ step, setStep }) {
+  const { appointment, setAppointment } = useAppointmentContext();
+  const { user } = useAuthContext();
+  const [clientId, setClientId] = useState("");
+  const [clientIdUploading, setClientIdUploading] = useState(false);
+  const [guardianId, setGuardianId] = useState("");
+  const [guardianIdUploading, setGuardianIdUploading] = useState(false);
+  const [updateModal, setUpdateModal] = useState(false);
   const [loading, setLoading] = useState(false)
-  const minor = sessionStorage.getItem("minor")
-  const {alert , setAlert , setAlertMessage } = React.useContext(UserContext);
- const typeofservice = JSON.parse(sessionStorage.getItem("appointment_detail")||"")?.typeofservice
- const [updateModal, setUpdateModal] = useState(false)
 
- 
- useEffect(()=>{
-   const fetchPrevIDs = async()=>{
-     setLoading(true)
-     await axios.get(`${apiUrl}Identity/latest_identity/`, {headers:AUTHHEADERS()})
-     .then(res=>{
-      if(minor === "false"){
-        if(res.data.useridentity){
-          setIdPhoto(res.data.useridentity.useridcard)
-          setImagePrev(res.data.useridentity.useridcard)
-          setStep(2)
-          setUpdateModal(true)
-          setLoading(false)
-          return
-        }else{
-          setLoading(false)
-          return
-        }
-      }
-      if(minor === "true"){
-        if(res.data.useridentity && res.data.guardianidentity){
-          setIdPhoto(res.data.useridentity.useridcard)
-          setImagePrev(res.data.useridentity.useridcard)
-             setGaurdianIDPhoto(res.data.guardianidentity.guardianidcard)
-             setGaurdianImagePrev(res.data.guardianidentity.guardianidcard)
+  useEffect(()=>{
+     (async()=>{
+      setLoading(true)
+      try {
+        const response = await axiosInstance.get("identity/latest_identity")
+        if(response.status === 200){
+          if(response.data.identity){
+            setClientId(response.data.identity.clientId);
+            setGuardianId(response.data.identity.guardianId)
              setUpdateModal(true)
-             setLoading(false)
-             setStep(2)
-        }else{
-          setLoading(false)
-          return
+          }
         }
+      } catch (error) {
+        console.log(error)
+        toast.error(error.response.data.error || "Something went wrong while fetching the uploaded identity")
+      }finally{
+            setLoading(false)
       }
-      })
-      .catch(err=>{
-        setLoading(false)
-        return
-      })
-    }
-    
-    fetchPrevIDs()
+     })()
   },[])
 
-  const handlePhotoUpload = (e) => {
+
+  const handleUpload = async (e) => {
     const file = e.target.files[0];
-    if(file){
-      uploadFunction(file, "client");
+    if (!file) {
+      toast.error("Please select a file");
+      return;
     }
-  };
-
-  const handleGaurdianPhotoUpload =(e) => {
-    const file = e.target.files[0];
-    if(file){
-      uploadFunction(file, "gaurdian");
+    const name = e.target.name;
+    const formData = new FormData();
+    if (name === "client") {
+      setClientIdUploading(true);
     }
-  };
-
-
-  const uploadFunction = async(file, field)=>{
-    if(field === "client"){
-      setClientLoading(true)
+    if (name === "guardian") {
+      setGuardianIdUploading(true);
     }
-
-    if(field === "gaurdian"){
-      setGaurdianLoading(true)
-    }
-        const formData = new FormData()
-        formData.append("profile", file)
-        await axios.post(`${apiUrl}upload`,formData, {headers : AUTHHEADERS()} )
-        .then(res=>{
-          if(res.data.profile_url){
-            const url =  URL.createObjectURL(file)
-            if(field === "client"){
-              setIdPhoto(res.data.profile_url);
-              setImagePrev(url)
-              setClientLoading(false)
-            }
-
-            if(field === "gaurdian"){
-                setGaurdianIDPhoto(res.data.profile_url);
-                setGaurdianImagePrev(url)
-                setGaurdianLoading(false)
-            }
-          }
-        })
-        .catch(err=>{
-          setAlertMessage(t("Something went wrong"))
-          setAlert(!alert)
-        })
-  }
-
-     const handleVerifyID = async()=>{
-      setLoading(true)
-      let data
-      if(minor === "false"){
-        if(!idPhoto){
-          setAlertMessage(t("Please upload an ID"))
-          setAlert(!alert)
-          setLoading(false)
-          return
+    formData.append("profiles", file);
+    try {
+      const response = await axiosInstance.post("upload", formData);
+      if (response.status === 200) {
+        if(name === "client"){
+          setClientId(response.data.profile_urls[0])
         }else{
-          data = {
-            UserIDCard:idPhoto
-          }
-          await axios.post(`${apiUrl}identity/user_identity` ,data,{headers:AUTHHEADERS()}).then((res)=>{
-              setLoading(false)
-              setStep(4)
-              return
-          }).catch((err)=>{
-            setLoading(false)
-            return
-          })
+          setGuardianId(response.data.profile_urls[0])
         }
       }
-      if(minor==="true"){
-        if(idPhoto!==null && gaurdianIDPhoto!==null){
-          let data = {
-            UserIDCard: idPhoto
-          };
-          let gaurdiandata = {
-            GuardianIDCard: gaurdianIDPhoto
-          };
-      
-          Promise.all([
-              axios.post(`${apiUrl}identity/user_identity`, data, {headers: AUTHHEADERS()}),
-              axios.post(`${apiUrl}identity/guardian_identity`, gaurdiandata, {headers: AUTHHEADERS()}),
-          ]).then((responses) => {
-              setLoading(false);
-              if(typeofservice === "tattoo" || typeofservice === "piercing"){
-                setStep(3);
-                return
-              }else{
-                setStep(4);
-                return
-              }
-          }).catch((errors) => {
-              setLoading(false);
-              setAlertMessage(t("Something went wrong")); 
-              setAlert(!alert);  
-              return 
-          });
-      } else {
-          setAlertMessage(t("Please upload both ID's"));
-          setLoading(false);
-          setAlert(!alert);
-          return
+    } catch (error) {
+      toast.error("Failed to upload ID");
+      console.log(error)
+    } finally {
+      setClientIdUploading(false);
+      setGuardianIdUploading(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!clientId) {
+      toast.error("Client ID is required");
+      return;
+    }
+    if (user.minor && !guardianId) {
+      toast.error("Guardian ID is required");
+      return;
+    }
+
+    let updates = {
+      clientId,
+    };
+    if (user.minor) {
+      updates.guardianId = guardianId;
+    }
+
+    try {
+      setLoading(true)
+      const response = await axiosInstance.put(`appointment/${appointment.id}`, updates)
+      if(response.status === 200){
+        setAppointment(response.data.appointment)
+        if(user.minor){
+          if(appointment.typeofservice === "tattoo" || appointment.typeofservice === "piercing"){
+            setStep(3);
+            return
+          }
+          setStep(4)
+        }else{
+          setStep(4)
+        }
       }
+    } catch (error) {
+      toast.error(error.response.data.message || "Something went wrong")
+    }finally{
+      setLoading(false)
+    }
+  };
+
+
+  const handleClientDelete = () => {
+    setClientId("");
+  };
+
+  const handleGaurdianDelete = () => {
+    setGuardianId("");
+  };
+
+  const handlePrev = () => {
+    setStep(1);
+  };
+
+  if(loading){
+    return <LoaderModal/>
+  }
+
+  
+
+  const handleNo = async() => {
+    let updates ={
+      clientId
+    };
+    if(user.minor){
+      updates.guardianId = guardianId
+    }
+    try {
+      setLoading(true)
+      const response = await axiosInstance.put(`/appointment/${appointment.id}`, updates)
+      if(response.status === 200){
+        if(user.minor){
+          if(appointment.typeofservice === "tattoo" || appointment.typeofservice === "piercing"){
+            setStep(3);
+            return
+          }
+          setStep(4)
+        }else{
+          setStep(4)
+        }
       }
+    } catch (error) {
+      console.log(error)
+       toast.error(error.response.data.message || "Something went wrong")
+    }finally{
+      setLoading(false)
     }
+    setUpdateModal(false);
+  };
 
-
-    const handleClientDelete = ()=>{
-         setImagePrev(null);
-    }
-
-    const handleGaurdianDelete = ()=>{
-         setGaurdianImagePrev(null)
-    }
-
-    
-
-    const handlePrev = ()=>{
-      setStep(1)
-    }
-
-    if(loading){
-      return <LoaderModal/>
-    }
-
-    const handleNo = ()=>{
-       setUpdateModal(false)
-       if(minor === "true"){
-         setStep(3)
-       }else{
-        setStep(4)
-       }
-    }
-
-    const handleYes = ()=>{
-       setUpdateModal(false)
-    }
+  const handleYes = () => {
+    setUpdateModal(false);
+  };
 
   return (
     <>
-    {updateModal && (
+      {updateModal && (
         <Modal>
           <p className="text-3xl font-bold mb-4 text-black">
-            {t("Do you want to update your ID?")}
+            <TranslationWrapper text={"Do you want to update your ID?"} />
           </p>
           <div className="flex  gap-5 items-center">
-          <button
-            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
-            onClick={handleYes}
-          >
-            {t("Yes")}
-          </button>
-          <button
-            className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
-            onClick={handleNo}
-          >
-            {t("No")}
-          </button>
-           
+            <button
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              onClick={handleYes}
+            >
+              <TranslationWrapper text={"Yes"} />
+            </button>
+            <button
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              onClick={handleNo}
+            >
+              <TranslationWrapper text={"No"} />
+            </button>
           </div>
         </Modal>
       )}
-    <div className="w-full h-full flex flex-col justify-between items-center overflow-auto bg-black p-8 text-white">
-      <div className='w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white'>
 
-    <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
+      {/* Client Section */}
+      <div className="w-full h-full flex flex-col justify-between items-center overflow-auto bg-black p-8 text-white">
+        <div className="w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white">
+          <h1 className="md:text-2xl uppercase text-lg font-bold">
+            {" "}
+            <TranslationWrapper text={"ID Verification"} />
+          </h1>
 
-      {imagePrev && (
-        <div className='relative md:w-1/4 w-full'>
-        <img
-          src={imagePrev}
-          className='w-full'
-          alt="ID Photo"
+          <h2 className="md:text-xl font-semibold">
+            {" "}
+            <TranslationWrapper text={"ID should be either an image(.jpg /.png) or pdf"} />
+          </h2>
+
+          {clientId && (
+            <div className="relative md:w-1/4 w-full">
+              <img
+                src={`${apiUrl}${clientId}`}
+                className="w-full"
+                alt="client ID"
+              />
+              <IoMdClose
+                className="absolute right-2 top-2 hover:cursor-pointer"
+                onClick={handleClientDelete}
+              />
+            </div>
+          )}
+
+          <InputButton
+            onChange={handleUpload}
+            name="client"
+            loading={clientIdUploading}
+            text={"Upload ID Photo"}
           />
-        <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleClientDelete}/>
-        </div>)
-      }
 
-      <InputButton onChange={handlePhotoUpload} loading={clientLoading} text={"Upload ID Photo"}/>
-
-
-
-      {isSubmitDisabled ? <p className='text-center'>{t("Please upload client ID photo before submitting.")}</p> : null}
-  
-   {minor === "true" &&
-   <>
-     {gaurdianImagePrev && (
-       <div className='relative md:w-1/4 w-full'>
-       <img
-       src={gaurdianImagePrev}
-       className='w-full'
-       alt="ID Photo"
-       />
-       <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
-       </div>
-       )
-      }
-      <InputButton onChange={handleGaurdianPhotoUpload} loading={gaurdianLoading} text={"Upload ID Photo"}/>
-      {isSubmitDisabled ? <p className='text-center'>{t("Please upload Gaurdian's ID photo before submitting.")}</p> : null}
-      </>
-    }
-  </div>
-
-<div className='w-full md:w-1/2 flex justify-between'>
-<button
-      onClick={handlePrev}
-      className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
-      >
-      {t("Back")}
-      </button>
-
-      <button
-      onClick={handleVerifyID}
-      disabled={minor === "false" ? !idPhoto  : !idPhoto && !gaurdianIDPhoto}
-      className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
-      >
-      {t("Submit")}
-      </button>
-    
+          {/* Guardian Section  */}
+          {user.minor && (
+            <>
+              {guardianId && (
+                <div className="relative md:w-1/4 w-full">
+                  <img
+                    src={`${apiUrl}${guardianId}`}
+                    className="w-full"
+                    alt="guardian ID"
+                  />
+                  <IoMdClose
+                    className="absolute right-2 top-2 hover:cursor-pointer"
+                    onClick={handleGaurdianDelete}
+                  />
+                </div>
+              )}
+              <InputButton
+                onChange={handleUpload}
+                name="guardian"
+                loading={guardianIdUploading}
+                text={"Upload Guardian's ID"}
+              />
+            </>
+          )}
         </div>
-    </div>
-        </>
-  )
+
+        <div className="w-full md:w-1/2 flex justify-between">
+          <button
+            onClick={handlePrev}
+            className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
+          >
+            <TranslationWrapper text={"Back"} />
+          </button>
+
+          <button
+            onClick={handleSubmit}
+            className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
+          >
+            <TranslationWrapper text={"Submit"} />
+          </button>
+        </div>
+      </div>
+    </>
+  );
 }
+
+// import { useContext, useEffect, useRef, useState } from 'react'
+// import { useTranslation } from 'react-i18next';
+// import { apiUrl } from '../../url';
+// import Loader from '../loader/Loader';
+// import LoaderModal from '../modal/LoaderModal';
+// import UserContext from '../../context/UserContext';
+// import axios from 'axios';
+// import { IoMdClose } from 'react-icons/io';
+// import { AUTHHEADERS } from '../../commonFunctions/Headers';
+// import InputButton from '../buttons/InputButton';
+// import Modal from '../modal/Modal';
+
+// export default function VerifyUpload({step, setStep}) {
+//   const { t } = useTranslation();
+
+//   const [idPhoto, setIdPhoto] = useState(null);
+//   const [gaurdianIDPhoto, setGaurdianIDPhoto] = useState(null)
+//   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
+//   const [imagePrev , setImagePrev] = useState()
+//   const [gaurdianImagePrev , setGaurdianImagePrev] = useState()
+//   const [clientLoading, setClientLoading] = useState(false)
+//   const [gaurdianLoading, setGaurdianLoading] = useState(false)
+//   const [loading, setLoading] = useState(false)
+//   const minor = sessionStorage.getItem("minor")
+//   const {alert , setAlert , setAlertMessage } = useContext(UserContext);
+//  const typeofservice = JSON.parse(sessionStorage.getItem("appointment_detail")||"")?.typeofservice
+//  const [updateModal, setUpdateModal] = useState(false)
+
+//  useEffect(()=>{
+//    const fetchPrevIDs = async()=>{
+//      setLoading(true)
+//      await axios.get(`${apiUrl}Identity/latest_identity/`, {headers:AUTHHEADERS()})
+//      .then(res=>{
+//       if(minor === "false"){
+//         if(res.data.useridentity){
+//           setIdPhoto(res.data.useridentity.useridcard)
+//           setImagePrev(res.data.useridentity.useridcard)
+//           setStep(2)
+//           setUpdateModal(true)
+//           setLoading(false)
+//           return
+//         }else{
+//           setLoading(false)
+//           return
+//         }
+//       }
+//       if(minor === "true"){
+//         if(res.data.useridentity && res.data.guardianidentity){
+//           setIdPhoto(res.data.useridentity.useridcard)
+//           setImagePrev(res.data.useridentity.useridcard)
+//              setGaurdianIDPhoto(res.data.guardianidentity.guardianidcard)
+//              setGaurdianImagePrev(res.data.guardianidentity.guardianidcard)
+//              setUpdateModal(true)
+//              setLoading(false)
+//              setStep(2)
+//         }else{
+//           setLoading(false)
+//           return
+//         }
+//       }
+//       })
+//       .catch(err=>{
+//         setLoading(false)
+//         return
+//       })
+//     }
+
+//     fetchPrevIDs()
+//   },[])
+
+//   const handlePhotoUpload = (e) => {
+//     const file = e.target.files[0];
+//     if(file){
+//       uploadFunction(file, "client");
+//     }
+//   };
+
+//   const handleGaurdianPhotoUpload =(e) => {
+//     const file = e.target.files[0];
+//     if(file){
+//       uploadFunction(file, "gaurdian");
+//     }
+//   };
+
+//   const uploadFunction = async(file, field)=>{
+//     if(field === "client"){
+//       setClientLoading(true)
+//     }
+
+//     if(field === "gaurdian"){
+//       setGaurdianLoading(true)
+//     }
+//         const formData = new FormData()
+//         formData.append("profiles", file)
+//         await axios.post(`${apiUrl}upload`,formData, {headers : AUTHHEADERS()} )
+//         .then(res=>{
+//           if(res.data.profile_url){
+//             const url =  URL.createObjectURL(file)
+//             if(field === "client"){
+//               setIdPhoto(res.data.profile_url);
+//               setImagePrev(url)
+//               setClientLoading(false)
+//             }
+
+//             if(field === "gaurdian"){
+//                 setGaurdianIDPhoto(res.data.profile_url);
+//                 setGaurdianImagePrev(url)
+//                 setGaurdianLoading(false)
+//             }
+//           }
+//         })
+//         .catch(err=>{
+//           setAlertMessage(t("Something went wrong"))
+//           setAlert(!alert)
+//           setClientLoading(false)
+//           setGaurdianLoading(false)
+//         }).finally(()=>{
+//           setClientLoading(false)
+//           setGaurdianLoading(false)
+//         })
+//   }
+
+//      const handleVerifyID = async()=>{
+//       setLoading(true)
+//       let data
+//       if(minor === "false"){
+//         if(!idPhoto){
+//           setAlertMessage(t("Please upload an ID"))
+//           setAlert(!alert)
+//           setLoading(false)
+//           return
+//         }else{
+//           data = {
+//             UserIDCard:idPhoto
+//           }
+//           await axios.post(`${apiUrl}identity/user_identity` ,data,{headers:AUTHHEADERS()}).then((res)=>{
+//               setLoading(false)
+//               setStep(4)
+//               return
+//           }).catch((err)=>{
+//             setLoading(false)
+//             return
+//           })
+//         }
+//       }
+//       if(minor==="true"){
+//         if(idPhoto!==null && gaurdianIDPhoto!==null){
+//           let data = {
+//             UserIDCard: idPhoto
+//           };
+//           let gaurdiandata = {
+//             GuardianIDCard: gaurdianIDPhoto
+//           };
+
+//           Promise.all([
+//               axios.post(`${apiUrl}identity/user_identity`, data, {headers: AUTHHEADERS()}),
+//               axios.post(`${apiUrl}identity/guardian_identity`, gaurdiandata, {headers: AUTHHEADERS()}),
+//           ]).then((responses) => {
+//               setLoading(false);
+//               if(typeofservice === "tattoo" || typeofservice === "piercing"){
+//                 setStep(3);
+//                 return
+//               }else{
+//                 setStep(4);
+//                 return
+//               }
+//           }).catch((errors) => {
+//               setLoading(false);
+//               setAlertMessage(t("Something went wrong"));
+//               setAlert(!alert);
+//               return
+//           });
+//       } else {
+//           setAlertMessage(t("Please upload both ID's"));
+//           setLoading(false);
+//           setAlert(!alert);
+//           return
+//       }
+//       }
+//     }
+
+//     const handleClientDelete = ()=>{
+//          setImagePrev(null);
+//     }
+
+//     const handleGaurdianDelete = ()=>{
+//          setGaurdianImagePrev(null)
+//     }
+
+//     const handlePrev = ()=>{
+//       setStep(1)
+//     }
+
+//     if(loading){
+//       return <LoaderModal/>
+//     }
+
+//     const handleNo = ()=>{
+//        setUpdateModal(false)
+//        if(minor === "true"){
+//          setStep(3)
+//        }else{
+//         setStep(4)
+//        }
+//     }
+
+//     const handleYes = ()=>{
+//        setUpdateModal(false)
+//     }
+
+//     console.log(clientLoading, gaurdianLoading)
+
+//   return (
+//     <>
+//     {updateModal && (
+//         <Modal>
+//           <p className="text-3xl font-bold mb-4 text-black">
+//             {t("Do you want to update your ID?")}
+//           </p>
+//           <div className="flex  gap-5 items-center">
+//           <button
+//             className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+//             onClick={handleYes}
+//           >
+//             {t("Yes")}
+//           </button>
+//           <button
+//             className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+//             onClick={handleNo}
+//           >
+//             {t("No")}
+//           </button>
+
+//           </div>
+//         </Modal>
+//       )}
+//     <div className="w-full h-full flex flex-col justify-between items-center overflow-auto bg-black p-8 text-white">
+//       <div className='w-full h-full flex flex-col gap-3 items-center overflow-auto bg-black p-8 text-white'>
+
+//     <h1 style={{ fontSize: '24px', marginBottom: '20px' }}> {t("ID Verification")}</h1>
+
+//       {imagePrev && (
+//         <div className='relative md:w-1/4 w-full'>
+//         <img
+//           src={imagePrev}
+//           className='w-full'
+//           alt="ID Photo"
+//           />
+//         <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleClientDelete}/>
+//         </div>)
+//       }
+
+//       <InputButton onChange={handlePhotoUpload} loading={clientLoading} text={"Upload ID Photo"}/>
+
+//       {isSubmitDisabled ? <p className='text-center'>{t("Please upload client ID photo before submitting.")}</p> : null}
+
+//    {minor === "true" &&
+//    <>
+//      {gaurdianImagePrev && (
+//        <div className='relative md:w-1/4 w-full'>
+//        <img
+//        src={gaurdianImagePrev}
+//        className='w-full'
+//        alt="ID Photo"
+//        />
+//        <IoMdClose className='absolute right-2 top-2 hover:cursor-pointer' onClick={handleGaurdianDelete }/>
+//        </div>
+//        )
+//       }
+//       <InputButton onChange={handleGaurdianPhotoUpload} loading={gaurdianLoading} text={"Upload ID Photo"}/>
+//       {isSubmitDisabled ? <p className='text-center'>{t("Please upload Gaurdian's ID photo before submitting.")}</p> : null}
+//       </>
+//     }
+//   </div>
+
+// <div className='w-full md:w-1/2 flex justify-between'>
+// <button
+//       onClick={handlePrev}
+//       className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
+//       >
+//       {t("Back")}
+//       </button>
+
+//       <button
+//       onClick={handleVerifyID}
+//       disabled={minor === "false" ? !idPhoto  : !idPhoto && !gaurdianIDPhoto}
+//       className="yellowButton px-4 py-2 font-bold rounded-3xl text-black"
+//       >
+//       {t("Submit")}
+//       </button>
+
+//         </div>
+//     </div>
+//         </>
+//   )
+// }

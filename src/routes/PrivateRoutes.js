@@ -1,11 +1,32 @@
-import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
 
-const PrivateRoutes = () => {
-    const isLoggedIn = sessionStorage.getItem("token") ? true : false
-  return (
-    isLoggedIn ? <Outlet/> : <Navigate to={"/"} />
-  )
-}
 
-export default PrivateRoutes
+
+import { useEffect, useState } from "react";
+import { Navigate,useLocation} from "react-router-dom";
+import { useAuthContext } from "../context/AuthContext";
+
+const PrivateRoutes = ({children}) => {
+  const { user, isCheckingLogin } = useAuthContext();
+  const location = useLocation()
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  
+  useEffect(() => {
+    if (!isCheckingLogin) {
+      setIsLoaded(true);
+    }
+  }, [isCheckingLogin]);
+
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/" replace state={{ from: location.pathname }} />;
+  }
+
+  return children;
+};
+
+export default PrivateRoutes;

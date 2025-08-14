@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import UserContext from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
 
@@ -12,7 +12,7 @@ export default function ConsentFormLayout({ children, title, about }) {
       <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center ">
         {t(title)}
       </label>
-      <div className="w-full h-full md:w-2/4 flex flex-col justify-between gap-2 flex-1 rounded-md md:p-4 overflow-hidden backdrop-blur bg-opacity-50">
+      <div className="w-full h-full max-w-2xl flex flex-col justify-between gap-2 flex-1 rounded-md md:p-4 overflow-hidden backdrop-blur bg-opacity-50">
         {children}
       </div>
      

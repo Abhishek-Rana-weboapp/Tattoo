@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 import UserContext from "../../../context/UserContext";
@@ -8,8 +8,12 @@ import axios from "axios";
 import LoaderModal from "../../modal/LoaderModal";
 import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 import Modal from "../../modal/Modal";
+import { useAppointmentContext } from "../../../context/AppointmentContext";
+import toast from "react-hot-toast";
+import axiosInstance from "../../../config/axios";
 
-export default function CompleteAgreement({ updateAppointment, handlePrev }) {
+export default function CompleteAgreement() {
+  const {appointment, setAppointment} = useAppointmentContext();
   const { t } = useTranslation();
   const [imgUrl, setImgUrl] = useState();
   const signatureRef = useRef();
@@ -17,24 +21,42 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   const { setAlert, setAlertMessage, alert } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false)
+  const [uploading, setUploading]= useState(false)
 
   useEffect(() => {
-    if (updateAppointment) {
-      if (updateAppointment.Sign_completion) {
-        setImgUrl(updateAppointment.Sign_completion);
+    if (appointment) {
+      if (appointment.Sign_completion) {
+        setImgUrl(appointment.Sign_completion);
       }
     }
-  }, [updateAppointment]);
+  }, [appointment]);
 
-  const handleSave = async () => {
-    if (signatureRef?.current?.isEmpty()) {
-      setAlertMessage(t("Please provide your signature"));
-      setAlert(!alert);
-    } else {
-      const dataUrl = signatureRef?.current?.toDataURL();
-      setImgUrl(dataUrl);
+const handleSave = async () => {
+  if (signatureRef?.current?.isEmpty()) {
+    toast.error(t("Please provide your signature"));
+    return
+  } 
+    const dataUrl = signatureRef?.current?.toDataURL("image/png");
+
+    // Convert base64 -> Blob -> File
+    const blob = await (await fetch(dataUrl)).blob();
+    const file = new File([blob], "signature.png", { type: "image/png" });
+
+    try {
+      setUploading(true)
+      const formData = new FormData();
+      formData.append("profiles", file)
+      const response = await axiosInstance.post("upload", formData)
+      if(response.status === 200){
+        setImgUrl(response?.data?.profile_urls[0])
+      }
+    } catch (error) {
+        toast.error(error.response.data.message || t("Something went wrong"))
+    }finally{
+      setUploading(false)
     }
-  };
+
+};
 
   const handleClear = () => {
     signatureRef?.current?.clear();
@@ -42,46 +64,39 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
   };
 
   const handleNext = async () => {
-    if (imgUrl) {
-      setLoading(true);
-      const data = {
-        updates: [
-          {
-            id: updateAppointment?.id,
-            updateField: "Sign_completion",
-            updateValue: imgUrl,
-          },
-        ],
-      };
-      await axios
-        .post(`${apiUrl}artist/post_new`, data, {headers : AUTHHEADERS()})
-        .then((res) => {
-          if (res.status === 201) {
-            setLoading(false);
-            setModalOpen(true)
-            return;
-          }
-        })
-        .catch((err) => {
-          setLoading(false);
-          setAlert(!alert);
-          setAlertMessage(t("Something went wrong"));
-          return;
-        });
-    } else {
-      setAlert(!alert);
-      setAlertMessage(t("Please save the Signature first"));
-      return;
+    if(!imgUrl){
+      toast.error("Please provide a signature")
+      return
+    }
+    try {
+      const updates = {
+        completionSignature:imgUrl
+      }
+      setLoading(true)
+      const res = await axiosInstance.put(`/appointment/${appointment.id}`,updates)
+      if(res.status === 200){
+        setAppointment(res.data.appointment);
+        setModalOpen(true)
+      }
+    } catch (error) {
+      toast.error("")
+    }finally{
+      setLoading(false)
     }
   };
+
+
+  const handlePrev = ()=>{
+    navigate(`/billing/8`)
+  }
 
   const handleGeneratePDF = async () => {
     await axios
       .post(
         `${apiUrl}pdf/generate`,
         {
-          username: updateAppointment?.username,
-          serviceId: updateAppointment?.id,
+          userName: appointment?.userName,
+          appointmentId: appointment?.id,
         },
         { headers: AUTHHEADERS() }
       )
@@ -123,7 +138,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
       </h3>
       <div className="overflow-auto p-2">
         <p className="text-center">
-          {t(`I,`)} {updateAppointment.ArtistPiercerNames},
+          {t(`I,`)} {appointment.artistPiercerNames},
           {t(
             "hereby confirm that I have thoroughly reviewed the client's submitted information, including their medical history, emergency contact details, and doctor's information. I have also ensured that the client has duly signed and agreed to the waiver releases, hold harmless agreement, and terms of service. As a self-employed contractor or employee of Fame Tattoos Inc., I affirm that I have competently completed the services requested by the client at Fame Tattoos Inc., in accordance with their instructions."
           )}
@@ -148,7 +163,7 @@ export default function CompleteAgreement({ updateAppointment, handlePrev }) {
         </div>
         {imgUrl && (
           <div className="bg-white h-28 w-30">
-            <img src={imgUrl} className="w-full h-full"></img>
+            <img src={`${apiUrl}${imgUrl}`} className="w-full h-full"></img>
           </div>
         )}
         <div className="flex justify-center gap-2">

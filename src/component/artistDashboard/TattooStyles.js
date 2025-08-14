@@ -1,129 +1,86 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  colorStyles,
-  pmuStyles,
-  pmuTypes,
-  tattooStyles,
-  tattooTypes,
+  colors,
+  styles,
+  types,
 } from "../../data/tattooStyles";
-import Navigation from "../navigation/Navigation";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { AUTHHEADERS } from "../../commonFunctions/Headers";
-import { apiUrl } from "../../url";
-import UserContext from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { useAppointmentContext } from "../../context/AppointmentContext";
+import toast from "react-hot-toast";
+import axiosInstance from "../../config/axios";
+import LoaderModal from "../modal/LoaderModal";
 
-const TattooStyles = ({
-  updateAppointment,
-  setUpdateAppointment,
-  handlePrev,
-}) => {
+const TattooStyles = ({}) => {
+  const { appointment, setAppointment } = useAppointmentContext();
   const navigate = useNavigate();
-
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [styles, setStyles] = useState(
-    updateAppointment.typeofservice === "tattoo" ? tattooStyles : pmuStyles
-  );
-  const [types, setTypes] = useState(
-    updateAppointment.typeofservice === "tattoo" ? tattooTypes : pmuTypes
-  );
-  const [colors, setColors] = useState(
-    updateAppointment.typeofservice === "tattoo" ? colorStyles : []
-  );
-  const [selectedOptions, setSelectedOptions] = useState({
-    style:
-      updateAppointment.typeofservice === "tattoo"
-        ? tattooStyles[0]
-        : pmuStyles[0],
-    type:
-      updateAppointment.typeofservice === "tattoo"
-        ? tattooTypes[0]
-        : pmuTypes[0],
-    color: updateAppointment.typeofservice === "tattoo" ? colorStyles[0] : null,
-  });
-  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
+  const [selectedOptions, setSelectedOptions] = useState(null);
+  console.log({selectedOptions})
 
-  const handleNext = async () => {
-    console.log(updateAppointment.typeofservice);
-    setLoading(true);
-    const data =
-      updateAppointment.typeofservice === "tattoo"
-        ? {
-            updates: [
-              {
-                id: updateAppointment?.id,
-                updateField: "tattoo_style",
-                updateValue: selectedOptions.style,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "tattoo_type",
-                updateValue: selectedOptions.type,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "color_style",
-                updateValue: selectedOptions.color,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "process_step",
-                updateValue: 8,
-              },
-            ],
-          }
-        : {
-            updates: [
-              {
-                id: updateAppointment?.id,
-                updateField: "tattoo_style",
-                updateValue: selectedOptions.style,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "tattoo_type",
-                updateValue: selectedOptions.type,
-              },
-              {
-                id: updateAppointment?.id,
-                updateField: "process_step",
-                updateValue: 8,
-              },
-            ],
-          };
-    if (data) {
-      console.log(data);
-      await axios
-        .post(`${apiUrl}artist/post_new`, data, { headers: AUTHHEADERS() })
-        .then((res) => {
-          setUpdateAppointment(res.data.updatedtable);
-          navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
-        })
-        .catch((err) => {
-          setLoading(false);
-          setAlert(!alert);
-          setAlertMessage(t("Something went wrong"));
-        });
-    } else {
-      setLoading(false);
+
+ const handleNext = async () => {
+  const { tattooStyle, colorStyle, tattooType } = selectedOptions || {};
+
+  if (appointment.typeofservice === "tattoo") {
+    if (!tattooStyle && !colorStyle && !tattooType) {
+      toast.error("Please select at least one option.");
+      return;
     }
-  };
+  } else if (appointment.typeofservice === "permanent-makeup") {
+    if (!tattooStyle && !tattooType) {
+      toast.error("Please select at least one option.");
+      return;
+    }
+  }
+
+  const updates = { ...selectedOptions, adminProcessStep: 8 };
+
+  try {
+    setLoading(true);
+    const res = await axiosInstance.put(
+      `/appointment/${appointment.id}`,
+      updates
+    );
+    if (res.status === 200) {
+      setAppointment(res.data.appointment);
+      navigate(`/billing/${res.data.appointment.adminProcessStep}`);
+    }
+  } catch (error) {
+    toast.error("Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
+
+  const handlePrev = ()=>{
+     navigate("/billing/6")
+  }
+
+
   const handleSelect = (e, key) => {
     setSelectedOptions((prev) => {
       return { ...prev, [key]: e.target.value };
     });
   };
 
+  useEffect(() => {
+    if(appointment){
+       if(appointment.tattooStyle || appointment.colorStyle || appointment.tattooType ){
+        setSelectedOptions({
+          tattooStyle: appointment.tattooStyle,
+          tattooType: appointment.tattooType,
+          colorStyle: appointment.colorStyle
+        })
+       }
+    }
+  }, [appointment]);
 
-  useEffect(()=>{
-   if(updateAppointment.typeofservice === "tattoo" && (updateAppointment.tattoo_style !== null || updateAppointment.tattoo_type !== null || updateAppointment.color_style !== null) ){
-    setSelectedOptions({style:updateAppointment.tattoo_style, type:updateAppointment.tattoo_type, color:updateAppointment.color_style })
-   }else if(updateAppointment.typeofservice === "permanent-makeup" && (updateAppointment.tattoo_style !== null || updateAppointment.tattoo_type !== null)){
-    setSelectedOptions({...selectedOptions ,style:updateAppointment.tattoo_style, type:updateAppointment.tattoo_type})
-   }
-  },[])
+
+  if(loading ){
+    return <LoaderModal />
+  }
 
   return (
     <div className="flex flex-col gap-5 items-center">
@@ -132,31 +89,33 @@ const TattooStyles = ({
         Tattoo Type
         <select
           className="text-black p-2 rounded-lg min-w-[300px]"
-          value={selectedOptions.type}
-          onChange={(e) => handleSelect(e, "type")}
+          value={selectedOptions?.tattooType ? selectedOptions.tattooType : ""}
+          onChange={(e) => handleSelect(e, "tattooType")}
         >
-          {types.map((style, index) => {
+          <option value={""}>Select Tattoo Type</option>
+          {types[appointment?.typeofservice].map((type, index) => {
             return (
-              <option value={style} key={index}>
-                {style}
+              <option value={type} key={index}>
+                {type}
               </option>
             );
           })}
         </select>
       </label>
 
-      {updateAppointment.typeofservice === "tattoo" && (
+      {appointment.typeofservice === "tattoo" && (
         <label className="flex flex-col">
           Color Style
           <select
             className="text-black p-2 rounded-lg min-w-[300px]"
-            value={selectedOptions.color}
-            onChange={(e) => handleSelect(e, "color")}
+            value={selectedOptions?.colorStyle ? selectedOptions.colorStyle : ""}
+            onChange={(e) => handleSelect(e, "colorStyle")}
           >
-            {colors.map((style, index) => {
+            <option value={""}>Select Color Style</option>
+            {colors.map((color, index) => {
               return (
-                <option value={style} key={index}>
-                  {style}
+                <option value={color} key={index}>
+                  {color}
                 </option>
               );
             })}
@@ -168,10 +127,11 @@ const TattooStyles = ({
         Tattoo Style
         <select
           className="text-black p-2 rounded-lg min-w-[300px]"
-          value={selectedOptions.style}
-          onChange={(e) => handleSelect(e, "style")}
+          value={selectedOptions?.tattooStyle ? selectedOptions.tattooStyle : "" }
+          onChange={(e) => handleSelect(e, "tattooStyle")}
         >
-          {styles.map((style, index) => {
+          <option value={""}>Select Tattoo Style</option>
+          {styles[appointment.typeofservice].map((style, index) => {
             return (
               <option value={style} key={index}>
                 {style}

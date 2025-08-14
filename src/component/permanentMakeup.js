@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import {useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
-import ProgressBar from "./ProgressBar";
 import GridLayout from "./Layout/GridLayout";
 import CustomButton from "./buttons/CustomButton";
 import Navigation from "./navigation/Navigation";
 import { useTranslation } from "react-i18next";
+import { useAppointmentContext } from "../context/AppointmentContext";
+import toast from "react-hot-toast";
 
 function PermanentMakeup() {
-  const progressValue = 20;
   const navigate = useNavigate();
-  const { user, setUser, alert, setAlert, setAlertMessage, setFinalUser } =
-    React.useContext(UserContext);
+  const {setAppointmentData}= useAppointmentContext()
   const [selected, setSelected] = useState();
   const { t } = useTranslation();
 
@@ -21,30 +19,32 @@ function PermanentMakeup() {
 
   const buttons = [
     {
-      name: "Eyebrows",
-      value: "Eyebrows",
+      name: "eyebrows",
+      value: "eyebrows",
     },
     {
-      name: "Eyeliner",
-      value: "Eyeliner",
+      name: "eyeliner",
+      value: "eyeliner",
     },
     {
-      name: "Lips",
-      value: "Lips",
+      name: "lips",
+      value: "lips",
     },
   ];
 
   const handleNext = () => {
-    if (selected) {
-      setUser({ ...user, level1: selected });
-      setFinalUser({
-        1: { level1: selected, level2: null, level3: null, level4: null },
-      });
-      navigate("/medical-form");
-    } else {
-      setAlert(!alert);
-      setAlertMessage(t("Please select an option"));
+    if (!selected) {
+      toast.error(t("Please select an option"))
+      return
     }
+
+    const data = {
+      1: { level1: selected, level2: null, level3: null, level4: null },
+    }
+    setAppointmentData(prev=>({...prev, 
+      bodyLocation: JSON.stringify(data)
+    }));
+    navigate("/medical-form");
   };
 
   const handlePrev = () => {

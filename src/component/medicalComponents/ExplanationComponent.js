@@ -1,17 +1,19 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import UserContext from '../../context/UserContext'
+import { useAppointmentContext } from '../../context/AppointmentContext'
 
 const ExplanationComponent = ({question, type,inputType, next, prev, subState, setSubState}) => {
     const [input, setInput] = useState("")
+    const { medicalhistory, setMedicalHistory } = useAppointmentContext();
     const {t} = useTranslation()
     const {setAlert, alert, setAlertMessage, setFormData, formData} = useContext(UserContext)
     const inputRef = useRef(null)
 
 
     useEffect(()=>{
-      if(formData[question?.id]){
-       setInput(formData[question?.id].ans)
+      if(medicalhistory[question?.id]){
+       setInput(medicalhistory[question?.id].ans)
       }
       inputRef?.current?.focus()
    },[question])
@@ -31,8 +33,13 @@ const ExplanationComponent = ({question, type,inputType, next, prev, subState, s
          setAlert(!alert)
          return
        }else{
-         setFormData(prev=>({...prev, [question.id] :{ans : input}}))
-         next()
+        //  setFormData(prev=>({...prev, [question.id] :{ans : input}}))
+        setMedicalHistory((prev) => ({
+          ...prev,
+          [question.id]: { ans: input },
+        }));
+         const latestMedicalState = {...medicalhistory,  [question.id]: { ans: input }}
+         next(latestMedicalState)
          return
        }
     }

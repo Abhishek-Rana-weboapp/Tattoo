@@ -15,3 +15,9 @@ export const captureCursiveSignature = async (id) => {
     // Convert the canvas to a base64-encoded image
     return cursiveSignatureCanvas.toDataURL();
   };
+
+
+
+  export function getOptionsByParent(parentId, data) {
+  return data.filter((item) => item.parentId === parentId);
+}

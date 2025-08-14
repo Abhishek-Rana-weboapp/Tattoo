@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Tattoo from "../assets/tattoo.png";
 import microblading from "../assets/microblading.png";
 import piercings from "../assets/piercings.png";
@@ -14,8 +14,10 @@ import removal_gold from "../assets/removal_gold.png";
 import piercings_gold from "../assets/piercings_gold.png";
 import tattoo_gold from "../assets/tattoo_gold.png";
 import { useTranslation } from "react-i18next";
+import { useAppointmentContext } from "../context/AppointmentContext";
 function Dashboard() {
   const { t } = useTranslation();
+  const { appointmentData, setAppointmentData } = useAppointmentContext();
   const {
     user,
     setUser,
@@ -30,22 +32,23 @@ function Dashboard() {
     finalUser,
     setFinalUser,
     setCurrentSelection,
-    setSelectedTeeth
-  } = React.useContext(UserContext);
+    setSelectedTeeth,
+  } = useContext(UserContext);
 
   const handleTattooTypeSelect = (selectedType) => {
     setUser({ ...user, selectedTattooType: selectedType });
-    setFinalUser({...finalUser, selectedTattooType : selectedType})
-    sessionStorage.setItem("typeofservice", selectedType)
+    setFinalUser({ ...finalUser, selectedTattooType: selectedType });
+    sessionStorage.setItem("typeofservice", selectedType);
+    setAppointmentData((prev) => ({ ...prev, typeofservice: selectedType }));
   };
 
   useEffect(() => {
-    sessionStorage.removeItem("user")
-    sessionStorage.removeItem("typeofservice")
-    sessionStorage.removeItem("emerformData")
-    sessionStorage.removeItem("drformData")
-    sessionStorage.removeItem("medicalHistory")
-    if (user?.selectedTattooType !== null){
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("typeofservice");
+    sessionStorage.removeItem("emerformData");
+    sessionStorage.removeItem("drformData");
+    sessionStorage.removeItem("medicalHistory");
+    if (user?.selectedTattooType !== null) {
       setUser({
         selectedTattooType: null,
         1: null,
@@ -54,23 +57,23 @@ function Dashboard() {
         4: null,
       });
 
-      setFinalUser({})
+      setFinalUser({});
 
       setFormData({});
-      setCurrentSelection(1)
-      setCount(1)
+      setCurrentSelection(1);
+      setCount(1);
 
       setharmlessagreement({
         name: "",
         initials: "",
-        initialsImg:"",
+        initialsImg: "",
         signatureurl: "",
         agreed: false,
-        gaurdianInitials : "",
-        gaurdianInitialsImg:"",
-        gaurdianSignature:"",
-        gaurdianAgreed :false,
-        gaurdianName : ""
+        gaurdianInitials: "",
+        gaurdianInitialsImg: "",
+        gaurdianSignature: "",
+        gaurdianAgreed: false,
+        gaurdianName: "",
       });
 
       setemerFormData({
@@ -79,8 +82,8 @@ function Dashboard() {
         city: "",
         state: "Florida",
       });
-      setDescription({})
-      setSelectedTeeth([])
+      setDescription({});
+      setSelectedTeeth([]);
 
       setdrFormData({
         name: "",

@@ -1,11 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAppointmentContext } from '../../context/AppointmentContext'
 
 const BriefDescription = () => {
   const navigate = useNavigate()
+  const {appointmentData, setAppointmentData, bodyLocation, setBodyLocation} = useAppointmentContext()
   const {alert ,setAlert, setAlertMessage,description, setDescription, currentSelection, setCurrentSelection, count, setFinalUser,finalUser, user , setUser} = useContext(UserContext)
   const {t} = useTranslation()
   const inputRef = useRef()

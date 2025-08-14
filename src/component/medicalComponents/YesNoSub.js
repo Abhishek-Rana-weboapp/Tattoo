@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import UserContext from "../../context/UserContext";
 import YesNoComponent from "./YesNoComponent";
-import YesNoExplain from "./YesNoExplain";
 import ExplanationComponent from "./ExplanationComponent";
-import Navigation from "../navigation/Navigation";
+import { useAppointmentContext } from "../../context/AppointmentContext";
+import DateComponent from "./DateComponent";
 
 const  YesNoSub = ({ question, next, type, prev }) => {
+  const { medicalhistory, setMedicalHistory } = useAppointmentContext();
   const [selected, setSelected] = useState("");
   const [subState, setSubState] = useState({});
   const { alert, setAlert, setAlertMessage, formData, setFormData } =
@@ -15,10 +16,10 @@ const  YesNoSub = ({ question, next, type, prev }) => {
   const ref = useRef()
 
   useEffect(() => {
-    if(Object.keys(formData).includes(question.id.toString())){
-      setSelected(formData[question.id].ans)
-        if(formData[question.id].ans === "yes"){
-          setSubState(formData[question.id].sub)
+    if(Object.keys(medicalhistory).includes(question.id.toString())){
+      setSelected(medicalhistory[question.id].ans)
+        if(medicalhistory[question.id].ans === "yes"){
+          setSubState(medicalhistory[question.id].sub)
           return
         }
       return
@@ -46,16 +47,16 @@ const  YesNoSub = ({ question, next, type, prev }) => {
                 return acc;
               }, {}))
             }
-            }, [question, formData]);
+            }, [question, formData, medicalhistory]);
             
             
             function hasEmptyValue(obj) {
               for (let key in obj) {
                 if (obj[key].ans === "") {
-                  return true; // If an empty value is found, return true
+                  return true; 
                 }
               }
-    return false; // If no empty value is found, return false
+    return false; 
   }
 
   const handleCheckboxes = (e) => {
@@ -79,15 +80,20 @@ const  YesNoSub = ({ question, next, type, prev }) => {
           setAlertMessage(t("Please enter all details"));
           return;
         }
-        setFormData({
-          ...formData,
+        setMedicalHistory((prev) => ({
+          ...prev,
           [question.id]: { ans: selected, sub: subState },
-        }); 
-        next()
+        }));
+        const latestMedicalState = {...medicalhistory , [question.id]: { ans: selected, sub: subState }}
+        next(latestMedicalState)
         return;
       }
+      setMedicalHistory((prev) => ({
+        ...prev,
+        [question.id]: { ans: selected },
+      }));
 
-      setFormData({ ...formData, [question.id]: { ans: selected } });
+      // setFormData({ ...formData, [question.id]: { ans: selected } });
       next(); // here provide the handleNext function recieved in props
       return
     }
@@ -159,6 +165,16 @@ const  YesNoSub = ({ question, next, type, prev }) => {
                       key={subQuestion.id}
                       question={subQuestion}
                       type={"sub"}
+                      subState={subState}
+                      setSubState={setSubState}
+                      />
+                      )}
+
+
+                      {subQuestion.type === "DATE" && (
+                      <DateComponent
+                      key={subQuestion.id}
+                      question={subQuestion}
                       subState={subState}
                       setSubState={setSubState}
                       />

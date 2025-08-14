@@ -8,7 +8,6 @@
 
 
 export const medicalQuestions = {
-  
   tattoo: [
     {
       id: 1,
@@ -261,7 +260,7 @@ export const medicalQuestions = {
         },
         {
           id:33,
-          type: "E",
+          type: "DATE",
           q:"When was your last session?"
         },
       ]

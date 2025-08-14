@@ -1,42 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { apiUrl } from "../url";
-import axios, { AxiosHeaders } from "axios";
+import axios from "axios";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Modal from "./modal/Modal";
 import { states } from "../data/states";
+import Loader from "./loader/Loader";
+import {useAuthContext} from "../context/AuthContext"
+import axiosInstance from "../config/axios";
 
 const CustomerInfo = () => {
-
-  const username = sessionStorage.getItem("username")
-  const storedDetailedInfo = JSON.parse(sessionStorage.getItem("detailedInfo"))
+  const {user, setUser} = useAuthContext()
+  const [showPopup_, setShowPopup_] = useState(false)
+  const [loading, setLoading] = useState(false)
   const {alert, setAlert, setAlertMessage} = useContext(UserContext)
   const navigate = useNavigate()
   const {t} = useTranslation()
-  const [showPopup_, setShowPopup_] = useState(false)
   const minor = sessionStorage.getItem("minor") || ""
 
+
     const [userData, setUserData] = useState({
-        address:"",
-        city:"",
-        state:"Florida",
-        zip:"",
-        race:"",
-        gender:"",
+        address:user.address ?? "",
+        city:user.city ?? "",
+        state:user.state ?? "Florida",
+        zip:user.zip ?? "",
+        race:user.race ?? "",
+        gender:user.gender ?? "",
     })
 
     const [otherInput, setOtherInput] = useState("")
     const [otherChecked, setOtherChecked] = useState(false)
 
     useEffect(()=>{
-       if(!Object.values(storedDetailedInfo).includes(null)){
-        setUserData(storedDetailedInfo)
-        setShowPopup_(true)
-       }
-    },[])
-
+      if(user.address || user.city || user.zip || user.race || user.gender){
+        setShowPopup_(!showPopup_)
+      }},[user])
 
     const handleInputs = (e)=>{
         const name = e.target.name
@@ -60,35 +60,40 @@ const CustomerInfo = () => {
        }
     },[otherInput])
 
-
-    const handleSubmit = async (e)=>{
-      e.preventDefault()
-      if(userData.address && userData.city && userData.state && userData.zip && userData.gender && userData.race ){
-        await axios.patch(`${apiUrl}artist/user_update?username=${username}`, userData , {headers:AUTHHEADERS()})
-        .then(res=>{
-          if(minor === "true"){
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      setLoading(true)
+      if(!userData.address || !userData.city || !userData.state || !userData.zip || !userData.gender || !userData.race ){
+       setAlertMessage(t("Please fill all the details"))
+        setAlert(!alert)
+        setLoading(false)
+        return
+      }
+      try {
+        const response = await axiosInstance.put(`user/${user.id}`, userData)
+        if(response.status === 200){
+           setUser(response.data.user)
+           if(response.data.user.minor){
             navigate("/gaurdian-info")
-          }else{
-            navigate("/dashboard")
-          }
-        })
-        .catch(err=>{
-          setAlertMessage(t("Something went wrong"))
-          setAlert(!alert)
-        })
-      }else{
-         setAlertMessage(t("Please fill all the details"))
-         setAlert(!alert)
-          return
+           }else{
+             navigate("/dashboard")
+           }
+        }
+      } catch (error) {
+        setAlertMessage(t("Something went wrong"))
+        setAlert(!alert)
+      }finally{
+        setLoading(false)
       }
-      }
-      
+    }
+
+
     const handleYes = () => {
       setShowPopup_(false)
     }
     
     const handleNo = ()=>{
-      if(minor === "true"){
+      if(user.minor){
         navigate("/gaurdian-info")
       }else{
         navigate("/dashboard")
@@ -210,8 +215,8 @@ const CustomerInfo = () => {
           </div>
         </div>
 
-        <button className="yellowButton px-4 py-2 text-black font-bold self-center rounded-3xl mt-3">
-          {t("Submit")}
+        <button disabled={loading} className="yellowButton px-4 py-2 text-black font-bold self-center rounded-3xl mt-3">
+          {loading ? <Loader /> : t("Submit")}
         </button>
       </form>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import one from "../assets/1.png";
 import two from "../assets/2.png";
 import three from "../assets/3.png";
@@ -16,27 +16,22 @@ import fourteen from "../assets/14.png";
 import fifteen from "../assets/15.png";
 import sixteen from "../assets/16.png";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
 
 import SmpCard from "./card/SmpCard";
 import SixGridLayout from "./Layout/SixGridLayout";
 import Navigation from "./navigation/Navigation";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+import axiosInstance from "../config/axios";
+import { useAppointmentContext } from "../context/AppointmentContext";
+import LoaderModal from "./modal/LoaderModal";
 
 const HairLossPatternSelection = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const {
-    selectedPattern,
-    setSelectedPattern,
-    alert,
-    setAlert,
-    setAlertMessage,
-    user,
-    setUser,
-    setFinalUser,
-  } = React.useContext(UserContext);
+ const {appointmentData, setAppointmentData} = useAppointmentContext()
   const [selected, setSelected] = useState();
+  const [loading, setLoading]= useState(false)
 
   const images = [
     one,
@@ -61,24 +56,46 @@ const HairLossPatternSelection = () => {
     setSelected(image);
   };
 
-  const handleNext = () => {
-    if (selected) {
-      setSelectedPattern(selected);
-      setUser({ ...user, level1: selected });
-      setFinalUser((prev) => ({
-        ...prev,
-        1: { level1: selected, level2: null, level3: null, level4: null },
-      }));
-      navigate("/medical-form");
-    } else {
-      setAlert(!alert);
-      setAlertMessage(t("Please select an option"));
+  const handleNext = async() => {
+    if(!selected){
+      toast.error("Please select an option");
+      return
     }
+
+    try {
+      setLoading(true)
+      const res = await fetch(selected);
+    const blob = await res.blob();
+    const file = new File([blob], "pattern.png", { type: blob.type });
+      const formData = new FormData();
+      formData.append("profiles", file)
+      const response = await axiosInstance.post("upload",formData )
+      if(response.status === 200){
+         setAppointmentData(prev=>({
+          ...prev , bodyLocation : JSON.stringify({
+            1 :{
+               level1: response.data.profile_urls[0]
+            }
+          })
+         }))
+         navigate("/medical-form")
+      }
+    } catch (error) {
+      toast.error(error.response.data.message || "Something went wrong")
+      console.log(error)
+    }finally{
+      setLoading(false)
+    }
+
   };
 
   const handlePrev = () => {
     navigate(-1);
   };
+
+  if(loading){
+    return <LoaderModal />
+  }
 
   return (
     <>

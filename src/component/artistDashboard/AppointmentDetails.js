@@ -1,31 +1,17 @@
-import { useEffect, useState } from "react";
 import { decodeUrls } from "../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IoMdAttach } from "react-icons/io";
+import {useAppointmentContext} from "../../context/AppointmentContext"
 
 const AppointmentDetails = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [appointment, setAppointment] = useState(() => {
-    return sessionStorage.getItem("selectedAppointment")
-      ? JSON.parse(sessionStorage.getItem("selectedAppointment"))
-      : null;
-  });
+  const {appointment} = useAppointmentContext()
+
 
   console.log(appointment);
 
-  // useEffect(()=>{
-  //   if(!appointment) return
-
-  //   console.log(appointment)
-  //   const dateParts = appointment?.Date.split("/");
-  //   console.log(dateParts)
-  //   const date = new Date(`20${dateParts[2]}`, dateParts[1], dateParts[0]);
-  //   setAppointment(prev=>({
-  //     ...prev, Date:date
-  //   }))
-  // },[appointment])
 
   if (appointment === null) {
     return (
@@ -101,22 +87,22 @@ const AppointmentDetails = () => {
         <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
           <div className="flex gap-2 items-start ">
             <label className="font-bold md:text-lg w-36">Verification ID:</label>
-            <a href={appointment?.id_url} target="_blank">
+            <a href={appointment?.clientId} target="_blank">
               <img
-                src={appointment?.id_url}
+                src={appointment?.clientId}
                 className="object-cover w-52 h-32 rounded-md shadow"
               />
             </a>
           </div>
 
-          {appointment?.gaurdian_id && (
+          {appointment?.guardianId && (
             <div className="flex gap-2 items-start ">
               <label className="font-bold md:text-lg w-36">
                 Gaurdian Verification ID:
               </label>
-              <a href={appointment?.gaurdian_id} target="_blank">
+              <a href={appointment?.guardianId} target="_blank">
                 <img
-                  src={appointment?.gaurdian_id}
+                  src={appointment?.guardianId}
                   className="object-cover w-52 h-32 rounded-md shadow"
                 />
               </a>
