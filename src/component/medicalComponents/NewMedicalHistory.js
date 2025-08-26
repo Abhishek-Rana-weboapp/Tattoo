@@ -32,7 +32,7 @@ const NewMedicalHistory = () => {
     }
     if (!appointmentData.medicalHistory) {
       if (
-        Object.keys(prevFormsInfo?.medicalHistory).length > 0 &&
+        prevFormsInfo && Object.keys(prevFormsInfo?.medicalHistory).length > 0 &&
         prevFormsInfo?.medicalHistory[appointmentData.typeofservice]
       ) {
         setMedicalHistory(
