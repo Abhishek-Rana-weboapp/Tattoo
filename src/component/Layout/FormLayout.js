@@ -1,5 +1,4 @@
-import { useContext, useEffect } from 'react';
-import UserContext from '../../context/UserContext';
+
 import { useTranslation } from 'react-i18next';
 
 export default function ConsentFormLayout({ children, title, about }) {

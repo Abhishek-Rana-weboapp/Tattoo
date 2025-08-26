@@ -16,31 +16,46 @@ export const AppointmentContextProvider = ({ children }) => {
   const [doctorInfo, setDoctorInfo] = useState(null);
   const [prevFormsInfo, setPrevFormsInfo] = useState(null);
   const [appointment, setAppointment] = useState(null);
+  const [selectedTeeth, setSelectedTeeth] = useState([]);
 
   const hasRestored = useRef(false);
 
   useEffect(() => {
-    const storedAppointmentData = sessionStorage.getItem("storedappointmentdata");
-    const storedBodyLocation = sessionStorage.getItem("storedbodyLocation");
-    const storedMedicalHistory = sessionStorage.getItem("storedmedicalhistory");
-    const storedAppointment = sessionStorage.getItem("storedappointment");
+    const storedAppointmentData = safeParse(
+      sessionStorage.getItem("storedappointmentdata")
+    );
+    const storedBodyLocation = safeParse(
+      sessionStorage.getItem("storedbodyLocation")
+    );
+    const storedMedicalHistory = safeParse(
+      sessionStorage.getItem("storedmedicalhistory")
+    );
+    const storedAppointment = safeParse(
+      sessionStorage.getItem("storedappointment")
+    );
 
-    if (storedMedicalHistory)
-      setMedicalHistory(JSON.parse(storedMedicalHistory));
-    if (storedAppointmentData) setAppointmentData(JSON.parse(storedAppointmentData));
-    if (storedBodyLocation) setBodyLocation(JSON.parse(storedBodyLocation));
-    if(storedAppointment) setAppointment(JSON.parse(storedAppointment))
+    if (storedMedicalHistory) setMedicalHistory(storedMedicalHistory);
+    if (storedAppointmentData) setAppointmentData(storedAppointmentData);
+    if (storedBodyLocation) setBodyLocation(storedBodyLocation);
+    if (storedAppointment) setAppointment(storedAppointment);
 
     hasRestored.current = true;
   }, []);
+
+  const safeParse = (value) => {
+    try {
+      return value ? JSON.parse(value) : null;
+    } catch {
+      return null;
+    }
+  };
 
   useEffect(() => {
     if (user) {
       (async () => {
         try {
-          const response = await axiosInstance.get(`artist/user_history`);
+          const response = await axiosInstance.get(`/user_history`);
           if (response.status === 200) {
-            console.log(response.data)
             setPrevFormsInfo(response.data);
           }
         } catch (error) {
@@ -56,37 +71,55 @@ export const AppointmentContextProvider = ({ children }) => {
       sessionStorage.removeItem("storedappointment");
       sessionStorage.removeItem("storedbodyLocation");
       sessionStorage.removeItem("storedmedicalhistory");
-      setAppointment(null)
+      setAppointment(null);
       setAppointmentData(null);
       setBodyLocation(null);
       setMedicalHistory(null);
       setEmergencyContactInfo(null);
       setDoctorInfo(null);
     }
-  }, [location]);
-  
+  }, [location, resetLocations]);
 
   // Save only after restore
   useEffect(() => {
     if (hasRestored.current) {
-      sessionStorage.setItem(
-        "storedappointmentdata",
-        JSON.stringify(appointmentData)
-      );
-      sessionStorage.setItem(
-        "storedmedicalhistory",
-        JSON.stringify(medicalhistory)
-      );
-      sessionStorage.setItem(
-        "storedbodyLocation",
-        JSON.stringify(bodyLocation)
-      );
-      sessionStorage.setItem(
-        "storedappointment",
-        JSON.stringify(appointment)
-      );
+      if (appointmentData !== undefined) {
+        sessionStorage.setItem(
+          "storedappointmentdata",
+          JSON.stringify(appointmentData)
+        );
+      } else {
+        sessionStorage.removeItem("storedappointmentdata");
+      }
+
+      if (medicalhistory !== undefined) {
+        sessionStorage.setItem(
+          "storedmedicalhistory",
+          JSON.stringify(medicalhistory)
+        );
+      } else {
+        sessionStorage.removeItem("storedmedicalhistory");
+      }
+
+      if (bodyLocation !== undefined) {
+        sessionStorage.setItem(
+          "storedbodyLocation",
+          JSON.stringify(bodyLocation)
+        );
+      } else {
+        sessionStorage.removeItem("storedbodyLocation");
+      }
+
+      if (appointment !== undefined) {
+        sessionStorage.setItem(
+          "storedappointment",
+          JSON.stringify(appointment)
+        );
+      } else {
+        sessionStorage.removeItem("storedappointment");
+      }
     }
-  }, [appointmentData, appointment]);
+  }, [appointmentData, medicalhistory, bodyLocation, appointment]);
 
   useEffect(() => {
     if (hasRestored.current) {
@@ -96,10 +129,6 @@ export const AppointmentContextProvider = ({ children }) => {
       );
     }
   }, [bodyLocation]);
-
-  console.log({appointment})
-  console.log({appointmentData})
-  console.log({bodyLocation})
 
   return (
     <AppointmentContext.Provider
@@ -118,6 +147,8 @@ export const AppointmentContextProvider = ({ children }) => {
         setPrevFormsInfo,
         appointment,
         setAppointment,
+        selectedTeeth,
+        setSelectedTeeth,
       }}
     >
       {children}

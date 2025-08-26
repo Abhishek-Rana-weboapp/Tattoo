@@ -1,15 +1,12 @@
 import {
-  useCallback,
-  useContext,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
-import UserContext from "../../context/UserContext";
 import html2canvas from "html2canvas";
 import { captureCursiveSignature } from "../../commonFunctions/utils";
+import toast from "react-hot-toast";
 
 const GaurdianInitialsModal = ({
   gaurdianInitials,
@@ -23,7 +20,6 @@ const GaurdianInitialsModal = ({
   setDrawnGaurdianSignature
 }) => {
   const { t } = useTranslation();
-  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
 
   const gaurdianInfo = JSON.parse(sessionStorage.getItem("gaurdianInfo"));
   const signatureRef = useRef(null);
@@ -40,8 +36,8 @@ const GaurdianInitialsModal = ({
 
   const handleSignatureSave = () => {
     if (signatureRef?.current?.isEmpty()) {
-      setAlertMessage(t("Please add your signature"));
-      setAlert(!alert);
+      toast.error(t("Please provide your signature"));
+      return;
     } else {
       const dataUrl = signatureRef?.current?.toDataURL();
       setDrawnGaurdianSignature(dataUrl);

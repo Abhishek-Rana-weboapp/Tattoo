@@ -1,23 +1,20 @@
-import { useState, useRef, useEffect, useCallback, useContext } from "react";
+import { useState, useRef, useEffect, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useMediaQuery } from "react-responsive";
-import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
 import ToothGem from "../assets/tooth-gen.png";
 import Gem from "../assets/Gem.png";
-import { AUTHHEADERS } from "../commonFunctions/Headers";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
 import axiosInstance from "../config/axios";
 import { useAppointmentContext } from "../context/AppointmentContext";
 
 const ToothGems = () => {
-  const { appointmentData, setAppointmentData, bodyLocation, setBodyLocation } =
+  const { setAppointmentData,selectedTeeth, setSelectedTeeth } =
     useAppointmentContext();
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const { selectedTeeth, setSelectedTeeth } = useContext(UserContext);
   const navigate = useNavigate();
 
   const canvasRef = useRef(null);

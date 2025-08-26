@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import UserContext from "../context/UserContext";
 import Navigation from "./navigation/Navigation";
 import { useAppointmentContext } from "../context/AppointmentContext";
 import toast from "react-hot-toast";
@@ -9,10 +8,7 @@ import toast from "react-hot-toast";
 const TattooCount = () => {
   const { appointmentData, setAppointmentData, bodyLocation, setBodyLocation } = useAppointmentContext();
   const navigate = useNavigate();
-  const { alert, user, setAlert, setAlertMessage, count, setCount } =
-    useContext(UserContext);
   const { t } = useTranslation();
-  const service = sessionStorage.getItem("typeofservice");
   const [localCount, setLocalCount] = useState(
     appointmentData?.count ? appointmentData.count : 1
   );
@@ -38,16 +34,15 @@ const TattooCount = () => {
   const handleNext = () => {
     if (localCount) {
       setAppointmentData((prev) => ({ ...prev, count: localCount }));
-      if (services.includes(service)) {
-        navigate(`/${service}`);
+      if (services.includes(appointmentData?.typeofservice)) {
+        navigate(`/${appointmentData?.typeofservice}`);
         return;
       }
     } else {
-      toast.error(errorMessages[appointmentData.typeofservice]);
+      toast.error(errorMessages[appointmentData?.typeofservice]);
     }
   };
 
-  //  Todo : Replace the userContext count value with appointmentData context value
 
   const handlePrev = () => {
     navigate(-1);
@@ -59,25 +54,25 @@ const TattooCount = () => {
     <div className="flex flex-col justify-between items-center h-full md:w-4/6  w-full">
       <div className="flex flex-col items-center gap-3 ">
         <label className="font-bold text-md md:text-5xl text-white uppercase">
-          {service === "tattoo"
+          {appointmentData?.typeofservice === "tattoo"
             ? t("Tattoo Count")
-            : service === "piercing"
+            : appointmentData?.typeofservice === "piercing"
             ? t("Piercing Count")
             : ""}
         </label>
-        <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center ">
-          {service === "tattoo"
+        <label className="font-bold text-xl  md:text-2xl text-white  uppercase text-center ">
+          {appointmentData?.typeofservice === "tattoo"
             ? t("How many tattoos are you getting today? 1-10")
-            : service === "piercing"
+            : appointmentData?.typeofservice === "piercing"
             ? t("How many piercings are you getting today? 1-10")
-            : appointmentData.typeofservice === "removal"
+            : appointmentData?.typeofservice === "removal"
             ? t("How many tattoos do you have? 1-10")
             : ""}
         </label>
         <select
           value={localCount}
           onChange={handleChange}
-          className="text-2xl font-bold rounded-lg p-2"
+          className="text-2xl font-bold rounded-lg px-2 py-1 w-24"
         >
           {options.map((option) => {
             return (

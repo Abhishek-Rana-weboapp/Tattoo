@@ -1,16 +1,13 @@
-import { decodeUrls } from "../../commonFunctions/Encoders";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IoMdAttach } from "react-icons/io";
 import {useAppointmentContext} from "../../context/AppointmentContext"
+import { apiUrl } from "../../url";
 
 const AppointmentDetails = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const {appointment} = useAppointmentContext()
-
-
-  console.log(appointment);
 
 
   if (appointment === null) {
@@ -20,6 +17,7 @@ const AppointmentDetails = () => {
       </div>
     );
   }
+
 
   return (
     <div className="text-white flex-1 flex flex-col gap-10 overflow-hidden">
@@ -34,7 +32,7 @@ const AppointmentDetails = () => {
               type="text"
               readOnly
               className="rounded-md p-2 text-black focus-within:outline-none"
-              value={appointment?.firstname + " " + appointment?.lastname}
+              value={appointment?.firstName + " " + appointment?.lastName}
             />
           </div>
           <div className="flex gap-2 items-center ">
@@ -66,7 +64,7 @@ const AppointmentDetails = () => {
               type="text"
               readOnly
               className="rounded-md p-2 text-black focus-within:outline-none"
-              value={new Date(appointment?.Date).toLocaleDateString("en-GB", {
+              value={new Date(appointment?.appointment_date).toLocaleDateString("en-GB", {
                 day: "2-digit",
                 month: "short",
                 year: "numeric",
@@ -80,7 +78,7 @@ const AppointmentDetails = () => {
               type="text"
               readOnly
               className="rounded-md p-2 text-black focus-within:outline-none"
-              value={appointment?.ArtistPiercerNames}
+              value={appointment?.artistName}
             />
           </div>
         </div>
@@ -89,7 +87,7 @@ const AppointmentDetails = () => {
             <label className="font-bold md:text-lg w-36">Verification ID:</label>
             <a href={appointment?.clientId} target="_blank">
               <img
-                src={appointment?.clientId}
+                src={`${apiUrl}${appointment?.clientId}`}
                 className="object-cover w-52 h-32 rounded-md shadow"
               />
             </a>
@@ -102,7 +100,7 @@ const AppointmentDetails = () => {
               </label>
               <a href={appointment?.guardianId} target="_blank">
                 <img
-                  src={appointment?.guardianId}
+                  src={`${apiUrl}${appointment?.guardianId}`}
                   className="object-cover w-52 h-32 rounded-md shadow"
                 />
               </a>

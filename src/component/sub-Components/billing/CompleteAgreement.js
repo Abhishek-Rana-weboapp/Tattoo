@@ -1,7 +1,6 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
-import UserContext from "../../../context/UserContext";
 import { apiUrl } from "../../../url";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,16 +8,17 @@ import LoaderModal from "../../modal/LoaderModal";
 import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 import Modal from "../../modal/Modal";
 import { useAppointmentContext } from "../../../context/AppointmentContext";
+import { useAuthContext } from "../../../context/AuthContext";
 import toast from "react-hot-toast";
 import axiosInstance from "../../../config/axios";
 
 export default function CompleteAgreement() {
   const {appointment, setAppointment} = useAppointmentContext();
+  const {user} = useAuthContext()
   const { t } = useTranslation();
   const [imgUrl, setImgUrl] = useState();
   const signatureRef = useRef();
   const navigate = useNavigate();
-  const { setAlert, setAlertMessage, alert } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false)
   const [uploading, setUploading]= useState(false)
@@ -58,6 +58,8 @@ const handleSave = async () => {
 
 };
 
+const artistName = `${user?.firstName} ${user?.lastName ? user?.lastName : ""}`;
+
   const handleClear = () => {
     signatureRef?.current?.clear();
     setImgUrl();
@@ -70,7 +72,8 @@ const handleSave = async () => {
     }
     try {
       const updates = {
-        completionSignature:imgUrl
+        completionSignature:imgUrl,
+        artistName
       }
       setLoading(true)
       const res = await axiosInstance.put(`/appointment/${appointment.id}`,updates)
@@ -91,6 +94,7 @@ const handleSave = async () => {
   }
 
   const handleGeneratePDF = async () => {
+    setLoading(true);
     await axios
       .post(
         `${apiUrl}pdf/generate`,
@@ -101,16 +105,17 @@ const handleSave = async () => {
         { headers: AUTHHEADERS() }
       )
       .then((res) => {
-        setAlert(!alert);
-        setAlertMessage(t("PDF uploaded to google drive"));
+        toast.success(t("PDF uploaded to google drive"));
         navigate("/artist-dashboard", { replace: true });
       })
       .catch((err) => {
-        console.log(err);
-      });
+        toast.error(err.response?.data?.message || t("Something went wrong"));
+      }).finally(()=>{
+        setLoading(false);
+      })
   };
 
-  if (loading) {
+  if (loading || uploading) {
     return <LoaderModal />;
   }
 

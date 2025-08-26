@@ -1,11 +1,8 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import InputButton from "../buttons/InputButton";
-import { AUTHHEADERS } from "../../commonFunctions/Headers";
-import axios from "axios";
 import { apiUrl } from "../../url";
 import { useTranslation } from "react-i18next";
-import UserContext from "../../context/UserContext";
 import LoaderModal from "../modal/LoaderModal";
 import axiosInstance from "../../config/axios";
 import toast from "react-hot-toast";
@@ -14,7 +11,6 @@ import { useAppointmentContext } from "../../context/AppointmentContext";
 const UploadFL = ({ setStep, step }) => {
   const {appointment, setAppointment} = useAppointmentContext()
   const { t } = useTranslation();
-  const { setAlert, alert, setAlertMessage } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [flForm, setFlForm] = useState("");
   const [flLoading, setFlLoading] = useState(false);

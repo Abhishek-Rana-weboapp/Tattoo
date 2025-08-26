@@ -1,19 +1,16 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import {useEffect,  useState } from "react";
 import { useTranslation } from "react-i18next";
-import UserContext from "../../context/UserContext";
 import YesNoComponent from "./YesNoComponent";
 import ExplanationComponent from "./ExplanationComponent";
 import { useAppointmentContext } from "../../context/AppointmentContext";
 import DateComponent from "./DateComponent";
+import toast from "react-hot-toast";
 
 const  YesNoSub = ({ question, next, type, prev }) => {
   const { medicalhistory, setMedicalHistory } = useAppointmentContext();
   const [selected, setSelected] = useState("");
   const [subState, setSubState] = useState({});
-  const { alert, setAlert, setAlertMessage, formData, setFormData } =
-    useContext(UserContext);
   const { t } = useTranslation();
-  const ref = useRef()
 
   useEffect(() => {
     if(Object.keys(medicalhistory).includes(question.id.toString())){
@@ -47,7 +44,7 @@ const  YesNoSub = ({ question, next, type, prev }) => {
                 return acc;
               }, {}))
             }
-            }, [question, formData, medicalhistory]);
+            }, [question,  medicalhistory]);
             
             
             function hasEmptyValue(obj) {
@@ -70,14 +67,12 @@ const  YesNoSub = ({ question, next, type, prev }) => {
 
   const handleNext = () => {
     if (selected === "") {
-      setAlert(!alert);
-      setAlertMessage(t("Please select an option"));
+      toast.error(t("Please select an option"));
       return;
     } else {
       if (selected === "yes") {
         if (hasEmptyValue(subState)) {
-          setAlert(!alert);
-          setAlertMessage(t("Please enter all details"));
+          toast.error(t("Please enter all details"));
           return;
         }
         setMedicalHistory((prev) => ({
@@ -93,7 +88,6 @@ const  YesNoSub = ({ question, next, type, prev }) => {
         [question.id]: { ans: selected },
       }));
 
-      // setFormData({ ...formData, [question.id]: { ans: selected } });
       next(); // here provide the handleNext function recieved in props
       return
     }

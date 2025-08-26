@@ -1,12 +1,10 @@
-import { useContext, useRef } from 'react'
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import SignatureCanvas from 'react-signature-canvas'
-import UserContext from '../../context/UserContext'
 
 export default function SignatureModal({ handleSave , handleClear, showPopup, setShowPopup , setSignatureRef}) {
 
   const {t} = useTranslation()
-  const {alert , setAlert} = useContext(UserContext)
   const signatureRef = useRef()
 
   setSignatureRef(signatureRef)

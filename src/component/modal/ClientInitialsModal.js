@@ -1,8 +1,8 @@
-import { useContext, useRef, useState } from "react";
-import UserContext from "../../context/UserContext";
+import { useRef} from "react";
 import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 import { useMediaQuery } from "react-responsive";
+import toast from "react-hot-toast";
 
 const ClientInitialsModal = ({
   cursiveSignatureImage,
@@ -14,19 +14,17 @@ const ClientInitialsModal = ({
   setDrawnSignature,
   storedInitials,
 }) => {
-  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const signatureRef = useRef();
 
   const handleSignatureSave = () => {
     if (signatureRef?.current?.isEmpty()) {
-      setAlertMessage(t("Please add your signature"));
-      setAlert(!alert);
-    } else {
+      toast.error(t("Please provide your signature"));
+      return;
+    } 
       const dataUrl = signatureRef?.current?.toDataURL();
       setDrawnSignature(dataUrl);
-    }
   };
 
   const handleClear = () => {

@@ -1,8 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { apiUrl } from "../url";
-import axios from "axios";
-import { AUTHHEADERS } from "../commonFunctions/Headers";
-import UserContext from "../context/UserContext";
+import {  useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Modal from "./modal/Modal";
@@ -10,15 +6,14 @@ import { states } from "../data/states";
 import Loader from "./loader/Loader";
 import {useAuthContext} from "../context/AuthContext"
 import axiosInstance from "../config/axios";
+import toast from "react-hot-toast";
 
 const CustomerInfo = () => {
   const {user, setUser} = useAuthContext()
   const [showPopup_, setShowPopup_] = useState(false)
   const [loading, setLoading] = useState(false)
-  const {alert, setAlert, setAlertMessage} = useContext(UserContext)
   const navigate = useNavigate()
   const {t} = useTranslation()
-  const minor = sessionStorage.getItem("minor") || ""
 
 
     const [userData, setUserData] = useState({
@@ -64,9 +59,7 @@ const CustomerInfo = () => {
       e.preventDefault();
       setLoading(true)
       if(!userData.address || !userData.city || !userData.state || !userData.zip || !userData.gender || !userData.race ){
-       setAlertMessage(t("Please fill all the details"))
-        setAlert(!alert)
-        setLoading(false)
+       toast.error(t("Please fill all the details"))
         return
       }
       try {
@@ -80,8 +73,7 @@ const CustomerInfo = () => {
            }
         }
       } catch (error) {
-        setAlertMessage(t("Something went wrong"))
-        setAlert(!alert)
+        toast.error(t("Something went wrong"))
       }finally{
         setLoading(false)
       }

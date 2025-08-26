@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../context/UserContext";
 import { useTranslation } from "react-i18next";
 import VerifyUpload from "./sub-Components/VerifyUpload";
 import VerifyPin from "./sub-Components/VerifyPin";
@@ -17,7 +16,6 @@ const IDVerificationComponent = () => {
   const { t } = useTranslation();
   const { appointment, setAppointment } = useAppointmentContext();
   const navigate = useNavigate();
-  const { alert, setAlert, setAlertMessage } = useContext(UserContext);
   const [step, setStep] = useState(0);
   const [pin, setPin] = useState();
   const [spanMessage, setSpanMessage] = useState();
@@ -30,8 +28,7 @@ const IDVerificationComponent = () => {
   const handlePinSubmit = (e) => {
     e.preventDefault()
     if (!pin) {
-      setAlertMessage(t("Please provide the pin"));
-      setAlert(!alert);
+      toast.error(t("Please provide the pin"));
     } else {
       if (parseInt(pin) === 1234) {
         setStep(1);
@@ -144,7 +141,7 @@ const IDVerificationComponent = () => {
             <button
               className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
               onClick={() =>
-                appointment.typeofservice === "tattoo" && UserContext.minor
+                appointment.typeofservice === "tattoo" && appointment.minor
                   ? setStep(3)
                   : setStep(2)
               }

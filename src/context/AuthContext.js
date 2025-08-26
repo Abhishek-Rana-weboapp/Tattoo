@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { apiUrl } from "../url";
 import { AUTHHEADERS } from "../commonFunctions/Headers";
 import { createInitialsAndFullName } from "../utils/helperFunctions";
-import i18n from "i18next"
+import i18n from "i18next";
 
 const AuthContext = createContext();
 
@@ -16,7 +16,8 @@ export const AuthContextProvider = ({ children }) => {
   const [fullName, setFullName] = useState("");
   const [guardianfullName, setGuardianFullName] = useState("");
   const [guardianInfo, setGuardianInfo] = useState({});
-  const [updateValues, setUpdateValues] = useState({})
+  const [updateValues, setUpdateValues] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
 
   const checkAuth = async () => {
     try {
@@ -46,33 +47,33 @@ export const AuthContextProvider = ({ children }) => {
       setInitials(initials);
       setFullName(fullname);
       let newUpdateValues = {
-        userName : user.userName,
-        firstName : user.firstName,
-        lastName:user.lastName ? user.lastName : "",
-        minor : user.minor,
-        initials : initials,
-      }
+        userName: user.userName,
+        firstName: user.firstName,
+        lastName: user.lastName ? user.lastName : "",
+        minor: user.minor,
+        initials: initials,
+      };
 
       if (user.minor && user.guardianInfo) {
-          const guardianInfoObj = JSON.parse(user.guardianInfo);
-          const { initials: guardianInitials, fullname: guardianFullName } =
-            createInitialsAndFullName(
-              guardianInfoObj.firstName,
-              guardianInfoObj.lastName
-            );
-          setGuardianInfo(guardianInfoObj);
-          setGuardianFullName(guardianFullName);
-          setGuardianInitials(guardianInitials);
-          newUpdateValues.guardianInfo = user.guardianInfo;
-          newUpdateValues.guardianInitials = guardianInitials;
+        const guardianInfoObj = JSON.parse(user.guardianInfo);
+        const { initials: guardianInitials, fullname: guardianFullName } =
+          createInitialsAndFullName(
+            guardianInfoObj.firstName,
+            guardianInfoObj.lastName
+          );
+        setGuardianInfo(guardianInfoObj);
+        setGuardianFullName(guardianFullName);
+        setGuardianInitials(guardianInitials);
+        newUpdateValues.guardianInfo = user.guardianInfo;
+        newUpdateValues.guardianInitials = guardianInitials;
       }
       setUpdateValues(newUpdateValues);
 
-      i18n.changeLanguage(user.lang)
+      i18n.changeLanguage(user.lang);
     }
   }, [user]);
 
-  console.log({updateValues})
+  console.log({ updateValues });
 
   return (
     <AuthContext.Provider
@@ -92,7 +93,9 @@ export const AuthContextProvider = ({ children }) => {
         setFullName,
         guardianInfo,
         setGuardianInfo,
-        updateValues
+        updateValues,
+        isVisible,
+        setIsVisible,
       }}
     >
       {children}

@@ -1,13 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import UserContext from '../../context/UserContext'
 import Navigation from '../navigation/Navigation'
 import { useAppointmentContext } from '../../context/AppointmentContext'
+import toast from 'react-hot-toast'
 
 const  YesNoExplain = ({question, next, prev,}) => {
     const [selected, setSelected] = useState("")
     const {medicalhistory, setMedicalHistory} = useAppointmentContext();
-    const {alert, setAlert, setAlertMessage, formData, setFormData} = useContext(UserContext)
     const [explanation, setExplanation] = useState("")
     const {t}= useTranslation()
     const inputRef = useRef()   
@@ -36,14 +35,12 @@ const  YesNoExplain = ({question, next, prev,}) => {
 
     const handleNext = ()=>{
         if(selected ===  ""){
-            setAlert(!alert)
-            setAlertMessage(t('Please select an option'))
+            toast.error(t('Please select an option'))
             return 
         }else{
           if(selected === "yes"){
             if(explanation === ""){
-              setAlert(!alert)
-              setAlertMessage(t('Please enter an explanation'))
+              toast.error(t('Please enter an explanation'))
               return 
             }
           }

@@ -1,11 +1,9 @@
-import { useContext, useEffect } from "react";
 import Tattoo from "../assets/tattoo.png";
 import microblading from "../assets/microblading.png";
 import piercings from "../assets/piercings.png";
 import removal from "../assets/removal.png";
 import smp from "../assets/smp.png";
 import tooth from "../assets/tooth.png";
-import UserContext from "../context/UserContext";
 import DisplayCard from "./card/DisplayCard";
 import microblading_active from "../assets/microblading_active.png";
 import smp_gold from "../assets/smp_gold.png";
@@ -18,85 +16,11 @@ import { useAppointmentContext } from "../context/AppointmentContext";
 function Dashboard() {
   const { t } = useTranslation();
   const { appointmentData, setAppointmentData } = useAppointmentContext();
-  const {
-    user,
-    setUser,
-    setFormData,
-    setemerFormData,
-    setdrFormData,
-    setInitials,
-    setharmlessagreement,
-    setGaurdianInitials,
-    setCount,
-    setDescription,
-    finalUser,
-    setFinalUser,
-    setCurrentSelection,
-    setSelectedTeeth,
-  } = useContext(UserContext);
 
   const handleTattooTypeSelect = (selectedType) => {
-    setUser({ ...user, selectedTattooType: selectedType });
-    setFinalUser({ ...finalUser, selectedTattooType: selectedType });
-    sessionStorage.setItem("typeofservice", selectedType);
     setAppointmentData((prev) => ({ ...prev, typeofservice: selectedType }));
   };
 
-  useEffect(() => {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("typeofservice");
-    sessionStorage.removeItem("emerformData");
-    sessionStorage.removeItem("drformData");
-    sessionStorage.removeItem("medicalHistory");
-    if (user?.selectedTattooType !== null) {
-      setUser({
-        selectedTattooType: null,
-        1: null,
-        2: null,
-        3: null,
-        4: null,
-      });
-
-      setFinalUser({});
-
-      setFormData({});
-      setCurrentSelection(1);
-      setCount(1);
-
-      setharmlessagreement({
-        name: "",
-        initials: "",
-        initialsImg: "",
-        signatureurl: "",
-        agreed: false,
-        gaurdianInitials: "",
-        gaurdianInitialsImg: "",
-        gaurdianSignature: "",
-        gaurdianAgreed: false,
-        gaurdianName: "",
-      });
-
-      setemerFormData({
-        name: "",
-        phone: "",
-        city: "",
-        state: "Florida",
-      });
-      setDescription({});
-      setSelectedTeeth([]);
-
-      setdrFormData({
-        name: "",
-        phone: "",
-        city: "",
-        state: "Florida",
-        useDoctorRecommendation: false,
-      });
-
-      setInitials({});
-      setGaurdianInitials({});
-    }
-  }, []);
 
   const menu = [
     {
@@ -158,7 +82,7 @@ function Dashboard() {
               type={menu?.type}
               link={menu?.link}
               onClick={handleTattooTypeSelect}
-              selectedType={user?.selectedTattooType}
+              selectedType={appointmentData?.typeofservice}
               src={menu?.src}
             />
           );

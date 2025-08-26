@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import {  useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "../component/login";
 import SignUp from "../component/signup";
@@ -17,16 +17,11 @@ import ConsentForm from "../component/consent";
 import HoldHarmlessAgreement from "../component/harmlessAgreement";
 import TermsOfService from "../component/termofService";
 // import UserContextProvider from '../context/UserContextProvider';
-import ConsentFormGuard from "../component/consentForm";
 import IDVerificationComponent from "../component/employeeVerfy";
 import AdminDashboard from "../component/Admin";
-import UserContext from "../context/UserContext";
 import PrivateRoutes from "./PrivateRoutes";
-import AlertModal from "../component/modal/AlertModal";
 import ArtistDashboard from "../component/artistDashboard/ArtistDashboard";
 import BillingComponent from "../component/billing";
-import AdminInvite from "../component/artistDashboard/AdminInvite";
-import BriefDescription from "../component/tatoodashboard/BriefDescription";
 import GaurdianInfo from "../component/GaurdianInfo";
 import Complications from "../component/artistDashboard/Complications";
 import TattooCount from "../component/TattooCount";
@@ -36,29 +31,18 @@ import { FaPowerOff } from "react-icons/fa";
 import AppointmentDetails from "../component/artistDashboard/AppointmentDetails";
 import i18n from "i18next";
 import { Toaster } from "react-hot-toast";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function RoutesComponent() {
   const {
     isVisible,
     setIsVisible,
-    alert,
-    user,
-    setUser,
-    finalUser,
-    setFinalUser,
-    description,
-    setDescription,
-    formData,
-    setFormData,
-    emerformData,
-    setemerFormData,
-    drformData,
-    setdrFormData,
-  } = useContext(UserContext);
+  } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
+
     if (
       location.pathname === "/" ||
       location.pathname === "/signup" ||
@@ -68,48 +52,7 @@ export default function RoutesComponent() {
     } else {
       setIsVisible(true);
     }
-    const storedUser = JSON.parse(sessionStorage.getItem("user"));
-    const storedFinalUser = JSON.parse(sessionStorage.getItem("finalUser"));
-    const storedDescription = JSON.parse(sessionStorage.getItem("description"));
-    const storedMedicalHistory = sessionStorage.getItem("medicalHistory");
-    const storedemerformData = sessionStorage.getItem("emerformData");
-    const storeddrformData = sessionStorage.getItem("drformData");
-
-    if (storedFinalUser) {
-      setFinalUser(storedFinalUser);
-    }
-    if (storedDescription) {
-      setDescription(storedDescription);
-    }
-
-    if (storedUser) {
-      setUser(storedUser);
-    }
-    if (storedMedicalHistory) {
-      setFormData(JSON.parse(storedMedicalHistory));
-    }
-    if (storedemerformData) {
-      setemerFormData(JSON.parse(storedemerformData));
-    }
-    if (storeddrformData) {
-      if (
-        storeddrformData.name !== "" &&
-        storeddrformData.state !== "Florida" &&
-        storeddrformData.city !== "" &&
-        storeddrformData.phone !== ""
-      ) {
-        setdrFormData(JSON.parse(storeddrformData));
-      }
-    }
     const handleBeforeUnload = (event) => {
-      sessionStorage.setItem("user", JSON.stringify(user));
-      sessionStorage.setItem("finalUser", JSON.stringify(finalUser));
-      sessionStorage.setItem("description", JSON.stringify(description));
-      if (Object.keys(formData).length > 0) {
-        sessionStorage.setItem("medicalHistory", JSON.stringify(formData));
-      }
-      sessionStorage.setItem("emerformData", JSON.stringify(emerformData));
-      sessionStorage.setItem("drformData", JSON.stringify(drformData));
       event.preventDefault();
       // Chrome requires returnValue to be set
       event.returnValue = "";
@@ -143,12 +86,11 @@ export default function RoutesComponent() {
   return (
     <>
       <Toaster />
-      {alert && <AlertModal />}
       {isVisible && (
-        <div className="flex justify-center relative">
-          <img src="/Title.png" alt="logo" className="w-4/5 md:w-2/5"></img>
+        <div className="flex justify-center relative w-full max-w-3xl">
+          <img src="/Title.png" alt="logo" className="w-3/5 object-cover"></img>
           <button
-            className="yellowButton px-4 py-2 rounded-3xl font-semibold md:block hidden absolute right-10 top-5"
+            className="yellowButton px-4 py-2 rounded-3xl font-semibold md:block hidden absolute right-5 top-3"
             onClick={handleLogout}
           >
             Log Out
@@ -167,7 +109,6 @@ export default function RoutesComponent() {
         <Route exact path="/signup" element={<SignUp />} />\
         <Route exact path="/forget_password" element={<ForgetPassword />} />
         <Route exact path="/reset_password" element={<Resetpassword />} />
-        <Route exact path="/invite_artist" element={<AdminInvite />} />
         {/* <Route element={<PrivateRoutes/>} > */}
         <Route
           exact
@@ -223,7 +164,6 @@ export default function RoutesComponent() {
             </PrivateRoutes>
           }
         />
-        <Route exact path="/description" element={<BriefDescription />} />
         <Route
           exact
           path="/piercing"
@@ -320,15 +260,6 @@ export default function RoutesComponent() {
           element={
             <PrivateRoutes>
               <IDVerificationComponent />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          exact
-          path="/consent-guard"
-          element={
-            <PrivateRoutes>
-              <ConsentFormGuard />
             </PrivateRoutes>
           }
         />

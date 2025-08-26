@@ -79,41 +79,6 @@ export default function PriceComponent()
     navigate("/artist-dashboard")
   }
 
-  // const handleNext = async()=>{
-  //   if(price && fix){
-  //     setLoading(true)
-  //     const data = {
-  //     updates:[
-  //       {
-  //         id:updateAppointment?.id,
-  //         updateField:"price",
-  //         updateValue:price
-  //       },
-  //       {
-  //         id:updateAppointment?.id,
-  //         updateField:"fix_price",
-  //         updateValue:fix
-  //       },
-  //       {
-  //         id:updateAppointment?.id,
-  //         updateField:"process_step",
-  //         updateValue:2
-  //       }
-  //     ]
-  //   }
-  //     await axios.post(`${apiUrl}artist/post_new`, data, {headers:AUTHHEADERS()})
-  //     .then((res) => {
-  //       setLoading(false)
-  //       setUpdateAppointment(res.data.updatedtable);
-  //       navigate(`/billing/${updateAppointment?.id}/${res.data.updatedtable.process_step}`);
-  //     })
-  //     .catch(err=>{
-  //       setLoading(false)
-  //       setAlertMessage(t("Something went wrong"))
-  //       setAlert(!alert)
-  //     })
-  //   }
-  // }
 
   if(loading){
     return <LoaderModal/>

@@ -1,13 +1,12 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import {useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import UserContext from '../../context/UserContext'
 import { useAppointmentContext } from '../../context/AppointmentContext'
+import toast from 'react-hot-toast'
 
 const ExplanationComponent = ({question, type,inputType, next, prev, subState, setSubState}) => {
     const [input, setInput] = useState("")
     const { medicalhistory, setMedicalHistory } = useAppointmentContext();
     const {t} = useTranslation()
-    const {setAlert, alert, setAlertMessage, setFormData, formData} = useContext(UserContext)
     const inputRef = useRef(null)
 
 
@@ -29,8 +28,7 @@ const ExplanationComponent = ({question, type,inputType, next, prev, subState, s
 
     const handleNext = ()=>{
        if(input === ""){
-         setAlertMessage(t("Please Enter an Answer"))
-         setAlert(!alert)
+         toast.error(t("Please provide an answer"));
          return
        }else{
         //  setFormData(prev=>({...prev, [question.id] :{ans : input}}))

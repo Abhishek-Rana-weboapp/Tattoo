@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { medicalQuestions } from "../../data/MedicalQuestions";
 import YesNoComponent from "./YesNoComponent";
-import UserContext from "../../context/UserContext";
 import YesNoOption from "./YesNoOption";
 import { useNavigate } from "react-router-dom";
 import YesNoSub from "./YesNoSub";
@@ -26,7 +25,6 @@ const NewMedicalHistory = () => {
   const [showPopup_, setShowPopup_] = useState(false);
   const { t } = useTranslation();
 
-  console.log({appointmentData})
 
   useEffect(() => {
     if (appointmentData) {

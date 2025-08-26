@@ -1,9 +1,7 @@
-import { useContext } from 'react'
-import UserContext from '../../context/UserContext'
+
 import { useTranslation } from 'react-i18next'
 
 export default function CustomAlertModal({children , onClick , message}) {
-   const {alertMessage , setAlertMessage ,alert , setAlert} = useContext(UserContext)
    const {t} = useTranslation()
 
   return (

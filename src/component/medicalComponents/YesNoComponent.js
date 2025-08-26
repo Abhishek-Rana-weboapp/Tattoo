@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import UserContext from "../../context/UserContext";
 import { useAppointmentContext } from "../../context/AppointmentContext";
+import toast from "react-hot-toast";
 
 const YesNoComponent = ({
   question,
@@ -14,8 +14,6 @@ const YesNoComponent = ({
   const { medicalhistory, setMedicalHistory } = useAppointmentContext();
 
   const [selected, setSelected] = useState("");
-  const { alert, setAlert, setAlertMessage} =
-    useContext(UserContext);
   const { t } = useTranslation();
 
 
@@ -40,8 +38,7 @@ const YesNoComponent = ({
 
   const handleNext = () => {
     if (selected === "") {
-      setAlert(!alert);
-      setAlertMessage(t("Please select an option"));
+      toast.error(t("Please select an option"));
       return;
     } else {
       // setFormData((prev) => ({ ...prev, [question.id]: { ans: selected } }));

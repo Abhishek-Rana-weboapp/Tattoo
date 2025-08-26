@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
 import { PiUserCircleFill } from "react-icons/pi";
 import { CiLock } from "react-icons/ci";
-import UserContext from "../context/UserContext";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import i18n from "i18next";
 import Loader from "./loader/Loader";
@@ -22,7 +21,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setIsVisible } = useContext(UserContext);
+  const { setIsVisible } = useAuthContext();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 

@@ -1,17 +1,16 @@
-import { useContext, useState } from 'react';
+import {useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png"
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import UserContext from '../context/UserContext';
 import Loader from './loader/Loader';
+import toast from 'react-hot-toast';
 
 function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword_, setShowPassword_] = useState(false);
-  const {alert, setAlert, setAlertMessage} = useContext(UserContext)
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const {t} = useTranslation()
   const navigate = useNavigate();
@@ -30,13 +29,11 @@ function ResetPassword() {
     setLoading(true)
     e.preventDefault();
     if (!(confirm_psw === psw)) {
-      setAlertMessage('Passwords do not match. Please try again.');
-      setAlert(!alert)
+      toast.error(t("Passwords do not match. Please try again."));
       return
     } 
     if (!passReg.test(confirm_psw)) {
-      setAlertMessage(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"));
-      setAlert(!alert);
+      toast.error(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"));
       return;
     }
       const data = {
@@ -50,8 +47,7 @@ function ResetPassword() {
         }
       })
       .catch(err=>{
-        setAlertMessage(t("Password reset failed"))
-        setAlert(!alert)
+        toast.error(t("Password reset failed"));
         return
       }).finally(()=>{
         setLoading(false)
