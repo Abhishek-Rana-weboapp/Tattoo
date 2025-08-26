@@ -13,8 +13,8 @@ import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
 
 export default function UploadAfterImage() {
   const { appointment, setAppointment } = useAppointmentContext();
-  const [images, setImages] = useState(null);
-  const [videos, setVideos] = useState(null);
+  const [images, setImages] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [imageLoading, setImageLoading] = useState(false);
   const [videoLoading, setVideoLoading] = useState(false);
 
@@ -46,8 +46,8 @@ export default function UploadAfterImage() {
   },[appointment])
 
   const handleNext = async () => {
-    const hasImages = images && images.length > 0;
-    const hasVideos = videos && videos.length > 0;
+    const hasImages = images.length > 0;
+    const hasVideos = videos.length > 0;
     const isTattooNotSelected =
       appointment.typeofservice === "tattoo" && selected === "no";
 
@@ -113,11 +113,12 @@ export default function UploadAfterImage() {
       });
 
       const response = await axiosInstance.post("/upload", formData);
+      e.target.value = null;
       if (response.status === 200) {
         if (name === "image") {
-          setImages(response.data.profile_urls);
+          setImages(prev=>([...prev, ...response.data.profile_urls]));
         } else {
-          setVideos(response.data.profile_urls);
+          setVideos(prev=>([...prev, ...response.data.profile_urls]));
         }
       }
     } catch (error) {
@@ -133,6 +134,14 @@ export default function UploadAfterImage() {
   if (loading) {
     return <LoaderModal />;
   }
+
+  const handleDeleteImage = (index) => {
+    setImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleDeleteVideo = (index) => {
+    setVideos((prev) => prev.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="flex flex-col gap-3 w-full h-full items-center overflow-x-hidden ">
@@ -155,7 +164,7 @@ export default function UploadAfterImage() {
                     />
                     <IoMdClose
                       className="absolute cursor-pointer top-1.5 right-1.5 hover:text-gray-500"
-                      // onClick={() => handleDeleteImage(index)}
+                      onClick={() => handleDeleteImage(index)}
                     />
                   </div>
                 );
@@ -188,7 +197,7 @@ export default function UploadAfterImage() {
                     </video>
                     <IoMdClose
                       className="absolute cursor-pointer top-1.5 right-1.5 hover:text-white"
-                      // onClick={() => handleDeleteVideo(index)}
+                      onClick={() => handleDeleteVideo(index)}
                     />
                   </div>
                 );
