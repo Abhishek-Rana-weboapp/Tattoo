@@ -422,5 +422,7 @@
   "During the service we provided were there any complications between you, the client, or any other member of Fame Tattoos Staff? Example: (fainting, contamination, unable to fulfill service, argument, or misunderstanding)":"¿Durante el servicio que proporcionamos, hubo alguna complicación entre tú, el cliente, u otro miembro del personal de Fame Tattoos? Ejemplo: (desmayo, contaminación, incapacidad para completar el servicio, discusión o malentendido)",
   "Please sit as still as possible during the procedure, your final satisfaction is our priority.":"Por favor, permanezca lo más quieto posible durante el procedimiento. Su satisfacción final es nuestra prioridad.",
   "ID should be either an image(.jpg /.png) or pdf": "La identificación debe ser una imagen (.jpg / .png) o un archivo PDF.",
-  "Please provide a before procedure image or video":"Por favor, proporciona una imagen o video antes del procedimiento."
+  "Please provide a before procedure image or video":"Por favor, proporciona una imagen o video antes del procedimiento.",
+  "Please Select Artist Name" : "Por favor, seleccione el nombre del artista."
+
 }

@@ -8,20 +8,20 @@ import LoaderModal from "../../modal/LoaderModal";
 import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 import Modal from "../../modal/Modal";
 import { useAppointmentContext } from "../../../context/AppointmentContext";
-import { useAuthContext } from "../../../context/AuthContext";
 import toast from "react-hot-toast";
 import axiosInstance from "../../../config/axios";
+import { artistNames } from "../../../data/artistsnames";
 
 export default function CompleteAgreement() {
   const {appointment, setAppointment} = useAppointmentContext();
-  const {user} = useAuthContext()
   const { t } = useTranslation();
   const [imgUrl, setImgUrl] = useState();
   const signatureRef = useRef();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false)
-  const [uploading, setUploading]= useState(false)
+  const [uploading, setUploading]= useState(false);
+  const [artistName, setArtistName] = useState("")
 
   useEffect(() => {
     if (appointment) {
@@ -58,14 +58,16 @@ const handleSave = async () => {
 
 };
 
-const artistName = `${user?.firstName} ${user?.lastName ? user?.lastName : ""}`;
-
   const handleClear = () => {
     signatureRef?.current?.clear();
     setImgUrl();
   };
 
   const handleNext = async () => {
+    if(!artistName){
+      toast.error("Please select artist name")
+      return
+    }
     if(!imgUrl){
       toast.error("Please provide a signature")
       return
@@ -115,6 +117,10 @@ const artistName = `${user?.firstName} ${user?.lastName ? user?.lastName : ""}`;
       })
   };
 
+  const handleSelectArtistName = (e)=>{
+    setArtistName(e.target.value)
+  }
+
   if (loading || uploading) {
     return <LoaderModal />;
   }
@@ -148,6 +154,18 @@ const artistName = `${user?.firstName} ${user?.lastName ? user?.lastName : ""}`;
             "hereby confirm that I have thoroughly reviewed the client's submitted information, including their medical history, emergency contact details, and doctor's information. I have also ensured that the client has duly signed and agreed to the waiver releases, hold harmless agreement, and terms of service. As a self-employed contractor or employee of Fame Tattoos Inc., I affirm that I have competently completed the services requested by the client at Fame Tattoos Inc., in accordance with their instructions."
           )}
         </p>
+      </div>
+
+      <div className="max-w-80 w-full flex flex-col gap-2 items-center">
+         <h4 className="font-medium uppercase">{t("Please Select Artist Name")}</h4>
+         <select className="bg-white p-2 rounded-xl w-full text-black" onChange={handleSelectArtistName} value={artistName}>
+            <option value="" >{t("Select Artist Name")}</option>
+           {
+            artistNames.map((name, index)=>(
+              <option key={index} value={name} selected={name === artistName}>{name}</option>
+            ))
+           }
+         </select>
       </div>
       <div className="flex flex-col gap-2">
         <div className="">

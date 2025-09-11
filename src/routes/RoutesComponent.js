@@ -32,6 +32,7 @@ import AppointmentDetails from "../component/artistDashboard/AppointmentDetails"
 import i18n from "i18next";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
+import NoServiceSection from "../component/artistDashboard/NoServiceSection";
 
 export default function RoutesComponent() {
   const {
@@ -289,6 +290,14 @@ export default function RoutesComponent() {
               <ArtistDashboard />
             </PrivateRoutes>
           }
+        />
+        <Route 
+           path="/no-service"
+           element={
+            <PrivateRoutes>
+              <NoServiceSection />
+            </PrivateRoutes>
+           }
         />
         <Route
           exact
