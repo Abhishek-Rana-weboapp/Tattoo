@@ -114,13 +114,6 @@ export default function ArtistDashboard() {
         {/* <h1 className="text-center text-yellow-400 font-bold">Artist Dashboard</h1> */}
         {step === 0 && (
           <div className="max-w-4xl mx-auto w-full flex flex-col items-center">
-            <div className="w-full flex justify-end"> 
-              <button className="yellowButton px-4 py-2 rounded-3xl font-semibold" onClick={()=>{
-                navigate("/no-service")
-              }}>
-                 <TranslationWrapper text={"No Service Section"} />
-              </button>
-            </div>
             <h1 className="text-white md:text-2xl text-lg uppercase font-bold mb-4">
               <TranslationWrapper text={"Select the Client"} />
             </h1>
@@ -175,6 +168,18 @@ export default function ArtistDashboard() {
                 })}
               </select>
              </div>
+
+
+              <div className="w-full flex flex-col items-center justify-center gap-3 mt-5"> 
+                <label className="md:text-2xl font-semibold text-lg text-white w-max mx-auto">
+                    No Service Section
+              </label>
+              <button className="yellowButton px-4 py-2 rounded-xl font-bold" onClick={()=>{
+                navigate("/no-service")
+              }}>
+                 <TranslationWrapper text={"No Service Section"} />
+              </button>
+            </div>
           </div>
         )}
 
