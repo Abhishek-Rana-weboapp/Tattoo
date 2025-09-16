@@ -9,6 +9,7 @@ import Modal from "./modal/Modal";
 import TranslationWrapper from "./Layout/TranslationWrapper";
 import ImageGenerator from "./imageCreater/ImageGenerator";
 import ImageWriterGenerator from "./imageCreater/ImageWriterGenerator";
+import SignatureCanvas from 'react-signature-canvas';
 import Button from "./buttons/Button";
 import axiosInstance from "../config/axios";
 import toast from "react-hot-toast";
@@ -26,6 +27,17 @@ function ConsentForm() {
   const [imageBlob, setImageBlob] = useState(null);
   const [step, setStep] = useState(1);
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [signatureRef, setSignatureRef] = useState(null);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    // Clear image blob when switching tabs
+    setImageBlob(null);
+    // Clear signature if switching from draw tab
+    if (tab === 1 && signatureRef) {
+      signatureRef.clear();
+    }
+  };
 
   // Step navigation state
   const [currentPage, setCurrentPage] = useState(1);
@@ -100,11 +112,39 @@ function ConsentForm() {
   };
 
 const handleInitialsAdopt = async () => {
-  if (!imageBlob) return;
+  // Handle signature drawing validation
+  if (activeTab === 2) {
+    if (!signatureRef || signatureRef.isEmpty()) {
+      toast.error("Please draw your signature before adopting");
+      return;
+    }
+    // Convert signature to blob
+    const dataURL = signatureRef.toDataURL();
+    fetch(dataURL)
+      .then(res => res.blob())
+      .then(blob => {
+        handleImageUpload(blob);
+      })
+      .catch(err => {
+        console.error("Error converting signature:", err);
+        toast.error("Failed to convert signature");
+      });
+    return;
+  } else {
+    // Handle text signature validation
+    if (!imageBlob) {
+      toast.error("Please generate your signature before adopting");
+      return;
+    }
+  }
 
+  handleImageUpload(imageBlob);
+};
+
+const handleImageUpload = async (blob) => {
   setUploadingImage(true);
   try {
-    const profileUrl = await uploadImage(imageBlob);
+    const profileUrl = await uploadImage(blob);
 
     if (step === 1) {
       setAppointmentData((prev) => ({
@@ -205,7 +245,7 @@ useEffect(() => {
                   className={`bg-none font-semibold text-black hover:bg-gray-300 ${
                     activeTab === 1 && "bg-gray-300"
                   } p-2 rounded-lg`}
-                  onClick={() => setActiveTab(1)}
+                  onClick={() => handleTabChange(1)}
                 >
                   <TranslationWrapper text={"Written"} />
                 </button>
@@ -213,7 +253,7 @@ useEffect(() => {
                   className={`bg-none font-semibold text-black hover:bg-gray-300 ${
                     activeTab === 2 && "bg-gray-300"
                   } p-2 rounded-lg`}
-                  onClick={() => setActiveTab(2)}
+                  onClick={() => handleTabChange(2)}
                 >
                   <TranslationWrapper text={"Draw"} />
                 </button>
@@ -229,7 +269,74 @@ useEffect(() => {
                     />
                   </div>
                 )}
-                {activeTab === 2 && <ImageWriterGenerator />}
+                {activeTab === 2 && (
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="text-center text-sm text-gray-600 mb-2">
+                      Draw your signature in the box below
+                    </div>
+                    <div className="border-2 border-gray-300 rounded-lg bg-white w-full max-w-md mx-auto">
+                      <SignatureCanvas
+                        ref={setSignatureRef}
+                        penColor="black"
+                        velocityFilterWeight={0.5}
+                        minWidth={1}
+                        maxWidth={3}
+                        canvasProps={{
+                          width: 400,
+                          height: 150,
+                          className: "sigCanvas w-full touch-none",
+                          style: {
+                            border: "1px solid #000",
+                            backgroundColor: "white",
+                            borderRadius: "8px",
+                            width: "100%",
+                            height: "auto",
+                            maxWidth: "100%",
+                            touchAction: "none",
+                          },
+                        }}
+                      />
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
+                        onClick={() => signatureRef && signatureRef.clear()}
+                      >
+                        Clear
+                      </button>
+                      <button
+                        type="button"
+                        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                        onClick={() => {
+                          if (signatureRef && !signatureRef.isEmpty()) {
+                            // Convert dataURL to blob
+                            const dataURL = signatureRef.toDataURL();
+                            fetch(dataURL)
+                              .then(res => res.blob())
+                              .then(blob => {
+                                setImageBlob(blob);
+                                toast.success("Signature saved!");
+                              })
+                              .catch(err => {
+                                console.error("Error converting signature:", err);
+                                toast.error("Failed to save signature");
+                              });
+                          } else {
+                            toast.error("Please draw a signature first");
+                          }
+                        }}
+                      >
+                        Save Signature
+                      </button>
+                    </div>
+                    {imageBlob && (
+                      <div className="text-green-600 text-sm font-medium">
+                        ✓ Signature ready for adoption
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div>
@@ -252,11 +359,15 @@ useEffect(() => {
                   </Button>
                 )}
                 <Button
-                  disabled={uploadingImage}
+                  disabled={uploadingImage || (activeTab === 1 && !imageBlob) || (activeTab === 2 && !imageBlob)}
                   onClick={handleInitialsAdopt}
-                  className="mt-4 shadow"
+                  className={`mt-4 shadow ${(activeTab === 1 && !imageBlob) || (activeTab === 2 && !imageBlob) ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  <TranslationWrapper text={"Adopt & Initial"} />
+                  <TranslationWrapper text={
+                    (activeTab === 1 && !imageBlob) || (activeTab === 2 && !imageBlob) 
+                      ? "Please create signature first" 
+                      : "Adopt & Initial"
+                  } />
                 </Button>
               </div>
             </div>

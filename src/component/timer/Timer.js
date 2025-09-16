@@ -190,7 +190,7 @@ const Timer = () => {
         </div>
       )}
 
-      <div className="text-5xl font-mono">
+      <div className="sm:text-5xl text-3xl font-mono">
         {formatSecondsToHHMMSS(displaySeconds)}
       </div>
 

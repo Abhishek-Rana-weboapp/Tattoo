@@ -63,11 +63,6 @@ export default function ShowBill({ }) {
       <label className="text-xl font-semibold">{t("Price calculation")}</label>
 
       <div className="flex gap-2">
-        <label>{t("Bill by :")}</label>
-        <label>{appointment?.billBy}</label>
-      </div>
-
-      <div className="flex gap-2">
         <label>{t("Total Time :")} </label>
         <label>{formatSecondsToHHMMSS(totalSeconds)}</label>
       </div>

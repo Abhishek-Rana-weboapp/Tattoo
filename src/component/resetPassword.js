@@ -22,6 +22,27 @@ function ResetPassword() {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const token = urlSearchParams.get('uuid');
 
+  // Check if token exists
+  if (!token) {
+    return (
+      <div className="w-full h-full flex flex-col gap-4 justify-center items-center">
+        <img src={Title_logo} className="w-3/6 md:w-1/6"></img>
+        <label className="text-red-500 text-xl font-bold uppercase underline">
+          Invalid Reset Link
+        </label>
+        <p className="text-center text-gray-600">
+          This reset link is invalid or has expired. Please request a new password reset.
+        </p>
+        <Link to="/forget_password" className="yellowButton py-2 px-8 rounded-3xl font-bold">
+          Request New Reset Link
+        </Link>
+        <Link to="/" className="text-right">
+          Back to Login
+        </Link>
+      </div>
+    );
+  }
+
   let passReg =
     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
 
@@ -30,10 +51,12 @@ function ResetPassword() {
     e.preventDefault();
     if (!(confirm_psw === psw)) {
       toast.error(t("Passwords do not match. Please try again."));
+      setLoading(false);
       return
     } 
     if (!passReg.test(confirm_psw)) {
       toast.error(t("Password should be atleast 8 characters with atleast a letter, a number, a special character, 1 uppercase letter"));
+      setLoading(false);
       return;
     }
       const data = {
@@ -43,11 +66,20 @@ function ResetPassword() {
       await axios.post(`${apiUrl}reset_password`, data)
       .then(res=>{
         if(res.status === 200){
+          toast.success(t("Password reset successfully!"));
           navigate("/")
         }
       })
       .catch(err=>{
-        toast.error(t("Password reset failed"));
+        console.error("Reset password error:", err);
+        if (err.response?.status === 404) {
+          toast.error(t("Invalid or expired reset token"));
+        } else if (err.response?.status === 400) {
+          toast.error(t("Invalid request. Please try again."));
+        } else {
+          toast.error(t("Password reset failed. Please try again."));
+        }
+        setLoading(false);
         return
       }).finally(()=>{
         setLoading(false)

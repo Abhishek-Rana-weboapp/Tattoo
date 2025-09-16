@@ -129,7 +129,7 @@ function TattooDashboard({}) {
     <div className="p-4 space-y-4 w-full max-w-3xl flex flex-col gap-2 h-screen ">
       <h1 className="text-white md:text-3xl text-xl uppercase font-bold text-center"><TranslationWrapper text={appointmentData.typeofservice} /></h1>
       <h2 className="md:text-xl font-semibold text-white uppercase text-center">
-        <TranslationWrapper text={`Select location for Tattoo ${currentSelectionIndex}`} />
+        <TranslationWrapper text={!showDescriptionInput ? `Select location for Tattoo ${currentSelectionIndex}` : `Description of Tattoo ${currentSelectionIndex}`} />
       </h2>
 
       {!showDescriptionInput ? (

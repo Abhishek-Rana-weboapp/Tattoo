@@ -141,7 +141,7 @@ const handleSave = async () => {
         </div>
       </Modal>
     }
-    <div className="flex md:w-2/4 w-full flex-col gap-3 items-center overflow-hidden p-2">
+    <div className="flex md:w-2/4 w-full flex-col gap-3 items-center overflow-y-auto  p-2">
       <h3 className="text-white font-bold text-center">
         {t(
           "Staff Acknowledgment of Service Completion and Client Information Verification."

@@ -2,11 +2,13 @@ import {useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
 import { useAuthContext } from "../context/AuthContext";
+import toast from 'react-hot-toast';
 
 function ForgetPassword() {
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [email, setEmail] = useState("");
   const [responseMessage, setResponseMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const { setIsVisible } = useAuthContext()
 
   useEffect(() => {
@@ -15,6 +17,15 @@ function ForgetPassword() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setResponseMessage("");
+    
+    if (!email) {
+      toast.error("Please enter your email address");
+      setLoading(false);
+      return;
+    }
+
     const forgetPasswordData = {
       username: email,
     };
@@ -31,20 +42,29 @@ function ForgetPassword() {
 
     try {
       const response = await fetch(url, config);
+      const responseData = await response.json();
+      
       if(response.status === 404){
-        throw new Error("User not Found")
+        toast.error("User not found");
+        setResponseMessage("User not found");
+        return;
       }
 
       if (!response.ok) {
-        throw new Error("Forget Password request failed");
+        toast.error(responseData.error || "Forgot password request failed");
+        setResponseMessage(responseData.error || "Forgot password request failed");
+        return;
       }
 
-      const responseData = await response.json();
-      setResponseMessage("Check you mail");
-      alert(responseData.message);
-      // Handle the response, e.g., display a success message to the user
+      setResponseMessage("Check your email for reset instructions");
+      toast.success("Password reset email sent successfully!");
+      
     } catch (error) {
-      setResponseMessage(error.message)
+      console.error("Forgot password error:", error);
+      toast.error("Network error. Please try again.");
+      setResponseMessage("Network error. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,8 +94,12 @@ function ForgetPassword() {
           <div className="text-red-400 text-sm mt-3">{responseMessage}</div>
         )}
           <div className="flex flex-col gap-3">
-            <button className="yellowButton py-2 px-8 rounded-3xl font-bold">
-              Reset Password
+            <button 
+              type="submit"
+              disabled={loading}
+              className="yellowButton py-2 px-8 rounded-3xl font-bold disabled:opacity-50"
+            >
+              {loading ? "Sending..." : "Reset Password"}
             </button>
 
             <Link to="/" className="text-right">

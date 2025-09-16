@@ -57,12 +57,12 @@ const CustomerInfo = () => {
 
     const handleSubmit = async(e)=>{
       e.preventDefault();
-      setLoading(true)
       if(!userData.address || !userData.city || !userData.state || !userData.zip || !userData.gender || !userData.race ){
-       toast.error(t("Please fill all the details"))
+        toast.error(t("Please fill all the details"))
         return
       }
       try {
+        setLoading(true)
         const response = await axiosInstance.put(`user/${user.id}`, userData)
         if(response.status === 200){
            setUser(response.data.user)
