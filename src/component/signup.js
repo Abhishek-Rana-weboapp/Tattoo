@@ -87,6 +87,7 @@ function SignUp() {
                   type="text"
                   className="w-full focus:outline-none bg-white p-1"
                   id="firstname"
+                  maxLength={60}
                   placeholder="First Name"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -98,6 +99,7 @@ function SignUp() {
                   type="text"
                   className="w-full focus:outline-none bg-white p-1"
                   id="lastname"
+                  maxLength={60}
                   placeholder="Last Name"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}

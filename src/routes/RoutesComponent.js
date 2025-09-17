@@ -41,13 +41,12 @@ export default function RoutesComponent() {
   } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
+  const publicRoutes = ["/", "/signup", "/forget_password", "/reset_password"];
 
   useEffect(() => {
 
     if (
-      location.pathname === "/" ||
-      location.pathname === "/signup" ||
-      location.pathname === "/forget_password"
+      publicRoutes.includes(location.pathname)
     ) {
       setIsVisible(false);
     } else {

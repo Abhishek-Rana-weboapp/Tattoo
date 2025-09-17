@@ -234,9 +234,10 @@ useEffect(() => {
                   </label>
                   <input
                     type="text"
-                    className="w-20 border-gray-300 border-1 border rounded-lg p-1  Blacksword"
+                    className="w-20 border-gray-300 border-1 border rounded-lg p-1 Blacksword bg-gray-200  cursor-not-allowed opacity-60"
                     value={step === 1 ? initials : guardianInitials}
                     readOnly
+                    disabled
                   />
                 </div>
               </div>

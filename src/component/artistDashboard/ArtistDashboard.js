@@ -16,7 +16,6 @@ import { useAppointmentContext } from "../../context/AppointmentContext";
 export default function ArtistDashboard() {
   const { appointment, setAppointment } = useAppointmentContext();
   const [pendingAppointments, setPendingAppointments] = useState([]);
-  const [noShowAppointments, setNoShowAppointments] = useState([]);
   const [completedAppointments, setCompletedAppointments] = useState([]);
   const { t } = useTranslation();
 
@@ -33,12 +32,6 @@ export default function ArtistDashboard() {
     fetchAppointments("pending")
       .then((appointments) => {
         setPendingAppointments(appointments);
-      })
-      .catch((err) => toast.error("Failed to fetch pending appointments"));
-
-    fetchAppointments("no_show")
-      .then((appointments) => {
-        setNoShowAppointments(appointments);
       })
       .catch((err) => toast.error("Failed to fetch pending appointments"));
 

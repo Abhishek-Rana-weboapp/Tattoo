@@ -94,7 +94,7 @@ function ResetPassword() {
       Reset Password{" "}
     </label>
 
-    <div className="col-md-6">
+    <div className="w-full max-w-md">
       <form
         className="flex flex-col gap-3 justify-between"
         onSubmit={handleFormSubmit}
@@ -104,7 +104,7 @@ function ResetPassword() {
               {/* <CiLock size={30}/> */}
               <input
           type={showPassword ? "text" : "password"}
-            className="p-2 rounded-lg w-full"
+            className="p-2 rounded-lg w-full focus:outline-none placeholder:select-none"
             id="Password"
             placeholder="Enter New Password"
             value={psw}
@@ -115,18 +115,17 @@ function ResetPassword() {
             <div className='flex gap-3 bg-white p-2 rounded-lg items-center w-full'>
               {/* <CiLock size={30}/> */}
               <input
-            type={showPassword_ ? "text" : "password"}
-            className="p-2 rounded-lg w-full"
+            type="password"
+            className="p-2 rounded-lg w-full focus:outline-none placeholder:select-none"
             id="confirm_password"
             placeholder="Confirm Password"
             value={confirm_psw}
             onChange={(e) => setconfirm_psw(e.target.value)}
           />
-          {showPassword_ ? <RiEyeOffFill size={20} onClick={() => setShowPassword_(!showPassword_)}/> : <RiEyeFill size={20}onClick={() => setShowPassword_(!showPassword_)} />}
             </div>
         </div>
         <div className="flex flex-col gap-3">
-          <button disabled={loading} className="yellowButton py-2 px-8 rounded-3xl font-bold">
+          <button disabled={loading} className="yellowButton py-2 px-8 rounded-3xl font-bold flex justify-center items-center">
             {loading ? <Loader /> : "Reset Password"}
           </button>
 

@@ -200,6 +200,7 @@ const CustomerInfo = () => {
               name="race"
               placeholder="Race"
               type="text"
+              maxLength={30}
               className="p-2 rounded-lg text-black md:flex-1"
               value={userData.race}
               onChange={handleInputs}
