@@ -22,7 +22,7 @@ const GaurdianInfo = () => {
       : {
           firstName: "",
           lastName: "",
-          dateOfBirth: new Date(),
+          dateOfBirth: null,
           email: "",
           phoneNumber: "",
           address: "",
@@ -63,22 +63,20 @@ const GaurdianInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   const isEmptyField = Object.entries(guardianInfo)
-    .filter(([key]) => key !== "lastName") // allow lastName to be blank
-    .some(([_, value]) => {
-      if (typeof value === "string") {
-        return value.trim() === ""; // catches whitespace only
-      }
-      if (value instanceof Date) {
-        return isNaN(value.getTime()); // catches invalid dates
-      }
-      return value === null || value === undefined;
-    });
+   // Check for required fields
+   const requiredFields = ['firstName', 'dateOfBirth', 'email', 'phoneNumber', 'address', 'state', 'city', 'zip', 'gender', 'race'];
+   const missingFields = requiredFields.filter(field => {
+     const value = guardianInfo[field];
+     if (typeof value === "string") {
+       return value.trim() === "";
+     }
+     return value === null || value === undefined;
+   });
 
-    if (isEmptyField) {
-      toast.error("Please fill in all fields");
-      return;
-    }
+   if (missingFields.length > 0) {
+     toast.error(`Please fill in: ${missingFields.join(', ')}`);
+     return;
+   }
 
     const today = new Date();
     const dob = new Date(guardianInfo.dateOfBirth);
@@ -97,6 +95,13 @@ const GaurdianInfo = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(guardianInfo.email)) {
       toast.error(t("Please enter a valid email address"));
+      return;
+    }
+
+    // Validate phone number
+    const phoneDigits = guardianInfo.phoneNumber.replace(/\D/g, '');
+    if (phoneDigits.length < 10) {
+      toast.error(t("Please enter a valid phone number (at least 10 digits)"));
       return;
     }
 
