@@ -42,7 +42,7 @@ function EmergencyContactForm() {
       name: "",
       phone: "",
       city: "",
-      state: "Florida",
+      state: "",
     });
   }, []);
 
@@ -129,7 +129,7 @@ function EmergencyContactForm() {
           onSubmit={handleSubmit}
         >
           <div className="flex flex-col gap-3 flex-1 items-center">
-            <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
               <label className="text-white font-semibold text-md md:w-20 w-full text-start">
                 {t("Name")}:
               </label>
@@ -141,7 +141,7 @@ function EmergencyContactForm() {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
               <label className="text-white font-semibold text-md md:w-[85px] w-full text-start">
                 {t("Phone")}:
               </label>
@@ -162,7 +162,7 @@ function EmergencyContactForm() {
                 />
               </div>
             </div>
-            <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
               <label className="text-white font-semibold text-md md:w-20 w-full text-start">
                 {t("City")}:
               </label>
@@ -174,7 +174,7 @@ function EmergencyContactForm() {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+            <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
               <label className="text-white font-semibold text-md md:w-20 w-full text-start">
                 {t("State")}:
               </label>
@@ -184,6 +184,7 @@ function EmergencyContactForm() {
                 className="rounded-md m-1 p-1 md:flex-1 w-full"
                 onChange={handleInputChange}
               >
+                <option value="">Select State</option>
                 {states?.map((state, index) => {
                   return (
                     <option key={state} value={state}>

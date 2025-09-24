@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
 import { PiUserCircleFill } from "react-icons/pi";
@@ -8,13 +8,11 @@ import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import i18n from "i18next";
 import Loader from "./loader/Loader";
 import axios from "axios";
-import { createInitialsAndFullName } from "../utils/helperFunctions";
 import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
 function Login() {
   const {setUser} = useAuthContext();
-  const location = useLocation()
   const [showPassword, setShowPassword] = useState(false);
   const apiUrl = process.env.REACT_APP_API_BASE_URL;
   const [responseMessage, setResponseMessage] = useState("");
@@ -25,7 +23,6 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  console.log(location)
 
   useEffect(() => {
     setIsVisible(false);
@@ -82,10 +79,11 @@ function Login() {
         className="flex flex-col justify-center gap-3 w-full"
       >
         <div className="flex flex-col itmes-center gap-3">
+          <label htmlFor="email" className="text-white">Email</label>
           <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
             <PiUserCircleFill size={30} />
             <input
-              type="email"
+              type="text"
               className="flex-1 focus:outline-none bg-white p-2"
               id="email"
               placeholder="Email"
@@ -94,6 +92,8 @@ function Login() {
             />
             {/* <input className='flex-1' placeholder='Email'/> */}
           </div>
+
+          <label htmlFor="password" className="text-white">Password</label>
           <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
             <CiLock size={30} />
             <input

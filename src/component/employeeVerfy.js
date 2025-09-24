@@ -30,7 +30,7 @@ const IDVerificationComponent = () => {
     if (!pin) {
       toast.error(t("Please provide the pin"));
     } else {
-      if (parseInt(pin) === 1234) {
+      if (parseInt(pin) === 1409) {
         setStep(1);
       } else {
         setSpanMessage("Pin is not correct");
