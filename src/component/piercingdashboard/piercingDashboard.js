@@ -4,9 +4,11 @@ import { piercingBodyLocations } from "../../data/tattooLocations";
 import NavigationButton from "../buttons/NavigationButton";
 import { useAppointmentContext } from "../../context/AppointmentContext";
 import TranslationWrapper from "../Layout/TranslationWrapper";
+import { useTranslation } from "react-i18next";
 
 function PiercingDashboard() {
   const navigate = useNavigate();
+  const {t} = useTranslation();
   const { appointmentData, setAppointmentData, bodyLocation, setBodyLocation } = useAppointmentContext();
   const [step, setStep] = useState(1);
   const [selectionPath, setSelectionPath] = useState({});
@@ -89,12 +91,12 @@ function PiercingDashboard() {
   };
 
   return (
-    <div className="p-4 space-y-4 w-full max-w-3xl flex flex-col gap-2 h-screen ">
+    <div className="p-4 space-y-4 w-full max-w-4xl flex flex-col gap-2 h-screen ">
       <h1 className="text-white md:text-3xl text-xl uppercase font-bold text-center">
         <TranslationWrapper text={appointmentData.typeofservice} />
       </h1>
       <h2 className="md:text-xl font-semibold text-white uppercase text-center">
-        <TranslationWrapper text={`Select location for Piercing ${currentSelectionIndex}`} />
+       {`${t("select location for piercing")} ${currentSelectionIndex}`}
       </h2>
 
       <div className="flex-1">
@@ -109,7 +111,7 @@ function PiercingDashboard() {
               }`}
               onClick={() => handleOptionClick(option)}
             >
-              {option.label}
+              {t(option.label)}
             </button>
           ))}
         </div>
@@ -133,7 +135,7 @@ function PiercingDashboard() {
           onClick={handleBack}
           className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
         >
-          Back
+          {t("Back")}
         </NavigationButton>
 
         {bodyLocation &&
@@ -144,7 +146,7 @@ function PiercingDashboard() {
               onClick={handleDirectNext}
               className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
             >
-              Keep prev selection
+              {t("Keep prev selection")}
             </NavigationButton>
           )}
 
@@ -153,7 +155,7 @@ function PiercingDashboard() {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           disabled={!selectedOption}
         >
-          Next
+          {t("Next")}
         </NavigationButton>
       </div>
     </div>

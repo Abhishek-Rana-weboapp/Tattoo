@@ -185,14 +185,14 @@ function TattooDashboard({}) {
             onClick={handleBack}
             className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
           >
-            Back
+            {t("Back")}
           </NavigationButton>
 
           {bodyLocation && Object.keys(bodyLocation).length === appointmentData.count && currentSelectionIndex === 1 && step ===1 && <NavigationButton
             onClick={handleDirectNext}
             className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
           >
-            Keep prev selection
+            {t("Keep prev selection")}
           </NavigationButton>}
 
         <NavigationButton

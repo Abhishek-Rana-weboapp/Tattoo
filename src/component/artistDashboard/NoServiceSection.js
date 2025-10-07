@@ -162,7 +162,7 @@ const NoServiceSection = () => {
 
         <div className="flex items-center justify-center mt-5 text-black gap-4">
           <button className="yellowButton rounded-xl py-2 px-5 font-bold" onClick={()=>navigate(-1)}>
-            Back
+            {t("Back")}
           </button>
           <button
             className="yellowButton rounded-xl py-2 px-5 font-bold"

@@ -434,17 +434,4 @@ export const piercingBodyLocations = [
   { id: "Shoulder 16g", label: "Shoulder", parentId: "surface-piercing", level: 2 },
   { id: "Stomach 16g", label: "Stomach", parentId: "surface-piercing", level: 2 },
 
-
-   
-  
-   
-   
-
-
-
-
-
-
-
-
 ];

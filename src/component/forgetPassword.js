@@ -90,9 +90,6 @@ function ForgetPassword() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-        {responseMessage && (
-          <div className="text-red-400 text-sm mt-3">{responseMessage}</div>
-        )}
           <div className="flex flex-col gap-3">
             <button 
               type="submit"

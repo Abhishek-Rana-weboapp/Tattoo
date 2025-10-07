@@ -107,7 +107,7 @@ function TermsOfService() {
               "subHeading"
             ) && (
               <label className=" text-[0.60rem] md:text-xl text-white  uppercase text-center ">
-                {pageContents[currentPage - 1].subHeading}
+                {t(pageContents[currentPage - 1].subHeading)}
               </label>
             )}
           <div className="overflow-auto scrollbar-thin scrollbar-track-slate-[#000000] scrollbar-thumb-slate-500 scrollbar-thumb-rounded scrollbar-track-rounded">
@@ -123,7 +123,7 @@ function TermsOfService() {
               "bottomHeading"
             ) && (
               <label className="text-xs md:text-xl text-white  uppercase text-center flex items-center">
-                * {pageContents[currentPage - 1].bottomHeading}
+                * {t(pageContents[currentPage - 1].bottomHeading)}
               </label>
             )}
         </div>
