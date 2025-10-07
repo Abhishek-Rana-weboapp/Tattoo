@@ -19,7 +19,7 @@ const CustomerInfo = () => {
     const [userData, setUserData] = useState({
         address:user.address ?? "",
         city:user.city ?? "",
-        state:user.state ?? "Florida",
+        state:user.state ?? "",
         zip:user.zip ?? "",
         race:user.race ?? "",
         gender:user.gender ?? "",
@@ -155,6 +155,7 @@ const CustomerInfo = () => {
               value={userData.state}
               onChange={handleInputs}
               >
+                <option value="">Select State</option>
                 {
                   states.map(state=><option key={state}>{state}</option>)
                 }

@@ -18,7 +18,6 @@ function DoctorContactForm() {
 
   const navigate = useNavigate();
   const [showPopup_, setShowPopup_] = useState(false);
-  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     if (appointmentData?.doctorInfo) {
@@ -37,7 +36,7 @@ function DoctorContactForm() {
       name: "",
       phone: "",
       city: "",
-      state: "Florida",
+      state: "",
     });
   }, []);
 
@@ -46,23 +45,13 @@ function DoctorContactForm() {
     setDoctorInfo((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckbox = () => {
-    setChecked(!checked);
-    if (!checked) {
-      setDoctorInfo({
-        name: "Carbon Health Urgent Care of Hialeah",
-        phone: "13052001225",
-        city: "Hialeah",
-        state: "Florida",
-      });
-    } else {
-      setDoctorInfo({
-        name: "",
-        phone: "",
-        city: "",
-        state: "Florida",
-      });
-    }
+  const handleUseThisInformation = () => {
+    setDoctorInfo({
+      name: "Carbon Health Urgent Care of Hialeah",
+      phone: "13052001225",
+      city: "Hialeah",
+      state: "Florida",
+    });
   };
 
   const handleNo = () => {
@@ -126,7 +115,7 @@ function DoctorContactForm() {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-4 flex-1">
-          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+          <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Name")}
             </label>
@@ -140,7 +129,7 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+          <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("Phone")}:
             </label>
@@ -153,7 +142,7 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+          <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("City")}:
             </label>
@@ -166,7 +155,7 @@ function DoctorContactForm() {
             />
           </div>
 
-          <div className="w-full md:w-3/6 md:flex md:flex-row flex flex-col justify-between items-center gap-1">
+          <div className="w-full max-w-md md:flex md:flex-row flex flex-col justify-between items-center gap-1">
             <label className="text-white font-semibold text-md md:w-20 w-full text-start">
               {t("State")}:
             </label>
@@ -177,6 +166,7 @@ function DoctorContactForm() {
               onChange={handleInputChange}
             >
               {states?.map((state) => {
+                <option value="">Select State</option>
                 return (
                   <option key={state} value={state}>
                     {state}
@@ -186,21 +176,11 @@ function DoctorContactForm() {
             </select>
           </div>
 
-          <label className="flex items-center  gap-2 text-white font-semibold text-md">
-            <input
-              type="checkbox"
-              className="w-5 h-5"
-              name="recommend"
-              checked={checked}
-              onChange={handleCheckbox}
-            />
-            {t("Use Doctor Recommendation")}
-          </label>
 
-          <div className="w-full md:w-3/6 flex  md:justify-end items-center gap-1">
-            {checked && (
-              <div className="text-white font-semibold text-md">
-                <h2>{t("Doctor Information")}</h2>
+          <div className="w-full md:w-3/6 flex flex-col items-center gap-1">
+             <h2>Use Nearest Doctor</h2>
+              <div className="text-white text-md">
+                <h3 className="font-bold">{t("Doctor Information")}</h3>
                 <p>
                   {t("Carbon Health Urgent Care of Hialeah")}
                   <br />
@@ -209,8 +189,14 @@ function DoctorContactForm() {
                   {t("Address: 915 W 49th St. Hialeah, FL 33012")}
                 </p>
               </div>
-            )}
           </div>
+          <button
+            type="button"
+            onClick={handleUseThisInformation}
+            className="yellowButton py-2 px-6 rounded-3xl font-bold text-black text-sm"
+          >
+            {t("Use This Information")}
+          </button>
         </div>
         <div className="w-full flex justify-between">
           <button
