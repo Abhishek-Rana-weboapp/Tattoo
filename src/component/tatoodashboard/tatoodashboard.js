@@ -12,6 +12,14 @@ function TattooDashboard({}) {
   const [step, setStep] = useState(1);
   const [selectionPath, setSelectionPath] = useState({});
   const {t} = useTranslation()
+
+  // Helper: map an id/label value to a translated label using tattooBodyLocations
+  const translateLocationValue = (value) => {
+    // Find by id first; if not found, try by label
+    const node = tattooBodyLocations.find((n) => n.id === value) || tattooBodyLocations.find((n) => n.label === value);
+    const labelKey = node?.label || String(value);
+    return t(labelKey);
+  }
   // const [bodyLocation, setBodyLocation] = useState({});
   const [currentSelectionIndex, setCurrentSelectionIndex] = useState(1);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -129,8 +137,9 @@ function TattooDashboard({}) {
     <div className="p-4 space-y-4 w-full max-w-3xl flex flex-col gap-2 h-screen ">
       <h1 className="text-white md:text-3xl text-xl uppercase font-bold text-center"><TranslationWrapper text={appointmentData.typeofservice} /></h1>
       <h2 className="md:text-xl font-semibold text-white uppercase text-center">
-        <TranslationWrapper text={!showDescriptionInput ? `Select location for Tattoo ${currentSelectionIndex}` : `Description of Tattoo ${currentSelectionIndex}`} />
-      </h2>
+        <TranslationWrapper text={!showDescriptionInput ? `select location for tattoo` : `description of tattoo`} />
+        {currentSelectionIndex}
+      </h2> 
 
       {!showDescriptionInput ? (
         <div className="flex-1">
@@ -166,17 +175,24 @@ function TattooDashboard({}) {
       )}
 
          <div className="text-white">
-        <h3 className="text-lg mt-4">Selections So Far:</h3>
+        <h3 className="text-lg mt-4">{t("Selections so far")}:</h3>
         <ul className="list-disc ml-6">
-          {bodyLocation && Object.entries(bodyLocation).map(([key, sel]) => (
-            <li key={key} className="text-sm">
-              {key}:{" "}
-              {Object.values(sel)
-                .filter((v, i, arr) => i < arr.length - 1)
-                .join(" > ")}
-              {sel.description ? ` - ${sel.description}` : ""}
-            </li>
-          ))}
+{bodyLocation && Object.entries(bodyLocation).map(([key, sel]) => {
+            // Build parts excluding description and translate each
+            const parts = Object.entries(sel)
+              .filter(([k]) => k !== "description")
+              .map(([, v]) => translateLocationValue(v));
+
+            const displayKey = translateLocationValue(key);
+
+            return (
+              <li key={key} className="text-sm">
+                {displayKey}:{" "}
+                {parts.join(" > ")}
+                {sel.description ? ` - ${sel.description}` : ""}
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -200,7 +216,7 @@ function TattooDashboard({}) {
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           disabled={!showDescriptionInput && !selectedOption}
         >
-          {showDescriptionInput ? "Save" : "Next"}
+          {showDescriptionInput ? t("Save") : t("Next")}
         </NavigationButton>
       </div>
     </div>

@@ -102,7 +102,7 @@ const IDVerificationComponent = () => {
       </h1>
       {finalAlert && (
         <CustomAlertModal
-          message={"Verification Done"}
+          message={t("Verification Done")}
           onClick={handleFinalClick}
         />
       )}

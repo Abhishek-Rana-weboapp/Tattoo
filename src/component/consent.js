@@ -12,12 +12,13 @@ import ImageWriterGenerator from "./imageCreater/ImageWriterGenerator";
 import SignatureCanvas from 'react-signature-canvas';
 import Button from "./buttons/Button";
 import axiosInstance from "../config/axios";
-import toast from "react-hot-toast";
+  import toast from "react-hot-toast";
+  import { useTranslation } from "react-i18next";
 
 function ConsentForm() {
   //  new code
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const { appointmentData, setAppointmentData } = useAppointmentContext();
   const { guardianInitials, guardianfullName, fullName, initials, user } =
     useAuthContext();
@@ -206,12 +207,13 @@ useEffect(() => {
           <div className="w-full h-[70vh] flex flex-col p-2 overflow-y-auto justify-between">
             <div>
               <h2 className="md:text-xl font-bold text-center">
-                Adopt your Initials and Signature
+                {t("Adopt your Initials and Signature")}
               </h2>
               <h2 className="md:text-xl  text-center font-semibold mt-3">
                 {step === 1
-                  ? "Confirm Your Name and Initials"
-                  : "Confirm Guardian's Name and Initials"}
+                  ? t("Confirm Your Name and Initials")
+                  : t("Confirm Guardian's Name and Initials")
+                }
               </h2>
               <div className="flex max-md:flex-col md:items-center items-start justify-between md:gap-10 overflow-hidden">
                 <div className="flex flex-col text-start w-3/4 gap-2">
@@ -260,7 +262,7 @@ useEffect(() => {
                 </button>
               </div>
               <div className="mt-3">
-                <h3 className="text-center font-semibold -mb-2">Signature</h3>
+                <h3 className="text-center font-semibold -mb-2 capitalize">{t("signature")}</h3>
                 {activeTab === 1 && (
                   <div>
                     <ImageGenerator
@@ -304,7 +306,7 @@ useEffect(() => {
                         className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors"
                         onClick={() => signatureRef && signatureRef.clear()}
                       >
-                        Clear
+                        {t("Clear")}
                       </button>
                       <button
                         type="button"
@@ -328,7 +330,7 @@ useEffect(() => {
                           }
                         }}
                       >
-                        Save Signature
+                        {t("Save Signature")}
                       </button>
                     </div>
                     {imageBlob && (
@@ -366,8 +368,8 @@ useEffect(() => {
                 >
                   <TranslationWrapper text={
                     (activeTab === 1 && !imageBlob) || (activeTab === 2 && !imageBlob) 
-                      ? "Please create signature first" 
-                      : "Adopt & Initial"
+                      ? t("Please create signature first") 
+                      : t("Adopt & Initial")
                   } />
                 </Button>
               </div>

@@ -98,7 +98,6 @@ function PiercingDashboard() {
       <h2 className="md:text-xl font-semibold text-white uppercase text-center">
        {`${t("select location for piercing")} ${currentSelectionIndex}`}
       </h2>
-
       <div className="flex-1">
         <div className="grid grid-cols-2 md:gap-x-10 gap-x-2 gap-y-5 w-full">
           {currentOptions.map((option) => (

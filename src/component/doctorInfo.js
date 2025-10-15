@@ -165,8 +165,8 @@ function DoctorContactForm() {
               className="rounded-md m-1 p-1  md:flex-1 w-full text-black"
               onChange={handleInputChange}
             >
+              <option value="">Select State</option>
               {states?.map((state) => {
-                <option value="">Select State</option>
                 return (
                   <option key={state} value={state}>
                     {state}

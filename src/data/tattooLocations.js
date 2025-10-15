@@ -4,8 +4,8 @@ export const tattooBodyLocations = [
   { id: "neck", label: "neck", parentId: null, level: 1 },
   { id: "chest", label: "chest", parentId: null, level: 1 },
   { id: "torso", label: "torso", parentId: null, level: 1 },
-  { id: "arms", label: "arms", parentId: null, level: 1 },
-  { id: "hands", label: "hands", parentId: null, level: 1 },
+  { id: "arm", label: "arm", parentId: null, level: 1 },
+  { id: "hand", label: "hand", parentId: null, level: 1 },
   { id: "pelvic", label: "pelvic", parentId: null, level: 1 },
   { id: "hip", label: "hip", parentId: null, level: 1 },
   { id: "glutes", label: "glutes", parentId: null, level: 1 },
@@ -123,8 +123,8 @@ export const tattooBodyLocations = [
   // { id: "other", label: "Other", parentId: "back", level: 2 },
 
   // arm level 2
-  { id: "left-arm", label: "left arm", parentId: "arms", level: 2 },
-  { id: "right-arm", label: "right arm", parentId: "arms", level: 2 },
+  { id: "left-arm", label: "left arm", parentId: "arm", level: 2 },
+  { id: "right-arm", label: "right arm", parentId: "arm", level: 2 },
 
   // arm -> left-arm -> level3
   {
@@ -216,8 +216,8 @@ export const tattooBodyLocations = [
   { id: "wrist-side", label: "side", parentId: "wrist", level: 4 },
 
   // hand -> level2
-  { id: "left-hand", label: "left hand", parentId: "hands", level: 2 },
-  { id: "right-hand", label: "right hand", parentId: "hands", level: 2 },
+  { id: "left-hand", label: "left hand", parentId: "hand", level: 2 },
+  { id: "right-hand", label: "right hand", parentId: "hand", level: 2 },
 
   // hand -> left-hand-> level3
   { id: "top", label: "top", parentId: "left-hand", level: 3 },

@@ -85,7 +85,7 @@ export const questions = {
   ],
 
   piercing: [
-    "I am at least 18 years of age",
+    "I am at least 18 years of age.",
     "I do not have any mental or medical impairment that could affect my well-being because of my decision to get a piercing(s).",
     "I agree to follow instructions concerning the care of my piercing(s). Any re-piercing will be done at my own expense.",
     "I, being of sound mind and body, I hereby release any and all employees, contractors, agents, or persons representing Fame Tattoos, Inc. from all responsibility. I agree not to sue Fame Tattoos, Inc. or its heirs or assigns in connection with any and all damages, claims, demands, rights, and causes of action of whatever kind or nature, based upon injuries, property damages, or death of myself or any other persons arising from my decisions to have any piercing(s) related work at this time, whether or not caused by any negligence of Fame Tattoos, Inc. and its heirs and employees.",

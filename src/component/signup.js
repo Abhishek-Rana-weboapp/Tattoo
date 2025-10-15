@@ -51,6 +51,8 @@ const ACTION_TYPES = {
   CLEAR_ALL_ERRORS: "CLEAR_ALL_ERRORS",
 };
 
+
+
 // Reducer function that handles all state updates
 function formReducer(state, action) {
   switch (action.type) {
@@ -133,6 +135,8 @@ function SignUp() {
 
   // Using useReducer instead of multiple useState hooks
   const [state, dispatch] = useReducer(formReducer, initialState);
+
+  console.log(state.dateOfBirth);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -219,7 +223,7 @@ function SignUp() {
       lastName: state.lastName,
       userName: state.userName,
       password: state.password,
-      dateOfBirth: state.dateOfBirth,
+      dateOfBirth: state.dateOfBirth ? state.dateOfBirth.toISOString().split('T')[0] : null,
       lang: state.lang,
       phoneNumber: state.phoneNumber,
       userType: "user",
