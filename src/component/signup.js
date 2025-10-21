@@ -223,7 +223,7 @@ function SignUp() {
       lastName: state.lastName,
       userName: state.userName,
       password: state.password,
-      dateOfBirth: state.dateOfBirth ? state.dateOfBirth.toISOString().split('T')[0] : null,
+      dateOfBirth: state.dateOfBirth,
       lang: state.lang,
       phoneNumber: state.phoneNumber,
       userType: "user",
