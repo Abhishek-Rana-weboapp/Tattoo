@@ -118,7 +118,7 @@ export default function UploadBeforeImage({}) {
         formData.append("profiles", file);
       });
 
-      const response = await axiosInstance.post("/upload", formData);
+      const response = await axiosInstance.post("upload", formData);
       e.target.value = null;
       if (response.status === 200) {
         if (name === "image") {

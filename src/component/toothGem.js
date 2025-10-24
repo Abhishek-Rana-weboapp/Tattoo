@@ -119,7 +119,7 @@ const ToothGems = () => {
 
     try {
       setLoading(true);
-      const res = await axiosInstance.post("/upload", formData);
+      const res = await axiosInstance.post("upload", formData);
       if (res.status === 200) {
         const location = {
           1: {
