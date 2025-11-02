@@ -88,18 +88,18 @@ function DoctorContactForm() {
     <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
       {showPopup_ && (
         <Modal>
-          <p className="text-3xl font-bold mb-4 text-black">
+          <h3 className="text-center md:text-3xl text-xl font-bold mb-2 text-black">
             {t("Do you want to update your Doctor's contact?")}
-          </p>
+          </h3>
           <div className="flex  gap-5 items-center">
             <button
-              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold "
               onClick={handleYes}
             >
               {t("Yes")}
             </button>
             <button
-              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold mt-4"
+              className="yellowButton text-black py-2 px-8 rounded-3xl font-bold "
               onClick={handleNo}
             >
               {t("No")}

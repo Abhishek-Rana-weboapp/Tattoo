@@ -119,7 +119,7 @@ const CustomerInfo = () => {
       )}
     <div className="w-full h-full flex flex-col items-center overflow-auto p-4 text-white gap-4">
         <label className="font-bold text-xl  md:text-4xl text-white  uppercase text-center">{t("Additional info")}</label>
-      <form className="flex flex-col md:w-1/3 w-full justify-between h-full overflow-auto" onSubmit={handleSubmit}>
+      <form className="flex flex-col max-w-2xl w-full justify-between h-full overflow-auto" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4 w-full">
           <div className="flex justify-between md:items-center md:flex-row flex-col">
             <label className="flex gap-3 md:w-20 w-full">{t("Address")} :</label>

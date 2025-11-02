@@ -49,6 +49,8 @@ function TermsOfService() {
           setAppointment(response.data.appointment)
           navigate("/verify")
           // setAppointment(response.data)
+        }else{
+          toast.error(response.data.message || "Something went wrong")
         }
       } catch (error) {
         console.log(error)
@@ -129,7 +131,7 @@ function TermsOfService() {
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex  justify-between items-center gap-2 max-w-xl mx-auto w-full">
-            <label className="text-white text-sm md:text-base flex gap-2 items-center hover:cursor-pointer">
+            <label className="text-white text-sm md:text-base flex gap-2 items-center select-none hover:cursor-pointer">
               <input
                 type="checkbox"
                 className="w-6 h-6"

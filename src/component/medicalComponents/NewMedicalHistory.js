@@ -93,6 +93,30 @@ const NewMedicalHistory = () => {
   };
 
   return (
+    <>
+    {showPopup_ && (
+      <Modal>
+        <h3 className="font-bold text-center md:text-3xl text-xl mb-2">
+          {t("Do you want to update your medical history?")}
+        </h3>
+    
+        <div className="flex gap-1 items-center">
+          <button
+            className="yellowButton py-2 px-8 rounded-3xl font-bold text-black"
+            onClick={handleYes}
+          >
+            {t("Yes")}
+          </button>
+    
+          <button
+            className="yellowButton py-2 px-8 rounded-3xl font-bold text-black"
+            onClick={handleNo}
+          >
+            {t("No")}
+          </button>
+        </div>
+      </Modal>
+    )}
     <div
       className="w-full sm:w-3/4  rounded-md p-4 md:w-1/2  flex flex-col gap-3 overflow-hidden "
       style={{ height: "100dvh" }}
@@ -149,30 +173,8 @@ const NewMedicalHistory = () => {
         )}
       </div>
 
-      {showPopup_ && (
-        <Modal>
-          <h3 className="font-bold">
-            {t("Do you want to update your medical history?")}
-          </h3>
-
-          <div className="flex gap-1 items-center">
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-              onClick={handleYes}
-            >
-              {t("Yes")}
-            </button>
-
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold  mb-2 mr-2"
-              onClick={handleNo}
-            >
-              {t("No")}
-            </button>
-          </div>
-        </Modal>
-      )}
     </div>
+    </>
   );
 };
 

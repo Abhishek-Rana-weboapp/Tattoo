@@ -115,7 +115,7 @@ const ToothGems = () => {
     );
 
     const formData = new FormData();
-    formData.append("profiles", imageBlob, "tooth-gem-design.jpg");
+    formData.append("profiles", imageBlob);
 
     try {
       setLoading(true);

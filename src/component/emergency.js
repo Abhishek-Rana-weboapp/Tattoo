@@ -102,9 +102,9 @@ function EmergencyContactForm() {
       <div className="w-full h-full flex flex-col items-center overflow-auto p-8 text-white">
         {showPopup_ && (
           <Modal>
-            <p className="text-3xl font-bold mb-4 text-black">
+            <h3 className="md:text-3xl text-xl font-bold mb-2 text-black text-center">
               {t("Do you want to update your emergency contact")}?
-            </p>
+            </h3>
             <div className="flex gap-5">
               <button
                 className="yellowButton py-2 px-8 rounded-3xl font-bold text-black"
