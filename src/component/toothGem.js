@@ -139,44 +139,6 @@ const ToothGems = () => {
     }
   };
 
-  //   const handleImageUpload = async () => {
-  //     const canvas = canvasRef.current;
-  //     const imageBlob = await new Promise((resolve) =>
-  //       canvas.toBlob(resolve, "image/jpeg", 1)
-  //     );
-
-  //     const formData = new FormData();
-  //     formData.append("profiles", imageBlob);
-  //  if(selectedTeeth.length > 0){
-
-  //    try {
-  //      const response = await fetch(`${apiUrl}upload`, {
-  //        method: "POST",
-  //        body: formData,
-  //        headers : AUTHHEADERS()
-  //       });
-
-  //       const data = await response.json();
-
-  //       if (response.ok) {
-  //         setUser((prev) => ({ ...prev, 1: data.profile_url }));
-  //         setFinalUser((prev) => ({ ...prev, 1 : {level1: data.profile_url, level2:null, level3:null , level4:null }}));
-  //         navigate("/medical-form");
-  //       } else {
-  //         console.error(
-  //           "Failed to upload image. Server returned:",
-  //           response.status
-  //         );
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   }else{
-  //     setAlert(!alert)
-  //     setAlertMessage(t('Please select at least one tooth'))
-  //   }
-  //   };
-
   const redrawCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");

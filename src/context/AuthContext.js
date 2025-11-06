@@ -1,9 +1,7 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
-import { apiUrl } from "../url";
-import { AUTHHEADERS } from "../commonFunctions/Headers";
 import { createInitialsAndFullName } from "../utils/helperFunctions";
 import i18n from "i18next";
+import axiosInstance from "../config/axios";
 
 const AuthContext = createContext();
 
@@ -21,9 +19,7 @@ export const AuthContextProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get(`${apiUrl}check`, {
-        headers: AUTHHEADERS(),
-      });
+      const response = await axiosInstance.get(`check`);
       setUser(response.data.user);
       if (response.data.user.minor && response.data.user.guardian_info) {
       }

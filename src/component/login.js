@@ -10,6 +10,7 @@ import Loader from "./loader/Loader";
 import axios from "axios";
 import { useAuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
+import axiosInstance from "../config/axios";
 
 function Login() {
   const {setUser} = useAuthContext();
@@ -44,11 +45,7 @@ function Login() {
     };
 
     try {
-      const response = await axios.post(`${apiUrl}login`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axiosInstance.post(`login`, data);
 
       if (response.status === 200) {
         response.lang === "es" && i18n.changeLanguage("es");

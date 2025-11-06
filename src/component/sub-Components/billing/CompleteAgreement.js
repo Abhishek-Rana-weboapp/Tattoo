@@ -3,9 +3,7 @@ import { useTranslation } from "react-i18next";
 import SignatureCanvas from "react-signature-canvas";
 import { apiUrl } from "../../../url";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import LoaderModal from "../../modal/LoaderModal";
-import { AUTHHEADERS } from "../../../commonFunctions/Headers";
 import Modal from "../../modal/Modal";
 import { useAppointmentContext } from "../../../context/AppointmentContext";
 import toast from "react-hot-toast";
@@ -97,14 +95,13 @@ const handleSave = async () => {
 
   const handleGeneratePDF = async () => {
     setLoading(true);
-    await axios
+    await axiosInstance
       .post(
-        `${apiUrl}pdf/generate`,
+        `pdf/generate`,
         {
           userName: appointment?.userName,
           appointmentId: appointment?.id,
         },
-        { headers: AUTHHEADERS() }
       )
       .then((res) => {
         toast.success(t("PDF uploaded to google drive"));

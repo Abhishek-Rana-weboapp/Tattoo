@@ -65,8 +65,12 @@ function ConsentForm() {
 
   const uploadImage = async(imageBlob) =>{
     try {
+      console.log(imageBlob);
+      
       const formData = new FormData();
-      formData.append("profiles", imageBlob);
+      // Provide a filename so servers/multer treat the Blob as a file
+      const fileName = (imageBlob && imageBlob.type && imageBlob.type.includes("png")) ? "signature.png" : "signature.jpg";
+      formData.append("profiles", imageBlob, fileName);
       const response = await axiosInstance.post("upload", formData);
       if (response.status === 200) {
         return response.data.profile_urls[0];
@@ -145,8 +149,7 @@ const handleInitialsAdopt = async () => {
 const handleImageUpload = async (blob) => {
   setUploadingImage(true);
   try {
-    const profileUrl = await uploadImage(blob);
-
+    const profileUrl = await uploadImage(blob)
     if (step === 1) {
       setAppointmentData((prev) => ({
         ...prev,
