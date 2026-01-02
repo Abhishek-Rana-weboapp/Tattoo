@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import Loader from './loader/Loader';
 import toast from 'react-hot-toast';
+import axiosInstance from '../config/axios';
 
 function ResetPassword() {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,7 @@ function ResetPassword() {
             token: token,
             newPassword: confirm_psw
           }
-      await axios.post(`${apiUrl}reset_password`, data)
+      await axiosInstance.post(`reset_password`, data)
       .then(res=>{
         if(res.status === 200){
           toast.success(t("Password reset successfully!"));
@@ -79,7 +80,6 @@ function ResetPassword() {
         } else {
           toast.error(t("Password reset failed. Please try again."));
         }
-        setLoading(false);
         return
       }).finally(()=>{
         setLoading(false)

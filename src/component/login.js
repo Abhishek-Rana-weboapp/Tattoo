@@ -73,7 +73,7 @@ function Login() {
       <h1 className="text-white font-bold md:text-2xl text-lg">LOGIN</h1>
       <form
         onSubmit={handleFormSubmit}
-        className="flex flex-col justify-center gap-3 w-full"
+        className="flex flex-col justify-center gap-3 w-full px-4"
       >
         <div className="flex flex-col itmes-center gap-3">
           <label htmlFor="email" className="text-white">Email</label>

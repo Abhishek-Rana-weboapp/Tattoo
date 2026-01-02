@@ -239,7 +239,8 @@ function SignUp() {
         navigate("/detailedinfo");
       }
     } catch (error) {
-      toast.error(error.response.data.message || "Failed to signup");
+      console.log(error.response.data.error);
+      toast.error(error.response.data.error || "Failed to signup");
     } finally {
       dispatch({ type: ACTION_TYPES.SET_LOADING, payload: false });
     }
