@@ -18,17 +18,14 @@ const initialState = {
   firstName: "",
   lastName: "",
   userName: "",
-  password: "",
   dateOfBirth: null,
   lang: "en",
   phoneNumber: "",
-  showPassword: false,
   loading: false,
   errors: {
     firstName: "",
     lastName: "",
     userName: "",
-    password: "",
     dateOfBirth: "",
     phoneNumber: "",
   },
@@ -39,11 +36,9 @@ const ACTION_TYPES = {
   SET_FIRST_NAME: "SET_FIRST_NAME",
   SET_LAST_NAME: "SET_LAST_NAME",
   SET_USER_NAME: "SET_USER_NAME",
-  SET_PASSWORD: "SET_PASSWORD",
   SET_DATE_OF_BIRTH: "SET_DATE_OF_BIRTH",
   SET_LANG: "SET_LANG",
   SET_PHONE_NUMBER: "SET_PHONE_NUMBER",
-  TOGGLE_PASSWORD_VISIBILITY: "TOGGLE_PASSWORD_VISIBILITY",
   SET_LOADING: "SET_LOADING",
   RESET_FORM: "RESET_FORM",
   SET_ERROR: "SET_ERROR",
@@ -74,12 +69,6 @@ function formReducer(state, action) {
         userName: action.payload,
         errors: { ...state.errors, userName: "" },
       };
-    case ACTION_TYPES.SET_PASSWORD:
-      return {
-        ...state,
-        password: action.payload,
-        errors: { ...state.errors, password: "" },
-      };
     case ACTION_TYPES.SET_DATE_OF_BIRTH:
       return {
         ...state,
@@ -94,8 +83,7 @@ function formReducer(state, action) {
         phoneNumber: action.payload,
         errors: { ...state.errors, phoneNumber: "" },
       };
-    case ACTION_TYPES.TOGGLE_PASSWORD_VISIBILITY:
-      return { ...state, showPassword: !state.showPassword };
+
     case ACTION_TYPES.SET_LOADING:
       return { ...state, loading: action.payload };
     case ACTION_TYPES.SET_ERROR:
@@ -115,7 +103,6 @@ function formReducer(state, action) {
           firstName: "",
           lastName: "",
           userName: "",
-          password: "",
           dateOfBirth: "",
           phoneNumber: "",
         },
@@ -130,13 +117,11 @@ function formReducer(state, action) {
 function SignUp() {
   const { setUser } = useAuthContext();
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
 
   // Using useReducer instead of multiple useState hooks
   const [state, dispatch] = useReducer(formReducer, initialState);
 
-  console.log(state.dateOfBirth);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -176,14 +161,8 @@ function SignUp() {
        }
      }
 
-    if (!state.password) {
-      dispatch({
-        type: ACTION_TYPES.SET_ERROR,
-        field: "password",
-        message: "Password is required",
-      });
-      hasErrors = true;
-    }
+
+    console.log("Phone Number:", state.phoneNumber);
 
      if (!state.phoneNumber) {
        dispatch({
@@ -222,7 +201,6 @@ function SignUp() {
       firstName: state.firstName,
       lastName: state.lastName,
       userName: state.userName,
-      password: state.password,
       dateOfBirth: state.dateOfBirth,
       lang: state.lang,
       phoneNumber: state.phoneNumber,
@@ -341,7 +319,7 @@ function SignUp() {
               )}
             </div>
 
-            <div className="flex flex-col gap-1">
+            {/*<div className="flex flex-col gap-1">
               <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
                 <input
                   type={state.showPassword ? "text" : "password"}
@@ -383,19 +361,21 @@ function SignUp() {
                   {state.errors.password}
                 </span>
               )}
-            </div>
+            </div>*/}
 
             <div className="flex flex-col gap-1">
               <div className="flex gap-3 bg-white p-2 rounded-lg items-center">
                 <PhoneInput
                   country="us"
                   placeholder="Enter Phone Number"
+                  disableDropdown
                   value={state.phoneNumber}
                    onChange={(value) => {
                      dispatch({
                        type: ACTION_TYPES.SET_PHONE_NUMBER,
                        payload: value,
                      });
+                     
                      
                      // Real-time phone number validation
                      if (value && value.length > 0) {
