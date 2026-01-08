@@ -33,6 +33,10 @@ import i18n from "i18next";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "../context/AuthContext";
 import NoServiceSection from "../component/artistDashboard/NoServiceSection";
+import ProfileDropdown from "../component/dropdown/dropdown";
+import EmployeeList from "../component/artistDashboard/EmployeeList";
+import ClientList from "../component/artistDashboard/ClientList";
+import LocationList from "../component/artistDashboard/LocationList";
 
 export default function RoutesComponent() {
   const {
@@ -87,9 +91,13 @@ export default function RoutesComponent() {
     <>
       <Toaster />
       {isVisible && (
-        <div className="flex justify-center relative w-full max-w-3xl">
+        <div className="flex justify-center items-center relative w-full max-w-3xl gap-3">
           <img src="/Title.png" alt="logo" className="w-3/5 object-cover"></img>
-          <button
+
+          <div className="-mt-2">
+            <ProfileDropdown logout={handleLogout} />
+          </div>
+          {/* <button
             className="yellowButton px-4 py-2 rounded-3xl font-semibold md:block hidden absolute right-5 top-3"
             onClick={handleLogout}
           >
@@ -101,7 +109,7 @@ export default function RoutesComponent() {
           >
             <FaPowerOff size={20} />
             LogOut
-          </button>
+          </button> */}
         </div>
       )}
       <Routes>
@@ -290,6 +298,11 @@ export default function RoutesComponent() {
             </PrivateRoutes>
           }
         />
+
+      <Route path="employee-list" element={<PrivateRoutes><EmployeeList /></PrivateRoutes>} />
+      <Route path="client-list" element={<PrivateRoutes><ClientList /></PrivateRoutes>} />
+      <Route path="shoplocation-list" element={<PrivateRoutes><LocationList /></PrivateRoutes>} />
+
         <Route 
            path="/no-service"
            element={

@@ -11,6 +11,8 @@ import UploadFL from "./sub-Components/UploadFL";
 import { useAppointmentContext } from "../context/AppointmentContext";
 import toast from "react-hot-toast";
 import axiosInstance from "../config/axios";
+import UpdateShopLocation from "./sub-Components/UpdateShopLocation";
+import UpdateFrontDeskEmployee from "./sub-Components/UpdateFrontDeskEmployee";
 
 const IDVerificationComponent = () => {
   const { t } = useTranslation();
@@ -38,51 +40,8 @@ const IDVerificationComponent = () => {
     }
   };
 
-  const handleShopLocation = async () => {
-    if (!shopLocation) {
-      toast.error("Please select a shop location");
-      return 
-    }
-    const updates = {
-      shopLocation
-    }
-    try {
-      setLoading(true)
-      const response = await axiosInstance.put(`appointment/${appointment.id}`, updates)
-      if(response.status === 200){
-        setAppointment(response.data.appointment)
-        setStep(5)
-        return
-      }
-    } catch (error) {
-      toast.error(error.response.data.message || "Something went wrong")
-    }finally{
-      setLoading(false)
-    }
-  };
 
-  const handleFrontDesk = async () => {
-   if (!frontDeskEmployee) {
-      toast.error("Please select a frontdesk Employee name");
-      return 
-    }
-    const updates = {
-      frontDeskEmployee
-    }
-    try {
-      setLoading(true)
-      const response = await axiosInstance.put(`appointment/${appointment.id}`, updates)
-      if(response.status === 200){
-        setAppointment(response.data.appointment)
-        setFinalAlert(!finalAlert)
-        return
-      }
-    } catch (error) {
-      toast.error(error.response.data.message || "Something went wrong")
-    }finally{
-      setLoading(false)
-    }
-  };
+  
 
   const handleFinalClick = () => {
     setFinalAlert(!finalAlert);
@@ -118,79 +77,10 @@ const IDVerificationComponent = () => {
       {step === 2 && <VerifyUpload step={step} setStep={setStep} />}
       {step === 3 && <UploadFL step={step} setStep={setStep} />}
       {step === 4 && (
-        <div className="w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white">
-          <div className="w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white">
-            <label className="text-white font-bold md:text-3xl text-lg">
-              {t("Select Shop Location")}
-            </label>
-            <select
-              className="p-2 rounded-xl md:w-1/4 w-full text-black font-semibold"
-              value={shopLocation}
-              onChange={(e) => setShopLocation(e.target.value)}
-            >
-              {shopLocationOption.map((state) => {
-                return (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="w-full md:w-1/2 flex justify-between">
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
-              onClick={() =>
-                appointment.typeofservice === "tattoo" && appointment.minor
-                  ? setStep(3)
-                  : setStep(2)
-              }
-            >
-              {t("Back")}
-            </button>
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
-              onClick={handleShopLocation}
-            >
-              {t("Submit")}
-            </button>
-          </div>
-        </div>
+       <UpdateShopLocation step={step} setStep={setStep} loading={loading} setLoading={setLoading} />
       )}
       {step === 5 && (
-        <div className="w-full h-full flex flex-col justify-between items-center  overflow-auto p-8 text-white">
-          <div className="w-full h-full flex flex-col gap-3 items-center  overflow-auto p-8 text-white">
-            <label className="text-white font-bold md:text-3xl text-lg">
-              {t("Select Employee Name")}
-            </label>
-            <select
-              className="p-2 rounded-xl md:w-1/4 w-full text-black font-semibold"
-              value={frontDeskEmployee}
-              onChange={(e) => setFrontDeskEmployee(e.target.value)}
-            >
-              <option value={""}>Select Employee Name</option>
-              {artists.map((employee, index) => (
-                <option className="capitalize" value={employee}>
-                  {employee}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="w-full md:w-1/2 flex justify-between">
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
-              onClick={() => setStep(4)}
-            >
-              {t("Back")}
-            </button>
-            <button
-              className="yellowButton py-2 px-4 rounded-3xl font-bold text-black"
-              onClick={handleFrontDesk}
-            >
-              {t("Submit")}
-            </button>
-          </div>
-        </div>
+        <UpdateFrontDeskEmployee step={step} setStep={setStep} loading={loading} setLoading={setLoading} finalAlert={finalAlert} setFinalAlert={setFinalAlert} />
       )}
     </>
   );

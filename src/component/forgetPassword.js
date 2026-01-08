@@ -88,7 +88,7 @@ function ForgetPassword() {
       <div className="content-center flex-1">
         <img src={Title_logo} className="w-full max-w-56 mx-auto"></img>
         <h1 className="text-yellow-500 text-xl font-bold uppercase underline text-center mt-6">
-          Forget Password?{" "}
+          Update Phone Number{" "}
         </h1>
         <div className="max-w-xl mx-auto mt-6 px-4">
           <form
@@ -114,7 +114,7 @@ function ForgetPassword() {
                 disabled={loading}
                 className="yellowButton py-2 px-8 rounded-3xl font-bold disabled:opacity-50"
               >
-                {loading ? "Sending..." : "Reset Password"}
+                {loading ? "Sending..." : "Send Reset Link"}
               </button>
               <Link to="/" className="text-right">
                 Remember your password? Log in

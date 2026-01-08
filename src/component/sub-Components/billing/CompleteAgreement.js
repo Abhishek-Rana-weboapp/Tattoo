@@ -9,6 +9,7 @@ import { useAppointmentContext } from "../../../context/AppointmentContext";
 import toast from "react-hot-toast";
 import axiosInstance from "../../../config/axios";
 import { artistNames } from "../../../data/artistsnames";
+import { set } from "lodash";
 
 export default function CompleteAgreement() {
   const {appointment, setAppointment} = useAppointmentContext();
@@ -19,7 +20,8 @@ export default function CompleteAgreement() {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false)
   const [uploading, setUploading]= useState(false);
-  const [artistName, setArtistName] = useState("")
+  const [artistName, setArtistName] = useState("");
+  const [artistList, setArtistList] = useState([])
 
   useEffect(() => {
     if (appointment) {
@@ -27,6 +29,20 @@ export default function CompleteAgreement() {
         setImgUrl(appointment.Sign_completion);
       }
     }
+
+    const fetchEmployees = async()=>{
+      try {
+          const res = await axiosInstance.get("employee")
+          if(res.status === 200){
+              const employees = res.data.employees;
+              const employeeNames = employees.map(emp => `${emp.firstName} ${emp.lastName}`);
+              setArtistList(employeeNames);
+          }
+    } catch (error) {
+          toast.error("Failed to fetch employees")
+      }
+    }
+    fetchEmployees()
   }, [appointment]);
 
 const handleSave = async () => {
@@ -158,7 +174,7 @@ const handleSave = async () => {
          <select className="bg-white p-2 rounded-xl w-full text-black" onChange={handleSelectArtistName} value={artistName}>
             <option value="" >{t("Select Artist Name")}</option>
            {
-            artistNames.map((name, index)=>(
+            artistList?.map((name, index)=>(
               <option key={index} value={name} selected={name === artistName}>{name}</option>
             ))
            }

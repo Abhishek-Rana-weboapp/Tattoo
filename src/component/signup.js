@@ -228,7 +228,7 @@ function SignUp() {
     <div className="w-full h-full flex flex-col gap-4 justify-center items-center p-4">
       <img src={Title_logo} className="w-full max-w-56"></img>
       <h1 className="text-white font-bold">Sign Up</h1>
-      <div className="sm:w-2/3 lg:1/3 w-4/5">
+      <div className="w-full max-w-2xl">
         <form
           onSubmit={handleFormSubmit}
           className="flex flex-col justify-center gap-3"
