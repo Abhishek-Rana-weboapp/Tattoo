@@ -32,6 +32,7 @@ const LocationList = () => {
     fetchLocations();
   }, []);
 
+
   const handleDeleteLocation = async (id) => {
     if (!id) return;
 

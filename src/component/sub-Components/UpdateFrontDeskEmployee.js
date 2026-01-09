@@ -25,7 +25,6 @@ const UpdateFrontDeskEmployee = ({step , setStep, loading, setLoading,finalAlert
             toast.error("Failed to fetch employees")
         }
      }
-
      fetchEmployees();
     },[])
 
@@ -64,8 +63,8 @@ const UpdateFrontDeskEmployee = ({step , setStep, loading, setLoading,finalAlert
               onChange={(e) => setFrontDeskEmployee(e.target.value)}
             >
               <option value={""}>Select Employee Name</option>
-              {artists.map((employee, index) => (
-                <option className="capitalize" value={employee}>
+              {artists.map((employee) => (
+                <option key={employee.id} className="capitalize" value={employee}>
                   {employee}
                 </option>
               ))}

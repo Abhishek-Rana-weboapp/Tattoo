@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Title_logo from "../assets/Title_logo.png";
-import { PiUserCircleFill } from "react-icons/pi";
+import { IoMailOutline } from "react-icons/io5";
 import { MdOutlinePhone } from "react-icons/md";
 import { RiEyeFill, RiEyeOffFill } from "react-icons/ri";
 import i18n from "i18next";
@@ -77,7 +77,7 @@ function Login() {
         <div className="flex flex-col itmes-center gap-3">
           <label htmlFor="email" className="text-white">Email</label>
           <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
-            <PiUserCircleFill size={30} />
+            <IoMailOutline size={30} />
             <input
               type="text"
               className="flex-1 focus:outline-none bg-white p-2"
