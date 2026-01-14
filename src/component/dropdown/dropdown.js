@@ -1,10 +1,11 @@
 
 import { NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { CiMenuKebab } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
+import { useAuthContext } from "../../context/AuthContext";
 
 const ProfileDropdown = ({logout}) => {
+  const {user} = useAuthContext()
   const [dropdownActive, setDropdownActive] = useState(false);
   const ref = useRef(null);
 
@@ -20,11 +21,14 @@ const ProfileDropdown = ({logout}) => {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
+
+  console.log(user);
+  
   return (
     <div ref={ref} className="relative">
       {/* Trigger */}
       <div
-        className="flex items-center gap-2 cursor-pointer md:text-lg text-sm group"
+        className={`flex items-center gap-2 cursor-pointer md:text-lg text-sm group ${user && user.userType === "admin" ? "flex" : "hidden"}`}
         onClick={(e) => {
           e.stopPropagation();
           setDropdownActive((prev) => !prev);
@@ -32,7 +36,7 @@ const ProfileDropdown = ({logout}) => {
       >
         {/* <User className="md:size-6 size-5 group-hover:text-primary-500 transition-colors" /> */}
         <span className="text-base capitalize group-hover:text-primary-500 transition-colors">
-        <IoMdMenu className=" text-yellow-500 sm:size-7 size-7" />
+        <IoMdMenu className=" text-white sm:size-7 size-7" />
         </span>
       </div>
 
