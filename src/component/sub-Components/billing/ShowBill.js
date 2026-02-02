@@ -31,7 +31,7 @@ export default function ShowBill({ }) {
     setLoading(true);
     try {
       const updates = {
-        adminProcessStep: 6,
+        adminProcessStep: 7,
       };
 
       const response = await axiosInstance.put(
@@ -51,7 +51,7 @@ export default function ShowBill({ }) {
   };
 
   const handlePrev = ()=>{
-    navigate(`/billing/4`)
+    navigate(`/billing/5`)
   }
 
   if (loading) return <LoaderModal />;

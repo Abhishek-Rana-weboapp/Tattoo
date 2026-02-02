@@ -7,15 +7,14 @@ import ShowBill from "./sub-Components/billing/ShowBill";
 import UploadAfterImage from "./sub-Components/billing/UploadAfterImage";
 import CompleteAgreement from "./sub-Components/billing/CompleteAgreement";
 import UploadBeforeImage from "./sub-Components/billing/UploadBeforeImage";
-import LoaderModal from "./modal/LoaderModal";
 import Complications from "./artistDashboard/Complications";
 import TattooStyles from "./artistDashboard/TattooStyles";
 import { useAppointmentContext } from "../context/AppointmentContext";
+import PiercingTypeSelection from "./artistDashboard/PiercingTypeSelection";
 
 const BillingComponent = () => {
   const {appointment, setAppointment} = useAppointmentContext()
   let { step } = useParams();
-  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState();
 
   useEffect(()=>{
@@ -69,10 +68,6 @@ const BillingComponent = () => {
   }, [currentStep, appointment?.endTime]);
 
 
-  if (loading) {
-    return <LoaderModal />;
-  }
-
 
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
@@ -89,34 +84,40 @@ const BillingComponent = () => {
       {currentStep === 3 && (
           <UploadBeforeImage/>
       )}
+      {
+        currentStep === 4 && (
+          <PiercingTypeSelection
+          />
+        )
+      }
 
-      {currentStep === 4 && (
+      {currentStep === 5 && (
         <div className="flex flex-col items-center w-full h-full gap-3">
           <Timer
           />
         </div>
       )}
 
-      {currentStep === 5 && (
+      {currentStep === 6 && (
         <ShowBill/>
       )}
       
-      {currentStep === 6 && (
+      {currentStep ===7 && (
         <Complications
         />
       )}
 
-      {currentStep === 7 && (
+      {currentStep === 8 && (
         <TattooStyles
         />
       )}
 
-      {currentStep === 8 && (
+      {currentStep === 9 && (
         <UploadAfterImage
         />
       )}
 
-      {currentStep === 9 && (
+      {currentStep === 10 && (
         <CompleteAgreement
         />
       )}

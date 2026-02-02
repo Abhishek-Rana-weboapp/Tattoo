@@ -14,8 +14,12 @@ function SkinCondition({
   const [explanation, setExplanation] = useState(appointment?.skinCondition && appointment?.skinCondition !== "good" ? appointment?.skinCondition  : "" )
   const [loading, setLoading] = useState(false)
 
-  const stepServices = [
+  const thirdstepServices = [
     "tattoo", "removal"
+  ]
+
+  const fourthstepServices = [
+    "piercing"
   ]
  
 
@@ -34,7 +38,7 @@ function SkinCondition({
       setLoading(true)
       const data = {
         skinCondition : condition === "good" ? condition : explanation,
-        adminProcessStep :stepServices.includes(appointment.typeofservice) ?  3 : 4
+        adminProcessStep :thirdstepServices.includes(appointment.typeofservice) ?  3 : fourthstepServices.includes(appointment.typeofservice) ? 4 : 5
       }
       const response = await axiosInstance.put(`appointment/${appointment.id}`, data)
       if(response.status === 200){

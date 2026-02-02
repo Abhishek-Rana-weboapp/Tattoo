@@ -140,7 +140,7 @@ const Timer = () => {
     try {
       setLoading(true);
       const updates = {
-        adminProcessStep: 5,
+        adminProcessStep: 6,
       };
       const response = await axiosInstance.put(
         `/appointment/${appointment.id}`,
@@ -158,7 +158,13 @@ const Timer = () => {
   };
 
   const handlePrev = () => {
-    navigate(`/billing/3`);
+    if(appointment.typeofservice === "piercing"){
+      navigate(`/billing/4`);
+    }else if(appointment.typeofservice === "tattoo"){
+      navigate(`/billing/3`);
+    }else{
+      navigate(`/billing/2`);
+    }
   };
 
   const availableBreakOptions = useMemo(() => {

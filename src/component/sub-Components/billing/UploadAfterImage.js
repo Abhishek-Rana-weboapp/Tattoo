@@ -62,9 +62,9 @@ export default function UploadAfterImage() {
         updates.afterVideo = encodeUrls(videos);
       }
 
-      updates.adminProcessStep = 9;
+      updates.adminProcessStep = 10;
     } else if (isTattooNotSelected) {
-      updates.adminProcessStep = 9;
+      updates.adminProcessStep = 10;
     } else {
       toast.error(
         "Please upload at least one image or video to proceed further"
@@ -88,9 +88,9 @@ export default function UploadAfterImage() {
 
   const handlePrev = () => {
     if(prevSteps.includes(appointment.typeofservice)){
-      navigate("/billing/7");
+      navigate("/billing/8");
     }else{
-      navigate("/billing/6")
+      navigate("/billing/7")
     }
   };
 

@@ -63,9 +63,9 @@ export default function UploadBeforeImage({}) {
         updates.beforeVideo = encodeUrls(videos);
       }
 
-      updates.adminProcessStep = 4;
+      updates.adminProcessStep = 5;
     } else if (isTattooNotSelected) {
-      updates.adminProcessStep = 4;
+      updates.adminProcessStep = 5;
     } else {
       toast.error(
         "Please upload at least one image or video to proceed further"
@@ -77,7 +77,7 @@ export default function UploadBeforeImage({}) {
     const response = await axiosInstance.put(`appointment/${appointment.id}`, updates)
     if(response.status === 200){
       setAppointment(response.data.appointment);
-      toast.success(t("Before Images and videos updated successfully"));
+      if(setSelected === "yes") toast.success(t("Before Images and videos updated successfully")) ;
       navigate(`/billing/${response.data.appointment.adminProcessStep}`)
     }
    } catch (error) {

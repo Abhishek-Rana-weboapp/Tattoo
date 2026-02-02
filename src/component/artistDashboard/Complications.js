@@ -56,9 +56,9 @@ const Complications = ({
     }
 
     if(appointment.typeofservice === "tattoo"){
-      updates.adminProcessStep = 7
-    }else{
       updates.adminProcessStep = 8
+    }else{
+      updates.adminProcessStep = 9
     }
 
     try {
@@ -76,7 +76,7 @@ const Complications = ({
   }
 
   const handlePrev = ()=>{
-     navigate(`/billing/5`)
+     navigate(`/billing/6`)
   }
 
   if (loading) {

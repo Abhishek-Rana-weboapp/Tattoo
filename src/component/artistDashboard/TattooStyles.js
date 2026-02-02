@@ -35,7 +35,7 @@ const TattooStyles = ({}) => {
     }
   }
 
-  const updates = { ...selectedOptions, adminProcessStep: 8 };
+  const updates = { ...selectedOptions, adminProcessStep: 9 };
 
   try {
     setLoading(true);
@@ -55,7 +55,7 @@ const TattooStyles = ({}) => {
 };
 
   const handlePrev = ()=>{
-     navigate("/billing/6")
+     navigate("/billing/7")
   }
 
 
