@@ -17,7 +17,6 @@ const TattooStyles = ({}) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState(null);
-  console.log({selectedOptions})
 
 
  const handleNext = async () => {

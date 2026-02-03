@@ -22,7 +22,6 @@ const ProfileDropdown = ({logout}) => {
   }, []);
 
 
-  console.log(user);
   
   return (
     <div ref={ref} className="relative">
