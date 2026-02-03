@@ -186,6 +186,10 @@ const PiercingTypeSelection = () => {
   };
 
   const handleNext = async () => {
+    if(!isNextEnabled){
+      toast.error("Please select the available options (jewelry, gauge, length) for all piercings before continuing.");
+      return;
+    }
     // Validate selections for all piercings
     for (let i = 1; i <= count; i++) {
       const sel = selections[i] || {};
@@ -322,7 +326,6 @@ const PiercingTypeSelection = () => {
             <button
               className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
               onClick={handleNext}
-              disabled={!isNextEnabled}
             >
               <TranslationWrapper text={"Next"} />
             </button>
