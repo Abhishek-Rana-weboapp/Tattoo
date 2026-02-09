@@ -100,6 +100,30 @@ const PiercingTypeSelection = () => {
     }
 
     setSelections(nextSelections);
+
+    // Set the initial step once when we hydrate from appointment data:
+    // jump to the first incomplete piercing (if any), otherwise stay on 1.
+    let firstIncomplete = 1;
+    for (let i = 1; i <= total; i++) {
+      const sel = nextSelections[i] || {};
+      if (!sel.jewelry) {
+        firstIncomplete = i;
+        break;
+      }
+      const item = piercingJewelryOptions.find((opt) => opt.jewelry === sel.jewelry);
+      const gauges = item?.gauges || [];
+      const lengths = item?.lengths || [];
+      if (gauges.length > 0 && !sel.gauge) {
+        firstIncomplete = i;
+        break;
+      }
+      if (lengths.length > 0 && !sel.length) {
+        firstIncomplete = i;
+        break;
+      }
+      firstIncomplete = i;
+    }
+    setActiveIndex((prev) => (prev ? prev : firstIncomplete));
   }, [appointment]);
 
   const currentSelection = selections[activeIndex] || {};
@@ -172,23 +196,8 @@ const PiercingTypeSelection = () => {
     return null;
   }, [count, getBlockedReasonForIndex]);
 
-  // After hydrating, jump to the first incomplete piercing (nice UX when resuming)
-  useEffect(() => {
-    if (!count) return;
-    let firstIncomplete = 1;
-    for (let i = 1; i <= count; i++) {
-      if (getBlockedReasonForIndex(i)) {
-        firstIncomplete = i;
-        break;
-      }
-      firstIncomplete = i;
-    }
-    if (activeIndex !== firstIncomplete) {
-      setActiveIndex(firstIncomplete);
-    }
-    // Intentionally omit activeIndex setter loops by checking equality above
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [count, selections, getBlockedReasonForIndex]);
+  // NOTE: We intentionally do NOT auto-advance `activeIndex` when the user completes a piercing.
+  // Navigation between piercings should be explicit via the Next/Back buttons.
 
   const availableGauges = useMemo(() => {
     if (!selectedJewelry) return [];
