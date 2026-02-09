@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { piercingJewelryOptions } from "../../data/piercingJewelry";
+import { piercingBodyLocations } from "../../data/tattooLocations";
 import TranslationWrapper from "../Layout/TranslationWrapper";
 import LoaderModal from "../modal/LoaderModal";
 import axiosInstance from "../../config/axios";
@@ -106,24 +107,88 @@ const PiercingTypeSelection = () => {
   const selectedGauge = currentSelection.gauge || "";
   const selectedLength = currentSelection.length || "";
 
-  const isNextEnabled = useMemo(() => {
-    // Must be complete for every piercing index (1..count)
-    for (let i = 1; i <= count; i++) {
+  const selectedLocationLabel = useMemo(() => {
+    const raw = appointment?.bodyLocation;
+    if (!raw) return "";
+
+    let parsed = raw;
+    if (typeof raw === "string") {
+      try {
+        parsed = JSON.parse(raw);
+      } catch {
+        return "";
+      }
+    }
+
+    const entry = parsed?.[activeIndex] || parsed?.[String(activeIndex)];
+    if (!entry || typeof entry !== "object") return "";
+
+    const ids = Object.keys(entry)
+      .filter((k) => k.startsWith("level"))
+      .sort(
+        (a, b) =>
+          Number(a.replace("level", "")) - Number(b.replace("level", ""))
+      )
+      .map((k) => entry[k])
+      .filter(Boolean);
+
+    if (!ids.length) return "";
+
+    const labels = ids.map((id) => {
+      const match = piercingBodyLocations.find((x) => x.id === id);
+      return match?.label || id;
+    });
+
+    return labels.join(" > ");
+  }, [appointment?.bodyLocation, activeIndex]);
+
+  const getBlockedReasonForIndex = useMemo(() => {
+    return (i) => {
       const sel = selections[i] || {};
-      if (!sel.jewelry) return false;
+      if (!sel.jewelry) return `Please select a jewelry type for piercing ${i}`;
 
       const item = piercingJewelryOptions.find((opt) => opt.jewelry === sel.jewelry);
-      if (!item) return false;
+      if (!item) return `Please select a valid jewelry type for piercing ${i}`;
 
       const gauges = item.gauges || [];
       const lengths = item.lengths || [];
 
-      // If the option exists, it must be selected
-      if (gauges.length > 0 && !sel.gauge) return false;
-      if (lengths.length > 0 && !sel.length) return false;
+      if (gauges.length > 0 && !sel.gauge) return `Please select a gauge for piercing ${i}`;
+      if (lengths.length > 0 && !sel.length) return `Please select a length for piercing ${i}`;
+
+      return null;
+    };
+  }, [selections]);
+
+  const nextBlockedReasonCurrent = useMemo(() => {
+    return getBlockedReasonForIndex(activeIndex);
+  }, [activeIndex, getBlockedReasonForIndex]);
+
+  const nextBlockedReasonAll = useMemo(() => {
+    for (let i = 1; i <= count; i++) {
+      const reason = getBlockedReasonForIndex(i);
+      if (reason) return reason;
     }
-    return true;
-  }, [count, selections]);
+    return null;
+  }, [count, getBlockedReasonForIndex]);
+
+  // After hydrating, jump to the first incomplete piercing (nice UX when resuming)
+  useEffect(() => {
+    if (!count) return;
+    let firstIncomplete = 1;
+    for (let i = 1; i <= count; i++) {
+      if (getBlockedReasonForIndex(i)) {
+        firstIncomplete = i;
+        break;
+      }
+      firstIncomplete = i;
+    }
+    if (activeIndex !== firstIncomplete) {
+      setActiveIndex(firstIncomplete);
+    }
+    // Intentionally omit activeIndex setter loops by checking equality above
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count, selections, getBlockedReasonForIndex]);
 
   const availableGauges = useMemo(() => {
     if (!selectedJewelry) return [];
@@ -182,35 +247,17 @@ const PiercingTypeSelection = () => {
   const hasLengthOptions = availableLengths.length > 0;
 
   const handlePrev = () => {
+    if (activeIndex > 1) {
+      setActiveIndex((prev) => Math.max(1, prev - 1));
+      return;
+    }
     navigate("/billing/2");
   };
 
-  const handleNext = async () => {
-    if(!isNextEnabled){
-      toast.error("Please select the available options (jewelry, gauge, length) for all piercings before continuing.");
+  const handleSubmitAll = async () => {
+    if (nextBlockedReasonAll) {
+      toast.error(nextBlockedReasonAll);
       return;
-    }
-    // Validate selections for all piercings
-    for (let i = 1; i <= count; i++) {
-      const sel = selections[i] || {};
-      if (!sel.jewelry) {
-        toast.error(`Please select a jewelry type for piercing ${i}`);
-        return;
-      }
-      const item = piercingJewelryOptions.find(
-        (opt) => opt.jewelry === sel.jewelry
-      );
-      const gauges = item?.gauges || [];
-      const lengths = item?.lengths || [];
-
-      if (gauges.length > 0 && !sel.gauge) {
-        toast.error(`Please select a gauge for piercing ${i}`);
-        return;
-      }
-      if (lengths.length > 0 && !sel.length) {
-        toast.error(`Please select a length for piercing ${i}`);
-        return;
-      }
     }
 
     const jewelryArray = [];
@@ -242,25 +289,30 @@ const PiercingTypeSelection = () => {
     }
   };
 
+  const handleNextStep = () => {
+    if (activeIndex < count) {
+      if (nextBlockedReasonCurrent) {
+        toast.error(nextBlockedReasonCurrent);
+        return;
+      }
+      setActiveIndex((prev) => Math.min(count, prev + 1));
+      return;
+    }
+    // Last piercing -> submit
+    handleSubmitAll();
+  };
+
   if (loading) {
     return <LoaderModal />;
   }
 
   return (
     <div className="flex flex-col gap-4 w-full max-w-xl">
-      <div className="flex flex-col gap-2">
-        <label className="text-white font-semibold">Piercing number</label>
-        <select
-          className="w-full p-2 rounded-lg bg-white text-black"
-          value={activeIndex}
-          onChange={(e) => setActiveIndex(Number(e.target.value) || 1)}
-        >
-          {Array.from({ length: count }, (_, idx) => idx + 1).map((idx) => (
-            <option key={idx} value={idx}>
-              {`Piercing ${idx} of ${count}`}
-            </option>
-          ))}
-        </select>
+      <div className="flex flex-col gap-1">
+        <div className="text-white font-semibold text-lg">
+          {selectedLocationLabel || "Selected location"}
+        </div>
+        <div className="text-white/70 text-sm">{`Piercing ${activeIndex} of ${count}`}</div>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -325,9 +377,9 @@ const PiercingTypeSelection = () => {
             </button>
             <button
               className="yellowButton rounded-xl py-2 px-4 font-bold text-black"
-              onClick={handleNext}
+              onClick={handleNextStep}
             >
-              <TranslationWrapper text={"Next"} />
+              <TranslationWrapper text={activeIndex < count ? "Next Piercing" : "Next"} />
             </button>
           </div>
     </div>
