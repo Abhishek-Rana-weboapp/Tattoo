@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import axiosInstance from "../../../config/axios";
 import TranslationWrapper from "../../Layout/TranslationWrapper";
 import { decodeUrls, encodeUrls } from "../../../commonFunctions/Encoders";
+import { resolveMediaUrl } from "../../../commonFunctions/mediaUrl";
 
 export default function UploadAfterImage() {
   const { appointment, setAppointment } = useAppointmentContext();
@@ -159,7 +160,7 @@ export default function UploadAfterImage() {
                 return (
                   <div className="relative" key={image}>
                     <img
-                      src={`${apiUrl}${image}`}
+                      src={resolveMediaUrl(apiUrl, image)}
                       className="w-44 h-44  object-cover"
                     />
                     <IoMdClose
@@ -191,7 +192,7 @@ export default function UploadAfterImage() {
                   <div className="relative" key={video}>
                     <video controls width="320" height="240" className="w-44 h-44">
                       <source
-                        src={`${apiUrl}${video}`}
+                        src={resolveMediaUrl(apiUrl, video)}
                         type="video/mp4"
                       ></source>
                     </video>

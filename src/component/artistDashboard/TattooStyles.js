@@ -92,7 +92,7 @@ const TattooStyles = ({}) => {
           onChange={(e) => handleSelect(e, "tattooType")}
         >
           <option value={""}>Select Tattoo Type</option>
-          {types[appointment?.typeofservice].map((type, index) => {
+          {types[appointment?.typeofservice]?.map((type, index) => {
             return (
               <option value={type} key={index}>
                 {type}
@@ -130,7 +130,7 @@ const TattooStyles = ({}) => {
           onChange={(e) => handleSelect(e, "tattooStyle")}
         >
           <option value={""}>Select Tattoo Style</option>
-          {styles[appointment.typeofservice].map((style, index) => {
+          {styles[appointment.typeofservice]?.map((style, index) => {
             return (
               <option value={style} key={index}>
                 {style}

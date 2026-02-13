@@ -82,14 +82,11 @@ const AppointmentDetails = () => {
             />
           </div>
         </div>
-        <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
+        {/* <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
           <div className="flex gap-2 items-start ">
             <label className="font-bold md:text-lg w-36">Verification ID:</label>
-            <a href={appointment?.clientId} target="_blank">
-              <img
-                src={`${apiUrl}${appointment?.clientId}`}
-                className="object-cover w-52 h-32 rounded-md shadow"
-              />
+            <a href={appointment?.clientId} target="_blank" className="max-w-56 text-blue-500 underline cursor-pointer overflow-hidden line-clamp-1">
+              {appointment?.clientId}
             </a>
           </div>
 
@@ -98,15 +95,12 @@ const AppointmentDetails = () => {
               <label className="font-bold md:text-lg w-36">
                 Gaurdian Verification ID:
               </label>
-              <a href={appointment?.guardianId} target="_blank">
-                <img
-                  src={`${apiUrl}${appointment?.guardianId}`}
-                  className="object-cover w-52 h-32 rounded-md shadow"
-                />
+              <a href={appointment?.guardianId} target="_blank" className="max-w-56 text-blue-500 underline cursor-pointer overflow-hidden line-clamp-1">
+                {appointment?.guardianId}
               </a>
             </div>
           )}
-        </div>
+        </div> */}
 
     
 
