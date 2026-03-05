@@ -132,14 +132,14 @@ const EmployeeList = () => {
           </table> : <p className="text-center text-gray-400">No employees found</p>
         )}
 
-        <button
+       {!isFormOpen && <button
           className="yellowButton py-2 px-4  rounded-3xl font-bold  mb-2 mr-2 text-black absolute bottom-5 left-1/2 -translate-x-1/2"
           onClick={() => {
             navigate(-1);
           }}
         >
           Prev
-        </button>
+        </button>}
       </div>
     </>
   );

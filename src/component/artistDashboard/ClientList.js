@@ -77,14 +77,14 @@ const ClientList = () => {
         CTA="Delete User"
       />
 
-      <div className="text-white max-w-4xl w-full overflow-y-auto  overflow-x-auto max-h-[80vh] p-2">
+      <div className="text-white max-w-4xl w-full overflow-y-auto  overflow-x-hidden max-h-[80vh] p-2">
         {/* Header */}
         <h1 className="md:text-3xl text-xl uppercase font-bold text-center mb-4">
           Users
         </h1>
 
         {/* Search */}
-        <div className="mb-4">
+        <div className="mb-4 flex justify-center">
           <input
             type="text"
             placeholder="Search by username, name or phone"
@@ -101,8 +101,8 @@ const ClientList = () => {
         <table className="w-full border border-gray-700 rounded-lg">
           <thead className="flex">
             <th className="flex-1 p-2 text-start">Name</th>
-            <th className="flex-1 p-2">Username</th>
-            <th className=" p-2">Options</th>
+            <th className="flex-1 p-2 text-start">Email</th>
+            <th className=" p-2 text-start">Phone</th>
           </thead>
 
           <tbody>
@@ -120,31 +120,14 @@ const ClientList = () => {
                     }}
                 className="flex justify-between items-center border-t border-gray-700 p-2 cursor-pointer"
               >
-                <td className="flex-1 capitalize">
+                <td className="flex-1 capitalize text-xs">
                   {user.firstName} {user.lastName}
                 </td>
 
-                <td className="flex-1 text-center">{user.userName}</td>
+                <td className="flex-1 text-center text-xs">{user.userName}</td>
 
-                <td className=" flex justify-center">
+                <td className=" flex justify-center text-xs">
                   {user.phoneNumber}
-                  {/* <button
-                    className="px-2 py-2 rounded-md hover:bg-red-600 transition-colors"
-                    onClick={() => {
-                     navigate(`/admin/client/${encodeURIComponent(user.userName)}`)
-                    }}
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    className="px-2 py-2 rounded-md hover:bg-red-600 transition-colors"
-                    onClick={() => {
-                      setUserToDelete(user.id);
-                      setIsConfirmOpen(true);
-                    }}
-                  >
-                    <FaTrashAlt />
-                  </button> */}
                 </td>
               </tr>
             ))}

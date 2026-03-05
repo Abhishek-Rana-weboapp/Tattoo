@@ -60,7 +60,7 @@ export default function PriceComponent()
       const updates = {
         price,
         isFixedPrice,
-        adminProcessStep:2,
+        adminProcessStep:appointment.typeofservice === "tooth-gems" ? 5 : 2,
       }
       const response = await axiosInstance.put(`appointment/${appointment.id}`,updates )
       if(response.status === 200){

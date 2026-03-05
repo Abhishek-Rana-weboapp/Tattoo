@@ -27,7 +27,7 @@ const ProfileDropdown = ({logout}) => {
     <div ref={ref} className="relative">
       {/* Trigger */}
       <div
-        className={`flex items-center gap-2 cursor-pointer md:text-lg text-sm group ${user && user.userType === "admin" ? "flex" : "hidden"}`}
+        className={`flex items-center gap-2 cursor-pointer md:text-lg text-sm group ${user && (user.userType === "admin" || user.userType === "artist") ? "flex" : "hidden"}`}
         onClick={(e) => {
           e.stopPropagation();
           setDropdownActive((prev) => !prev);
@@ -50,7 +50,7 @@ export default ProfileDropdown;
 
 
 const MenuList = ({ open , logout}) => {
-
+ const {user} = useAuthContext()
   return (
     <div
       className={`
@@ -62,29 +62,29 @@ const MenuList = ({ open , logout}) => {
           : "opacity-0 -translate-y-2 pointer-events-none"}
       `}
     >
-      <NavLink
-          to="/artist-dashboard"
-          className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
-        >
-          Dashboard
-        </NavLink>
+      {user.userType === "admin" ? <>
         <NavLink
-          to="/employee-list"
-          className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
-        >
-          Employee List
-        </NavLink>
-
-        <NavLink
-          to={
-           "/client-list"
-          }
-          className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
-        >
-          Client List
-        </NavLink>
-
-        <NavLink to={"shoplocation-list"}  className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md">Shop Locations</NavLink>
+            to="/artist-dashboard"
+            className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
+          >
+            Dashboard
+          </NavLink>
+          <NavLink
+            to="/employee-list"
+            className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
+          >
+            Employee List
+          </NavLink>
+          <NavLink
+            to={
+             "/client-list"
+            }
+            className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md"
+          >
+            Client List
+          </NavLink>
+          <NavLink to={"shoplocation-list"}  className="block mb-2 text-gray-700 hover:bg-yellow-500 hover:text-white p-2 py-1 rounded-md">Shop Locations</NavLink>
+      </> : <></>}
 
       <button
         onClick={logout}

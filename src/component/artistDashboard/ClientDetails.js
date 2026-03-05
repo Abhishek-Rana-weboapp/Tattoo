@@ -121,7 +121,7 @@ function ClientDetailsForm() {
       toast.success("Client updated successfully");
       navigate(-1);
     } catch (error) {
-      toast.error("Failed to update client");
+      toast.error(error.response.data.message || "Failed to update client");
       console.error(error);
     } finally {
       setSaving(false);
