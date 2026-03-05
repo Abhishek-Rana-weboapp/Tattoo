@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosInstance from "../../config/axios";
 import toast from "react-hot-toast";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../modal/ConfirmationModal";
 
@@ -77,7 +77,7 @@ const ClientList = () => {
         CTA="Delete User"
       />
 
-      <div className="text-white max-w-4xl w-full overflow-y-auto overflow-x-auto max-h-[80vh] p-2">
+      <div className="text-white max-w-4xl w-full overflow-y-auto  overflow-x-auto max-h-[80vh] p-2">
         {/* Header */}
         <h1 className="md:text-3xl text-xl uppercase font-bold text-center mb-4">
           Users
@@ -115,7 +115,10 @@ const ClientList = () => {
             {users.map((user) => (
               <tr
                 key={user.id}
-                className="flex justify-between items-center border-t border-gray-700 p-2"
+                 onClick={() => {
+                     navigate(`/admin/client/${encodeURIComponent(user.userName)}`)
+                    }}
+                className="flex justify-between items-center border-t border-gray-700 p-2 cursor-pointer"
               >
                 <td className="flex-1 capitalize">
                   {user.firstName} {user.lastName}
@@ -124,6 +127,15 @@ const ClientList = () => {
                 <td className="flex-1 text-center">{user.userName}</td>
 
                 <td className=" flex justify-center">
+                  {user.phoneNumber}
+                  {/* <button
+                    className="px-2 py-2 rounded-md hover:bg-red-600 transition-colors"
+                    onClick={() => {
+                     navigate(`/admin/client/${encodeURIComponent(user.userName)}`)
+                    }}
+                  >
+                    <FaEdit />
+                  </button>
                   <button
                     className="px-2 py-2 rounded-md hover:bg-red-600 transition-colors"
                     onClick={() => {
@@ -132,7 +144,7 @@ const ClientList = () => {
                     }}
                   >
                     <FaTrashAlt />
-                  </button>
+                  </button> */}
                 </td>
               </tr>
             ))}

@@ -16,28 +16,30 @@ export const AppointmentContextProvider = ({ children }) => {
   const [doctorInfo, setDoctorInfo] = useState(null);
   const [prevFormsInfo, setPrevFormsInfo] = useState(null);
   const [appointment, setAppointment] = useState(null);
+  const [clientPhoneNumber, setClientPhoneNumber] = useState(null);
   const [selectedTeeth, setSelectedTeeth] = useState([]);
 
   const hasRestored = useRef(false);
 
   useEffect(() => {
     const storedAppointmentData = safeParse(
-      sessionStorage.getItem("storedappointmentdata")
+      sessionStorage.getItem("storedappointmentdata"),
     );
     const storedBodyLocation = safeParse(
-      sessionStorage.getItem("storedbodyLocation")
+      sessionStorage.getItem("storedbodyLocation"),
     );
     const storedMedicalHistory = safeParse(
-      sessionStorage.getItem("storedmedicalhistory")
+      sessionStorage.getItem("storedmedicalhistory"),
     );
     const storedAppointment = safeParse(
-      sessionStorage.getItem("storedappointment")
+      sessionStorage.getItem("storedappointment"),
     );
-
+    const storedPhoneNumber = safeParse(sessionStorage.getItem("storedPhoneNumber"))
     if (storedMedicalHistory) setMedicalHistory(storedMedicalHistory);
     if (storedAppointmentData) setAppointmentData(storedAppointmentData);
     if (storedBodyLocation) setBodyLocation(storedBodyLocation);
     if (storedAppointment) setAppointment(storedAppointment);
+    if(storedPhoneNumber) setClientPhoneNumber(storedPhoneNumber)
 
     hasRestored.current = true;
   }, []);
@@ -71,7 +73,9 @@ export const AppointmentContextProvider = ({ children }) => {
       sessionStorage.removeItem("storedappointment");
       sessionStorage.removeItem("storedbodyLocation");
       sessionStorage.removeItem("storedmedicalhistory");
+      sessionStorage.removeItem("storedPhoneNumber");
       setAppointment(null);
+      setClientPhoneNumber(null);
       setAppointmentData(null);
       setBodyLocation(null);
       setMedicalHistory(null);
@@ -86,7 +90,7 @@ export const AppointmentContextProvider = ({ children }) => {
       if (appointmentData !== undefined) {
         sessionStorage.setItem(
           "storedappointmentdata",
-          JSON.stringify(appointmentData)
+          JSON.stringify(appointmentData),
         );
       } else {
         sessionStorage.removeItem("storedappointmentdata");
@@ -95,7 +99,7 @@ export const AppointmentContextProvider = ({ children }) => {
       if (medicalhistory !== undefined) {
         sessionStorage.setItem(
           "storedmedicalhistory",
-          JSON.stringify(medicalhistory)
+          JSON.stringify(medicalhistory),
         );
       } else {
         sessionStorage.removeItem("storedmedicalhistory");
@@ -104,7 +108,7 @@ export const AppointmentContextProvider = ({ children }) => {
       if (bodyLocation !== undefined) {
         sessionStorage.setItem(
           "storedbodyLocation",
-          JSON.stringify(bodyLocation)
+          JSON.stringify(bodyLocation),
         );
       } else {
         sessionStorage.removeItem("storedbodyLocation");
@@ -113,11 +117,21 @@ export const AppointmentContextProvider = ({ children }) => {
       if (appointment !== undefined) {
         sessionStorage.setItem(
           "storedappointment",
-          JSON.stringify(appointment)
+          JSON.stringify(appointment),
         );
+        
       } else {
         sessionStorage.removeItem("storedappointment");
       }
+
+       if (clientPhoneNumber !== undefined) {
+      sessionStorage.setItem(
+        "storedPhoneNumber",
+        JSON.stringify(clientPhoneNumber),
+      );
+    }else{
+       sessionStorage.removeItem("storedPhoneNumber");
+    }
     }
   }, [appointmentData, medicalhistory, bodyLocation, appointment]);
 
@@ -125,7 +139,7 @@ export const AppointmentContextProvider = ({ children }) => {
     if (hasRestored.current) {
       sessionStorage.setItem(
         "storedbodyLocation",
-        JSON.stringify(bodyLocation)
+        JSON.stringify(bodyLocation),
       );
     }
   }, [bodyLocation]);
@@ -149,6 +163,8 @@ export const AppointmentContextProvider = ({ children }) => {
         setAppointment,
         selectedTeeth,
         setSelectedTeeth,
+        clientPhoneNumber,
+        setClientPhoneNumber,
       }}
     >
       {children}
@@ -159,7 +175,7 @@ export const useAppointmentContext = () => {
   const context = useContext(AppointmentContext);
   if (!context) {
     throw new Error(
-      "useAppointmentContext hook should be used inside the appointmentData context"
+      "useAppointmentContext hook should be used inside the appointmentData context",
     );
   }
 

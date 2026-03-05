@@ -13,7 +13,7 @@ import { useAppointmentContext } from "../context/AppointmentContext";
 import PiercingTypeSelection from "./artistDashboard/PiercingTypeSelection";
 
 const BillingComponent = () => {
-  const {appointment, setAppointment} = useAppointmentContext()
+  const {appointment, setAppointment, clientPhoneNumber} = useAppointmentContext()
   let { step } = useParams();
   const [currentStep, setCurrentStep] = useState();
 
@@ -71,6 +71,21 @@ const BillingComponent = () => {
 
   return (
     <div className="w-full h-full flex flex-col text-white gap-2 items-center overflow-auto p-2">
+      <div className="flex gap-3 ">
+         <div>
+           <label className="font-medium" htmlFor="">FirstName:</label>
+           <p>{appointment?.firstName}</p>
+         </div>
+          <div>
+           <label className="font-medium" htmlFor="">LastName:</label>
+           <p>{appointment?.lastName}</p>
+         </div>
+          <div>
+           <label className="font-medium" htmlFor="">PhoneNumber:</label>
+           <p>{clientPhoneNumber ? clientPhoneNumber : ""}</p>
+         </div>
+      </div>
+
       <h1 className="text-3xl uppercase font-bold mb-4">{appointment?.typeofservice}</h1>
       {currentStep === 1 && (
         <PriceComponent/>

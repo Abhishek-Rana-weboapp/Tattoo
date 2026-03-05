@@ -22,6 +22,7 @@ const InputButton = ({onChange, loading, text,accept,className, ...props}) => {
       onChange={onChange}
       />
       <button
+      type='button'
       className={cn("flex items-center bg-gradient-to-b from-[#f8f5f5] from-0% via-[#ffd21c] via-30% to-[#eb6d08] to-100% text-black rounded-xl text-md px-4 hover:cursor-pointer p-2 font-semibold hover:scale-105 ease-in-out duration-300", className)}
       onClick={handleButton}
       disabled={loading}

@@ -14,7 +14,7 @@ import TranslationWrapper from "../Layout/TranslationWrapper";
 import { useAppointmentContext } from "../../context/AppointmentContext";
 
 export default function ArtistDashboard() {
-  const { appointment, setAppointment } = useAppointmentContext();
+  const { appointment, setAppointment ,clientPhoneNumber, setClientPhoneNumber} = useAppointmentContext();
   const [pendingAppointments, setPendingAppointments] = useState([]);
   const [completedAppointments, setCompletedAppointments] = useState([]);
   const { t } = useTranslation();
@@ -48,6 +48,9 @@ export default function ArtistDashboard() {
         (app) => parseInt(app.id) === parseInt(e.target.value)
       )
     );
+    setClientPhoneNumber(pendingAppointments.find(
+        (app) => parseInt(app.id) === parseInt(e.target.value)
+      ).phoneNumber)
     setStep(1);
     return;
   };

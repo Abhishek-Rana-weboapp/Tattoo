@@ -1,4 +1,4 @@
-import {  useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "../component/login";
 import SignUp from "../component/signup";
@@ -37,21 +37,17 @@ import ProfileDropdown from "../component/dropdown/dropdown";
 import EmployeeList from "../component/artistDashboard/EmployeeList";
 import ClientList from "../component/artistDashboard/ClientList";
 import LocationList from "../component/artistDashboard/LocationList";
+import ClientDetailsForm from "../component/artistDashboard/ClientDetails";
+import AdminRoute from "./AdminRoutes";
 
 export default function RoutesComponent() {
-  const {
-    isVisible,
-    setIsVisible,
-  } = useAuthContext();
+  const { isVisible, setIsVisible } = useAuthContext();
   const location = useLocation();
   const navigate = useNavigate();
   const publicRoutes = ["/", "/signup", "/forget_password", "/reset_password"];
 
   useEffect(() => {
-
-    if (
-      publicRoutes.includes(location.pathname)
-    ) {
+    if (publicRoutes.includes(location.pathname)) {
       setIsVisible(false);
     } else {
       setIsVisible(true);
@@ -298,18 +294,45 @@ export default function RoutesComponent() {
             </PrivateRoutes>
           }
         />
-
-      <Route path="employee-list" element={<PrivateRoutes><EmployeeList /></PrivateRoutes>} />
-      <Route path="client-list" element={<PrivateRoutes><ClientList /></PrivateRoutes>} />
-      <Route path="shoplocation-list" element={<PrivateRoutes><LocationList /></PrivateRoutes>} />
-
-        <Route 
-           path="/no-service"
-           element={
+        <Route
+          path="employee-list"
+          element={
+            <AdminRoute>
+              <EmployeeList />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="client-list"
+          element={
+            <AdminRoute>
+              <ClientList />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/client/:userName"
+          element={
+            <AdminRoute>
+              <ClientDetailsForm />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="shoplocation-list"
+          element={
+            <AdminRoute>
+              <LocationList />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/no-service"
+          element={
             <PrivateRoutes>
               <NoServiceSection />
             </PrivateRoutes>
-           }
+          }
         />
         <Route
           exact

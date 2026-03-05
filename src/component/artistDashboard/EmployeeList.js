@@ -64,7 +64,7 @@ const EmployeeList = () => {
           <h1 className=" md:text-3xl text-xl uppercase font-bold  text-center">
             Employees
           </h1>
-          <button
+          {!isFormOpen ? <button
             className="absolute right-3 top-1/2 -translate-y-1/2 text-yellow-400 rounded-md"
             onClick={() => {
               setFormMode("add");
@@ -72,7 +72,7 @@ const EmployeeList = () => {
             }}
           >
             <FaPlus className="size-5" />
-          </button>
+          </button> : <></>}
         </div>
 
         {isFormOpen ? (

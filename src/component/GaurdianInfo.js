@@ -12,8 +12,8 @@ import LoaderModal from "./modal/LoaderModal";
 
 const GaurdianInfo = () => {
   const { user, setUser } = useAuthContext();
-  const [otherInput, setOtherInput] = useState("")
-  const [otherChecked, setOtherChecked] = useState(false)
+  const [otherInput, setOtherInput] = useState("");
+  const [otherChecked, setOtherChecked] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [guardianInfo, setGaurdianInfo] = useState(
@@ -26,14 +26,14 @@ const GaurdianInfo = () => {
           email: "",
           phoneNumber: "",
           address: "",
-          gender:"",
-          race:"",
-          state:"",
-          city:"",
-          zip:"",
-        }
+          gender: "",
+          race: "",
+          state: "",
+          city: "",
+          zip: "",
+        },
   );
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   // const handleInput = (e) => {
   //   const field = e.target.name;
@@ -41,21 +41,25 @@ const GaurdianInfo = () => {
   //   setGaurdianInfo((prev) => ({ ...prev, [field]: value }));
   // };
 
-  const handleInput = (e)=>{
-        const name = e.target.name
-        const value = e.target.value
-        if(name === "genderMale" || name === "genderFemale" || name === "genderOther"){
-            if(name === "genderOther"){
-              setOtherChecked(true)
-                setGaurdianInfo(prev=>({...prev, gender : otherInput}))
-            }else{
-              setOtherChecked(false)
-                setGaurdianInfo(prev=>({...prev, gender:value}))
-            }
-        }else{
-            setGaurdianInfo(prev=>({...prev , [name] : value}))
-        }
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    if (
+      name === "genderMale" ||
+      name === "genderFemale" ||
+      name === "genderOther"
+    ) {
+      if (name === "genderOther") {
+        setOtherChecked(true);
+        setGaurdianInfo((prev) => ({ ...prev, gender: otherInput }));
+      } else {
+        setOtherChecked(false);
+        setGaurdianInfo((prev) => ({ ...prev, gender: value }));
+      }
+    } else {
+      setGaurdianInfo((prev) => ({ ...prev, [name]: value }));
     }
+  };
   const handleDate = (date) => {
     setGaurdianInfo((prev) => ({ ...prev, dateOfBirth: date }));
   };
@@ -63,20 +67,31 @@ const GaurdianInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-   // Check for required fields
-   const requiredFields = ['firstName', 'dateOfBirth', 'email', 'phoneNumber', 'address', 'state', 'city', 'zip', 'gender', 'race'];
-   const missingFields = requiredFields.filter(field => {
-     const value = guardianInfo[field];
-     if (typeof value === "string") {
-       return value.trim() === "";
-     }
-     return value === null || value === undefined;
-   });
+    // Check for required fields
+    const requiredFields = [
+      "firstName",
+      "dateOfBirth",
+      "email",
+      "phoneNumber",
+      "address",
+      "state",
+      "city",
+      "zip",
+      "gender",
+      "race",
+    ];
+    const missingFields = requiredFields.filter((field) => {
+      const value = guardianInfo[field];
+      if (typeof value === "string") {
+        return value.trim() === "";
+      }
+      return value === null || value === undefined;
+    });
 
-   if (missingFields.length > 0) {
-     toast.error(`Please fill in: ${missingFields.join(', ')}`);
-     return;
-   }
+    if (missingFields.length > 0) {
+      toast.error(`Please fill in: ${missingFields.join(", ")}`);
+      return;
+    }
 
     const today = new Date();
     const dob = new Date(guardianInfo.dateOfBirth);
@@ -99,14 +114,14 @@ const GaurdianInfo = () => {
     }
 
     // Validate phone number
-    const phoneDigits = guardianInfo.phoneNumber.replace(/\D/g, '');
+    const phoneDigits = guardianInfo.phoneNumber.replace(/\D/g, "");
     if (phoneDigits.length < 10) {
       toast.error(t("Please enter a valid phone number (at least 10 digits)"));
       return;
     }
 
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axiosInstance.put(`user/${user.id}`, {
         guardianInfo: JSON.stringify(guardianInfo),
       });
@@ -115,12 +130,12 @@ const GaurdianInfo = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      toast.error(t("Something went wrong"))
+      toast.error(t("Something went wrong"));
     }
   };
 
-  if(loading){
-    return <LoaderModal />
+  if (loading) {
+    return <LoaderModal />;
   }
 
   return (
@@ -149,8 +164,14 @@ const GaurdianInfo = () => {
             placeholder="Last Name"
             onChange={handleInput}
           ></input>
-          <div className="bg-white rounded-md">
-            <DatePicker date={guardianInfo.dateOfBirth} setDate={handleDate} />
+          <div>
+            <label className="text-white">Date of Birth</label>
+            <div className="bg-white rounded-md">
+              <DatePicker
+                date={guardianInfo.dateOfBirth}
+                setDate={handleDate}
+              />
+            </div>
           </div>
           <input
             name="email"
@@ -196,28 +217,54 @@ const GaurdianInfo = () => {
             type="text"
             placeholder="Zip"
             onChange={(e) => {
-    const numericValue = e.target.value.replace(/\D/g, ""); // remove non-digits
-    setGaurdianInfo((prev) => ({ ...prev, zip: numericValue }));
-  }}
+              const numericValue = e.target.value.replace(/\D/g, ""); // remove non-digits
+              setGaurdianInfo((prev) => ({ ...prev, zip: numericValue }));
+            }}
           ></input>
           <div className="flex items-center md:flex-row flex-col">
-            <label className="flex  md:w-20 w-full text-white">{t("Gender")} :</label>
+            <label className="flex  md:w-20 w-full text-white">
+              {t("Gender")} :
+            </label>
             <div className="flex flex-col md:flex-1 w-full">
               <div className="flex gap-2">
-            <label className="flex gap-2 items-center ml-1 text-white">
-            <input name="genderMale" type="radio" value="male" checked={guardianInfo.gender === "male"} onChange={handleInput}></input>
-                {t("Male")}
-            </label>
-            <label className="flex gap-2 items-center text-white">
-            <input name="genderFemale" type="radio" value="female" checked={guardianInfo.gender === "female"} onChange={handleInput}></input>
-                {t("Female")}
-            </label>
-            <label className="flex gap-2 items-center text-white">
-                <input name="genderOther" type="radio" checked={otherChecked} onChange={handleInput}></input>
-                {t("other")} 
-            </label>
+                <label className="flex gap-2 items-center ml-1 text-white">
+                  <input
+                    name="genderMale"
+                    type="radio"
+                    value="male"
+                    checked={guardianInfo.gender === "male"}
+                    onChange={handleInput}
+                  ></input>
+                  {t("Male")}
+                </label>
+                <label className="flex gap-2 items-center text-white">
+                  <input
+                    name="genderFemale"
+                    type="radio"
+                    value="female"
+                    checked={guardianInfo.gender === "female"}
+                    onChange={handleInput}
+                  ></input>
+                  {t("Female")}
+                </label>
+                <label className="flex gap-2 items-center text-white">
+                  <input
+                    name="genderOther"
+                    type="radio"
+                    checked={otherChecked}
+                    onChange={handleInput}
+                  ></input>
+                  {t("other")}
+                </label>
               </div>
-            {otherChecked && <input type="text" className="p-2 rounded-lg text-black" value={otherInput} onChange={(e)=>setOtherInput(e.target.value)} ></input>}
+              {otherChecked && (
+                <input
+                  type="text"
+                  className="p-2 rounded-lg text-black"
+                  value={otherInput}
+                  onChange={(e) => setOtherInput(e.target.value)}
+                ></input>
+              )}
             </div>
           </div>
           <input

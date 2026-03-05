@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { IoMdAttach } from "react-icons/io";
-import {useAppointmentContext} from "../../context/AppointmentContext"
+import { useAppointmentContext } from "../../context/AppointmentContext";
 import { apiUrl } from "../../url";
+import { formatNumericMDY } from "../../commonFunctions/timeFunctions";
 
 const AppointmentDetails = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const {appointment} = useAppointmentContext()
-
+  const { appointment } = useAppointmentContext();
 
   if (appointment === null) {
     return (
@@ -17,7 +17,6 @@ const AppointmentDetails = () => {
       </div>
     );
   }
-
 
   return (
     <div className="text-white flex-1 flex flex-col gap-10 overflow-hidden">
@@ -46,8 +45,8 @@ const AppointmentDetails = () => {
           </div>
         </div>
 
-
-        {appointment?.brief_description &&<div className="flex gap-2 items-center ">
+        {appointment?.brief_description && (
+          <div className="flex gap-2 items-center ">
             <label className="font-bold md:text-lg w-36">Description:</label>
             <input
               type="text"
@@ -55,7 +54,8 @@ const AppointmentDetails = () => {
               className="rounded-md p-2 text-black focus-within:outline-none"
               value={JSON.parse(appointment?.brief_description)[1]}
             />
-          </div>}
+          </div>
+        )}
 
         <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
           <div className="flex gap-2 items-center ">
@@ -64,11 +64,8 @@ const AppointmentDetails = () => {
               type="text"
               readOnly
               className="rounded-md p-2 text-black focus-within:outline-none"
-              value={new Date(appointment?.appointment_date).toLocaleDateString("en-GB", {
-                day: "2-digit",
-                month: "short",
-                year: "numeric",
-              })}
+              value={
+                formatNumericMDY(appointment?.appointment_date)}
             />
           </div>
 
@@ -82,51 +79,40 @@ const AppointmentDetails = () => {
             />
           </div>
         </div>
-        {/* <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
-          <div className="flex gap-2 items-start ">
-            <label className="font-bold md:text-lg w-36">Verification ID:</label>
-            <a href={appointment?.clientId} target="_blank" className="max-w-56 text-blue-500 underline cursor-pointer overflow-hidden line-clamp-1">
-              {appointment?.clientId}
+
+        <div className="flex md:flex-row flex-col md:gap-16 gap-4 justify-between">
+          <div className="flex gap-2 items-center">
+            <label className="font-bold md:text-lg w-36 ">Attachments:</label>
+            <a
+              href={appointment?.google_drive_folder_id}
+              target="_blank"
+              className="flex items-center gap-2 underline text-blue-500"
+            >
+              Google Drive link
+              <IoMdAttach onClick />
             </a>
           </div>
 
-          {appointment?.guardianId && (
-            <div className="flex gap-2 items-start ">
-              <label className="font-bold md:text-lg w-36">
-                Gaurdian Verification ID:
-              </label>
-              <a href={appointment?.guardianId} target="_blank" className="max-w-56 text-blue-500 underline cursor-pointer overflow-hidden line-clamp-1">
-                {appointment?.guardianId}
-              </a>
-            </div>
-          )}
-        </div> */}
-
-    
-
-        <div className="flex gap-2 items-center">
-          <label className="font-bold md:text-lg w-36 ">Attachments:</label>
-          <a
-            href={appointment?.google_drive_folder_id}
-            target="_blank"
-            className="flex items-center gap-2 underline text-blue-500"
-          >
-            Google Drive link
-            <IoMdAttach onClick />
-          </a>
-        </div>
-
-
-
-        <div className="flex gap-2 items-center ">
-            <label className="font-bold md:text-lg w-36">Total Cost:</label>
+          <div className="flex gap-2 items-center ">
+            <label className="font-bold md:text-lg w-36">Phone Number:</label>
             <input
               type="text"
               readOnly
               className="rounded-md p-2 text-black focus-within:outline-none"
-              value={"$" + " " +`${appointment?.price}`}
+              value={appointment?.phoneNumber}
             />
           </div>
+        </div>
+
+        <div className="flex gap-2 items-center ">
+          <label className="font-bold md:text-lg w-36">Total Cost:</label>
+          <input
+            type="text"
+            readOnly
+            className="rounded-md p-2 text-black focus-within:outline-none"
+            value={"$" + " " + `${appointment?.price}`}
+          />
+        </div>
       </div>
       <div className="flex justify-center">
         <button

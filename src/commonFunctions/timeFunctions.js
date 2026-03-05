@@ -26,6 +26,15 @@ export const formatCurrentTime = (time) => {
   )}:${String(seconds).padStart(2, "0")} ${ampm}`;
 };
 
+export const formatNumericMDY = (dateString) => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${month} / ${day} / ${year}`;
+};
+
 
 // Converts UTC to 12-hour local time
 export const formatTimeDisplay = (iso) => {

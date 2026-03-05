@@ -11,6 +11,7 @@ export const tattooBodyLocations = [
   { id: "glutes", label: "glutes", parentId: null, level: 1 },
   { id: "leg", label: "leg", parentId: null, level: 1 },
   { id: "foot", label: "foot", parentId: null, level: 1 },
+  { id: "back", label: "back", parentId: null, level: 1 },
 
   // Head -> Face (Level 2)
   { id: "face", label: "face", parentId: "head", level: 2 },
@@ -120,7 +121,7 @@ export const tattooBodyLocations = [
   { id: "left-shoulder", label: "left shoulder", parentId: "back", level: 2 },
   { id: "spine", label: "spine", parentId: "back", level: 2 },
   { id: "lower-back", label: "lower back", parentId: "back", level: 2 },
-  // { id: "other", label: "Other", parentId: "back", level: 2 },
+  { id: "other", label: "Other", parentId: "back", level: 2,requiresInput: true},
 
   // arm level 2
   { id: "left-arm", label: "left arm", parentId: "arm", level: 2 },

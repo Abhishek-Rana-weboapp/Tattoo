@@ -51,7 +51,8 @@ function Login() {
         toast.success("Login successful");
         sessionStorage.setItem("token", response.data.token);
         setUser(response.data.user);
-        if(response.data.user.userType === "admin"){
+        const userType = response.data.user.userType
+        if(userType === "admin" || userType === "artist"){
          navigate("/artist-dashboard");
         }else{
           navigate("/detailedinfo");
@@ -93,14 +94,14 @@ function Login() {
           <div className="flex gap-3 bg-white p-2 rounded-2xl items-center">
             <MdOutlinePhone size={30} />
             <input
-              type={showPassword ? "text" : "password"}
+              type={"text"}
               className="flex-1 focus:outline-none bg-white p-2"
               id="phoneNumber"
               placeholder="Phone Number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
-            {showPassword ? (
+            {/* {showPassword ? (
               <RiEyeOffFill
                 size={20}
                 onClick={() => setShowPassword(!showPassword)}
@@ -110,7 +111,7 @@ function Login() {
                 size={20}
                 onClick={() => setShowPassword(!showPassword)}
               />
-            )}
+            )} */}
           </div>
         </div>
         <div className="flex gap-2 justify-between">
