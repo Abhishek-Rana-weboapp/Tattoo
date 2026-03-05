@@ -124,7 +124,7 @@ const ClientList = () => {
                   {user.firstName} {user.lastName}
                 </td>
 
-                <td className="flex-1 text-center text-xs">{user.userName}</td>
+                <td className="flex-1 text-start text-xs">{user.userName}</td>
 
                 <td className=" flex justify-center text-xs">
                   {user.phoneNumber}
